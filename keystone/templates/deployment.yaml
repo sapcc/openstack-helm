@@ -3,7 +3,6 @@ apiVersion: extensions/v1beta1
 
 metadata:
   name: keystone
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: api

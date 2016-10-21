@@ -3,7 +3,6 @@ kind: Ingress
 
 metadata:
   name: neutron-server
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: api

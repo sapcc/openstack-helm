@@ -3,7 +3,6 @@ kind: Ingress
 
 metadata:
   name: manila-api
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: api

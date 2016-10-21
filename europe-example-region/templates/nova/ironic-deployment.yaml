@@ -3,7 +3,6 @@ apiVersion: extensions/v1beta1
 
 metadata:
   name: nova-compute-ironic
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: backend

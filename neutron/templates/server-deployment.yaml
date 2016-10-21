@@ -3,7 +3,6 @@ apiVersion: extensions/v1beta1
 
 metadata:
   name: neutron-server
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: api

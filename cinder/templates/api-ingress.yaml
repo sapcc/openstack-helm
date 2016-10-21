@@ -3,7 +3,6 @@ kind: Ingress
 
 metadata:
   name: cinder-api
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: api

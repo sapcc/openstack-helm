@@ -3,7 +3,6 @@ kind: Ingress
 
 metadata:
   name: nova-console
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: backend

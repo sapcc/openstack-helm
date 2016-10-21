@@ -3,7 +3,6 @@ kind: Ingress
 
 metadata:
   name: ironic-api
-  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: api
