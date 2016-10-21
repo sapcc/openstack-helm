@@ -1,0 +1,122 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: nova-compute-vmware
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: nova
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+        name: nova-compute-vmware
+  template:
+    metadata:
+      labels:
+        name: nova-compute-vmware
+      annotations:
+        pod.beta.kubernetes.io/hostname:  nova-compute-vmware
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: nova-compute-vmware
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.global.image_version_nova_compute_m3}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-compute-start
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/nova/service-liveness-check
+              - --config-file=/etc/nova/nova.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/nova/compute-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: SENTRY_DSN
+              value: {{include "sentry_dsn_nova_region" .}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /hypervisor-config
+              name: hypervisor-config
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /nova-patches
+              name: nova-patches
+            - mountPath: /container.init
+              name: nova-container-init
+        - name: neutron-dvs-agent
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.openstack.global.image_version_neutron_server_m3}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - neutron-dvs-agent-start
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/neutron/service-liveness-check
+              - --config-file=/etc/neutron/neutron.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/neutron/dvs-agent-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /neutron-etc
+              name: neutron-etc
+            - mountPath: /ml2-conf-vmware
+              name: ml2-conf-vmware
+            - mountPath: /container.init
+              name: neutron-container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.openstack.global.configuration_repository}}
+            revision:  {{.Values.openstack.global.configuration_revision}}
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+        - name: nova-patches
+          configMap:
+            name: nova-patches
+        - name: hypervisor-config
+          configMap:
+            name: hypervisor-vmware
+        - name: ml2-conf-vmware
+          configMap:
+            name: ml2-vmware-ini
+        - name: neutron-etc
+          configMap:
+            name: neutron-etc
+        - name: nova-container-init
+          configMap:
+            name: nova-bin
+        - name: neutron-container-init
+          configMap:
+            name: neutron-bin

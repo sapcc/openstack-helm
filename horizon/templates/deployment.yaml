@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: horizon
+  labels:
+    system: openstack
+    type: api
+    component: horizon
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: horizon
+  template:
+    metadata:
+      labels:
+        name: horizon
+      annotations:
+        chart-version: {{.Chart.Version}}
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: horizon
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-horizon-m3:{{.Values.global.image_version_horizon_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - horizon-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+          ports:
+            - name: http
+              containerPort: {{.Values.global.horizon_endpoint_port}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /horizon-etc
+              name: horizon-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: horizon-etc
+          configMap:
+            name: horizon-etc
+        - name: container-init
+          configMap:
+            name: horizon-bin
+
+

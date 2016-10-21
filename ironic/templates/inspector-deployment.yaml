@@ -1,0 +1,56 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: ironic-inspector
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: none
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: ironic-inspector
+  template:
+    metadata:
+      labels:
+        name: ironic-inspector
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: ironic-inspector
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.global.image_version_ironic_inspector}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - ironic-inspector-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /ironic-etc
+              name: ironic-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: ironic-etc
+          configMap:
+            name: ironic-etc
+        - name: container-init
+          configMap:
+            name: ironic-bin

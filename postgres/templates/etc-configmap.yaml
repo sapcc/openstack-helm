@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-etc-{{.Values.name}}
+  labels:
+    system: openstack
+    type: configuration
+    component: database
+
+data:
+  postgresql.conf: |
+{{ include "etc/postgresql.conf" .| indent 4 }}

@@ -1,0 +1,74 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: cinder-scheduler
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: cinder
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: cinder-scheduler
+  template:
+    metadata:
+      labels:
+        name: cinder-scheduler
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: cinder-scheduler
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.global.image_version_cinder_scheduler}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - cinder-scheduler-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: SENTRY_DSN
+              value: {{ include "sentry_dsn_cinder" . | quote}}
+
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/cinder/service-liveness-check
+              - --config-file=/etc/cinder/cinder.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/cinder/scheduler-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          volumeMounts:
+            - mountPath: /development
+              name: development
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /cinder-etc
+              name: cinder-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: cinder-etc
+          configMap:
+            name: cinder-etc
+        - name: development
+          persistentVolumeClaim:
+            claimName: development-pvclaim
+        - name: container-init
+          configMap:
+            name: cinder-bin

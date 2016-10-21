@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: nova-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: nova
+spec:
+  tls:
+     - secretName: tls-{{include "nova_api_endpoint_host_public" . | replace "." "-" }}
+       hosts: [{{include "nova_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{include "nova_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: nova-api
+            servicePort: {{.Values.global.nova_api_port_internal}}

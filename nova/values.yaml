@@ -1,0 +1,21 @@
+# Default values for nova.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+debug: "True"
+
+db_name: nova
+db_user: nova
+db_password: DEFINED-IN-REGION-CHART
+
+api_db_name: nova_api
+api_db_user: nova_api
+api_db_password: DEFINED-IN-REGION-CHART
+
+port_metrics: '9102'
+
+sentry_dsn_key: DEFINE_IN_REGION_CHART
+
+postgres:
+  name: nova

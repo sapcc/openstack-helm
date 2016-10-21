@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: postgres-{{.Values.name}}
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: database
+    component: {{.Values.name}}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+
+spec:
+  type: NodePort
+  selector:
+    name: postgres-{{.Values.name}}
+  ports: 
+    - name: public
+      port: {{.Values.port_public}}
+      targetPort: postgres

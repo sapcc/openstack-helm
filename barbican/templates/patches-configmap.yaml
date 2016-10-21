@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: barbican-patches
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: patches
+    component: barbican
+
+data:
+  barbican-api.diff: |
+{{ include "patches/barbican-api.diff" .| indent 4 }}
+  consumers.diff: |
+{{ include "patches/consumers.diff" .| indent 4 }}
+  models.diff: |
+{{ include "patches/models.diff" .| indent 4 }}
+
+

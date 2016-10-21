@@ -1,0 +1,111 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: glance
+  labels:
+    system: openstack
+    type: api
+    component: glance
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: glance
+  template:
+    metadata:
+      labels:
+        name: glance
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: glance-api
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api-m3:{{.Values.global.image_version_glance_api_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - glance-api-start
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{.Values.global.glance_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: STATSD_HOST
+              value: "localhost"
+            - name: STATSD_PORT
+              value: "9125"
+            - name: SENTRY_DSN
+              value: {{ include "sentry_dsn_glance" . | quote}}
+          ports:
+            - name: api
+              containerPort: {{.Values.global.glance_api_port_internal}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /glance-patches
+              name: glance-patches
+            - mountPath: /glance-etc
+              name: glance-etc
+            - mountPath: /glance_store
+              name: image-store
+            - mountPath: /container.init
+              name: glance-bin
+        - name: glance-registry
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-registry:{{.Values.global.image_version_glance_registry}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - glance-registry-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: SENTRY_DSN
+              value: {{ include "sentry_dsn_glance" . | quote}}
+          ports:
+            - name: registry
+              containerPort: 9191
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /glance-etc
+              name: glance-etc
+            - mountPath: /container.init
+              name: glance-bin
+        - name: statsd
+          image: prom/statsd-exporter
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: statsd
+              containerPort: 9125
+              protocol: UDP
+            - name: metrics
+              containerPort: {{.Values.port_metrics}}
+      volumes:
+        - name: image-store
+          persistentVolumeClaim:
+            claimName: glance-pvclaim
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: glance-patches
+          configMap:
+            name: glance-patches
+        - name: glance-etc
+          configMap:
+            name: glance-etc
+        - name: glance-bin
+          configMap:
+            name: glance-bin

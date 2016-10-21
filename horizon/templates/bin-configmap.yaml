@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: horizon-bin
+  labels:
+    system: openstack
+    type: configuration
+    component: horizon
+
+data:
+  horizon-start: |
+{{ include "bin/horizon-start" .| indent 4 }}
+  common.sh: |
+{{ include "common.sh" .| indent 4 }}

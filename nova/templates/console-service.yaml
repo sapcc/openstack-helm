@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: nova-console
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: nova
+spec:
+  type: NodePort
+  selector:
+    name: nova-console
+
+  ports:
+    - name: nonvc-proxy
+      port: {{.Values.global.nova_novnc_port_public}}
+    - name: spicehtml5-proxy
+      port: {{.Values.global.nova_spicehtml5_port_public}}

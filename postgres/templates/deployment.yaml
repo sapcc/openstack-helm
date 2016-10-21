@@ -1,0 +1,86 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: postgres-{{.Values.name}}
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: database
+    component: {{.Values.name}}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      name: postgres-{{.Values.name}}
+  template:
+    metadata:
+      labels:
+        name: postgres-{{.Values.name}}
+    spec:
+      hostPID: false
+      nodeSelector:
+        zone: farm
+      volumes:
+        - name: postgres-persistent-storage
+          persistentVolumeClaim:
+            claimName: db-{{.Values.name}}-pvclaim
+        - name: db-init
+          configMap:
+            name: db-init-{{.Values.name}}
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: postgres-etc
+          configMap:
+            name: postgres-etc-{{.Values.name}}
+        - name: container-init
+          configMap:
+            name: postgres-bin-{{.Values.name}}
+      containers:
+        - name: postgres
+          image: hub.global.cloud.sap/monsoon/postgres:9.4
+          imagePullPolicy: Always
+          livenessProbe:
+            exec:
+              command:
+              - pg_isready
+              - -h
+              - localhost
+              - -p
+              - "{{.Values.port_private}}"
+              - -U
+              - postgres
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+          env:
+            - name: PGDATA
+              value: /postgresql-data/data/
+          ports:
+            - name: postgres
+              containerPort: {{.Values.port_private}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - name: postgres-persistent-storage
+              mountPath: /postgresql-data
+            - name: db-init
+              mountPath: /docker-entrypoint-initdb.d
+            - name: postgres-etc
+              mountPath: /postgresql-conf
+            - name: container-init
+              mountPath: /container-init
+        - name: metrics
+          image: wrouesnel/postgres_exporter
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_PASSWORD
+              value: {{.Values.password}}
+            - name: DATA_SOURCE_NAME
+              value: "postgresql://{{.Values.user}}:{{.Values.password}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
+          ports:
+            - name: metrics
+              containerPort: {{.Values.port_metrics}}

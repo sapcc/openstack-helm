@@ -1,0 +1,7 @@
+dependencies:
+  - name: utils
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: postgres
+    repository: http://localhost:8879/charts
+    version: 0.1.0

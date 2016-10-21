@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: designate-api
+  labels:
+    system: openstack
+    type: api
+    component: designate
+spec:
+  tls:
+    - secretName: tls-{{include "designate_api_endpoint_host_public" . | replace "." "_"}}
+      hosts: [{{include "designate_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{include "designate_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: designate-api
+            servicePort: {{.Values.global.designate_api_port_internal}}

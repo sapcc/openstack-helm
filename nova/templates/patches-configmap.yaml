@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nova-patches
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: patches
+    component: nova
+
+data:
+  vif.diff: |
+{{ include "patches/vif.diff" . | indent 4}}
+
+

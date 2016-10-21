@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manila-bin
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: configuration
+    component: manila
+
+data:
+  manila-api-start: |
+{{ include "bin/manila-api-start" .| indent 4 }}
+  manila-scheduler-start: |
+{{ include "bin/manila-scheduler-start" .| indent 4 }}
+  manila-share-start: |
+{{ include "bin/manila-share-start" .| indent 4 }}
+  common.sh: |
+{{ include "common.sh" .| indent 4 }}
+
+

@@ -1,0 +1,216 @@
+# Default values for openstack.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+global:
+  configuration_repository: https://github.wdf.sap.corp/monsoon/openstack-kube.git
+  configuration_revision: master
+
+  os_release: mitaka
+
+  region: DEFINED-IN-REGION-CHART
+
+  default_availability_zone: nova
+
+  image_version_keystone_m3: DEFINED-IN-REGION-CHART
+  image_version_nova_api_m3: DEFINED-IN-REGION-CHART
+  image_version_nova_compute_m3: DEFINED-IN-REGION-CHART
+  image_version_nova_libvirt: DEFINED-IN-REGION-CHART
+  image_version_nova_conductor: DEFINED-IN-REGION-CHART
+  image_version_nova_consoleauth: DEFINED-IN-REGION-CHART
+  image_version_nova_novncproxy: DEFINED-IN-REGION-CHART
+  image_version_nova_spicehtml5proxy: DEFINED-IN-REGION-CHART
+  image_version_nova_scheduler: DEFINED-IN-REGION-CHART
+  image_version_glance_api_m3: DEFINED-IN-REGION-CHART
+  image_version_glance_registry: DEFINED-IN-REGION-CHART
+  image_version_barbican_m3: DEFINED-IN-REGION-CHART
+  image_version_cinder_api_m3: DEFINED-IN-REGION-CHART
+  image_version_cinder_scheduler: DEFINED-IN-REGION-CHART
+  image_version_cinder_volume: DEFINED-IN-REGION-CHART
+  image_version_horizon_m3: DEFINED-IN-REGION-CHART
+  image_version_manila_api_m3: DEFINED-IN-REGION-CHART
+  image_version_manila_scheduler_m3: DEFINED-IN-REGION-CHART
+  image_version_manila_share_m3: DEFINED-IN-REGION-CHART
+  image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
+  image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
+  image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
+  image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
+  image_version_ironic_api: DEFINED-IN-REGION-CHART
+  image_version_ironic_conductor: DEFINED-IN-REGION-CHART
+  image_version_ironic_inspector: DEFINED-IN-REGION-CHART
+  image_version_ironic_pxe: DEFINED-IN-REGION-CHART
+  image_version_designate_api_m3: DEFINED-IN-REGION-CHART
+  image_version_designate_central_m3: DEFINED-IN-REGION-CHART
+  image_version_designate_mdns_m3: DEFINED-IN-REGION-CHART
+  image_version_designate_poolmanager_m3:  DEFINED-IN-REGION-CHART
+
+  # TODO change to chart setting
+  postgres_port_public: '5432'
+
+  memcached_port_public: '11211'
+  memcached_port_metrics: '9150'
+
+  rabbitmq_default_user: openstack
+  rabbitmq_admin_user: admin
+  rabbitmq_metrics_user: monitoring
+  rabbitmq_port_public: '5672'
+  rabbitmq_port_management: '15672'
+  rabbitmq_port_metrics: '9150'
+
+  rabbitmq_default_pass: DEFINED-IN-REGION-CHART
+  rabbitmq_admin_pass: DEFINED-IN-REGION-CHART
+  rabbitmq_metrics_pass: DEFINED-IN-REGION-CHART
+
+
+  glance_service_user: glance
+  glance_service_password: DEFINED-IN-REGION-CHART
+
+  glance_api_endpoint_protocol_admin: http
+  glance_api_endpoint_protocol_internal: http
+  glance_api_endpoint_protocol_public: https
+
+
+  glance_api_port_admin: '9292'
+  glance_api_port_internal: '9292'
+  glance_api_port_public: '443'
+
+  neutron_service_user: neutron
+  neutron_service_password: DEFINED-IN-REGION-CHART
+
+  neutron_api_endpoint_protocol_admin: http
+  neutron_api_endpoint_protocol_internal: http
+  neutron_api_endpoint_protocol_public: https
+
+
+  neutron_api_port_admin: '9696'
+  neutron_api_port_internal: '9696'
+  neutron_api_port_public: '443'
+
+  keystone_api_endpoint_protocol_admin: http
+  keystone_api_endpoint_protocol_admin_ext: https
+  keystone_api_endpoint_protocol_internal: http
+    # Monasca configuration needs the boolean property below for substitution
+  keystone_api_endpoint.protocol.internal_ssl: "False"
+  keystone_api_endpoint_protocol_public: https
+
+
+  keystone_api_port_admin: '35357'
+  keystone_api_port_admin_ext: '443'
+  keystone_api_port_internal: '5000'
+  keystone_api_port_public: '443'
+
+
+
+   #This is for backward compatibility in Monasca scripts and will be removed
+  keystone_endpoint_protocol: http
+  keystone_service_domain: Default
+  keystone_service_project: service
+  keystone_demo_project: demo
+
+
+  ironic_service_user: ironic
+  ironic_service_password: DEFINED-IN-REGION-CHART
+
+  ironic_api_endpoint_protocol_admin: http
+  ironic_api_endpoint_protocol_internal: http
+  ironic_api_endpoint_protocol_public: https
+
+
+  ironic_api_port_admin: '6385'
+  ironic_api_port_internal: '6385'
+  ironic_api_port_public: '443'
+
+  ironic_pxe_port_public: '69'
+  ironic_pxe_endpoint_host_public: DEFINED-IN-REGION-CHART
+  ironic_pxe_endpoint_ip_public: DEFINED-IN-REGION-CHART
+
+  nova_service_user: nova
+  nova_service_password: DEFINED-IN-REGION-CHART
+  nova_metadata_secret: DEFINED-IN-REGION-CHART
+
+  nova_api_endpoint_protocol_admin: http
+  nova_api_endpoint_protocol_internal: http
+  nova_api_endpoint_protocol_public: https
+
+
+  nova_api_port_admin: '8774'
+  nova_api_port_internal: '8774'
+  nova_api_port_public: '443'
+
+  nova_port_metrics: '9102'
+
+  nova_metadata_port_internal: '8775'
+  nova_novnc_port_public: '443'
+  nova_spicehtml5_port_public: '6082'
+
+  nova_console_endpoint_protocol: https
+
+
+  barbican_api_endpoint_protocol_admin: http
+  barbican_api_endpoint_protocol_internal: http
+  barbican_api_endpoint_protocol_public: https
+  barbican_api_port_admin: '9311'
+  barbican_api_port_internal: '9311'
+  barbican_api_port_public: '443'
+
+  cinder_service_user: cinder
+  cinder_service_password: DEFINED-IN-REGION-CHART
+
+  cinder_api_endpoint_protocol_admin: http
+  cinder_api_endpoint_protocol_internal: http
+  cinder_api_endpoint_protocol_public: https
+
+  cinder_api_port_admin: '8776'
+  cinder_api_port_internal: '8776'
+  cinder_api_port_public: '443'
+
+  horizon_endpoint_port: '8080'
+
+  
+  manila_service_user: manila
+  manila_service_password: DEFINED-IN-REGION-CHART
+  manila_endpoint_protocol: http
+  manila_api_port_public: '8786'
+
+  manila_api_endpoint_protocol_admin: http
+  manila_api_endpoint_protocol_internal: http
+  manila_api_endpoint_protocol_public: https
+
+  manila_api_port_admin: '8786'
+  manila_api_port_internal: '8786'
+  manila_api_port_public: '443'
+
+  neutron_service_user: neutron
+  neutron_service_password: DEFINED-IN-REGION-CHART
+
+  neutron_api_endpoint_protocol_admin: http
+  neutron_api_endpoint_protocol_internal: http
+  neutron_api_endpoint_protocol_public: https
+
+
+  neutron_api_port_admin: '9696'
+  neutron_api_port_internal: '9696'
+  neutron_api_port_public: '443'
+
+  neutron_manila_physnet: DEFINED-IN-REGION-CHART
+
+  
+  swift_endpoint_protocol: https
+  swift_api_port_public: '443'
+  swift_api_port_internal: '8080'
+  
+  designate_api_endpoint_protocol_admin: http
+  designate_api_endpoint_protocol_internal: http
+  designate_api_endpoint_protocol_public: https
+  designate_api_port_internal: '9001'
+  designate_api_port_admin: '9001'
+  designate_api_port_public: '443'
+  designate_metrics_port: '9102'
+  designate_mdns_port_public: '5354'
+  designate_mdns_external_ip: DEFINED-IN-REGION-CHART 
+  designate_service_user: designate
+  designate_service_password: DEFINED-IN-REGION-CHART 
+
+  barbican_service_user: barbican
+  barbican_service_password: DEFINED-IN-REGION-CHART

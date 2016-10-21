@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: designate-initdb
+  labels:
+    system: openstack
+    type: configuration
+    component: designate
+
+data:
+  init.sh: |
+{{ include "initdb/init.sh" . | indent 4 }}

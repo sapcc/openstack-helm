@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -e
+
+INI=/etc/pgbouncer/pgbouncer.ini
+USERLIST=/etc/pgbouncer/userlist.txt
+
+function bootstrap {
+    touch "$USERLIST"
+    chown postgres:postgres "$USERLIST"
+    chmod 0640 "$USERLIST"
+
+    if [[ -d /cluster-config && -d /cluster-secret ]]; then
+        echo "Parsing cluster-config/secret"
+        for db in /cluster-config/*.db.name; do
+            NAME="`cat $db`"
+            rel=${db##/*/}
+            s=${rel%.db.name}
+            USER="`cat /cluster-config/$s.db.user`"
+            PASSWORD="`cat /cluster-secret/$s.db.password`"
+            echo \"${USER}\" \"md5$(printf "${PASSWORD}${USER}" | md5sum - | cut -f1 -d' ')\"
+        done>"$USERLIST"
+
+        grep auth_file "$INI" >/dev/null || ( echo "auth_file = $USERLIST" >> "$INI" )
+
+        [ -f /cluster-config/pgbouncer.user ] && (
+            USER="`cat /cluster-config/pgbouncer.user`"
+            PASSWORD="`cat /cluster-secret/pgbouncer.password`"
+            echo "stats_users = ${USER}" >> "$INI"
+
+            grep \"${USER}\" "$USERLIST" >/dev/null || ( echo \"${USER}\" \"md5$(printf "${PASSWORD}${USER}" | md5sum - | cut -f1 -d' ')\" >> "$USERLIST" )
+         ) || echo "No pgbouncer user"
+    else
+        echo "Cluster-config/secret missing"
+    fi
+}
+
+bootstrap
+exec /usr/sbin/pgbouncer -u postgres "$INI"

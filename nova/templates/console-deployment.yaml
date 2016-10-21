@@ -1,0 +1,93 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: nova-console
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: nova
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: nova-console
+  template:
+    metadata:
+      labels:
+        name: nova-console
+
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: nova-consoleauth
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.global.image_version_nova_consoleauth}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-consoleauth-start
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/nova/service-liveness-check
+              - --config-file=/etc/nova/nova.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/nova/consoleauth-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: container-init
+        - name: nova-novncproxy
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.global.image_version_nova_novncproxy}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-novncproxy-start
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: container-init
+        - name: nova-spicehtml5proxy
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.global.image_version_nova_spicehtml5proxy}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-spicehtml5proxy-start
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: container-init
+
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+        - name: container-init
+          configMap:
+            name: nova-bin

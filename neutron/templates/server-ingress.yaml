@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: neutron-server
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: neutron
+spec:
+  tls:
+     - secretName: tls-{{include "neutron_api_endpoint_host_public" . | replace "." "-" }}
+       hosts: [{{include "neutron_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{include "neutron_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: neutron-server
+            servicePort: {{.Values.global.neutron_api_port_internal}}

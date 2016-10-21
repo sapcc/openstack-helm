@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: neutron-server
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: neutron
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+spec:
+  type: NodePort
+  selector:
+    name: neutron-server
+  ports:
+    - name: neutron-server
+      port: {{.Values.global.neutron_api_port_internal}}

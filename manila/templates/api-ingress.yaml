@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: manila-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: manila
+spec:
+  tls:
+     - secretName: tls-{{include "manila_api_endpoint_host_public" . | replace "." "-" }}
+       hosts: [{{include "manila_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{include "manila_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: manila-api
+            servicePort: {{.Values.global.manila_api_port_internal}}

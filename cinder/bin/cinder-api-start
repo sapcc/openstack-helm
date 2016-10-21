@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    cp /cinder-etc/cinder.conf /etc/cinder/cinder.conf
+    cp /cinder-etc/logging.conf /etc/cinder/logging.conf
+}
+
+function bootstrap_db {
+
+    cinder-manage db sync
+
+}
+
+
+function start_application {
+    exec /var/lib/kolla/venv/bin/cinder-api
+
+}
+
+
+process_config
+# DB migration needed prior to start since Mitaka....
+bootstrap_db
+start_application
+
+

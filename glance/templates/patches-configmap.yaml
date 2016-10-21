@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: glance-patches
+  labels:
+    system: openstack
+    type: patches
+    component: neutron
+
+data:
+  connection-manager.diff: |
+{{ include "patches/connection_manager.diff" .| indent 4 }}
+
+
+

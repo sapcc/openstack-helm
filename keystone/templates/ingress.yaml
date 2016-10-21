@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: keystone
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: keystone
+spec:
+  tls:
+     - secretName: tls-{{ include "keystone_api_endpoint_host_public" . | replace "." "-" }}
+       hosts: [{{include "keystone_api_endpoint_host_public" .}}]
+     - secretName: tls-{{include "keystone_api_endpoint_host_admin_ext" . | replace "." "-" }}
+       hosts: [{{include "keystone_api_endpoint_host_admin_ext" .}}]
+
+  rules:
+    - host: {{include "keystone_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: keystone
+            servicePort: {{.Values.global.keystone_api_port_internal}}
+    - host: {{include "keystone_api_endpoint_host_admin_ext" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: keystone
+            servicePort: {{.Values.global.keystone_api_port_admin}}

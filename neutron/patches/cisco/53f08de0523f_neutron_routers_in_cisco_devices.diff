@@ -1,0 +1,28 @@
+--- 53f08de0523f_neutron_routers_in_cisco_devices.orig.py	2016-09-01 11:52:38.000000000 +0100
++++ 53f08de0523f_neutron_routers_in_cisco_devices.patch.py	2016-08-17 08:59:34.000000000 +0100
+@@ -66,10 +66,22 @@
+                               referent_table='cisco_router_types',
+                               local_cols=['router_type_id'],
+                               remote_cols=['id'])
+-        op.drop_constraint('cisco_router_mappings_ibfk_2',
+-                           'cisco_router_mappings', type_='foreignkey')
+-        op.drop_constraint('cisco_router_mappings_ibfk_2',
++
++
++
++        # ****** This foreign key is never present ********
++
++        #op.drop_constraint('cisco_router_mappings_ibfk_2',
++        #                   'cisco_router_mappings', type_='foreignkey')
++
++
++        op.drop_constraint('cisco_router_mappings_pkey',
+                            'cisco_router_mappings', type_='primary')
++
++        # ****** End of Hack *****
++
++
++
+         op.create_foreign_key('cisco_router_mappings_ibfk_2',
+                               source_table='cisco_router_mappings',
+                               referent_table='routers',

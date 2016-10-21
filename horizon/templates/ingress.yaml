@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: horizon
+  labels:
+    system: openstack
+    type: api
+    component: horizon
+
+spec:
+  tls:
+     - secretName:  tls-{{ include "horizon_endpoint_host" . | replace "." "-" }}
+       hosts: [{{include "horizon_endpoint_host" . }}]
+  rules:
+    - host: {{include "horizon_endpoint_host" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: horizon
+            servicePort: {{.Values.global.horizon_endpoint_port}}
+

@@ -1,0 +1,21 @@
+--- service_builder.orig.py	2016-10-04 14:39:02.000000000 +0100
++++ service_builder.patch.py	2016-10-06 15:32:08.000000000 +0100
+@@ -93,11 +93,14 @@
+                 agent['configurations'])
+             segment_data = self.disconnected_service.get_network_segment(
+                 context, agent_config, network)
++
++
+             if segment_data:
+-                network['provider:segmentation_id'] = getattr(
+-                    segment_data, 'segmentation_id', None)
+-                network['provider:network_type'] = getattr(
+-                    segment_data, 'network_type', None)
++
++                network['provider:segmentation_id'] = segment_data.get('segmentation_id', None)
++                network['provider:network_type'] = segment_data.get('network_type', None)
++                network['provider:physical_network'] = segment_data.get('physical_network', None)
++
+             network_map[network_id] = network
+ 
+             # Check if the tenant can create a loadbalancer on the network.

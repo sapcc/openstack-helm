@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: memcached
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    component: cache
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.global.memcached_port_metrics}}"
+spec:
+  type: NodePort
+  selector:
+    name: memcached
+  ports:
+    - name: memcache
+      port: {{.Values.global.memcached_port_public}}

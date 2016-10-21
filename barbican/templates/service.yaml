@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: barbican-api
+  namespace: {{.Release.Namespace}} 
+  labels:
+    system: openstack
+    type: api
+    component: barbican
+spec:
+  selector:
+    name: barbican-api
+  ports:
+    - name: barbican-api
+      port: {{.Values.global.barbican_api_port_internal}}

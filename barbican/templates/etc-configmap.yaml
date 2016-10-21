@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: barbican-etc
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: configuration
+    component: barbican
+
+data:
+  barbican-api-paste.ini: |
+{{ include "etc/barbican-api-paste.ini" .| indent 4 }}
+  barbican.conf: |
+{{ include "etc/barbican.conf" .| indent 4 }}

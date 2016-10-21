@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: rabbitmq
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    component: messaging
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.global.rabbitmq_port_metrics}}"
+spec:
+  type: NodePort
+  selector:
+    name: rabbitmq
+
+  ports: 
+    - name: rabbitmq
+      port: {{.Values.global.rabbitmq_port_public}}
+    - name: rabbitmq-mgmt
+      port: {{.Values.global.rabbitmq_port_management}}

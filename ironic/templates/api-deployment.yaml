@@ -1,0 +1,69 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: ironic-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: ironic
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: ironic-api
+  template:
+    metadata:
+      labels:
+        name: ironic-api
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: ironic-api
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.global.image_version_ironic_api}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - ironic-api-start
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{.Values.global.ironic_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          ports:
+            - name: ironic-api
+              containerPort: {{.Values.global.ironic_api_port_internal}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /ironic-etc
+              name: ironic-etc
+            - mountPath: /ironic-patches
+              name: ironic-patches
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: ironic-etc
+          configMap:
+            name: ironic-etc
+        - name: ironic-patches
+          configMap:
+            name: ironic-patches
+        - name: container-init
+          configMap:
+            name: ironic-bin

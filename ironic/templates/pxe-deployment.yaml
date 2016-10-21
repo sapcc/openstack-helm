@@ -1,0 +1,63 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: ironic-pxe
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: ironic
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: ironic-pxe
+  template:
+    metadata:
+      labels:
+        name: ironic-pxe
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: {{.Values.global.ironic_pxe_endpoint_host_public}}
+      hostNetwork: true
+      hostPID: true
+      hostIPC: true
+      containers:
+        - name: ironic-pxe
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.global.image_version_ironic_pxe}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - ironic-pxe-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+          ports:
+            - name: ironic-pxe
+              protocol: UDP
+              containerPort: {{.Values.global.ironic_pxe_port_public}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /ironic-etc
+              name: ironic-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: ironic-etc
+          configMap:
+            name: ironic-etc
+        - name: container-init
+          configMap:
+            name: ironic-bin

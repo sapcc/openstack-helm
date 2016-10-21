@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: glance
+  labels:
+    system: openstack
+    type: api
+    component: glance
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+spec:
+  type: NodePort
+  selector:
+    name: glance
+  ports:
+    - name: public
+      port: {{.Values.global.glance_api_port_internal}}

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: horizon-etc
+  labels:
+    system: openstack
+    type: configuration
+    component: horizon
+
+data:
+  local-settings: |
+{{ include "etc/local-settings" .| indent 4 }}
+  policyv3.json: |
+{{ include "etc/horizon-policyv3.json" .| indent 4 }}
+  horizon.conf: |
+{{ include "etc/horizon.conf" .| indent 4 }}

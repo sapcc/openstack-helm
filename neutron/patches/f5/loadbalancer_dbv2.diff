@@ -1,0 +1,18 @@
+--- loadbalancer_dbv2.orig.py	2016-10-03 12:32:39.000000000 +0100
++++ loadbalancer_dbv2.patch.py	2016-10-03 12:33:43.000000000 +0100
+@@ -60,9 +60,12 @@
+         resource = None
+         try:
+             if for_update:
+-                query = self._model_query(context, model).filter(
+-                    model.id == id).with_lockmode('update')
+-                resource = query.one()
++#                query = self._model_query(context, model).filter(
++#                    model.id == id).with_lockmode('update')
++#                resource = query.one()
++
++                resource = self._get_by_id(context, model, id)
++
+             else:
+                 resource = self._get_by_id(context, model, id)
+         except exc.NoResultFound:

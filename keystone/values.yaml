@@ -1,0 +1,26 @@
+# Default values for keystone.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+debug: "True"
+
+image_version_keystone_m3: DEFINED-IN-REGION-CHART
+
+port_metrics: '9102'
+
+db_name: keystone
+db_user: keystone
+
+db_password: DEFINED-IN-REGION-CHART
+admin_token: DEFINED-IN-REGION-CHART
+
+bootstrap_user: admin
+bootstrap_password: DEFINED-IN-REGION-CHART
+
+sentry_dsn_key: DEFINED-IN-REGION-CHART
+
+cloud_admin_project: DEFINED-IN-REGION-CHART
+
+postgres:
+  name: keystone

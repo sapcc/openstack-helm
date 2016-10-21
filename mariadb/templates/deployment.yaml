@@ -1,0 +1,52 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{.Values.name}}-mariadb
+  labels:
+    system: openstack
+    type: database
+    component: {{ .Values.name }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{.Values.name}}-mariadb
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}-mariadb
+
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+      - name: mariadb
+        image: {{.Values.image}}
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mariadb-{{.Values.name}}
+              key: root-password
+        ports:
+          - name: mariadb
+            containerPort: 3306
+        volumeMounts:
+          - name: mariadb-persistent-storage
+            mountPath: /var/lib/mysql
+            readOnly: false
+          - name: initdb 
+            mountPath: /docker-entrypoint-initdb.d
+      volumes:
+{{- if .Values.persistence_claim }}
+        - name: mariadb-persistent-storage
+          persistentVolumeClaim:
+           claimName: {{.Values.persistence_claim }}
+{{- end }}
+{{- if .Values.initdb_configmap }}
+        - name: initdb 
+          configMap:
+            name: {{ .Values.initdb_configmap }}  
+{{ end }}

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    cp /nova-etc/nova.conf  /etc/nova/nova.conf
+    cp /nova-etc/logging.conf  /etc/nova/logging.conf
+}
+
+
+
+
+function _start_application {
+
+    exec  /var/lib/kolla/venv/bin/nova-api
+
+}
+
+
+process_config
+start_application
+
+

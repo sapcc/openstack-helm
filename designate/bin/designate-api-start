@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+. /container.init/common.sh
+
+function process_config {
+    cp /designate-etc/designate.conf /etc/designate/designate.conf
+    cp /designate-etc/policy.json  /etc/designate/policy.json
+    cp /designate-etc/logging.conf /etc/designate/logging.conf
+}
+
+function _start_application {
+#    export no_proxy=$no_proxy,cluster.local,cloud.sap
+    exec /var/lib/kolla/venv/bin/designate-api
+
+}
+
+
+process_config
+start_application

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: cinder-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: cinder
+spec:
+  tls:
+     - secretName: tls-{{ include "cinder_api_endpoint_host_public" . | replace "." "-"}}
+       hosts: [{{ include "cinder_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{ include "cinder_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: cinder-api
+            servicePort: {{.Values.global.cinder_api_port_internal}}

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    patch  /barbican/bin/barbican-api /barbican-patches/barbican-api.diff
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/barbican/api/controllers/consumers.py /barbican-patches/consumers.diff
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/barbican/model/models.py /barbican-patches/models.diff
+
+
+    cp /barbican-etc/barbican.conf /etc/barbican/barbican.conf
+    cp /barbican-etc/barbican-api-paste.ini /etc/barbican/barbican-api-paste.ini
+
+    cp /barbican/etc/barbican/policy.json /etc/barbican/policy.json
+}
+
+
+
+function _start_application {
+   exec /barbican/bin/barbican-api
+}
+
+
+process_config
+start_application

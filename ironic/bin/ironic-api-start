@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/ironic/api/app.py /ironic-patches/app.diff
+
+    cp /ironic-etc/ironic.conf  /etc/ironic/ironic.conf
+}
+
+function bootstrap_db {
+
+    ironic-dbsync --config-file /etc/ironic/ironic.conf create_schema
+}
+
+
+function start_application {
+
+   exec /var/lib/kolla/venv/bin/ironic-api
+
+}
+
+
+process_config
+#bootstrap_db
+start_application
+
+

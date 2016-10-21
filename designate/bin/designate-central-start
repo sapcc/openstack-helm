@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+set -x
+
+. /container.init/common.sh
+
+function process_config {
+    cp /designate-etc/designate.conf /etc/designate/designate.conf
+    cp /designate-etc/policy.json  /etc/designate/policy.json
+    cp /designate-etc/logging.conf /etc/designate/logging.conf
+}
+
+function bootstrap_db {
+    designate-manage database sync
+    designate-manage pool-manager-cache sync
+}
+
+function start_application {
+    exec /var/lib/kolla/venv/bin/designate-central
+}
+
+process_config
+#bootstrap_db
+start_application

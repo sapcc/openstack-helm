@@ -1,0 +1,91 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: nova-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: nova
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: nova-api
+  template:
+    metadata:
+      labels:
+        name: nova-api
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: nova-api
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api-m3:{{.Values.global.image_version_nova_api_m3}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-api-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: STATSD_HOST
+              value: "localhost"
+            - name: STATSD_PORT
+              value: "9125"
+            - name: SENTRY_DSN
+              value: {{include "sentry_dsn_nova" .}}
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{.Values.global.nova_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          ports:
+            - name: nova-api
+              containerPort: {{.Values.global.nova_api_port_internal}}
+            - name: nova-metdata
+              containerPort: {{.Values.global.nova_metadata_port_internal}}
+          volumeMounts:
+            - mountPath: /development
+              name: development
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: container-init
+
+        - name: statsd
+          image: prom/statsd-exporter
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: statsd
+              containerPort: 9125
+              protocol: UDP
+            - name: metrics
+              containerPort: {{.Values.port_metrics}}
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+        - name: development
+          persistentVolumeClaim:
+            claimName: development-pvclaim
+        - name: container-init
+          configMap:
+            name: nova-bin

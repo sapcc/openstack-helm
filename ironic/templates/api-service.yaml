@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: ironic-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: ironic
+spec:
+  type: NodePort
+  selector:
+    name: ironic-api
+  ports:
+    - name: ironic-api
+      port: {{.Values.global.ironic_api_port_internal}}

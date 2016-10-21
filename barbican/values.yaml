@@ -1,0 +1,18 @@
+# Default values for barbican.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+#
+# 
+global:
+  image_repository: DEFINED-IN-REGION-CHART
+  image_namespace: DEFINED-IN-REGION-CHART
+  image_version_barbican_m3: DEFINED-IN-REGION-CHART
+debug: "True"
+
+db_name: barbican
+db_user: barbican
+db_password: DEFINED-IN-REGION-CHART
+
+postgres:
+  name: barbican

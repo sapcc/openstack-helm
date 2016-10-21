@@ -1,0 +1,246 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: nova-compute-minion1
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: nova
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      name: nova-compute-minion1
+  template:
+    metadata:
+      labels:
+        name: nova-compute-minion1
+      annotations:
+        scheduler.alpha.kubernetes.io/affinity: >
+            {
+            "nodeAffinity": {
+              "requiredDuringSchedulingIgnoredDuringExecution": {
+                "nodeSelectorTerms": [
+                  {
+                    "matchExpressions": [
+                      {
+                        "key": "kubernetes.io/hostname",
+                        "operator": "In",
+                        "values": ["minion1.kube.your.domain"]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+            }
+    spec:
+      hostNetwork: true
+      hostPID: true
+      hostIPC: true
+      containers:
+        - name: nova-compute-minion1
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.global.image_version_nova_compute_m3}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-compute-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: SENTRY_DSN
+              value: {{include "sentry_dsn_nova_region" .}}
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/nova/service-liveness-check
+              - --config-file=/etc/nova/nova.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/nova/compute-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          volumeMounts:
+            - mountPath: /var/lib/nova/instances
+              name: instances
+            - mountPath: /var/lib/libvirt
+              name: libvirt
+            - mountPath: /lib/modules
+              name: modules
+              readOnly: true
+            - mountPath: /var/run
+              name: run
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /hypervisor-config
+              name: hypervisor-config
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /nova-patches
+              name: nova-patches
+
+            - mountPath: /container.init
+              name: nova-container-init
+        - name: nova-libvirt
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.openstack.global.image_version_nova_libvirt}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-libvirt-start
+          volumeMounts:
+            - mountPath: /var/lib/nova/instances
+              name: instances
+            - mountPath: /var/lib/libvirt
+              name: libvirt
+            - mountPath: /var/run
+              name: run
+            - mountPath: /lib/modules
+              name: modules
+              readOnly: true
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: nova-container-init
+        - name: nova-virtlog
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.openstack.global.image_version_nova_libvirt}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-virtlog-start
+          volumeMounts:
+            - mountPath: /var/lib/nova/instances
+              name: instances
+            - mountPath: /var/lib/libvirt
+              name: libvirt
+            - mountPath: /var/run
+              name: run
+            - mountPath: /lib/modules
+              name: modules
+              readOnly: true
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: nova-container-init
+
+        - name: neutron-ovs-agent
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{.Values.openstack.global.image_version_neutron_openvswitch_agent}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - neutron-ovs-agent-start
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/neutron/service-liveness-check
+              - --config-file=/etc/neutron/neutron.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/neutron/ovs-agent-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          volumeMounts:
+            - mountPath: /var/run/
+              name: run
+            - mountPath: /lib/modules
+              name: modules
+              readOnly: true
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /neutron-etc
+              name: neutron-etc
+            - mountPath: /container.init
+              name: neutron-container-init
+        - name: ovs
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{.Values.openstack.global.image_version_neutron_vswitchd}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - neutron-ovs-start
+          volumeMounts:
+            - mountPath: /var/run/
+              name: run
+            - mountPath: /lib/modules
+              name: modules
+              readOnly: true
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /container.init
+              name: neutron-container-init
+        - name: ovs-db
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{.Values.openstack.global.image_version_neutron_vswitchdb}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - neutron-ovs-db-start
+          volumeMounts:
+            - mountPath: /var/run/
+              name: run
+            - mountPath: /lib/modules
+              name: modules
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /container.init
+              name: neutron-container-init
+      volumes:
+        - name : instances
+          persistentVolumeClaim:
+            claimName: kvm-shared1-pvclaim
+        - name : libvirt
+          emptyDir:
+            medium: Memory
+        - name : run
+          emptyDir:
+            medium: Memory
+        - name : modules
+          hostPath:
+            path: /lib/modules
+        - name : cgroup
+          hostPath:
+            path: /sys/fs/cgroup
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.openstack.global.configuration_repository}}
+            revision: {{.Values.openstack.global.configuration_revision}}
+        - name: hypervisor-config
+          configMap:
+            name: hypervisor-kvm
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+        - name: nova-patches
+          configMap:
+            name: nova-patches
+        - name: neutron-etc
+          configMap:
+            name: neutron-etc
+        - name: nova-container-init
+          configMap:
+            name: nova-bin
+        - name: neutron-container-init
+          configMap:
+            name: neutron-bin

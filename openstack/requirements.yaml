@@ -1,0 +1,40 @@
+dependencies:
+  - name: memcached
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: rabbitmq
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: keystone
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: glance
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: neutron
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: ironic
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: nova
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: barbican
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: cinder
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: manila
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: horizon
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: neutron
+    repository: http://localhost:8879/charts
+    version: 0.1.0
+  - name: designate
+    repository: http://localhost:8879/charts
+    version: 0.1.0

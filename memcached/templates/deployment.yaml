@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: memcached
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: cache
+    component: memcache
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: memcached
+  template:
+    metadata:
+      labels:
+        name: memcached
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: memcached
+          image: memcached
+          imagePullPolicy: Always
+          ports:
+            - name: memcache
+              containerPort: {{.Values.global.memcached_port_public}}
+          command: ["memcached", "-m", "1024"]
+        - name: metrics
+          image: prom/memcached-exporter:master
+          ports:
+            - name: metrics
+              containerPort: {{.Values.global.memcached_port_metrics}}
+

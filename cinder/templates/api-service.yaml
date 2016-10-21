@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: cinder-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: cinder
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+spec:
+  type: NodePort
+  selector:
+    name: cinder-api
+  ports:
+    - name: cinder-api
+      port: {{.Values.global.cinder_api_port_internal}}

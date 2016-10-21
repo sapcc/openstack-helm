@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    cp /glance-etc/glance-registry.conf /etc/glance/glance-registry.conf
+    cp /glance-etc/logging.conf /etc/glance/logging.conf
+    cp /glance-etc/policy.json /etc/glance/policy.json
+}
+
+
+function _start_application {
+    exec /var/lib/kolla/venv/bin/glance-registry
+}
+
+
+process_config
+start_application

@@ -1,0 +1,21 @@
+# Default values for ironic.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+debug: "True"
+db_name: ironic
+db_user: ironic
+db_password: DEFINE_IN_REGION_CHART
+
+
+port_metrics: '9102'
+sentry_dsn_key: DEFINE_IN_REGION_CHART
+
+network_management_uuid: DEFINE_IN_REGION_CHART
+network_cleaning_uuid: DEFINE_IN_REGION_CHART
+swift_account: DEFINE_IN_REGION_CHART
+swift_tempurl: DEFINE_IN_REGION_CHART
+
+postgres:
+  name: ironic

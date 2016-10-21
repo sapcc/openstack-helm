@@ -1,0 +1,9 @@
+dependencies:
+- name: utils
+  repository: http://localhost:8879/charts
+  version: 0.1.0
+- name: mariadb
+  repository: http://localhost:8879/charts
+  version: 0.1.0
+digest: sha256:2c5558b1152e0952e1b5513f9214c1859865cf833473b4310de51c831278470c
+generated: 2016-10-20T15:28:05.625546846+01:00

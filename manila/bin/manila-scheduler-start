@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    cp /manila-etc/manila.conf  /etc/manila/manila.conf
+}
+
+
+
+function _start_application {
+    mkdir /var/log/manila
+    exec /var/lib/kolla/venv/bin/manila-scheduler --config-file /etc/manila/manila.conf
+}
+
+
+process_config
+start_application
+
+

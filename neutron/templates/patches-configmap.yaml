@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neutron-patches
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: patches
+    component: neutron
+
+data:
+  dhcp.diff: |
+{{ include "patches/dhcp.diff" .| indent 4 }}
+  dns-integration.diff: |
+{{ include "patches/dns_integration.diff" .| indent 4 }}
+
+

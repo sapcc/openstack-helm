@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cinder-etc
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: configuration
+    component: cinder
+
+data:
+  cinder.conf: |
+{{ include "etc/cinder.conf" .| indent 4 }}
+  logging.conf: |
+{{ include "etc/cinder-logging.conf" .| indent 4 }}

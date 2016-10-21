@@ -1,0 +1,236 @@
+# Default values for europe-example-region.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+# Default values for staging.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+openstack:
+  global:
+    region: europe-example-region
+    tld: openstack.cloud
+
+    default_availability_zone: europe-example-region1a
+
+    image_repository: hub.docker.com
+    image_namespace: myrepo
+
+    image_version_barbican_m3: 'v1'
+    image_version_keystone_m3: 'v1'
+    image_version_nova_api_m3: 'v1'
+    image_version_nova_compute_m3: 'v1'
+    image_version_nova_libvirt: 'v1'
+    image_version_nova_conductor: 'v1'
+    image_version_nova_consoleauth: 'v1'
+    image_version_nova_novncproxy: 'v1'
+    image_version_nova_spicehtml5proxy: 'v1'
+    image_version_nova_scheduler: 'v1'
+    image_version_glance_api_m3: 'v1'
+    image_version_glance_registry: 'v1'
+    image_version_cinder_api_m3: 'v1'
+    image_version_cinder_scheduler: 'v1'
+    image_version_cinder_volume: 'v1'
+    image_version_horizon_m3: 'v1'
+    image_version_manila_api_m3: 'v1'
+    image_version_manila_scheduler_m3: 'v1'
+    image_version_manila_share_m3: 'v1'
+    image_version_neutron_server_m3: 'v1'
+    image_version_neutron_dhcp_agent: 'v1'
+    image_version_neutron_metadata_agent: 'v1'
+    image_version_neutron_l3_agent: 'v1'
+    image_version_neutron_openvswitch_agent: 'v1'
+    image_version_neutron_vswitchd: 'v1'
+    image_version_neutron_vswitchdb: 'v1'
+    image_version_ironic_api: 'v1'
+    image_version_ironic_conductor: 'v1'
+    image_version_ironic_inspector: 'v1'
+    image_version_ironic_pxe: 'v1'
+    image_version_designate_api_m3: 'v1'
+    image_version_designate_central_m3: 'v1'
+    image_version_designate_mdns_m3: 'v1'
+    image_version_designate_poolmanager_m3: 'v1'
+
+    rabbitmq_default_pass: openstack
+    rabbitmq_admin_pass: YourOwnSecret!
+    rabbitmq_metrics_pass: openstack
+
+    postgres_password: YourOwnSecret!
+
+    nova_service_password: YourOwnSecret!
+    nova_metadata_secret: YourOwnSecret!
+
+    neutron_service_password: YourOwnSecret!
+    neutron_manila_physnet: manila-tor
+
+
+
+    ironic_service_password: YourOwnSecret!
+    ironic_pxe_endpoint_host_public: ipxe.your.domain
+    ironic_pxe_endpoint_ip_public: 10.0.0.10
+
+    glance_service_password: YourOwnSecret!
+
+    cinder_service_password: YourOwnSecret!
+
+    barbican_service_password: YourOwnSecret!
+
+    manila_service_password: YourOwnSecret!
+
+    manila_netapp_vserver: netapp-manila
+    manila_netapp_host: netapp1.your.domain
+    manila_netapp_username: admin123
+    manila_netapp_root_volume_aggregate: aggr_12345
+    manila_netapp_aggregate_search_pattern: ^aggr_*$
+    manila_netapp_physical_network: manila-tor
+    manila_netapp_mtu: '1500'
+
+    designate_mdns_external_ip: 10.0.0.19
+    designate_service_password: YourOwnSecret!
+
+
+  postgres:
+    password: YourOwnSecret!
+
+  keystone:
+    db_password: YourOwnSecret!
+    admin_token: abc12345678899
+    bootstrap_password: openstack
+    sentry_dsn_key: 'add your own'
+    cloud_admin_project: 'add your own'
+    postgres:
+      password: YourOwnSecret!
+  nova:
+    db_password: YourOwnSecret!
+    api_db_password: YourOwnSecret!
+    sentry_dsn_key: 'add your own'
+
+    vcenter_host: vcenter1.your.domain
+    vcenter_username: administrator@vsphere.local
+    vcenter_cluster_name: prod
+    vcenter_datastore_regex: ephemeral0
+    vcenter_password: YourOwnSecret!
+
+
+    postgres:
+      password: YourOwnSecret!
+
+  glance:
+    db_password: YourOwnSecret!
+    sentry_dsn_key: 'add your own'
+    default_store: swift
+    swift_domain: Default
+    swift_project: admin
+    swift_multi_tenant: 'True'
+    postgres:
+      password: YourOwnSecret!
+
+  cinder:
+    db_password: YourOwnSecret!
+    sentry_dsn_key: 'add your own'
+    postgres:
+      password: YourOwnSecret!
+
+  manila:
+    db_password: YourOwnSecret!
+    sentry_dsn_key: 'add your own'
+    postgres:
+      password: YourOwnSecret!
+
+  neutron:
+    db_password: YourOwnSecret!
+    sentry_dsn_key: 'add your own'
+
+    cp_physical_network: bb99-fi
+    cp_network_interface: bond1
+    interface_driver: openvswitch
+    dhcp_lease_duration: '86400'
+
+    dns_forwarders: 10.0.0.200, 10.0.0.201
+    dns_local_domain: openstack.your.domain
+    #neutron_dns_external_driver: designate
+    #neutron_dns_ml2_extension: dns
+    dns_external_driver: ""
+    dns_ml2_extension: ""
+    ml2_mechanismdrivers: aci,dvs,openvswitch,arista,asr,manila,simple_f5ml2
+
+    aci_apic_hosts: aci.your.domain:443
+    aci_apic_user: admin
+    aci_apic_password: YourOwnSecret!
+    aci_apic_tenant_name: tenant-prefix
+
+    asr_l3_admin_tenant: l3admin
+    asr_physnet: asr-tor
+    asr_credential_1_user_name: admin
+    asr_credential_1_password: YourOwnSecret!
+    asr_hosting_device_template_1_credential: '1'
+    asr_hosting_device_template_3_credential: '1'
+
+    asr_hosting_device_3_name: router2
+    asr_hosting_device_3_id: SN:YOURDEVICESN
+    asr_hosting_device_3_ip: 10.0.0.20
+    asr_hosting_device_3_credential: '1'
+    asr_hosting_device_3_intf_internal: '*:TenGigabitEthernet0/1/0'
+    asr_hosting_device_3_intf_external: '*:TenGigabitEthernet0/1/0'
+
+    asr_hosting_device_4_name: router2
+    asr_hosting_device_4_id: SN:YOURDEVICESN
+    asr_hosting_device_4_ip: 10.0.0.21
+    asr_hosting_device_4_credential: '1'
+    asr_hosting_device_4_intf_internal: '*:TenGigabitEthernet0/2/0'
+    asr_hosting_device_4_intf_external: '*:TenGigabitEthernet0/2/0'
+
+    f5_physnet: f5-tor
+    f5_icontrol_hostname: lb1.your.domain
+    f5_icontrol_username: admin2
+    f5_external_physical_mappings: f5-tor:portchannel1:True,default:portchannel1:True
+    f5_icontrol_password: YourOwnSecret!
+
+
+
+    arista_physnet: arista-tor
+    arista_eapi_host: eapi.your.domain
+    arista_eapi_username: admin
+    arista_switch_host: switch.your.domain
+    arista_switch_username: switchuser
+    arista_eapi_password: eapiuser
+    arista_switch_password: YourOwnSecret!
+
+
+    postgres:
+      password: YourOwnSecret!
+
+  ironic:
+    db_password: YourOwnSecret!
+    sentry_dsn_key: "add your own"
+    network_management_uuid: "add your own"
+    network_cleaning_uuid: "add your own"
+    swift_account: AUTH_ADD_YOUR_OWN
+    swift_tempurl: "add your own"
+    postgres:
+      password: YourOwnSecret!
+
+  barbican:
+    db_password: YourOwnSecret!
+    sentry_dsn_key: TODO
+    postgres:
+      password: YourOwnSecret!
+
+  horizon:
+    secret_key: YourOwnSecret!
+  designate:
+    sentry_dsn_key: "add your own"
+    mariadb:
+      root_password: YourOwnSecret!
+    rndc_key: YourKey
+    bind_pools:
+      - name: default
+        nameservers:
+          - hostname: ns1.your.domain
+            ip: 10.0.0.11
+          - hostname: ns2.your.domai
+            ip: 10.0.0.12
+          - hostname: ns3.your.domai
+            ip: 10.0.0.12
+

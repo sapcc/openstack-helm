@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    cp /nova-etc/libvirtd.conf  /etc/libvirt/libvirtd.conf
+}
+
+
+function _start_application {
+
+    if command -v dumb-init >/dev/null 2>&1; then
+        exec dumb-init /usr/sbin/virtlogd
+    else
+        exec /usr/sbin/virtlogd
+    fi
+}
+
+process_config
+
+start_application
+
+

@@ -1,0 +1,82 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: nova-compute-ironic
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: backend
+    component: nova
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+        name: nova-compute-ironic
+  template:
+    metadata:
+      labels:
+        name: nova-compute-ironic
+      annotations:
+        pod.beta.kubernetes.io/hostname: nova-compute-ironic
+    spec:
+      nodeSelector:
+        zone: farm
+      containers:
+        - name: nova-compute-ironic
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.global.image_version_nova_compute_m3}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - nova-compute-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: SENTRY_DSN
+              value: {{include "sentry_dsn_nova_region" .}}
+          livenessProbe:
+            exec:
+              command:
+              - /openstack-kube/openstack-kube/scripts/liveness-checks/nova/service-liveness-check
+              - --config-file=/etc/nova/nova.conf
+              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/nova/compute-liveness.conf
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 2
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - mountPath: /hypervisor-config
+              name: hypervisor-config
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /nova-patches
+              name: nova-patches
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.openstack.global.configuration_repository}}
+            revision: {{.Values.openstack.global.configuration_revision}}
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+        - name: nova-patches
+          configMap:
+            name: nova-patches
+        - name: hypervisor-config
+          configMap:
+            name:  hypervisor-ironic
+        - name: container-init
+          configMap:
+            name: nova-bin

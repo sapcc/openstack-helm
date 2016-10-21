@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: ironic-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: ironic
+spec:
+  tls:
+     - secretName: tls-{{ include "ironic_api_endpoint_host_public" . | replace "." "-" }}
+       hosts: [{{include "ironic_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{include "ironic_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: ironic-api
+            servicePort: {{.Values.global.ironic_api_port_internal}}

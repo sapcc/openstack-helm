@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: barbican-api
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: barbican
+spec:
+  tls:
+     - secretName: tls-{{ include "barbican_api_endpoint_host_public" . | replace "." "-" }}
+       hosts: [{{include "barbican_api_endpoint_host_public" .}}]
+  rules:
+    - host: {{include "barbican_api_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: barbican-api
+            servicePort: {{.Values.global.barbican_api_port_internal}}

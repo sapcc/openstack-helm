@@ -1,0 +1,76 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: rabbitmq
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: messaging
+    component: rabbitmq
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      name: rabbitmq
+  template:
+    metadata:
+      labels:
+        name: rabbitmq
+    spec:
+      nodeSelector:
+        zone: farm
+      volumes:
+        - name: rabbitmq-persistent-storage
+          persistentVolumeClaim:
+            claimName: rabbitmq-pvclaim
+        - name: openstack-kube
+          gitRepo:
+            repository: {{.Values.global.configuration_repository}}
+            revision: {{.Values.global.configuration_revision}}
+        - name: container-init
+          configMap:
+            name: rabbitmq-bin
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3-management
+          command:
+            - /openstack-kube/openstack-kube/scripts/_container_init
+          args:
+            - rabbitmq-start
+#          env:
+#          - name: RABBITMQ_NODENAME
+#            value: monsoon3-rabbitmq
+          livenessProbe:
+            tcpSocket:
+              port: {{.Values.global.rabbitmq_port_public}}
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+          ports:
+            - name: rabbitmq
+              containerPort: {{.Values.global.rabbitmq_port_public}}
+            - name: rabbitmq-mgmt
+              containerPort: {{.Values.global.rabbitmq_port_management}}
+          volumeMounts:
+            - mountPath: /openstack-kube
+              name: openstack-kube
+            - name: rabbitmq-persistent-storage
+              mountPath: /var/lib/rabbitmq
+            - mountPath: /container.init
+              name: container-init
+        - name: metrics
+          image: kbudde/rabbitmq-exporter
+          env:
+            - name: PUBLISH_PORT
+              value: "{{.Values.global.rabbitmq_port_metrics}}"
+            - name: RABBIT_USER
+              value: "{{.Values.global.rabbitmq_metrics_user}}"
+            - name: RABBIT_PASSWORD
+              value: "{{.Values.global.rabbitmq_metrics_pass}}"
+            - name: RABBIT_URL
+              value: "http://{{.Values.global.rabbitmq_host}}:{{.Values.global.rabbitmq_port_management}}"
+          ports:
+            - name: metrics
+              containerPort: {{.Values.global.rabbitmq_port_metrics}}

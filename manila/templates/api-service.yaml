@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: manila-api
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: manila
+spec:
+  type: NodePort
+  selector:
+    name: manila-api
+  ports:
+    - name: manila-api
+      port: {{.Values.global.manila_api_port_internal}}

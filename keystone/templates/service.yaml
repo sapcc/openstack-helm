@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: keystone
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: api
+    component: keystone
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+
+spec:
+  type: NodePort
+  selector:
+    name: keystone
+  ports:
+    - name: public
+      port: {{.Values.global.keystone_api_port_internal}}
+    - name: admin
+      port: {{.Values.global.keystone_api_port_admin}}

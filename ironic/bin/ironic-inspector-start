@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+function process_config {
+    cp /ironic-etc/ironic.conf  /etc/ironic/ironic.conf
+}
+
+
+
+function _start_application {
+
+    exec /var/lib/kolla/venv/bin/ironic-inspector --config-file /etc/ironic/ironic.conf
+
+}
+
+
+process_config
+start_application
+
+

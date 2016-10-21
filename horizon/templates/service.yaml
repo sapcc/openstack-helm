@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: horizon
+  labels:
+    system: openstack
+    type: api
+    component: horizon
+spec:
+  selector:
+    name: horizon
+  ports:
+    - name: http
+      port: {{.Values.global.horizon_endpoint_port}}
