@@ -27,7 +27,7 @@ spec:
         zone: farm
       containers:
         - name: nova-conductor
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-conductor:{{.Values.global.image_version_nova_conductor}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-conductor:{{.Values.image_version_nova_conductor}}
           imagePullPolicy: IfNotPresent
           command:
             - /openstack-kube/openstack-kube/scripts/_container_init

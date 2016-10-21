@@ -13,38 +13,6 @@ global:
 
   default_availability_zone: nova
 
-  image_version_keystone_m3: DEFINED-IN-REGION-CHART
-  image_version_nova_api_m3: DEFINED-IN-REGION-CHART
-  image_version_nova_compute_m3: DEFINED-IN-REGION-CHART
-  image_version_nova_libvirt: DEFINED-IN-REGION-CHART
-  image_version_nova_conductor: DEFINED-IN-REGION-CHART
-  image_version_nova_consoleauth: DEFINED-IN-REGION-CHART
-  image_version_nova_novncproxy: DEFINED-IN-REGION-CHART
-  image_version_nova_spicehtml5proxy: DEFINED-IN-REGION-CHART
-  image_version_nova_scheduler: DEFINED-IN-REGION-CHART
-  image_version_glance_api_m3: DEFINED-IN-REGION-CHART
-  image_version_glance_registry: DEFINED-IN-REGION-CHART
-  image_version_barbican_m3: DEFINED-IN-REGION-CHART
-  image_version_cinder_api_m3: DEFINED-IN-REGION-CHART
-  image_version_cinder_scheduler: DEFINED-IN-REGION-CHART
-  image_version_cinder_volume: DEFINED-IN-REGION-CHART
-  image_version_horizon_m3: DEFINED-IN-REGION-CHART
-  image_version_manila_api_m3: DEFINED-IN-REGION-CHART
-  image_version_manila_scheduler_m3: DEFINED-IN-REGION-CHART
-  image_version_manila_share_m3: DEFINED-IN-REGION-CHART
-  image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
-  image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
-  image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
-  image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
-  image_version_ironic_api: DEFINED-IN-REGION-CHART
-  image_version_ironic_conductor: DEFINED-IN-REGION-CHART
-  image_version_ironic_inspector: DEFINED-IN-REGION-CHART
-  image_version_ironic_pxe: DEFINED-IN-REGION-CHART
-  image_version_designate_api_m3: DEFINED-IN-REGION-CHART
-  image_version_designate_central_m3: DEFINED-IN-REGION-CHART
-  image_version_designate_mdns_m3: DEFINED-IN-REGION-CHART
-  image_version_designate_poolmanager_m3:  DEFINED-IN-REGION-CHART
-
   # TODO change to chart setting
   postgres_port_public: '5432'
 
@@ -214,3 +182,46 @@ global:
 
   barbican_service_user: barbican
   barbican_service_password: DEFINED-IN-REGION-CHART
+
+keystone:
+  image_version_keystone_m3: DEFINED-IN-REGION-CHART
+nova:
+  image_version_nova_api_m3: DEFINED-IN-REGION-CHART
+  image_version_nova_compute_m3: DEFINED-IN-REGION-CHART
+  image_version_nova_libvirt: DEFINED-IN-REGION-CHART
+  image_version_nova_conductor: DEFINED-IN-REGION-CHART
+  image_version_nova_consoleauth: DEFINED-IN-REGION-CHART
+  image_version_nova_novncproxy: DEFINED-IN-REGION-CHART
+  image_version_nova_spicehtml5proxy: DEFINED-IN-REGION-CHART
+  image_version_nova_scheduler: DEFINED-IN-REGION-CHART
+
+barbican:
+  image_version_glance_api_m3: DEFINED-IN-REGION-CHART
+  image_version_glance_registry: DEFINED-IN-REGION-CHART
+barbican:
+  image_version_barbican_m3: DEFINED-IN-REGION-CHART
+cinder:
+  image_version_cinder_api_m3: DEFINED-IN-REGION-CHART
+  image_version_cinder_scheduler: DEFINED-IN-REGION-CHART
+  image_version_cinder_volume: DEFINED-IN-REGION-CHART
+horizon:
+  image_version_horizon_m3: DEFINED-IN-REGION-CHART
+manila:
+  image_version_manila_api_m3: DEFINED-IN-REGION-CHART
+  image_version_manila_scheduler_m3: DEFINED-IN-REGION-CHART
+  image_version_manila_share_m3: DEFINED-IN-REGION-CHART
+neutron:
+  image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
+  image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
+  image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
+  image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
+ironic:
+  image_version_ironic_api: DEFINED-IN-REGION-CHART
+  image_version_ironic_conductor: DEFINED-IN-REGION-CHART
+  image_version_ironic_inspector: DEFINED-IN-REGION-CHART
+  image_version_ironic_pxe: DEFINED-IN-REGION-CHART
+designate:
+  image_version_designate_api_m3: DEFINED-IN-REGION-CHART
+  image_version_designate_central_m3: DEFINED-IN-REGION-CHART
+  image_version_designate_mdns_m3: DEFINED-IN-REGION-CHART
+  image_version_designate_poolmanager_m3:  DEFINED-IN-REGION-CHART

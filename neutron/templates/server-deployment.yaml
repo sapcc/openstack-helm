@@ -27,7 +27,7 @@ spec:
         zone: farm
       containers:
         - name: neutron-server
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.global.image_version_neutron_server_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true

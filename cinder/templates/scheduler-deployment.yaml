@@ -27,7 +27,7 @@ spec:
         zone: farm
       containers:
         - name: cinder-scheduler
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.global.image_version_cinder_scheduler}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.image_version_cinder_scheduler}}
           imagePullPolicy: IfNotPresent
           command:
             - /openstack-kube/openstack-kube/scripts/_container_init

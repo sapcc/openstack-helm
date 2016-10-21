@@ -30,7 +30,7 @@ spec:
       hostIPC: true
       containers:
         - name: ironic-pxe
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.global.image_version_ironic_pxe}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
           imagePullPolicy: IfNotPresent
           command:
             - /openstack-kube/openstack-kube/scripts/_container_init

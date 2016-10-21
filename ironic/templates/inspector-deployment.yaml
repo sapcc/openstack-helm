@@ -27,7 +27,7 @@ spec:
         zone: farm
       containers:
         - name: ironic-inspector
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.global.image_version_ironic_inspector}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}
           imagePullPolicy: IfNotPresent
           command:
             - /openstack-kube/openstack-kube/scripts/_container_init

@@ -43,7 +43,7 @@ spec:
       hostIPC: true
       containers:
         - name: nova-compute-minion1
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.global.image_version_nova_compute_m3}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.image_version_nova_compute_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -88,7 +88,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-libvirt
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.openstack.global.image_version_nova_libvirt}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.openstack.image_version_nova_libvirt}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -113,7 +113,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-virtlog
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.openstack.global.image_version_nova_libvirt}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.openstack.image_version_nova_libvirt}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -139,7 +139,7 @@ spec:
               name: nova-container-init
 
         - name: neutron-ovs-agent
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{.Values.openstack.global.image_version_neutron_openvswitch_agent}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{.Values.openstack.image_version_neutron_openvswitch_agent}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -170,7 +170,7 @@ spec:
             - mountPath: /container.init
               name: neutron-container-init
         - name: ovs
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{.Values.openstack.global.image_version_neutron_vswitchd}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{.Values.openstack.image_version_neutron_vswitchd}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -189,7 +189,7 @@ spec:
             - mountPath: /container.init
               name: neutron-container-init
         - name: ovs-db
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{.Values.openstack.global.image_version_neutron_vswitchdb}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{.Values.openstack.image_version_neutron_vswitchdb}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
