@@ -29,7 +29,7 @@ spec:
         zone: farm
       containers:
         - name: nova-compute-ironic
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.image_version_nova_compute_m3}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.nova.image_version_nova_compute_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
