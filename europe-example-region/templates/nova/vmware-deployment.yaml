@@ -63,7 +63,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: neutron-dvs-agent
-          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.openstack.nova.image_version_neutron_server_m3}}
+          image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.openstack.neutron.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true

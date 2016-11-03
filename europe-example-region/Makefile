@@ -1,15 +1,7 @@
-.PHONY: $(shell find * -type d -depth 0)
+EXCLUDE := templates/* charts/* Chart.yaml requirement* values.yaml Makefile patches/*.patch.* patches/*.orig.*
+FILES := $(shell find * -type f $(foreach e,$(EXCLUDE), -not -path "$(e)") )
 
-all: europe-example-region
-
-
-staging: europe-example-region
-
-
-build-%:
-	if [ -f $*/Makefile ]; then make -C $*; fi
-	if [ -f $*/requirements.yaml ]; then helm dep up $*; fi
-	helm package $*
-
-#%.bla: #$(firstword $(subst -, ,%))
-#  echo $(wildcard $(firstword $(subst -, ,$*))/**/*)
+templates/_partials.tpl: Makefile $(FILES)
+	echo Generating $(CURDIR)/$@
+	rm -f $@
+	for i in $(FILES); do  printf '{{ define \"'$$i'\" }}' >> $@; cat $$i >> $@; printf "{{ end }}\n" >> $@; done

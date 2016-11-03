@@ -1,9 +1,8 @@
 .PHONY: $(shell find * -type d -depth 0)
 
-regions : europe-example-region
-regions : openstack
+all: openstack europe-example-region
 
-all: openstack
+europe-example-region: build-europe-example-region
 
 openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq
 openstack: build-openstack
