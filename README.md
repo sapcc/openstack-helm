@@ -41,7 +41,7 @@ for Neutron, which are build into our images (you can see reference to many of t
 
 ## Installation
 
-### Pre-requisites
+### Prerequisites
 
 **Kubernetes with Helm**
 
