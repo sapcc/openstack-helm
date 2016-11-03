@@ -39,7 +39,26 @@ We use images based on a Kolla build, but we've dropped their Ansible approach t
 favour of Helm and native Kubernetes specs. We also have a number of vendor and self developed extensions, especially
 for Neutron, which are build into our images (you can see reference to many of these in the configuration files/values).
 
+## Installation
 
+### Pre-requisites
+
+**Kubernetes with Helm**
+
+See https://github.com/kubernetes/kubernetes and https://github.com/kubernetes/helm
+
+**Local Charts server**
+
+During installation, openstack-helm expects a chart server running on localhost. You can start one with the following command:
+
+    helm serve --address localhost:8879
+
+To add the new server to helm's list of repos
+
+    helm repo add localhost http://localhost:8879/charts
+
+
+### Installing openstack-helm
 
 To install, from the repository root
 
