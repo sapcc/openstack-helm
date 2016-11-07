@@ -33,19 +33,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - neutron-aci-agent-start
-          livenessProbe:
-            exec:
-              command:
-              - /openstack-kube/openstack-kube/scripts/liveness-checks/neutron/service-liveness-check
-              - --config-file=/etc/neutron/neutron.conf
-              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/neutron/aci-agent-liveness.conf
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 30
-            failureThreshold: 2
+            - /container.init/neutron-aci-agent-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -54,17 +44,11 @@ spec:
           volumeMounts:
             - mountPath: /development
               name: development
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: development
           persistentVolumeClaim:
             claimName: development-pvclaim

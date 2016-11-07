@@ -5,8 +5,6 @@
 global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
-  configuration_repository: REQUIRED
-  configuration_revision: REQUIRED
   nova_api_port_admin: '8774'
   nova_api_port_internal: '8774'
   nova_api_port_public: '443'

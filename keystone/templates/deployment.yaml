@@ -34,9 +34,9 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone-m3:{{.Values.image_version_keystone_m3}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - keystone-start
+            - /container.init/keystone-start
           livenessProbe:
             httpGet:
               path: /v3
@@ -58,8 +58,6 @@ spec:
             - name: admin
               containerPort: 35357
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /keystone-etc
               name: keystone-etc
             - mountPath: /fernet-keys
@@ -77,10 +75,6 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: keystone-etc
           configMap:
             name: keystone-etc

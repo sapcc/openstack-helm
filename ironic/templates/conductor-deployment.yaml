@@ -29,21 +29,15 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - ironic-conductor-start
+            - /container.init/ironic-conductor-start
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /ironic-etc
               name: ironic-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: ironic-etc
           configMap:
             name: ironic-etc

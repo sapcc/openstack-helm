@@ -6,8 +6,6 @@
 global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
-  configuration_repository: REQUIRED
-  configuration_revision: REQUIRED 
   ironic_api_port_internal: '6385'
   ironic_pxe_port_public: '69'
 

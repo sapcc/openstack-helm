@@ -33,9 +33,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - barbican-api-start
+            - /container.init/barbican-api-start
 #          livenessProbe:
 #            httpGet:
 #              path: /
@@ -46,8 +46,6 @@ spec:
             - name: barbican-api
               containerPort: {{.Values.global.barbican_api_port_internal}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /barbican-etc
               name: barbican-etc
             - mountPath: /barbican-patches
@@ -56,10 +54,6 @@ spec:
               name: container-init
 
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: barbican-etc
           configMap:
             name: barbican-etc

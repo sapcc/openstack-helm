@@ -29,24 +29,18 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler-m3:{{.Values.image_version_manila_scheduler_m3}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - manila-scheduler-start
+            - /container.init/manila-scheduler-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
           volumeMounts:
             - mountPath: /manila-etc
               name: manila-etc
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: manila-etc
           configMap:
             name: manila-etc

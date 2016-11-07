@@ -33,26 +33,20 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - designate-poolmanager-start
+            - /container.init/designate-poolmanager-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
               value: {{include "sentry_dsn_designate" . | quote}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /designate-etc
               name: designate-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{ .Values.global.configuration_repository }} 
-            revision: {{ .Values.global.configuration_revision }}
         - name: designate-etc
           configMap:
             name: designate-etc

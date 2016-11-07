@@ -32,9 +32,9 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - ironic-pxe-start
+            - /container.init/ironic-pxe-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -43,17 +43,11 @@ spec:
               protocol: UDP
               containerPort: {{.Values.global.ironic_pxe_port_public}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /ironic-etc
               name: ironic-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: ironic-etc
           configMap:
             name: ironic-etc

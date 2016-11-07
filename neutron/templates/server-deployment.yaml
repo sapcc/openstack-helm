@@ -31,9 +31,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - neutron-server-start
+            - /container.init/neutron-server-start
           livenessProbe:
             httpGet:
               path: /
@@ -55,8 +55,6 @@ spec:
           volumeMounts:
             - mountPath: /development
               name: development
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /neutron-patches
@@ -77,10 +75,6 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: neutron-etc
           configMap:
             name: neutron-etc

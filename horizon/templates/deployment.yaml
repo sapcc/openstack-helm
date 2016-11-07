@@ -31,9 +31,9 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-horizon-m3:{{.Values.image_version_horizon_m3}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - horizon-start
+            - /container.init/horizon-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -41,17 +41,11 @@ spec:
             - name: http
               containerPort: {{.Values.global.horizon_endpoint_port}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /horizon-etc
               name: horizon-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: horizon-etc
           configMap:
             name: horizon-etc
