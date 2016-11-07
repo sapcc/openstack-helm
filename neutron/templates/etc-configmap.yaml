@@ -9,40 +9,40 @@ metadata:
 
 data:
   cisco-cfg-agent.ini: |
-{{ include "etc/cisco-cfg-agent.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_cisco-cfg-agent.ini.tpl" .| indent 4 }}
   cisco-device-manager-plugin.ini: |
-{{ include "etc/cisco-device-manager-plugin.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_cisco-device-manager-plugin.ini.tpl" .| indent 4 }}
   cisco-router-plugin.ini: |
-{{ include "etc/cisco-router-plugin.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_cisco-router-plugin.ini.tpl" .| indent 4 }}
   dhcp-agent.ini: |
-{{ include "etc/dhcp-agent.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_dhcp-agent.ini.tpl" .| indent 4 }}
   dnsmasq.conf: |
-{{ include "etc/dnsmasq.conf" .| indent 4 }}
+{{ include "neutron/templates/etc/_dnsmasq.conf.tpl" .| indent 4 }}
   f5-oslbaasv2-agent.ini: |
-{{ include "etc/f5-oslbaasv2-agent.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_f5-oslbaasv2-agent.ini.tpl" .| indent 4 }}
   l3-agent.ini: |
-{{ include "etc/l3-agent.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_l3-agent.ini.tpl" .| indent 4 }}
   metadata-agent.ini: |
-{{ include "etc/metadata-agent.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_metadata-agent.ini.tpl" .| indent 4 }}
   ml2-conf.ini: |
-{{ include "etc/ml2-conf.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_ml2-conf.ini.tpl" .| indent 4 }}
   ml2-conf-arista.ini: |
-{{ include "etc/ml2-conf-arista.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_ml2-conf-arista.ini.tpl" .| indent 4 }}
   ml2-conf-asr.ini: |
-{{ include "etc/ml2-conf-asr.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_ml2-conf-asr.ini.tpl" .| indent 4 }}
   ml2-conf-f5.ini: |
-{{ include "etc/ml2-conf-asr.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_ml2-conf-asr.ini.tpl" .| indent 4 }}
   ml2-conf-manila.ini: |
-{{ include "etc/ml2-conf-manila.ini" .| indent 4 }}
+{{ include "neutron/templates/etc/_ml2-conf-manila.ini.tpl" .| indent 4 }}
   ml2-conf-aci.ini: |
 {{ include "etc/neutron/ml2-conf-aci.ini" .| indent 4 }}
   neutron.conf: |
-{{ include "etc/neutron.conf" .| indent 4 }}
+{{ include "neutron/templates/etc/_neutron.conf.tpl" .| indent 4 }}
   neutron-lbaas.conf: |
-{{ include "etc/neutron-lbaas.conf" .| indent 4 }}
+{{ include "neutron/templates/etc/_neutron-lbaas.conf.tpl" .| indent 4 }}
   neutron-policy.json: |
-{{ include "etc/neutron-policy.json" .| indent 4 }}
+{{ include "neutron/templates/etc/_neutron-policy.json.tpl" .| indent 4 }}
   logging.conf: |
-{{ include "etc/neutron-logging.conf" .| indent 4 }}
+{{ include "neutron/templates/etc/_neutron-logging.conf.tpl" .| indent 4 }}
 
 

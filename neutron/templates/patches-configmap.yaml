@@ -9,8 +9,8 @@ metadata:
 
 data:
   dhcp.diff: |
-{{ include "patches/dhcp.diff" .| indent 4 }}
+{{ .Files.Get "patches/dhcp.diff" | indent 4 }}
   dns-integration.diff: |
-{{ include "patches/dns_integration.diff" .| indent 4 }}
+{{ .Files.Get "patches/dns_integration.diff" | indent 4 }}
 
 
