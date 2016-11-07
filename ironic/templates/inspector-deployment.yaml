@@ -34,7 +34,7 @@ spec:
             - /container.init/ironic-inspector-start
           env:
             - name: DEBUG_CONTAINER
-              value: "false"
+              value: "true"
           volumeMounts:
             - mountPath: /ironic-etc
               name: ironic-etc
