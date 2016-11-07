@@ -9,13 +9,13 @@ metadata:
 
 data:
   glance-api.conf: |
-{{ include "etc/glance-api.conf" .| indent 4 }}
+{{ include "glance/templates/etc/_glance-api.conf.tpl" .| indent 4 }}
   glance-registry.conf: |
-{{ include "etc/glance-registry.conf" .| indent 4 }}
+{{ include "glance/templates/etc/_glance-registry.conf.tpl" .| indent 4 }}
   swift-store.conf: |
-{{ include "etc/swift-store.conf" .| indent 4 }}
+{{ include "glance/templates/etc/_swift-store.conf.tpl" .| indent 4 }}
   logging.conf: |
-{{ include "etc/glance-logging.conf" .| indent 4 }}
+{{ include "glance/templates/etc/_glance-logging.conf.tpl" .| indent 4 }}
   policy.json: |
-{{ include "etc/glance-policy.json" .| indent 4 }}
+{{ include "glance/templates/etc/_glance-policy.json.tpl" .| indent 4 }}
 

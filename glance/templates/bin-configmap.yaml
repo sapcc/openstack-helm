@@ -9,9 +9,9 @@ metadata:
 
 data:
   glance-api-start: |
-{{ include "bin/glance-api-start" .| indent 4 }}
+{{ .Files.Get "bin/glance-api-start" | indent 4 }}
   glance-registry-start: |
-{{ include "bin/glance-registry-start" .| indent 4 }}
+{{ .Files.Get "bin/glance-registry-start" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 
