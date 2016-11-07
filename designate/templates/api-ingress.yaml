@@ -9,7 +9,7 @@ metadata:
     component: designate
 spec:
   tls:
-    - secretName: tls-{{include "designate_api_endpoint_host_public" . | replace "." "_"}}
+    - secretName: tls-{{include "designate_api_endpoint_host_public" . | replace "." "-"}}
       hosts: [{{include "designate_api_endpoint_host_public" .}}]
   rules:
     - host: {{include "designate_api_endpoint_host_public" .}}
