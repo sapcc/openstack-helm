@@ -15,6 +15,6 @@ data:
   manila-share-start: |
 {{ .Files.Get "bin/manila-share-start" | indent 4 }}
   common.sh: |
-{{ .Files.Get "common.sh" | indent 4 }}
+{{ include "common.sh" .| indent 4 }}
 
 
