@@ -11,8 +11,8 @@ data:
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
   keystone-bootstrap: |
-{{ include "bin/keystone-bootstrap" . | indent 4 }}
+{{ include "keystone/templates/bin/_keystone-bootstrap.tpl" . | indent 4 }}
   keystone-seed: |
-{{ include "bin/keystone-seed" . | indent 4 }}
+{{ include "keystone/templates/bin/_keystone-seed.tpl" . | indent 4 }}
   keystone-start: |
-{{ include "bin/keystone-start" . | indent 4 }}
+{{ include "keystone/templates/bin/_keystone-start.tpl" . | indent 4 }}

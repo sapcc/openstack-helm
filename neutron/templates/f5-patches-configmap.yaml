@@ -9,12 +9,12 @@ metadata:
 
 data:
   barbican-cert.diff: |
-{{ include "patches/f5/barbican_cert.diff" .| indent 4 }}
+{{ .Files.Get "patches/f5/barbican_cert.diff" | indent 4 }}
   loadbalancer-dbv2.diff: |
-{{ include "patches/f5/loadbalancer_dbv2.diff" .| indent 4 }}
+{{ .Files.Get "patches/f5/loadbalancer_dbv2.diff" | indent 4 }}
   service-builder.diff: |
-{{ include "patches/f5/service_builder.diff" .| indent 4 }}
+{{ .Files.Get "patches/f5/service_builder.diff" | indent 4 }}
   network-helper.diff: |
-{{ include "patches/f5/network_helper.diff" .| indent 4 }}
+{{ .Files.Get "patches/f5/network_helper.diff" | indent 4 }}
   keystone.diff: |
-{{ include "patches/f5/keystone.diff" .| indent 4 }}
+{{ .Files.Get "patches/f5/keystone.diff" | indent 4 }}

@@ -3,7 +3,19 @@
 # Declare name/value pairs to be passed into your templates.
 # name: value
 
+global:
+  image_namespace: REQUIRED
+  image_repository: REQUIRED
+  configuration_repository: REQUIRED
+  configuration_revision: REQUIRED
+  keystone_api_port_admin: '35357'
+  keystone_api_port_admin_ext: '443'
+  keystone_api_port_internal: '5000'
+  keystone_api_port_public: '443'
+
 debug: "True"
+
+
 
 image_version_keystone_m3: DEFINED-IN-REGION-CHART
 

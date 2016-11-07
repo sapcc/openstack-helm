@@ -9,4 +9,4 @@ metadata:
 
 data:
   ironic.conf: |
-{{ include "etc/ironic.conf" .| indent 4 }}
+{{ include "ironic/templates/etc/_ironic.conf.tpl" .| indent 4 }}

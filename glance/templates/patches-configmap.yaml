@@ -9,7 +9,7 @@ metadata:
 
 data:
   connection-manager.diff: |
-{{ include "patches/connection_manager.diff" .| indent 4 }}
+{{ .Files.Get "patches/connection_manager.diff" | indent 4 }}
 
 
 

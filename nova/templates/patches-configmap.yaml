@@ -9,6 +9,6 @@ metadata:
 
 data:
   vif.diff: |
-{{ include "patches/vif.diff" . | indent 4}}
+{{ .Files.Get "patches/vif.diff" | indent 4}}
 
 

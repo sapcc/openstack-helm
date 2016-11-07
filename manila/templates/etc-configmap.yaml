@@ -9,4 +9,4 @@ metadata:
 
 data:
   manila.conf: |
-{{ include "etc/manila.conf" .| indent 4 }}
+{{ include "manila/templates/etc/_manila.conf.tpl" .| indent 4 }}

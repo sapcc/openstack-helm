@@ -9,7 +9,7 @@ metadata:
 
 data:
   pgbouncer-start: |
-{{ include "bin/pgbouncer-start" .| indent 4 }}
+{{ .Files.Get "bin/pgbouncer-start" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

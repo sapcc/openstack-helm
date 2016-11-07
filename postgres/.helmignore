@@ -20,7 +20,3 @@
 .idea/
 *.tmproj
 
-bin/
-etc/
-*.py
-Makefile

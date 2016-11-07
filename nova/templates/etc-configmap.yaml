@@ -9,8 +9,8 @@ metadata:
 
 data:
   nova.conf: |
-{{ include "etc/nova.conf" .| indent 4 }}
+{{ include "nova/templates/etc/_nova.conf.tpl" .| indent 4 }}
   libvirtd.conf: |
-{{ include "etc/libvirtd.conf" .| indent 4 }}
+{{ include "nova/templates/etc/_libvirtd.conf.tpl" .| indent 4 }}
   logging.conf: |
-{{ include "etc/nova-logging.conf" .| indent 4 }}
+{{ include "nova/templates/etc/_nova-logging.conf.tpl" .| indent 4 }}

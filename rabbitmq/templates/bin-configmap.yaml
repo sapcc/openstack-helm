@@ -9,7 +9,7 @@ metadata:
 
 data:
   rabbitmq-start: |
-{{ include "bin/rabbitmq-start" .| indent 4 }}
+{{ include "rabbitmq/templates/bin/_rabbitmq-start.tpl" .| indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

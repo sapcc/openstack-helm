@@ -9,6 +9,6 @@ metadata:
 
 data:
   barbican-api-start: |
-{{ include "bin/barbican-api-start" .| indent 4 }}
+{{ .Files.Get "bin/barbican-api-start" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}

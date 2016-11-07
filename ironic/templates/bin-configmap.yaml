@@ -9,14 +9,14 @@ metadata:
 
 data:
   ironic-api-start: |
-{{ include "bin/ironic-api-start" .| indent 4 }}
+{{ .Files.Get "bin/ironic-api-start" | indent 4 }}
   ironic-conductor-start: |
-{{ include "bin/ironic-conductor-start" .| indent 4 }}
+{{ .Files.Get "bin/ironic-conductor-start" | indent 4 }}
   ironic-inspector-start: |
-{{ include "bin/ironic-inspector-start" .| indent 4 }}
+{{ .Files.Get "bin/ironic-inspector-start" | indent 4 }}
   ironic-pxe-start: |
-{{ include "bin/ironic-pxe-start" .| indent 4 }}
+{{ .Files.Get "bin/ironic-pxe-start" | indent 4 }}
   common.sh: |
-{{ include "common.sh" .| indent 4 }}
+{{ include "common.sh" . | indent 4 }}
 
 
