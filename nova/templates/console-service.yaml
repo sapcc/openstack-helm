@@ -8,7 +8,6 @@ metadata:
     type: backend
     component: nova
 spec:
-  type: NodePort
   selector:
     name: nova-console
 
