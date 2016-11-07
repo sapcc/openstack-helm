@@ -59,6 +59,11 @@ spec:
           env:
             - name: PGDATA
               value: /postgresql-data/data/
+            - name: POSTGRES_USER
+              value: {{.Values.user}}
+            - name: POSTGRES_PASSWORD
+              value: {{.Values.password}}
+
           ports:
             - name: postgres
               containerPort: {{.Values.port_private}}
