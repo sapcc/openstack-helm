@@ -9,6 +9,6 @@ metadata:
 
 data:
   cinder.conf: |
-{{ include "etc/cinder.conf" .| indent 4 }}
+{{ include "cinder/templates/etc/_cinder.conf.tpl" .| indent 4 }}
   logging.conf: |
-{{ include "etc/cinder-logging.conf" .| indent 4 }}
+{{ include "cinder/templates/etc/_cinder-logging.conf.tpl" .| indent 4 }}

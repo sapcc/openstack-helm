@@ -9,11 +9,11 @@ metadata:
 
 data:
   cinder-api-start: |
-{{ include "bin/cinder-api-start" .| indent 4 }}
+{{ .Files.Get "bin/cinder-api-start" | indent 4 }}
   cinder-scheduler-start: |
-{{ include "bin/cinder-scheduler-start" .| indent 4 }}
+{{ .Files.Get "bin/cinder-scheduler-start" | indent 4 }}
   cinder-volume-start: |
-{{ include "bin/cinder-volume-start" .| indent 4 }}
+{{ .Files.Get "bin/cinder-volume-start" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 
