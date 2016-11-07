@@ -9,8 +9,8 @@ metadata:
 
 data:
   local-settings: |
-{{ include "etc/local-settings" .| indent 4 }}
+{{ include "horizon/templates/etc/_local-settings.tpl" .| indent 4 }}
   policyv3.json: |
-{{ include "etc/horizon-policyv3.json" .| indent 4 }}
+{{ include "horizon/templates/etc/_horizon-policyv3.json.tpl" .| indent 4 }}
   horizon.conf: |
-{{ include "etc/horizon.conf" .| indent 4 }}
+{{ include "horizon/templates/etc/horizon.conf.tpl" .| indent 4 }}

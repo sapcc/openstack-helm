@@ -6,7 +6,9 @@
 global:
   image_repository: REQUIRED
   image_namespace: REQUIRED
-  image_version_horizon_m3: REQUIRED
   configuration_repository: REQUIRED
   configuration_revision: REQUIRED
+
+image_version_horizon_m3: REQUIRED
+
 secret_key: DEFINED-IN-REGION-CHART

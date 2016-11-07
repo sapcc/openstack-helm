@@ -9,6 +9,6 @@ metadata:
 
 data:
   horizon-start: |
-{{ include "bin/horizon-start" .| indent 4 }}
+{{ .Files.Get "bin/horizon-start" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
