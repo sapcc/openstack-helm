@@ -47,9 +47,13 @@ rabbitmq: build-rabbitmq
 utils: build-utils
 
 build-%:
-	if [ -f $*/Makefile ]; then make -C $*; fi
 	if [ -f $*/requirements.yaml ]; then helm dep up $*; fi
 	helm package $*
 
-#%.bla: #$(firstword $(subst -, ,%))
-#  echo $(wildcard $(firstword $(subst -, ,$*))/**/*)
+lint: lint-barbican lint-cinder lint-designate lint-europe-example-region
+lint: lint-glance lint-horizon lint-ironic lint-keystone lint-mariadb
+lint: lint-memcached lint-neutron lint-nova lint-openstack lint-postgres
+lint: lint-rabbitmq lint-utils
+lint-%:
+	helm lint $*
+
