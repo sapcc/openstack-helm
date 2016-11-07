@@ -8,7 +8,6 @@ metadata:
     type: api
     component: ironic
 spec:
-  type: NodePort
   selector:
     name: ironic-api
   ports:

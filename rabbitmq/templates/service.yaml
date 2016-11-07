@@ -10,7 +10,6 @@ metadata:
     prometheus.io/scrape: "true"
     prometheus.io/port: "{{.Values.global.rabbitmq_port_metrics}}"
 spec:
-  type: NodePort
   selector:
     name: rabbitmq
 

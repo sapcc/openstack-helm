@@ -11,7 +11,6 @@ metadata:
     prometheus.io/scrape: "true"
     prometheus.io/port: "{{.Values.global.designate_metrics_port}}"
 spec:
-  type: NodePort
   selector:
     app: designate-api
   ports:

@@ -8,7 +8,6 @@ metadata:
     type: api
     component: manila
 spec:
-  type: NodePort
   selector:
     name: manila-api
   ports:

@@ -9,7 +9,6 @@ metadata:
     component: designate
 
 spec:
-  type: NodePort
   selector:
     app: designate-mdns
   ports:

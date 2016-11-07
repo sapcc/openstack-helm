@@ -11,7 +11,6 @@ metadata:
     prometheus.io/scrape: "true"
     prometheus.io/port: "{{.Values.port_metrics}}"
 spec:
-  type: NodePort
   selector:
     name: cinder-api
   ports:

@@ -12,7 +12,6 @@ metadata:
     prometheus.io/port: "{{.Values.port_metrics}}"
 
 spec:
-  type: NodePort
   selector:
     name: nova-api
   ports:
