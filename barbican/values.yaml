@@ -7,7 +7,11 @@
 global:
   image_repository: DEFINED-IN-REGION-CHART
   image_namespace: DEFINED-IN-REGION-CHART
-  image_version_barbican_m3: DEFINED-IN-REGION-CHART
+  barbican_api_port_internal: '9292'
+  configuration_repository: DEFINED-IN-REGION-CHART
+  configuration_revision: DEFINED-IN-REGION-CHART
+
+image_version_barbican_m3: DEFINED-IN-REGION-CHART
 debug: "True"
 
 db_name: barbican

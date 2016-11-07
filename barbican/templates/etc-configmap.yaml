@@ -9,6 +9,6 @@ metadata:
 
 data:
   barbican-api-paste.ini: |
-{{ include "etc/barbican-api-paste.ini" .| indent 4 }}
+{{ include "barbican/templates/etc/_barbican-api-paste.ini.tpl" .| indent 4 }}
   barbican.conf: |
-{{ include "etc/barbican.conf" .| indent 4 }}
+{{ include "barbican/templates/etc/_barbican.conf.tpl" .| indent 4 }}

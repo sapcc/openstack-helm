@@ -9,10 +9,10 @@ metadata:
 
 data:
   barbican-api.diff: |
-{{ include "patches/barbican-api.diff" .| indent 4 }}
+{{ .Files.Get "patches/barbican-api.diff" | indent 4 }}
   consumers.diff: |
-{{ include "patches/consumers.diff" .| indent 4 }}
+{{ .Files.Get "patches/consumers.diff" | indent 4 }}
   models.diff: |
-{{ include "patches/models.diff" .| indent 4 }}
+{{ .Files.Get "patches/models.diff" | indent 4 }}
 
 
