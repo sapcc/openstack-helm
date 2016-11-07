@@ -8,12 +8,12 @@ metadata:
     component: designate
 data:
   designate-api-start: |
-{{ include "bin/designate-api-start" . | indent 4 }}
+{{ .Files.Get "bin/designate-api-start" | indent 4 }}
   designate-central-start: |
-{{ include "bin/designate-central-start" . | indent 4 }}
+{{ .Files.Get "bin/designate-central-start" | indent 4 }}
   designate-mdns-start: |
-{{ include "bin/designate-mdns-start" . | indent 4 }}
+{{ .Files.Get "bin/designate-mdns-start" | indent 4 }}
   designate-poolmanager-start: |
-{{ include "bin/designate-poolmanager-start" . | indent 4 }}
+{{ .Files.Get "bin/designate-poolmanager-start" | indent 4 }}
   common.sh: |
 {{ include "common.sh" . | indent 4}}

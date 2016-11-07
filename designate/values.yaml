@@ -14,12 +14,13 @@ global:
   image_namespace: DEFINED-IN-OPENSTACK-CHART
   designate_api_port_internal: DEFINED-IN-OPENSTACK-CHART
   designate_metrics_port: DEFINED-IN-OPENSTACK-CHART 
-  image_version_designate_api_m3:  DEFINED-IN-REGION-CHART
-  image_version_designate_central_m3:  DEFINED-IN-REGION-CHART
-  image_version_designate_mdns_m3:  DEFINED-IN-REGION-CHART
-  image_version_designate_poolmanager_m3:  DEFINED-IN-REGION-CHART
   designate_mdns_port_public: DEFINED-IN-OPENSTACK-CHART
   designate_mdns_external_ip: DEFINED-IN-REGION-CHART
+
+image_version_designate_api_m3:  DEFINED-IN-REGION-CHART
+image_version_designate_central_m3:  DEFINED-IN-REGION-CHART
+image_version_designate_mdns_m3:  DEFINED-IN-REGION-CHART
+image_version_designate_poolmanager_m3:  DEFINED-IN-REGION-CHART
 
 bind_pools:
   - name: default
