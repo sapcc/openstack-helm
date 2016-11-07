@@ -10,4 +10,4 @@ metadata:
 
 data:
   hypervisor.conf: |
-{{ include "etc/nova/hypervisor-ironic.conf" .| indent 4 }}
+{{ include "europe-example-region/templates/etc/nova/_hypervisor-ironic.conf.tpl" .| indent 4 }}

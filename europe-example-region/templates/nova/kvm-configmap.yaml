@@ -10,5 +10,5 @@ metadata:
 
 data:
   hypervisor.conf: |
-{{ include "etc/nova/hypervisor-kvm.conf" .| indent 4 }}
+{{ include "europe-example-region/templates/etc/nova/_hypervisor-kvm.conf.tpl" .| indent 4 }}
   
