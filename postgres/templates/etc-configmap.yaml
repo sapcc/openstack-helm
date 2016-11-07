@@ -9,4 +9,4 @@ metadata:
 
 data:
   postgresql.conf: |
-{{ include "etc/postgresql.conf" .| indent 4 }}
+{{ .Files.Get "etc/postgresql.conf" | indent 4 }}
