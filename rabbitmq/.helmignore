@@ -20,8 +20,4 @@
 .idea/
 *.tmproj
 
-bin/
-etc/
-patches/
-*.py
-Makefile
+
