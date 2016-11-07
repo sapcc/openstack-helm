@@ -2,6 +2,19 @@
 # This is a YAML-formatted file.
 # Declare name/value pairs to be passed into your templates.
 # name: value
+#
+global:
+  image_namespace: REQUIRED
+  image_repository: REQUIRED
+  configuration_repository: REQUIRED
+  configuration_revision: REQUIRED 
+  ironic_api_port_internal: '6385'
+  ironic_pxe_port_public: '69'
+
+image_version_ironic_api: REQUIRED
+image_version_ironic_conductor: REQUIRED
+image_version_ironic_inspector: REQUIRED
+image_version_ironic_pxe: REQUIRED
 
 debug: "True"
 db_name: ironic

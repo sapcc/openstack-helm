@@ -9,4 +9,4 @@ metadata:
 
 data:
   app.diff: |
-{{ include "patches/app.diff" .| indent 4 }}
+{{ .Files.Get "patches/app.diff"| indent 4 }}
