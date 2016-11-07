@@ -25,10 +25,6 @@ spec:
         - name: rabbitmq-persistent-storage
           persistentVolumeClaim:
             claimName: rabbitmq-pvclaim
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: container-init
           configMap:
             name: rabbitmq-bin
@@ -36,9 +32,9 @@ spec:
         - name: rabbitmq
           image: rabbitmq:3-management
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - rabbitmq-start
+            - /container.init/rabbitmq-start
 #          env:
 #          - name: RABBITMQ_NODENAME
 #            value: monsoon3-rabbitmq
@@ -53,8 +49,6 @@ spec:
             - name: rabbitmq-mgmt
               containerPort: {{.Values.global.rabbitmq_port_management}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - name: rabbitmq-persistent-storage
               mountPath: /var/lib/rabbitmq
             - mountPath: /container.init

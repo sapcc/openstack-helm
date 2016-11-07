@@ -29,39 +29,22 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.image_version_cinder_scheduler}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - cinder-scheduler-start
+            - /container.init/cinder-scheduler-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
               value: {{ include "sentry_dsn_cinder" . | quote}}
-
-          livenessProbe:
-            exec:
-              command:
-              - /openstack-kube/openstack-kube/scripts/liveness-checks/cinder/service-liveness-check
-              - --config-file=/etc/cinder/cinder.conf
-              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/cinder/scheduler-liveness.conf
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 30
-            failureThreshold: 2
           volumeMounts:
             - mountPath: /development
               name: development
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /cinder-etc
               name: cinder-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: cinder-etc
           configMap:
             name: cinder-etc

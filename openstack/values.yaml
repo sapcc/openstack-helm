@@ -4,9 +4,6 @@
 # name: value
 
 global:
-  configuration_repository: https://github.wdf.sap.corp/monsoon/openstack-kube.git
-  configuration_revision: master
-
   os_release: mitaka
 
   region: DEFINED-IN-REGION-CHART

@@ -33,9 +33,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - designate-api-start
+            - /container.init/designate-api-start
           livenessProbe:
             httpGet:
               path: /
@@ -55,8 +55,6 @@ spec:
             - name: designate-api
               containerPort: {{.Values.global.designate_api_port_internal}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /designate-etc
               name: designate-etc
             - mountPath: /container.init
@@ -71,10 +69,6 @@ spec:
             - name: metrics
               containerPort: {{.Values.global.designate_metrics_port}} 
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{ .Values.global.configuration_repository }} 
-            revision: {{ .Values.global.configuration_revision }}
         - name: designate-etc
           configMap:
             name: designate-etc

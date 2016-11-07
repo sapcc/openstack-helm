@@ -8,8 +8,6 @@ debug: "True"
 sentry_dsn_key: DEFINE-IN-REGION-CHART
 
 global:
-  configuration_repository: DEFINED-REGION-CHART
-  configuration_revision: DEFINED-REGION-CHART
   image_repository: DEFINED-IN-OPENSTACK-CHART
   image_namespace: DEFINED-IN-OPENSTACK-CHART
   designate_api_port_internal: DEFINED-IN-OPENSTACK-CHART

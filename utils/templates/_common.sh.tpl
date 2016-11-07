@@ -13,8 +13,6 @@ fi
 
 }
 
-CLUSTER_SCRIPT_PATH=/openstack-kube/openstack-kube/scripts
-CLUSTER_CONFIG_PATH=/openstack-kube/openstack-kube/etc
 
 export MY_IP=$(ip route get 1 | awk '{print $NF;exit}')
 

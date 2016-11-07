@@ -29,9 +29,9 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api-m3:{{.Values.image_version_glance_api_m3}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - glance-api-start
+            - /container.init/glance-api-start
           livenessProbe:
             httpGet:
               path: /
@@ -51,8 +51,6 @@ spec:
             - name: api
               containerPort: {{.Values.global.glance_api_port_internal}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /glance-patches
               name: glance-patches
             - mountPath: /glance-etc
@@ -65,9 +63,9 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-registry:{{.Values.image_version_glance_registry}}
           imagePullPolicy: IfNotPresent
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - glance-registry-start
+            - /container.init/glance-registry-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -77,8 +75,6 @@ spec:
             - name: registry
               containerPort: 9191
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /glance-etc
               name: glance-etc
             - mountPath: /container.init
@@ -96,10 +92,6 @@ spec:
         - name: image-store
           persistentVolumeClaim:
             claimName: glance-pvclaim
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: glance-patches
           configMap:
             name: glance-patches

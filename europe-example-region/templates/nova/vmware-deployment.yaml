@@ -33,27 +33,15 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - nova-compute-start
-          livenessProbe:
-            exec:
-              command:
-              - /openstack-kube/openstack-kube/scripts/liveness-checks/nova/service-liveness-check
-              - --config-file=/etc/nova/nova.conf
-              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/nova/compute-liveness.conf
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 30
-            failureThreshold: 2
+            - /container.init/nova-compute-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
               value: {{include "sentry_dsn_nova_region" .}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /hypervisor-config
               name: hypervisor-config
             - mountPath: /nova-etc
@@ -68,25 +56,13 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - neutron-dvs-agent-start
-          livenessProbe:
-            exec:
-              command:
-              - /openstack-kube/openstack-kube/scripts/liveness-checks/neutron/service-liveness-check
-              - --config-file=/etc/neutron/neutron.conf
-              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/neutron/dvs-agent-liveness.conf
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 30
-            failureThreshold: 2
+            - /container.init/neutron-dvs-agent-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /ml2-conf-vmware
@@ -94,10 +70,6 @@ spec:
             - mountPath: /container.init
               name: neutron-container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.openstack.global.configuration_repository}}
-            revision:  {{.Values.openstack.global.configuration_revision}}
         - name: nova-etc
           configMap:
             name: nova-etc

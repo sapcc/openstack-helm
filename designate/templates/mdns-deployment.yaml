@@ -33,9 +33,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - designate-mdns-start
+            - /container.init/designate-mdns-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -50,17 +50,11 @@ spec:
             - name: designate-mdns
               containerPort: {{.Values.global.designate_mdns_port_public}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /designate-etc
               name: designate-etc
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{ .Values.global.configuration_repository }}
-            revision: {{ .Values.global.configuration_revision }}
         - name: designate-etc
           configMap:
             name: designate-etc

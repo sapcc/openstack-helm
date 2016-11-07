@@ -31,9 +31,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - cinder-api-start
+            - /container.init/cinder-api-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -53,8 +53,6 @@ spec:
             - name: cinder-api
               containerPort: {{.Values.global.cinder_api_port_internal}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /cinder-etc
               name: cinder-etc
             - mountPath: /container.init
@@ -69,10 +67,6 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: cinder-etc
           configMap:
             name: cinder-etc

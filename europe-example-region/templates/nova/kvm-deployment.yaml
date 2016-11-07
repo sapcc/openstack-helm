@@ -47,24 +47,14 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - nova-compute-start
+            - /container.init/nova-compute-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
               value: {{include "sentry_dsn_nova_region" .}}
-          livenessProbe:
-            exec:
-              command:
-              - /openstack-kube/openstack-kube/scripts/liveness-checks/nova/service-liveness-check
-              - --config-file=/etc/nova/nova.conf
-              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/nova/compute-liveness.conf
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 30
-            failureThreshold: 2
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances
@@ -75,8 +65,6 @@ spec:
               readOnly: true
             - mountPath: /var/run
               name: run
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /hypervisor-config
               name: hypervisor-config
             - mountPath: /nova-etc
@@ -92,9 +80,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - nova-libvirt-start
+            - /container.init/nova-libvirt-start
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances
@@ -105,8 +93,6 @@ spec:
             - mountPath: /lib/modules
               name: modules
               readOnly: true
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /container.init
@@ -117,9 +103,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - nova-virtlog-start
+            - /container.init/nova-virtlog-start
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances
@@ -130,8 +116,6 @@ spec:
             - mountPath: /lib/modules
               name: modules
               readOnly: true
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /container.init
@@ -143,27 +127,15 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - neutron-ovs-agent-start
-          livenessProbe:
-            exec:
-              command:
-              - /openstack-kube/openstack-kube/scripts/liveness-checks/neutron/service-liveness-check
-              - --config-file=/etc/neutron/neutron.conf
-              - --config-file=/openstack-kube/openstack-kube/scripts/liveness-checks/neutron/ovs-agent-liveness.conf
-            initialDelaySeconds: 30
-            timeoutSeconds: 10
-            periodSeconds: 30
-            failureThreshold: 2
+            - /container.init/neutron-ovs-agent-start
           volumeMounts:
             - mountPath: /var/run/
               name: run
             - mountPath: /lib/modules
               name: modules
               readOnly: true
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /container.init
@@ -174,17 +146,15 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - neutron-ovs-start
+            - /container.init/neutron-ovs-start
           volumeMounts:
             - mountPath: /var/run/
               name: run
             - mountPath: /lib/modules
               name: modules
               readOnly: true
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /container.init
               name: neutron-container-init
         - name: ovs-db
@@ -193,16 +163,14 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - neutron-ovs-db-start
+            - /container.init/neutron-ovs-db-start
           volumeMounts:
             - mountPath: /var/run/
               name: run
             - mountPath: /lib/modules
               name: modules
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /container.init
               name: neutron-container-init
       volumes:
@@ -221,10 +189,6 @@ spec:
         - name : cgroup
           hostPath:
             path: /sys/fs/cgroup
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.openstack.global.configuration_repository}}
-            revision: {{.Values.openstack.global.configuration_revision}}
         - name: hypervisor-config
           configMap:
             name: hypervisor-kvm

@@ -31,9 +31,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - ironic-api-start
+            - /container.init/ironic-api-start
           livenessProbe:
             httpGet:
               path: /
@@ -44,8 +44,6 @@ spec:
             - name: ironic-api
               containerPort: {{.Values.global.ironic_api_port_internal}}
           volumeMounts:
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /ironic-etc
               name: ironic-etc
             - mountPath: /ironic-patches
@@ -53,10 +51,6 @@ spec:
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: ironic-etc
           configMap:
             name: ironic-etc

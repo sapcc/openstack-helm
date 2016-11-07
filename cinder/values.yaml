@@ -6,8 +6,6 @@ global:
   image_repository: DEFINED-IN-REGION-CHART
   image_namespace: DEFINED-IN-REGION-CHART
   cinder_api_port_internal: '8776'
-  configuration_repository: DEFINED-IN-REGION-CHART
-  configuration_revision: DEFINED-IN-REGION-CHART
 
 image_version_cinder_api_m3: 'v1'
 image_version_cinder_scheduler: 'v1'

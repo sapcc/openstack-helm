@@ -31,9 +31,9 @@ spec:
           securityContext:
             privileged: true
           command:
-            - /openstack-kube/openstack-kube/scripts/_container_init
+            - bash
           args:
-            - nova-api-start
+            - /container.init/nova-api-start
           env:
             - name: DEBUG_CONTAINER
               value: "false"
@@ -58,8 +58,6 @@ spec:
           volumeMounts:
             - mountPath: /development
               name: development
-            - mountPath: /openstack-kube
-              name: openstack-kube
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /container.init
@@ -75,10 +73,6 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
-        - name: openstack-kube
-          gitRepo:
-            repository: {{.Values.global.configuration_repository}}
-            revision: {{.Values.global.configuration_revision}}
         - name: nova-etc
           configMap:
             name: nova-etc
