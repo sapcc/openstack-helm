@@ -9,4 +9,5 @@ metadata:
 
 data:
   manila.conf: |
-{{ include "manila/templates/etc/_manila.conf.tpl" .| indent 4 }}
+{{ tuple "etc/_manila.conf.tpl" . | include "template" | indent 4 }}
+

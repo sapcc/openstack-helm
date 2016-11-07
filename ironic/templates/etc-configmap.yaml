@@ -9,4 +9,5 @@ metadata:
 
 data:
   ironic.conf: |
-{{ include "ironic/templates/etc/_ironic.conf.tpl" .| indent 4 }}
+{{ tuple "etc/_ironic.conf.tpl" . | include "template" | indent 4 }}
+

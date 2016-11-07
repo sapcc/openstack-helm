@@ -8,29 +8,29 @@ metadata:
     component: neutron
 data:
   neutron-aci-agent-start: |
-{{ include "neutron/templates/bin/_neutron-aci-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-aci-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-asr-start: |
-{{ include "neutron/templates/bin/_neutron-asr-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-asr-start.tpl" . | include "template" | indent 4 }}
   neutron-dhcp-agent-start: |
-{{ include "neutron/templates/bin/_neutron-dhcp-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-dhcp-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-dvs-agent-start: |
-{{ include "neutron/templates/bin/_neutron-dvs-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-dvs-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-f5-agent-start: |
-{{ include "neutron/templates/bin/_neutron-f5-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-f5-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-f5-ml2-agent-start: |
-{{ include "neutron/templates/bin/_neutron-f5-ml2-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-f5-ml2-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-l3-agent-start: |
-{{ include "neutron/templates/bin/_neutron-l3-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-l3-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-metadata-agent-start: |
-{{ include "neutron/templates/bin/_neutron-metadata-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-metadata-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-ovs-agent-start: |
-{{ include "neutron/templates/bin/_neutron-ovs-agent-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-ovs-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-ovs-db-start: |
-{{ include "neutron/templates/bin/_neutron-ovs-db-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-ovs-db-start.tpl" . | include "template" | indent 4 }}
   neutron-ovs-start: |
-{{ include "neutron/templates/bin/_neutron-ovs-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-ovs-start.tpl" . | include "template" | indent 4 }}
   neutron-server-start: |
-{{ include "neutron/templates/bin/_neutron-server-start.tpl" .| indent 4 }}
+{{ tuple "bin/_neutron-server-start.tpl" . | include "template" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

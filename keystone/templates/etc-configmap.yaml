@@ -9,8 +9,9 @@ metadata:
 
 data:
   keystone.conf: |
-{{ include "keystone/templates/etc/_keystone.conf.tpl" .| indent 4 }}
+{{ tuple "etc/_keystone.conf.tpl" . | include "template" | indent 4 }}
   policyv3.json: |
-{{ include "keystone/templates/etc/_keystone-policyv3.json.tpl" .| indent 4 }}
+{{ tuple "etc/_keystone-policyv3.json.tpl" . | include "template" | indent 4 }}
   wsgi-keystone.conf: |
-{{ include "keystone/templates/etc/wsgi-_keystone.conf.tpl" .| indent 4 }}
+{{ tuple "etc/_wsgi-keystone.conf.tpl" . | include "template" | indent 4 }}
+
