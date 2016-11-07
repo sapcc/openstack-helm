@@ -9,25 +9,25 @@ metadata:
 
 data:
   nova-api-start: |
-{{ include "bin/nova-api-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-api-start" | indent 4 }}
   nova-compute-start: |
-{{ include "bin/nova-compute-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-compute-start" | indent 4 }}
   nova-conductor-start: |
-{{ include "bin/nova-conductor-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-conductor-start" | indent 4 }}
   nova-consoleauth-start: |
-{{ include "bin/nova-consoleauth-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-consoleauth-start" | indent 4 }}
   nova-libvirt-start: |
-{{ include "bin/nova-libvirt-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-libvirt-start" | indent 4 }}
   nova-novncproxy-start: |
-{{ include "bin/nova-novncproxy-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-novncproxy-start" | indent 4 }}
   nova-scheduler-start: |
-{{ include "bin/nova-scheduler-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-scheduler-start" | indent 4 }}
   nova-spicehtml5proxy-start: |
-{{ include "bin/nova-spicehtml5proxy-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-spicehtml5proxy-start" | indent 4 }}
   nova-virtlog-start: |
-{{ include "bin/nova-virtlog-start" .| indent 4 }}
+{{ .Files.Get "bin/nova-virtlog-start" | indent 4 }}
   common.sh: |
-{{ include "common.sh" .| indent 4 }}
+{{ .Files.Get "common.sh" | indent 4 }}
 
 
 
