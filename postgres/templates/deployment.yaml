@@ -30,6 +30,9 @@ spec:
         - name: db-init
           configMap:
             name: db-init-{{.Values.name}}
+        - name: db-maintain
+          configMap:
+            name: db-maintain-{{.Values.name}}
         - name: postgres-etc
           configMap:
             name: postgres-etc-{{.Values.name}}
@@ -68,6 +71,8 @@ spec:
               mountPath: /postgresql-data
             - name: db-init
               mountPath: /docker-entrypoint-initdb.d
+            - name: db-maintain
+              mountPath: /docker-entrypoint-maintaindb.d
             - name: postgres-etc
               mountPath: /postgresql-conf
             - name: container-init
