@@ -1,31 +1,27 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: db-init-glance
+  name: db-maintain-barbican
   labels:
     system: openstack
     type: configuration
     component: database
 
 data:
-  db-init.sh: |
+  db-maintain.sh: |
     #!/usr/bin/env bash
 
     data_dir=/postgresql-data/data
-
-    if [[ ! -e $data_dir ]]
-    then
-      mkdir $data_dir
-    fi
 
     cp /postgresql-conf/postgresql.conf  $data_dir/postgresql.conf
     cp /postgresql-conf/pg-hba.conf  $data_dir/pg_hba.conf
 
     export PGUSER=postgres
     psql <<- EOSQL
-        CREATE DATABASE {{.Values.db_name}};
-        CREATE ROLE {{.Values.db_user}} WITH ENCRYPTED PASSWORD '{{.Values.db_password}}' LOGIN;
-        GRANT ALL PRIVILEGES ON DATABASE {{.Values.db_name}} TO {{.Values.db_user}};
+
+        ALTER ROLE {{.Values.db_user}} WITH ENCRYPTED PASSWORD '{{.Values.db_password}}';
+        ALTER ROLE {{.Values.postgres.user}} WITH ENCRYPTED PASSWORD '{{.Values.postgres.password}}';
+
     EOSQL
 
 

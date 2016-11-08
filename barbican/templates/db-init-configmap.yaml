@@ -19,6 +19,7 @@ data:
     fi
 
     cp /postgresql-conf/postgresql.conf  $data_dir/postgresql.conf
+    cp /postgresql-conf/pg-hba.conf  $data_dir/pg_hba.conf
 
     export PGUSER=postgres
     psql <<- EOSQL
