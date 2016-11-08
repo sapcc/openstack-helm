@@ -26,7 +26,7 @@ function process_config {
     cp /neutron-etc/neutron-lbaas.conf /etc/neutron/neutron_lbaas.conf
     cp /neutron-etc/ml2-conf.ini  /etc/neutron/plugins/ml2/ml2_conf.ini
 
-    cp /neutron-etc/ml2-conf-aci.ini  /etc/neutron/plugins/ml2/ml2-conf-aci.ini
+    cp /neutron-etc-region/ml2-conf-aci.ini  /etc/neutron/plugins/ml2/ml2-conf-aci.ini
 
     cp /neutron-etc/ml2-conf-arista.ini  /etc/neutron/plugins/ml2/ml2_conf_arista.ini
     cp /neutron-etc/ml2-conf-manila.ini  /etc/neutron/plugins/ml2/ml2_conf_manila.ini

@@ -34,8 +34,6 @@ data:
 {{ tuple "etc/_ml2-conf-f5.ini.tpl" . | include "template" | indent 4 }}
   ml2-conf-manila.ini: |
 {{ tuple "etc/_ml2-conf-manila.ini.tpl" . | include "template" | indent 4 }}
-  ml2-conf-aci.ini: |
-{{ include "etc/neutron/ml2-conf-aci.ini" .| indent 4 }}
   neutron.conf: |
 {{ tuple "etc/_neutron.conf.tpl" . | include "template" | indent 4 }}
   neutron-lbaas.conf: |
