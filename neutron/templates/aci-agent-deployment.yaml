@@ -46,6 +46,8 @@ spec:
               name: development
             - mountPath: /neutron-etc
               name: neutron-etc
+            - mountPath: /neutron-etc-region
+              name: neutron-etc-region
             - mountPath: /container.init
               name: container-init
       volumes:
@@ -55,6 +57,9 @@ spec:
         - name: neutron-etc
           configMap:
             name: neutron-etc
+        - name: neutron-etc-region
+          configMap:
+            name: neutron-etc-region
         - name: container-init
           configMap:
             name: neutron-bin
