@@ -8,7 +8,7 @@ metadata:
     component: database
 
 data:
-  db-maintaine.sh: |
+  db-maintain.sh: |
     #!/usr/bin/env bash
 
     data_dir=/postgresql-data/data
