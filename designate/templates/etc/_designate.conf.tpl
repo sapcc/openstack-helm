@@ -168,7 +168,7 @@ password = {{ .Values.global.designate_service_password }}
 user_domain_name = {{.Values.global.keystone_service_domain}} 
 project_name = {{.Values.global.keystone_service_project}} 
 project_domain_name = {{.Values.global.keystone_service_domain}}
-memcache_servers = {{ include "memcached_host" . }}:{{.Values.memcached_port_public}}
+memcache_servers = {{ include "memcached_host" . }}:{{.Values.global.memcached_port_public}}
 auth_type = v3password
 insecure = True
 
