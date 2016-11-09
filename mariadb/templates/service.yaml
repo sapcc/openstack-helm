@@ -12,7 +12,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    name: {{.Values.name}}-mariadb
+    app: {{.Values.name}}-mariadb
   ports: 
     - name: {{.Values.name}}-mariadb
       port: {{.Values.port_public}}
