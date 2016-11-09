@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: {{.Values.name}}-mariadb
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: database
+    component: {{.Values.name}}
+
+spec:
+  type: ClusterIP
+  selector:
+    name: {{.Values.name}}-mariadb
+  ports: 
+    - name: {{.Values.name}}-mariadb
+      port: {{.Values.port_public}}
