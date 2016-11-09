@@ -93,20 +93,23 @@ class LBaaSv2ServiceBuilder(object):
                 agent['configurations'])
             segment_data = self.disconnected_service.get_network_segment(
                 context, agent_config, network)
-
-
             if segment_data:
 
                 network['provider:segmentation_id'] = segment_data.get('segmentation_id', None)
                 network['provider:network_type'] = segment_data.get('network_type', None)
                 network['provider:physical_network'] = segment_data.get('physical_network', None)
-
             network_map[network_id] = network
 
             # Check if the tenant can create a loadbalancer on the network.
             if (agent and not self._valid_tenant_ids(network,
                                                      loadbalancer.tenant_id,
                                                      agent)):
+                LOG.error("Creating a loadbalancer %s for tenant %s on a"
+                          "  non-shared network %s owned by %s." % (
+                              loadbalancer.id,
+                              loadbalancer.tenant_id,
+                              network['id'],
+                              network['tenant_id']))
                 raise f5_exc.F5MismatchedTenants()
 
             # Get the network VTEPs if the network provider type is
@@ -363,22 +366,25 @@ class LBaaSv2ServiceBuilder(object):
 
     @log_helpers.log_method_call
     def _is_common_network(self, network, agent):
+        common_external_networks = False
+        common_networks = {}
+
         if agent and "configurations" in agent:
             agent_configs = self.deserialize_agent_configurations(
                 agent['configurations'])
 
             if 'common_networks' in agent_configs:
                 common_networks = agent_configs['common_networks']
-            else:
-                common_networks = {}
-            common_external_networks = (
-                agent_configs['f5_common_external_networks'])
 
-            return (network['shared'] or
-                    (network['id'] in common_networks) or
-                    ('router:external' in network and
-                     network['router:external'] and
-                     common_external_networks))
+            if 'f5_common_external_networks' in agent_configs:
+                common_external_networks = (
+                    agent_configs['f5_common_external_networks'])
+
+        return (network['shared'] or
+                (network['id'] in common_networks) or
+                ('router:external' in network and
+                 network['router:external'] and
+                 common_external_networks))
 
     def _valid_tenant_ids(self, network, lb_tenant_id, agent):
         if (network['tenant_id'] == lb_tenant_id):

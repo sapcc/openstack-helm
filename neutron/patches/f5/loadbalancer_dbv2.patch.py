@@ -15,9 +15,12 @@
 
 import re
 
+import netaddr
 from neutron.callbacks import events
 from neutron.callbacks import registry
 from neutron.callbacks import resources
+from neutron.common import ipv6_utils
+from neutron.db import api as db_api
 from neutron.db import common_db_mixin as base_db
 from neutron import manager
 from neutron.plugins.common import constants
@@ -27,9 +30,9 @@ from oslo_db import exception
 from oslo_log import log as logging
 from oslo_utils import excutils
 from oslo_utils import uuidutils
-from sqlalchemy import exc as sqlalchemy_exc
 from sqlalchemy import orm
 from sqlalchemy.orm import exc
+from sqlalchemy.orm import lazyload
 
 from neutron_lbaas._i18n import _
 from neutron_lbaas import agent_scheduler
@@ -60,12 +63,15 @@ class LoadBalancerPluginDbv2(base_db.CommonDbMixin,
         resource = None
         try:
             if for_update:
-#                query = self._model_query(context, model).filter(
+                # To lock the instance for update, return a single
+                # instance, instead of an instance with LEFT OUTER
+                # JOINs that do not work in PostgreSQL
+#                query = self._model_query(context, model).options(
+#                    lazyload('*')
+#                ).filter(
 #                    model.id == id).with_lockmode('update')
 #                resource = query.one()
-
                 resource = self._get_by_id(context, model, id)
-
             else:
                 resource = self._get_by_id(context, model, id)
         except exc.NoResultFound:
@@ -92,33 +98,68 @@ class LoadBalancerPluginDbv2(base_db.CommonDbMixin,
                                            filters=filters)
         return [model_instance for model_instance in query]
 
-    def _create_port_for_load_balancer(self, context, lb_db, ip_address):
-        # resolve subnet and create port
-        subnet = self._core_plugin.get_subnet(context, lb_db.vip_subnet_id)
-        fixed_ip = {'subnet_id': subnet['id']}
-        if ip_address and ip_address != n_const.ATTR_NOT_SPECIFIED:
-            fixed_ip['ip_address'] = ip_address
+    def _create_port_choose_fixed_ip(self, fixed_ips):
+        # Neutron will try to allocate IPv4, IPv6, and IPv6 EUI-64 addresses.
+        # We're most interested in the IPv4 address. An IPv4 vip can be
+        # routable from IPv6. Creating a port by network can be used to manage
+        # the dwindling, fragmented IPv4 address space. IPv6 has enough
+        # addresses that a single subnet can always be created that's big
+        # enough to allocate all vips.
+        for fixed_ip in fixed_ips:
+            ip_address = fixed_ip['ip_address']
+            ip = netaddr.IPAddress(ip_address)
+            if ip.version == 4:
+                return fixed_ip
+        # An EUI-64 address isn't useful as a vip
+        for fixed_ip in fixed_ips:
+            ip_address = fixed_ip['ip_address']
+            ip = netaddr.IPAddress(ip_address)
+            if ip.version == 6 and not ipv6_utils.is_eui64_address(ip_address):
+                return fixed_ip
+        for fixed_ip in fixed_ips:
+            return fixed_ip
+
+    def _create_port_for_load_balancer(self, context, lb_db, ip_address,
+                                       network_id=None):
+        if lb_db.vip_subnet_id:
+            assign_subnet = False
+            # resolve subnet and create port
+            subnet = self._core_plugin.get_subnet(context, lb_db.vip_subnet_id)
+            network_id = subnet['network_id']
+            fixed_ip = {'subnet_id': subnet['id']}
+            if ip_address and ip_address != n_const.ATTR_NOT_SPECIFIED:
+                fixed_ip['ip_address'] = ip_address
+            fixed_ips = [fixed_ip]
+        elif network_id and network_id != n_const.ATTR_NOT_SPECIFIED:
+            assign_subnet = True
+            fixed_ips = n_const.ATTR_NOT_SPECIFIED
+        else:
+            attrs = _("vip_subnet_id or vip_network_id")
+            raise loadbalancerv2.RequiredAttributeNotSpecified(attr_name=attrs)
 
         port_data = {
             'tenant_id': lb_db.tenant_id,
             'name': 'loadbalancer-' + lb_db.id,
-            'network_id': subnet['network_id'],
+            'network_id': network_id,
             'mac_address': n_const.ATTR_NOT_SPECIFIED,
             'admin_state_up': False,
             'device_id': lb_db.id,
             'device_owner': n_const.DEVICE_OWNER_LOADBALANCERV2,
-            'fixed_ips': [fixed_ip]
+            'fixed_ips': fixed_ips
         }
 
         port = self._core_plugin.create_port(context, {'port': port_data})
         lb_db.vip_port_id = port['id']
-        for fixed_ip in port['fixed_ips']:
-            if fixed_ip['subnet_id'] == lb_db.vip_subnet_id:
-                lb_db.vip_address = fixed_ip['ip_address']
-                break
 
-        # explicitly sync session with db
-        context.session.flush()
+        if assign_subnet:
+            fixed_ip = self._create_port_choose_fixed_ip(port['fixed_ips'])
+            lb_db.vip_address = fixed_ip['ip_address']
+            lb_db.vip_subnet_id = fixed_ip['subnet_id']
+        else:
+            for fixed_ip in port['fixed_ips']:
+                if fixed_ip['subnet_id'] == lb_db.vip_subnet_id:
+                    lb_db.vip_address = fixed_ip['ip_address']
+                    break
 
     def _create_loadbalancer_stats(self, context, loadbalancer_id, data=None):
         # This is internal method to add load balancer statistics.  It won't
@@ -274,34 +315,30 @@ class LoadBalancerPluginDbv2(base_db.CommonDbMixin,
         return self.get_loadbalancer(context, lb_db.id)
 
     def create_loadbalancer(self, context, loadbalancer, allocate_vip=True):
+        self._load_id(context, loadbalancer)
+        vip_network_id = loadbalancer.pop('vip_network_id', None)
+        vip_subnet_id = loadbalancer.pop('vip_subnet_id', None)
+        vip_address = loadbalancer.pop('vip_address')
+        if vip_subnet_id and vip_subnet_id != n_const.ATTR_NOT_SPECIFIED:
+            loadbalancer['vip_subnet_id'] = vip_subnet_id
+        loadbalancer['provisioning_status'] = constants.PENDING_CREATE
+        loadbalancer['operating_status'] = lb_const.OFFLINE
+        lb_db = models.LoadBalancer(**loadbalancer)
+
+        # create port outside of lb create transaction since it can sometimes
+        # cause lock wait timeouts
+        if allocate_vip:
+            LOG.debug("Plugin will allocate the vip as a neutron port.")
+            self._create_port_for_load_balancer(context, lb_db,
+                                                vip_address, vip_network_id)
+
         with context.session.begin(subtransactions=True):
-            self._load_id(context, loadbalancer)
-            vip_address = loadbalancer.pop('vip_address')
-            loadbalancer['provisioning_status'] = constants.PENDING_CREATE
-            loadbalancer['operating_status'] = lb_const.OFFLINE
-            lb_db = models.LoadBalancer(**loadbalancer)
             context.session.add(lb_db)
             context.session.flush()
             lb_db.stats = self._create_loadbalancer_stats(
                 context, lb_db.id)
             context.session.add(lb_db)
             context.session.flush()
-
-        # create port outside of lb create transaction since it can sometimes
-        # cause lock wait timeouts
-        if allocate_vip:
-            LOG.debug("Plugin will allocate the vip as a neutron port.")
-            try:
-                self._create_port_for_load_balancer(context, lb_db,
-                                                    vip_address)
-            except Exception:
-                with excutils.save_and_reraise_exception():
-                    try:
-                        context.session.delete(lb_db)
-                    except sqlalchemy_exc.InvalidRequestError:
-                        # Revert already completed.
-                        pass
-                    context.session.flush()
         return data_models.LoadBalancer.from_sqlalchemy_model(lb_db)
 
     def update_loadbalancer(self, context, id, loadbalancer):
@@ -315,7 +352,11 @@ class LoadBalancerPluginDbv2(base_db.CommonDbMixin,
             lb_db = self._get_resource(context, models.LoadBalancer, id)
             context.session.delete(lb_db)
         if delete_vip_port and lb_db.vip_port:
-            self._core_plugin.delete_port(context, lb_db.vip_port_id)
+            self._delete_vip_port(context, lb_db.vip_port_id)
+
+    @db_api.retry_db_errors
+    def _delete_vip_port(self, context, vip_port_id):
+        self._core_plugin.delete_port(context, vip_port_id)
 
     def prevent_lbaasv2_port_deletion(self, context, port_id):
         try:
@@ -758,9 +799,6 @@ class LoadBalancerPluginDbv2(base_db.CommonDbMixin,
             listener_db = self._get_resource(
                 context, models.Listener, listener_id)
 
-            if not listener_db:
-                raise loadbalancerv2.EntityNotFound(
-                    name=models.Listener.NAME, id=listener_id)
             self._load_id(context, l7policy)
 
             l7policy['provisioning_status'] = constants.PENDING_CREATE

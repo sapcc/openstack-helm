@@ -15,5 +15,6 @@ admin_password = {{ .Values.global.neutron_service_password }}
 region={{.Values.global.region}}
 service_name=lbaas
 auth_version = 3
+insecure=True
 
 

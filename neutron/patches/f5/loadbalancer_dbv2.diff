@@ -1,18 +1,20 @@
---- loadbalancer_dbv2.orig.py	2016-10-03 12:32:39.000000000 +0100
-+++ loadbalancer_dbv2.patch.py	2016-10-03 12:33:43.000000000 +0100
-@@ -60,9 +60,12 @@
-         resource = None
-         try:
-             if for_update:
--                query = self._model_query(context, model).filter(
+--- neutron/patches/f5/loadbalancer_dbv2.orig.py	2016-11-09 14:44:44.000000000 +0000
++++ neutron/patches/f5/loadbalancer_dbv2.patch.py	2016-11-09 14:44:44.000000000 +0000
+@@ -66,11 +66,12 @@
+                 # To lock the instance for update, return a single
+                 # instance, instead of an instance with LEFT OUTER
+                 # JOINs that do not work in PostgreSQL
+-                query = self._model_query(context, model).options(
+-                    lazyload('*')
+-                ).filter(
 -                    model.id == id).with_lockmode('update')
 -                resource = query.one()
-+#                query = self._model_query(context, model).filter(
++#                query = self._model_query(context, model).options(
++#                    lazyload('*')
++#                ).filter(
 +#                    model.id == id).with_lockmode('update')
 +#                resource = query.one()
-+
 +                resource = self._get_by_id(context, model, id)
-+
              else:
                  resource = self._get_by_id(context, model, id)
          except exc.NoResultFound:

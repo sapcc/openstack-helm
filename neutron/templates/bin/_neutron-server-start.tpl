@@ -13,13 +13,10 @@ function process_config {
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/networking_cisco/plugins/cisco/device_manager/plugging_drivers/hw_vlan_trunking_driver.py /cisco-patches/hw-vlan-trunking-driver.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/networking_cisco/plugins/cisco/db/device_manager/hosting_device_manager_db.py /cisco-patches/hosting-device-manager-db.diff
 
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/db/loadbalancer/loadbalancer_dbv2.py /f5-patches/loadbalancer-dbv2.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/common/keystone.py /f5-patches/keystone.diff
-
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5lbaasdriver/v2/bigip/service_builder.py /f5-patches/service-builder.diff
-
-
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/plugins/ml2/extensions/dns_integration.py /neutron-patches/dns-integration.diff
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/db/loadbalancer/loadbalancer_dbv2.py /f5-patches/loadbalancer-dbv2.diff
+
 
     cp /neutron-etc/neutron.conf  /etc/neutron/neutron.conf
     cp /neutron-etc/logging.conf  /etc/neutron/logging.conf
