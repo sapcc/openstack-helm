@@ -7,6 +7,7 @@ set -e
 function process_config {
     cp /nova-etc/nova.conf /etc/nova/nova.conf
     cp /nova-etc/logging.conf  /etc/nova/logging.conf
+    cp /nova-etc/policy.json  /etc/nova/policy.json
 }
 
 
@@ -18,5 +19,3 @@ function start_application {
 
 process_config
 start_application
-
-
