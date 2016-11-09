@@ -1,7 +1,7 @@
 [loggers]
 #keys = root, neutron,neutron_lbaas, networkingaci,networkingdvs,networkingcisco,networkingarista,networking_f5_ml2,f5lbaasdriver,f5_openstack_agent
 
-keys = root, neutron,neutron_lbaas, networkingaci,f5lbaasdriver,f5_openstack_agent
+keys = {{.Values.loggers_keys}}
 
 [handlers]
 keys = stderr, stdout, null, sentry

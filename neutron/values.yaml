@@ -30,5 +30,7 @@ image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
 
+loggers_keys: 'root, neutron'
+
 postgres:
   name: neutron
