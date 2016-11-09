@@ -5,6 +5,7 @@
 
 name: DEFINED-IN-COMPONENT-CHART
 image: mariadb:10.1
+port_public: 3306
 #
 #root_password: 
 #initdb_configmap:
