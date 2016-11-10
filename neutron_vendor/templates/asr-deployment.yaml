@@ -24,8 +24,6 @@ spec:
       annotations:
         pod.beta.kubernetes.io/hostname:  asr-pet
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: neutron-cisco-asr
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
