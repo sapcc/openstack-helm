@@ -17,7 +17,7 @@ state_path = /var/lib/designate
 log_config_append = /etc/designate/logging.conf
 
 # Driver used for issuing notifications
-notification_driver = messaging
+notification_driver = messagingv2
 
 # Notification Topics
 notification_topics = notifications

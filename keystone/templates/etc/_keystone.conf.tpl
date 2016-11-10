@@ -7,7 +7,7 @@ logging_context_format_string = %(process)d %(levelname)s %(name)s [%(request_id
 logging_default_format_string = %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s
 logging_exception_prefix = %(process)d ERROR %(name)s %(instance)s
 
-notification_driver = messaging
+notification_driver = messagingv2
 rpc_backend = rabbit
 
 [cache]
