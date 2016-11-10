@@ -22,8 +22,6 @@ spec:
       labels:
         name: glance
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: glance-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api-m3:{{.Values.image_version_glance_api_m3}}

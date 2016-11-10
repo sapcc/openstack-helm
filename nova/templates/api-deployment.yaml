@@ -22,8 +22,6 @@ spec:
       labels:
         name: nova-api
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: nova-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api-m3:{{.Values.image_version_nova_api_m3}}

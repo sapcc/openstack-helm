@@ -24,8 +24,6 @@ spec:
       annotations:
         chart-version: {{.Chart.Version}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: barbican-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-barbican-m3:{{.Values.image_version_barbican_m3}}

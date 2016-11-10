@@ -24,8 +24,6 @@ spec:
       annotations:
         chart-version: {{.Chart.Version}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: designate-central
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-central-m3:{{.Values.image_version_designate_central_m3}}

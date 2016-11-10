@@ -22,8 +22,6 @@ spec:
       labels:
         name: manila-scheduler
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: manila-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler-m3:{{.Values.image_version_manila_scheduler_m3}}

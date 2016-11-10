@@ -22,8 +22,6 @@ spec:
       labels:
         name: nova-scheduler
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: nova-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-scheduler:{{.Values.image_version_nova_scheduler}}

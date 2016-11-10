@@ -21,8 +21,6 @@ spec:
         name: postgres-{{.Values.name}}
     spec:
       hostPID: false
-      nodeSelector:
-        zone: farm
       volumes:
         - name: postgres-persistent-storage
           persistentVolumeClaim:
