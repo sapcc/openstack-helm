@@ -20,11 +20,6 @@ port_metrics: '9102'
 
 sentry_dsn_key: DEFINE-IN-REGION-CHART
 
-aci_apic_hosts: DEFINED-IN-REGION-CHART
-aci_apic_user: DEFINED-IN-REGION-CHART
-aci_apic_password: DEFINED-IN-REGION-CHART
-aci_apic_tenant_name: DEFINED-IN-REGION-CHART
-
 image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
 image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART

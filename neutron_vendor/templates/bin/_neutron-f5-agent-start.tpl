@@ -11,7 +11,7 @@ function process_config {
     cp /neutron-etc/neutron.conf /etc/neutron/neutron.conf
     cp /neutron-etc/logging.conf  /etc/neutron/logging.conf
     cp /neutron-etc/neutron-lbaas.conf /etc/neutron/neutron_lbaas.conf
-    cp /neutron-etc/f5-oslbaasv2-agent.ini /etc/neutron/f5-oslbaasv2-agent.ini
+    cp /neutron-etc-vendor/f5-oslbaasv2-agent.ini /etc/neutron/f5-oslbaasv2-agent.ini
 }
 
 

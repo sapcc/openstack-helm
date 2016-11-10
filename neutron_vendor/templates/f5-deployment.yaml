@@ -45,6 +45,8 @@ spec:
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc
+            - mountPath: /neutron-etc-vendor
+              name: neutron-etc-vendor
             - mountPath: /f5-patches
               name: f5-patches
             - mountPath: /container.init
@@ -53,6 +55,9 @@ spec:
         - name: neutron-etc
           configMap:
             name: neutron-etc
+        - name: neutron-etc-vendor
+          configMap:
+            name: neutron-etc-vendor
         - name: f5-patches
           configMap:
             name: f5-patches
@@ -61,5 +66,5 @@ spec:
             claimName: development-pvclaim
         - name: container-init
           configMap:
-            name: neutron-bin
+            name: neutron-bin-vendor
 

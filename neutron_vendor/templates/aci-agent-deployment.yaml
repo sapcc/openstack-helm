@@ -46,6 +46,8 @@ spec:
               name: development
             - mountPath: /neutron-etc
               name: neutron-etc
+            - mountPath: /neutron-etc-vendor
+              name: neutron-etc-vendor
             - mountPath: /neutron-etc-region
               name: neutron-etc-region
             - mountPath: /container.init
@@ -60,7 +62,10 @@ spec:
         - name: neutron-etc-region
           configMap:
             name: neutron-etc-region
+        - name: neutron-etc-vendor
+          configMap:
+            name: neutron-etc-vendor
         - name: container-init
           configMap:
-            name: neutron-bin
+            name: neutron-bin-vendor
 

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neutron-etc-vendor
+  labels:
+    system: openstack
+    type: configuration
+    component: neutron
+
+data:
+  cisco-cfg-agent.ini: |
+{{ tuple "etc/_cisco-cfg-agent.ini.tpl" . | include "template" | indent 4 }}
+  cisco-device-manager-plugin.ini: |
+{{ tuple "etc/_cisco-device-manager-plugin.ini.tpl" . | include "template" | indent 4 }}
+  cisco-router-plugin.ini: |
+{{ tuple "etc/_cisco-router-plugin.ini.tpl" . | include "template" | indent 4 }}
+  f5-oslbaasv2-agent.ini: |
+{{ tuple "etc/_f5-oslbaasv2-agent.ini.tpl" . | include "template" | indent 4 }}
+  ml2-conf-arista.ini: |
+{{ tuple "etc/_ml2-conf-arista.ini.tpl" . | include "template" | indent 4 }}
+  ml2-conf-asr.ini: |
+{{ tuple "etc/_ml2-conf-asr.ini.tpl" . | include "template" | indent 4 }}
+  ml2-conf-f5.ini: |
+{{ tuple "etc/_ml2-conf-f5.ini.tpl" . | include "template" | indent 4 }}
+  ml2-conf-manila.ini: |
+{{ tuple "etc/_ml2-conf-manila.ini.tpl" . | include "template" | indent 4 }}
+
+
+

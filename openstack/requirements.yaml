@@ -35,6 +35,9 @@ dependencies:
   - name: neutron
     repository: http://localhost:8879/charts
     version: 0.1.0
+  - name: neutron_vendor
+    repository: http://localhost:8879/charts
+    version: 0.1.0
   - name: designate
     repository: http://localhost:8879/charts
     version: 0.1.0

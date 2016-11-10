@@ -15,7 +15,7 @@ function process_config {
 
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5lbaasdriver/v2/bigip/service_builder.py /f5-patches/service-builder.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/plugins/ml2/extensions/dns_integration.py /neutron-patches/dns-integration.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/db/loadbalancer/loadbalancer_dbv2.py /f5-patches/loadbalancer-dbv2.diff
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/db/loadbalancer/loadbalancer_dbv2.py /neutron-patches/loadbalancer-dbv2.diff
 
 
     cp /neutron-etc/neutron.conf  /etc/neutron/neutron.conf
@@ -25,16 +25,17 @@ function process_config {
 
     cp /neutron-etc-region/ml2-conf-aci.ini  /etc/neutron/plugins/ml2/ml2-conf-aci.ini
 
-    cp /neutron-etc/ml2-conf-arista.ini  /etc/neutron/plugins/ml2/ml2_conf_arista.ini
-    cp /neutron-etc/ml2-conf-manila.ini  /etc/neutron/plugins/ml2/ml2_conf_manila.ini
-    cp /neutron-etc/ml2-conf-asr.ini  /etc/neutron/plugins/ml2/ml2_conf_asr.ini
-    cp /neutron-etc/ml2-conf-f5.ini  /etc/neutron/plugins/ml2/ml2_conf_f5.ini
+    cp /neutron-etc-vendor/ml2-conf-arista.ini  /etc/neutron/plugins/ml2/ml2_conf_arista.ini
+    cp /neutron-etc-vendor/ml2-conf-manila.ini  /etc/neutron/plugins/ml2/ml2_conf_manila.ini
+    cp /neutron-etc-vendor/ml2-conf-asr.ini  /etc/neutron/plugins/ml2/ml2_conf_asr.ini
+    cp /neutron-etc-vendor/ml2-conf-f5.ini  /etc/neutron/plugins/ml2/ml2_conf_f5.ini
+
     cp /neutron-etc/neutron-policy.json  /etc/neutron/policy.json
 
     mkdir /etc/neutron/plugins/cisco
 
-    cp /neutron-etc/cisco-device-manager-plugin.ini   /etc/neutron/plugins/cisco/cisco_device_manager_plugin.ini
-    cp /neutron-etc/cisco-router-plugin.ini   /etc/neutron/plugins/cisco/cisco_router_plugin.ini
+    cp /neutron-etc-vendor/cisco-device-manager-plugin.ini   /etc/neutron/plugins/cisco/cisco_device_manager_plugin.ini
+    cp /neutron-etc-vendor/cisco-router-plugin.ini   /etc/neutron/plugins/cisco/cisco_router_plugin.ini
 }
 
 function bootstrap_db {

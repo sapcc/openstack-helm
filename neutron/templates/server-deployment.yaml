@@ -57,6 +57,8 @@ spec:
               name: development
             - mountPath: /neutron-etc
               name: neutron-etc
+            - mountPath: /neutron-etc-vendor
+              name: neutron-etc-vendor
             - mountPath: /neutron-etc-region
               name: neutron-etc-region
             - mountPath: /neutron-patches
@@ -80,6 +82,9 @@ spec:
         - name: neutron-etc
           configMap:
             name: neutron-etc
+        - name: neutron-etc-vendor
+          configMap:
+            name: neutron-etc-vendor
         - name: neutron-etc-region
           configMap:
             name: neutron-etc-region
