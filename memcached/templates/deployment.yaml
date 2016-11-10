@@ -22,8 +22,6 @@ spec:
       labels:
         name: memcached
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: memcached
           image: memcached

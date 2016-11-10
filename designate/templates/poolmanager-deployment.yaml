@@ -24,8 +24,6 @@ spec:
       annotations:
         chart-version: {{.Chart.Version}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: designate-poolmanager
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-poolmanager-m3:{{.Values.image_version_designate_poolmanager_m3}}

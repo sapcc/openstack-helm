@@ -22,8 +22,6 @@ spec:
       labels:
         name: neutron-server
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: neutron-server
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}

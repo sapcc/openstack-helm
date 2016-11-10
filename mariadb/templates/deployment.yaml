@@ -19,8 +19,6 @@ spec:
         app: {{.Values.name}}-mariadb
 
     spec:
-      nodeSelector:
-        zone: farm
       containers:
       - name: mariadb
         image: {{.Values.image}}

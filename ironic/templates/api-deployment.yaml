@@ -22,8 +22,6 @@ spec:
       labels:
         name: ironic-api
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: ironic-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_api}}

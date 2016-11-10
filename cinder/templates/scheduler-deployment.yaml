@@ -22,8 +22,6 @@ spec:
       labels:
         name: cinder-scheduler
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: cinder-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.image_version_cinder_scheduler}}
