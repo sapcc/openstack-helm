@@ -22,8 +22,6 @@ spec:
       labels:
         name: manila-api
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: manila-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-api-m3:{{.Values.image_version_manila_api_m3}}

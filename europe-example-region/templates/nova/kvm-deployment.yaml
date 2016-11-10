@@ -18,28 +18,13 @@ spec:
       labels:
         name: nova-compute-minion1
       annotations:
-        scheduler.alpha.kubernetes.io/affinity: >
-            {
-            "nodeAffinity": {
-              "requiredDuringSchedulingIgnoredDuringExecution": {
-                "nodeSelectorTerms": [
-                  {
-                    "matchExpressions": [
-                      {
-                        "key": "kubernetes.io/hostname",
-                        "operator": "In",
-                        "values": ["minion1.kube.your.domain"]
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-            }
+        scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"hypervisor","effect":"NoSchedule"}]'
     spec:
       hostNetwork: true
       hostPID: true
       hostIPC: true
+      nodeSelector:
+        kubernetes.io/hostname: minion1.kube.your.domain
       containers:
         - name: nova-compute-minion1
           image: {{.Values.openstack.global.image_repository}}/{{.Values.openstack.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.openstack.nova.image_version_nova_compute_m3}}

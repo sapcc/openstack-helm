@@ -22,8 +22,6 @@ spec:
       labels:
         name: nova-conductor
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: nova-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-conductor:{{.Values.image_version_nova_conductor}}

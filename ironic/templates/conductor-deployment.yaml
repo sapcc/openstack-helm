@@ -22,8 +22,6 @@ spec:
       labels:
         name: ironic-conductor
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: ironic-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}

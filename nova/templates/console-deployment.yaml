@@ -23,8 +23,6 @@ spec:
         name: nova-console
 
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: nova-consoleauth
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth}}

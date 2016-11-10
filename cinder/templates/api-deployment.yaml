@@ -22,8 +22,6 @@ spec:
       labels:
         name: cinder-api
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: cinder-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api-m3:{{.Values.image_version_cinder_api_m3}}

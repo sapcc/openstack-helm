@@ -22,8 +22,6 @@ spec:
       labels:
         name: ironic-inspector
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: ironic-inspector
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}

@@ -24,8 +24,6 @@ spec:
       annotations:
         chart-version: {{.Chart.Version}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: horizon
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-horizon-m3:{{.Values.image_version_horizon_m3}}

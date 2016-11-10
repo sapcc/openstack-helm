@@ -19,8 +19,6 @@ spec:
       labels:
         name: rabbitmq
     spec:
-      nodeSelector:
-        zone: farm
       volumes:
         - name: rabbitmq-persistent-storage
           persistentVolumeClaim:
