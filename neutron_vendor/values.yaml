@@ -1,0 +1,17 @@
+# Default values for neutron-sap.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  image_namespace: REQUIRED
+  image_repository: REQUIRED
+
+debug: "True"
+
+image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
+
+aci_apic_hosts: DEFINED-IN-REGION-CHART
+aci_apic_user: DEFINED-IN-REGION-CHART
+aci_apic_password: DEFINED-IN-REGION-CHART
+aci_apic_tenant_name: DEFINED-IN-REGION-CHART
+
+sentry_dsn_key: DEFINE-IN-REGION-CHART

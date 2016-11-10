@@ -42,6 +42,8 @@ spec:
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc
+            - mountPath: /neutron-etc-vendor
+              name: neutron-etc-vendor
             - mountPath: /cisco-patches
               name: cisco-patches
             - mountPath: /container.init
@@ -50,10 +52,13 @@ spec:
         - name: neutron-etc
           configMap:
             name: neutron-etc
+        - name: neutron-etc-vendor
+          configMap:
+            name: neutron-etc-vendor
         - name: cisco-patches
           configMap:
             name: cisco-patches
         - name: container-init
           configMap:
-            name: neutron-bin
+            name: neutron-bin-vendor
 

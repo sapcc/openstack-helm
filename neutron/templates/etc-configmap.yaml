@@ -8,32 +8,16 @@ metadata:
     component: neutron
 
 data:
-  cisco-cfg-agent.ini: |
-{{ tuple "etc/_cisco-cfg-agent.ini.tpl" . | include "template" | indent 4 }}
-  cisco-device-manager-plugin.ini: |
-{{ tuple "etc/_cisco-device-manager-plugin.ini.tpl" . | include "template" | indent 4 }}
-  cisco-router-plugin.ini: |
-{{ tuple "etc/_cisco-router-plugin.ini.tpl" . | include "template" | indent 4 }}
   dhcp-agent.ini: |
 {{ tuple "etc/_dhcp-agent.ini.tpl" . | include "template" | indent 4 }}
   dnsmasq.conf: |
 {{ tuple "etc/_dnsmasq.conf.tpl" . | include "template" | indent 4 }}
-  f5-oslbaasv2-agent.ini: |
-{{ tuple "etc/_f5-oslbaasv2-agent.ini.tpl" . | include "template" | indent 4 }}
   l3-agent.ini: |
 {{ tuple "etc/_l3-agent.ini.tpl" . | include "template" | indent 4 }}
   metadata-agent.ini: |
 {{ tuple "etc/_metadata-agent.ini.tpl" . | include "template" | indent 4 }}
   ml2-conf.ini: |
 {{ tuple "etc/_ml2-conf.ini.tpl" . | include "template" | indent 4 }}
-  ml2-conf-arista.ini: |
-{{ tuple "etc/_ml2-conf-arista.ini.tpl" . | include "template" | indent 4 }}
-  ml2-conf-asr.ini: |
-{{ tuple "etc/_ml2-conf-asr.ini.tpl" . | include "template" | indent 4 }}
-  ml2-conf-f5.ini: |
-{{ tuple "etc/_ml2-conf-f5.ini.tpl" . | include "template" | indent 4 }}
-  ml2-conf-manila.ini: |
-{{ tuple "etc/_ml2-conf-manila.ini.tpl" . | include "template" | indent 4 }}
   neutron.conf: |
 {{ tuple "etc/_neutron.conf.tpl" . | include "template" | indent 4 }}
   neutron-lbaas.conf: |

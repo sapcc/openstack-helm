@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 
 metadata:
-  name: neutron-aci-agent
+  name: neutron-f5-agent
   labels:
     system: openstack
     type: backend
@@ -16,16 +16,16 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-      name: neutron-aci-agent
+      name: neutron-f5-agent
   template:
     metadata:
       labels:
-        name: neutron-aci-agent
+        name: neutron-f5-agent
       annotations:
-        pod.beta.kubernetes.io/hostname:  aci-agent-pet
+        pod.beta.kubernetes.io/hostname:  f5-pet
     spec:
       containers:
-        - name: neutron-aci-agent
+        - name: neutron-f5-agent
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
@@ -33,32 +33,36 @@ spec:
           command:
             - bash
           args:
-            - /container.init/neutron-aci-agent-start
+            - /container.init/neutron-f5-agent-start
+
           env:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
               value: "{{ include "sentry_dsn_neutron" . }}"
           volumeMounts:
-            - mountPath: /development
-              name: development
             - mountPath: /neutron-etc
               name: neutron-etc
-            - mountPath: /neutron-etc-region
-              name: neutron-etc-region
+            - mountPath: /neutron-etc-vendor
+              name: neutron-etc-vendor
+            - mountPath: /f5-patches
+              name: f5-patches
             - mountPath: /container.init
               name: container-init
       volumes:
-        - name: development
-          persistentVolumeClaim:
-            claimName: development-pvclaim
         - name: neutron-etc
           configMap:
             name: neutron-etc
-        - name: neutron-etc-region
+        - name: neutron-etc-vendor
           configMap:
-            name: neutron-etc-region
+            name: neutron-etc-vendor
+        - name: f5-patches
+          configMap:
+            name: f5-patches
+        - name: development
+          persistentVolumeClaim:
+            claimName: development-pvclaim
         - name: container-init
           configMap:
-            name: neutron-bin
+            name: neutron-bin-vendor
 

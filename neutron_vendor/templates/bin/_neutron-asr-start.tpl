@@ -16,7 +16,7 @@ function process_config {
     cp /neutron-etc/logging.conf /etc/neutron/logging.conf
 
     mkdir /etc/neutron/plugins/cisco
-    cp /neutron-etc/cisco-cfg-agent.ini /etc/neutron/plugins/cisco/cisco_cfg_agent.ini
+    cp /neutron-etc-vendor/cisco-cfg-agent.ini /etc/neutron/plugins/cisco/cisco_cfg_agent.ini
 }
 
 
