@@ -1,6 +1,6 @@
 {
     "context_is_cloud_admin":  "role:cloud_compute_admin",
-    "context_is_admin":  "rule:context_is_cloud_admin",
+    "context_is_admin":  "rule:context_is_cloud_admin or is_admin:True",
     "owner": "project_id:%(project_id)s",
     "member": "role:member and rule:owner",
     "viewer": "role:compute_viewer and rule:owner",
@@ -153,7 +153,7 @@
     "compute_extension:floating_ips_bulk": "rule:context_is_admin",
     "compute_extension:fping": "rule:context_is_editor",
     "compute_extension:fping:all_tenants": "rule:context_is_admin",
-    "compute_extension:hide_server_addresses": "not rule:context_is_admin",
+    "compute_extension:hide_server_addresses": "is_admin:False",
     "compute_extension:hosts": "rule:context_is_admin",
     "compute_extension:hypervisors": "rule:context_is_admin",
     "compute_extension:image_size": "rule:context_is_editor",
