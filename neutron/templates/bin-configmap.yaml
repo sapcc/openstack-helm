@@ -7,6 +7,8 @@ metadata:
     type: configuration
     component: neutron
 data:
+  neutron-dhcp-agent-start: |
+{{ tuple "bin/_neutron-dhcp-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-l3-agent-start: |
 {{ tuple "bin/_neutron-l3-agent-start.tpl" . | include "template" | indent 4 }}
   neutron-metadata-agent-start: |
