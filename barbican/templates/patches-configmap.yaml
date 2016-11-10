@@ -12,7 +12,5 @@ data:
 {{ .Files.Get "patches/barbican-api.diff" | indent 4 }}
   consumers.diff: |
 {{ .Files.Get "patches/consumers.diff" | indent 4 }}
-  models.diff: |
-{{ .Files.Get "patches/models.diff" | indent 4 }}
 
 
