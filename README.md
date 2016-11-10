@@ -52,3 +52,53 @@ with this [commit](https://github.com/kubernetes/helm/commit/2eed3f0464ff88d1c83
 The 'build' process is a little cumbersome, we wanted to keep config, patches and custom start scripts in plain text,
 rather than directly in a template. We hope this (https://github.com/kubernetes/helm/issues/950) feature request
 will simplify our processing.
+
+## Node Affinity
+
+We have two use cases for exclusive nodes:
+
+  * Hypervisor
+  * Network
+
+Only specific pods should be scheduled to these nodes. We will achieve this by
+tainting the nodes:
+
+```
+kubectl taint network0 species=network:NoSchedule
+kubectl taint network1 species=network:NoSchedule
+kubectl taint minion1  species=hypervisor:NoSchedule
+```
+
+Now nothing can be scheduled there. Pods that should be able to go to this need to
+have a toleration added.
+
+```
+annotations:
+  scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"hypervisor"}]'
+```
+
+These pods could still go to any node though. We need to confine KVM pods to
+the hyperivsors and neutron agents to their dedicated network nodes. We do this
+by labeling the nodes:
+
+```
+kubectl label network0 species=network
+kubectl label minion1  species=hypervisor
+```
+
+Then add selectors to the pods:
+
+```
+spec:
+  nodeSelector:
+    species: hypervisor
+    kubernetes.io/hostname: minion1
+```
+
+To lock pods onto a particular node we do:
+
+```
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: minion1
+```
