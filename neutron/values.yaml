@@ -21,9 +21,15 @@ port_metrics: '9102'
 sentry_dsn_key: DEFINE-IN-REGION-CHART
 
 image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
+image_version_neutron_dhcp_agent: DEFINED-IN-REGION-CHART
+image_version_neutron_metadata_agent: DEFINED-IN-REGION-CHART
+image_version_neutron_l3_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
+
+agent_host0: DEFINED-IN-REGION-CHART
+agent_host1: DEFINED-IN-REGION-CHART
 
 loggers_keys: 'root, neutron'
 
