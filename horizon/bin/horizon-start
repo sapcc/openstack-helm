@@ -5,7 +5,8 @@
 function process_config {
     cp /horizon-etc/horizon.conf  /etc/apache2/conf-enabled/horizon.conf
     cp /horizon-etc/local-settings /etc/openstack-dashboard/local_settings
-    cp /horizon-etc/policyv3.json /etc/openstack-dashboard/keystone_policy.json
+    cp /horizon-etc/keystone-policy.json /etc/openstack-dashboard/keystone_policy.json
+    cp /horizon-etc/nova-policy.json /etc/openstack-dashboard/nova_policy.json
 }
 
 function _start_application {
