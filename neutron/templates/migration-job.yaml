@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: neutron-migration
+  labels:
+    system: openstack
+    type: configuration
+    component: neutron
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: neutron-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-neutron"
+          volumeMounts:
+            - mountPath: /neutron-etc
+              name: neutron-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: neutron-etc
+          configMap:
+            name: neutron-etc
+        - name: container-init
+          configMap:
+            name: neutron-bin

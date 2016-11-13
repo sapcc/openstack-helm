@@ -29,10 +29,16 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
-            - /container.init/nova-api-start
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/nova-api-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "nova-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-nova,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: STATSD_HOST

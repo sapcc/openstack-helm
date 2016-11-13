@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+
+
+function process_config {
+    cp /manila-etc/manila.conf  /etc/manila/manila.conf
+    if [[ ! -d /var/log/manila ]] ; then
+        mkdir /var/log/manila
+    fi
+}
+
+process_config
+manila-manage db sync

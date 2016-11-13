@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+
+
+function process_config {
+    cp /ironic-etc/ironic.conf  /etc/ironic/ironic.conf
+}
+
+process_config
+ironic-dbsync --config-file /etc/ironic/ironic.conf create_schema

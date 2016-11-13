@@ -29,10 +29,16 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
-            - /container.init/manila-api-start
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/manila-api-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "manila-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-manila,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
           livenessProbe:

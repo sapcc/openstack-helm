@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cinder-migration
+  labels:
+    system: openstack
+    type: configuration
+    component: cinder
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: cinder-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api-m3:{{.Values.image_version_cinder_api_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-cinder"
+          volumeMounts:
+            - mountPath: /cinder-etc
+              name: cinder-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: cinder-etc
+          configMap:
+            name: cinder-etc
+        - name: container-init
+          configMap:
+            name: cinder-bin

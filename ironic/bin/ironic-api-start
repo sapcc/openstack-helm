@@ -10,12 +10,6 @@ function process_config {
     cp /ironic-etc/ironic.conf  /etc/ironic/ironic.conf
 }
 
-function bootstrap_db {
-
-    ironic-dbsync --config-file /etc/ironic/ironic.conf create_schema
-}
-
-
 function start_application {
 
    exec /var/lib/kolla/venv/bin/ironic-api
@@ -24,7 +18,6 @@ function start_application {
 
 
 process_config
-#bootstrap_db
 start_application
 
 

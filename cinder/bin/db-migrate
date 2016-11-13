@@ -4,19 +4,12 @@ set -e
 
 . /container.init/common.sh
 
+
+
 function process_config {
     cp /cinder-etc/cinder.conf /etc/cinder/cinder.conf
     cp /cinder-etc/logging.conf /etc/cinder/logging.conf
 }
 
-
-function start_application {
-    exec /var/lib/kolla/venv/bin/cinder-api
-
-}
-
-
 process_config
-start_application
-
-
+cinder-manage db sync

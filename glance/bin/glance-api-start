@@ -14,11 +14,6 @@ function process_config {
     cp /glance-etc/policy.json /etc/glance/policy.json
 }
 
-function bootstrap_db {
-    glance-manage db_sync
-}
-
-
 function _start_application {
     #chown -R glance: /glance_store
     exec  /var/lib/kolla/venv/bin/glance-api
@@ -26,5 +21,4 @@ function _start_application {
 
 
 process_config
-#bootstrap_db
 start_application

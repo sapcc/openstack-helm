@@ -30,9 +30,17 @@ spec:
             privileged: true
           command:
             - bash
-          args:
-            - /container.init/cinder-api-start
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/cinder-api-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "cinder-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-cinder,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: STATSD_HOST

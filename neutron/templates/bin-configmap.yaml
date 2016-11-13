@@ -21,6 +21,8 @@ data:
 {{ tuple "bin/_neutron-ovs-start.tpl" . | include "template" | indent 4 }}
   neutron-server-start: |
 {{ tuple "bin/_neutron-server-start.tpl" . | include "template" | indent 4 }}
+  db-migrate: |
+{{ tuple "bin/_db-migrate.tpl" . | include "template" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

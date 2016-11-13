@@ -31,15 +31,20 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
-            - /container.init/barbican-api-start
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: {{.Values.global.barbican_api_port_internal}}
-#            initialDelaySeconds: 15
-#            timeoutSeconds: 5
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/barbican-api-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-barbican,rabbitmq"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{.Values.global.barbican_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
           ports:
             - name: barbican-api
               containerPort: {{.Values.global.barbican_api_port_internal}}
