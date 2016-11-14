@@ -27,9 +27,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/ironic-conductor-start
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/ironic-conductor-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "ironic-api,rabbitmq"
           volumeMounts:
             - mountPath: /ironic-etc
               name: ironic-etc

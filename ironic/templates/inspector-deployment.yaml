@@ -27,10 +27,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/ironic-inspector-start
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/ironic-inspector-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "ironic-api,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "true"
           volumeMounts:

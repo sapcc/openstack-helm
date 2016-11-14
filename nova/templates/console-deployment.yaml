@@ -28,9 +28,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/nova-consoleauth-start
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/nova-consoleauth-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "nova-api"
           volumeMounts:
             - mountPath: /nova-etc
               name: nova-etc
@@ -40,9 +45,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/nova-novncproxy-start
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/nova-novncproxy-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "nova-api"
           volumeMounts:
             - mountPath: /nova-etc
               name: nova-etc
@@ -52,9 +62,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.image_version_nova_spicehtml5proxy}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/nova-spicehtml5proxy-start
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/nova-spicehtml5proxy-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "nova-api"
           volumeMounts:
             - mountPath: /nova-etc
               name: nova-etc

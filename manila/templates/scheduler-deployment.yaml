@@ -27,10 +27,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler-m3:{{.Values.image_version_manila_scheduler_m3}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/manila-scheduler-start
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/manila-scheduler-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "manila-api,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
           volumeMounts:

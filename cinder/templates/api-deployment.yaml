@@ -29,8 +29,6 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND

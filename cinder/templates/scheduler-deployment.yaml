@@ -27,10 +27,14 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.image_version_cinder_scheduler}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
-            - /container.init/cinder-scheduler-start
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/cinder-scheduler-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "cinder-api,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
