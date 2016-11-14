@@ -180,6 +180,23 @@ global:
   barbican_service_user: barbican
   barbican_service_password: DEFINED-IN-REGION-CHART
 
+
+  keystone_router_api_endpoint_protocol_public: https
+  keystone_router_api_port_public: '443'
+
+  lyra_api_endpoint_protocol_public: https
+  lyra_api_port_public: '443'
+
+  arc_api_endpoint_protocol_public: https
+  arc_api_port_public: '443'
+
+  billing_api_endpoint_protocol_public: https
+  billing_api_port_public: '64000'
+
+  webcli_api_endpoint_protocol_public: https
+  webcli_api_port_public: '443'
+
+
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
 nova:

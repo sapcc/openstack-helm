@@ -76,4 +76,12 @@
 {{define "designate_api_endpoint_host_public"}}dns-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
 
+{{define "arc_api_endpoint_host_public"}}arc.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "lyra_api_endpoint_host_public"}}lyra.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "billing_api_endpoint_host_public"}}sapcc-billing.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "webcli_api_endpoint_host_public"}}webcli.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define keystone_router_api_endpoint_host_public"}}identity.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+
+
+
 {{define "swift_endpoint_host"}}objectstore.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
