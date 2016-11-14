@@ -35,17 +35,13 @@ spec:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
-              value: "keystone-migration"
+              value: "keystone-migration,keystone-bootstrap"
             - name: DEPENDENCY_SERVICE
               value: "postgres-keystone,rabbitmq"
             - name: DEBUG_CONTAINER
           volumeMounts:
             - mountPath: /keystone-etc
               name: keystone-etc
-            - mountPath: /cluster-config
-              name: cluster-config
-            - mountPath: /cluster-secret
-              name: cluster-secret
             - mountPath: /keystone-config
               name: keystone-config
             - mountPath: /container.init
@@ -54,12 +50,6 @@ spec:
         - name: keystone-etc
           configMap:
             name: keystone-etc
-        - name: cluster-config
-          configMap:
-            name: cluster-config
-        - name: cluster-secret
-          secret:
-            secretName: cluster-secret
         - name: keystone-config
           configMap:
             name: keystone-seed

@@ -25,7 +25,7 @@ fi
 export OS_AUTH_URL=${URL_BASE}/v3
 export OS_AUTH_PLUGIN=v3password
 export OS_USERNAME={{.Values.bootstrap_user}}
-export OS_PASSWORD={{.Values.keystone_bootstrap_password}}
+export OS_PASSWORD={{.Values.bootstrap_password}}
 export OS_USER_DOMAIN_ID=default
 #export OS_PROJECT_NAME=admin
 #export OS_PROJECT_DOMAIN_ID=default

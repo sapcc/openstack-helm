@@ -81,6 +81,10 @@
 {{define "billing_api_endpoint_host_public"}}sapcc-billing.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "webcli_api_endpoint_host_public"}}webcli.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "keystone_router_api_endpoint_host_public"}}identity.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "monasca_api_endpoint_host_admin"}}monasca-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "monasca_api_endpoint_host_internal"}}monasca-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "monasca_api_endpoint_host_public"}}monasca-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+
 
 
 

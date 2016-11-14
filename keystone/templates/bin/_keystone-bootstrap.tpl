@@ -2,7 +2,9 @@
 
 . /container.init/common.sh
 
-URL_BASE=http://localhost:{{.Values.global.keystone_api_port_admin}}
+cp /keystone-etc/keystone.conf  /etc/keystone/keystone.conf
+
+URL_BASE={{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{.Values.global.keystone_api_port_admin}}
 
 echo "Waiting for keystone application.."
 
