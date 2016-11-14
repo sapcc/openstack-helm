@@ -23,8 +23,6 @@ spec:
       labels:
         name: keystone-seeder
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: keystone-seeder
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone-m3:{{.Values.image_version_keystone_m3}}
