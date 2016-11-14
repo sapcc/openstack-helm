@@ -80,7 +80,7 @@
 {{define "lyra_api_endpoint_host_public"}}lyra.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "billing_api_endpoint_host_public"}}sapcc-billing.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "webcli_api_endpoint_host_public"}}webcli.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
-{{define keystone_router_api_endpoint_host_public"}}identity.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "keystone_router_api_endpoint_host_public"}}identity.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
 
 
