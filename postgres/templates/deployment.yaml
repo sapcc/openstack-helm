@@ -40,7 +40,7 @@ spec:
       containers:
         - name: postgres
           image: hub.global.cloud.sap/monsoon/postgres:9.4
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             exec:
               command:
