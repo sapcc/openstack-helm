@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: glance-migration
+  labels:
+    system: openstack
+    type: configuration
+    component: glance
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: glance-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api-m3:{{.Values.image_version_glance_api_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-glance"
+          volumeMounts:
+            - mountPath: /glance-etc
+              name: glance-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: glance-etc
+          configMap:
+            name: glance-etc
+        - name: container-init
+          configMap:
+            name: glance-bin

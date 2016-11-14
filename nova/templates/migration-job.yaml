@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nova-migration
+  labels:
+    system: openstack
+    type: configuration
+    component: nova
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: nova-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api-m3:{{.Values.image_version_nova_api_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-nova"
+          volumeMounts:
+            - mountPath: /nova-etc
+              name: nova-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+        - name: container-init
+          configMap:
+            name: nova-bin

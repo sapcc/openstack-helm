@@ -28,17 +28,23 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
-          command:
-            - bash
-          args:
-            - /container.init/neutron-server-start
           livenessProbe:
             httpGet:
               path: /
               port: {{.Values.global.neutron_api_port_internal}}
             initialDelaySeconds: 60
             timeoutSeconds: 5
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/neutron-server-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "neutron-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-neutron,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: STATSD_HOST

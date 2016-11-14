@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: manila-migration
+  labels:
+    system: openstack
+    type: configuration
+    component: manila
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: manila-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-api-m3:{{.Values.image_version_manila_api_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-manila"
+          volumeMounts:
+            - mountPath: /manila-etc
+              name: manila-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: manila-etc
+          configMap:
+            name: manila-etc
+        - name: container-init
+          configMap:
+            name: manila-bin

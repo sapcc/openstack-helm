@@ -29,9 +29,16 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
-            - /container.init/ironic-api-start
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/ironic-api-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "ironic-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-ironic,rabbitmq"
           livenessProbe:
             httpGet:
               path: /

@@ -12,6 +12,8 @@ data:
 {{ .Files.Get "bin/glance-api-start" | indent 4 }}
   glance-registry-start: |
 {{ .Files.Get "bin/glance-registry-start" | indent 4 }}
+  db-migrate: |
+{{ .Files.Get "bin/db-migrate" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

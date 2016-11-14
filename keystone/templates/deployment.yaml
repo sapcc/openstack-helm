@@ -31,17 +31,23 @@ spec:
         - name: keystone
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone-m3:{{.Values.image_version_keystone_m3}}
           imagePullPolicy: IfNotPresent
-          command:
-            - bash
-          args:
-            - /container.init/keystone-start
           livenessProbe:
             httpGet:
               path: /v3
               port: 5000
             initialDelaySeconds: 15
             timeoutSeconds: 15
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/keystone-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "keystone-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-keystone,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN

@@ -21,6 +21,8 @@ spec:
     metadata:
       labels:
         name: ironic-pxe
+      annotations:
+        scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"none"}]'
     spec:
       nodeSelector:
         kubernetes.io/hostname: {{.Values.global.ironic_pxe_endpoint_host_public}}

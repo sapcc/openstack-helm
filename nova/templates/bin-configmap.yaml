@@ -26,6 +26,8 @@ data:
 {{ .Files.Get "bin/nova-spicehtml5proxy-start" | indent 4 }}
   nova-virtlog-start: |
 {{ .Files.Get "bin/nova-virtlog-start" | indent 4 }}
+  db-migrate: |
+{{ .Files.Get "bin/db-migrate" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: keystone-migration
+  labels:
+    system: openstack
+    type: configuration
+    component: keystone
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: keystone-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone-m3:{{.Values.image_version_keystone_m3}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-ironic"
+          volumeMounts:
+            - mountPath: /keystone-etc
+              name: keystone-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: keystone-etc
+          configMap:
+            name: keystone-etc
+        - name: container-init
+          configMap:
+            name: keystone-bin
