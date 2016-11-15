@@ -74,7 +74,7 @@ spec:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
-              value: "glance-api"
+              value: "glance"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
