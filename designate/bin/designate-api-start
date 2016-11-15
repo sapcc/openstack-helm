@@ -12,9 +12,7 @@ function process_config {
 }
 
 function _start_application {
-#    export no_proxy=$no_proxy,cluster.local,cloud.sap
     exec /var/lib/kolla/venv/bin/designate-api
-
 }
 
 

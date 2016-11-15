@@ -1,48 +1,30 @@
-kind: Deployment
-apiVersion: extensions/v1beta1
-
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: designate-poolmanager
+  name: designate-pools
   labels:
     system: openstack
-    type: backend
+    type: configuration
     component: designate
 spec:
-  replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 3
-  selector:
-    matchLabels:
-      app: designate-poolmanager
   template:
-    metadata:
-      labels:
-        app: designate-poolmanager
-      annotations:
-        chart-version: {{.Chart.Version}}
     spec:
+      restartPolicy: OnFailure
       containers:
-        - name: designate-poolmanager
+        - name:  designate-pools
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-poolmanager-m3:{{.Values.image_version_designate_poolmanager_m3}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
           command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/designate-poolmanager-start"
+              value: "bash /container.init/manage-pools"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
-              value: "designate-pools"
-            - name: DEBUG_CONTAINER
-              value: "false"
-            - name: SENTRY_DSN
-              value: {{include "sentry_dsn_designate" . | quote}}
+              value: "designate-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "designate-mariadb,rabbitmq"
           volumeMounts:
             - mountPath: /designate-etc
               name: designate-etc
@@ -55,5 +37,3 @@ spec:
         - name: container-init
           configMap:
             name: designate-bin
-
-

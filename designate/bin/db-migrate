@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
+set -ex
 
 . /container.init/common.sh
+
+
 
 function process_config {
     cp /designate-etc/designate.conf /etc/designate/designate.conf
@@ -11,9 +12,7 @@ function process_config {
     cp /designate-etc/logging.conf /etc/designate/logging.conf
 }
 
-function start_application {
-    exec /var/lib/kolla/venv/bin/designate-central
-}
-
 process_config
-start_application
+designate-manage database sync
+designate-manage pool-manager-cache sync
+

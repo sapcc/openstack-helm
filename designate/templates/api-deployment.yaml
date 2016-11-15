@@ -31,16 +31,16 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
-            - /container.init/designate-api-start
-          livenessProbe:
-            httpGet:
-              path: /
-              port: {{.Values.global.designate_api_port_internal}}
-            initialDelaySeconds: 15
-            timeoutSeconds: 5
+            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: COMMAND
+              value: "bash /container.init/designate-api-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "designate-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "designate-mariadb,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: STATSD_HOST
@@ -49,6 +49,12 @@ spec:
               value: "9125"
             - name: SENTRY_DSN
               value: {{include "sentry_dsn_designate" . | quote}}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{.Values.global.designate_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
           ports:
             - name: designate-api
               containerPort: {{.Values.global.designate_api_port_internal}}

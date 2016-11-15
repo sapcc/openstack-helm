@@ -15,5 +15,9 @@ data:
 {{ .Files.Get "bin/designate-mdns-start" | indent 4 }}
   designate-poolmanager-start: |
 {{ .Files.Get "bin/designate-poolmanager-start" | indent 4 }}
+  db-migrate: |
+{{ .Files.Get "bin/db-migrate" | indent 4 }}
+  manage-pools: |
+{{ .Files.Get "bin/manage-pools" | indent 4 }}
   common.sh: |
 {{ include "common.sh" . | indent 4}}
