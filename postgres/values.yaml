@@ -13,6 +13,6 @@ password: DEFINED-IN-REGION-CHART
 port_public: '5432'
 port_private: '5432'
 port_metrics: '9113'
-hba_cidr: 100.64.0.0/10
+hba_cidr: 0.0.0.0/0
 
 
