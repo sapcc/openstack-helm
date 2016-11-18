@@ -10,19 +10,19 @@ dependencies:
     version: 0.1.0
   - name: glance
     repository: http://localhost:8879/charts
-    version: 0.1.0
+    version: 0.1.1
   - name: ironic
     repository: http://localhost:8879/charts
     version: 0.1.0
   - name: nova
     repository: http://localhost:8879/charts
-    version: 0.1.0
+    version: 0.1.1
   - name: barbican
     repository: http://localhost:8879/charts
     version: 0.1.0
   - name: cinder
     repository: http://localhost:8879/charts
-    version: 0.1.0
+    version: 0.1.1
   - name: manila
     repository: http://localhost:8879/charts
     version: 0.1.0
@@ -31,10 +31,10 @@ dependencies:
     version: 0.1.0
   - name: neutron
     repository: http://localhost:8879/charts
-    version: 0.1.0
+    version: 0.1.1
   - name: neutron_vendor
     repository: http://localhost:8879/charts
     version: 0.1.0
   - name: designate
     repository: http://localhost:8879/charts
-    version: 0.1.0
+    version: 0.1.1

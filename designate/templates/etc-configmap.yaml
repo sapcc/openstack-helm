@@ -17,4 +17,4 @@ data:
   policy.json: |
 {{ tuple "etc/_designate-policy.json.tpl" . | include "template" | indent 4 }}
   logging.conf: |
-{{ tuple "etc/_designate-logging.conf.tpl" . | include "template" | indent 4 }}
+{{ include "loggerIni" .Values.logging | indent 4 }}

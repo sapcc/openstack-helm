@@ -37,7 +37,70 @@ image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
 
-loggers_keys: 'root, neutron'
+logging:
+    formatters:
+        context:
+            class: oslo_log.formatters.ContextFormatter
+        default:
+            format: "%(message)s"
+    handlers:
+        stderr:
+            class: StreamHandler
+            args: "(sys.stderr,)"
+            formatter: context
+        stdout:
+            class: StreamHandler
+            args: "(sys.stdout,)"
+        "null":
+            class: logging.NullHandler
+            formatter: default
+            args: "()"
+        sentry:
+            class: "raven.handlers.logging.SentryHandler"
+            level: ERROR
+            args: "()"
+    loggers:
+        root:
+            handlers: "null"
+            level: WARNING
+        neutron:
+            handlers: stdout, sentry
+            level: DEBUG
+        neutron_lbaas:
+            handlers: stdout, sentry
+            level: DEBUG
+        amqp:
+            handlers: stdout, sentry
+        amqplib:
+            handlers: stdout, sentry
+        sqlalchemy:
+            handlers: stdout, sentry
+        boto:
+            handlers: stdout, sentry
+        suds:
+            handlers: stdout, sentry
+            level: INFO
+        eventlet.wsgi.server:
+            handlers: stdout, sentry
+            level: INFO
+        networking_aci:
+            handlers: stdout, sentry
+            level: DEBUG
+        networking_cisco:
+            handlers: stdout, sentry
+            level: DEBUG
+        networking_arista:
+            handlers: stdout, sentry
+            level: DEBUG
+        f5lbaasdriver:
+            handlers: stdout, sentry
+            level: DEBUG
+        f5_openstack_agent:
+            handlers: stdout, sentry
+            level: DEBUG
+        networking_f5_ml2:
+            handlers: stdout, sentry
+            level: DEBUG
 
 postgres:
   name: neutron

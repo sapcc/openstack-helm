@@ -11,5 +11,4 @@ data:
   cinder.conf: |
 {{ tuple "etc/_cinder.conf.tpl" . | include "template" | indent 4 }}
   logging.conf: |
-{{ tuple "etc/_cinder-logging.conf.tpl" . | include "template" | indent 4 }}
-
+{{ include "loggerIni" .Values.logging | indent 4 }}

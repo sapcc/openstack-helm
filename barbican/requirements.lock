@@ -1,9 +1,9 @@
 dependencies:
 - name: utils
   repository: http://localhost:8879/charts
-  version: 0.1.0
+  version: 0.1.1
 - name: postgres
   repository: http://localhost:8879/charts
   version: 0.1.0
-digest: sha256:15afcc5c9bdd41fee1d0cf8f06b4c4e387effaee4c474b39a5fdd59741458572
-generated: 2016-10-21T14:55:48.6450389+01:00
+digest: sha256:34cf935027ef1c8f373ae94f62fcff725d4ed95af43b1925ec2cd4acd7f7ce81
+generated: 2016-11-18T09:49:48.930768827+01:00
