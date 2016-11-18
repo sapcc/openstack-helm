@@ -11,4 +11,4 @@ function process_config {
 }
 
 process_config
-ironic-dbsync --config-file /etc/ironic/ironic.conf create_schema
+ironic-dbsync --config-file /etc/ironic/ironic.conf upgrade
