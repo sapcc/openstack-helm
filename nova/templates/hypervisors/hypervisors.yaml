@@ -1,0 +1,31 @@
+{{- $context := . -}}
+{{- range $i, $hypervisor := .Values.hypervisors_vmware -}}
+{{ tuple $context $hypervisor |include "vmware_hypervisor" }}
+---
+{{ tuple $context $hypervisor |include "vmware_configmap" }}
+{{ if lt $i (sub (len $context.Values.hypervisors_vmware) 1) }}
+---
+{{end}}
+{{- end -}}
+{{ if and (ge (len .Values.hypervisors_kvm) 1)  (ge (len .Values.hypervisors_vmware) 1) }}
+---
+{{end}}
+{{- range $i, $hypervisor := .Values.hypervisors_kvm -}}
+{{ tuple $context $hypervisor |include "kvm_hypervisor" }}
+---
+{{ tuple $context $hypervisor |include "kvm_configmap" }}
+{{ if lt $i (sub (len $context.Values.hypervisors_kvm) 1) }}
+---
+{{end}}
+{{- end -}}
+{{ if and (ge (len .Values.hypervisors_ironic) 1) (and (ge (len .Values.hypervisors_kvm) 1)  (ge (len .Values.hypervisors_vmware) 1)) }}
+--
+{{end}}
+{{- range $i, $hypervisor := .Values.hypervisors_ironic -}}
+{{ tuple $context $hypervisor |include "ironic_hypervisor" }}
+---
+{{ tuple $context $hypervisor |include "ironic_configmap" }}
+{{ if lt $i (sub (len $context.Values.hypervisors_ironic) 1) }}
+---
+{{end}}
+{{- end -}}
