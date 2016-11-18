@@ -1,6 +1,14 @@
---- neutron/patches/lbaas/loadbalancer_dbv2.orig.py	2016-11-10 10:26:41.000000000 +0000
-+++ neutron/patches/lbaas/loadbalancer_dbv2.patch.py	2016-11-10 10:27:19.000000000 +0000
-@@ -60,7 +60,16 @@
+--- loadbalancer_dbv2.orig.py	2016-11-10 12:57:10.000000000 +0000
++++ loadbalancer_dbv2.patch.py	2016-11-18 09:48:22.000000000 +0000
+@@ -30,6 +30,7 @@
+ from oslo_utils import uuidutils
+ from sqlalchemy import orm
+ from sqlalchemy.orm import exc
++from sqlalchemy.orm import lazyload
+ 
+ from neutron_lbaas._i18n import _
+ from neutron_lbaas import agent_scheduler
+@@ -60,7 +61,16 @@
          resource = None
          try:
              if for_update:

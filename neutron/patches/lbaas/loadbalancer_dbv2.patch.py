@@ -30,6 +30,7 @@ from oslo_utils import excutils
 from oslo_utils import uuidutils
 from sqlalchemy import orm
 from sqlalchemy.orm import exc
+from sqlalchemy.orm import lazyload
 
 from neutron_lbaas._i18n import _
 from neutron_lbaas import agent_scheduler
