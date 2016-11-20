@@ -1,3 +1,4 @@
+#TODO For vmware we should use the hypervisor definition to define volume nodes to avoid repeating config - consider moving hypervisor, volume, share and network hardware definitions into global section.
 {{- $context := . -}}
 {{- range $i, $volume := .Values.volumes_vmware -}}
 {{ tuple $context $volume |include "volume_vmware" }}
