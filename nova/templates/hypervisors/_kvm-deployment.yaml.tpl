@@ -180,7 +180,7 @@ spec:
             path: /sys/fs/cgroup
         - name: hypervisor-config
           configMap:
-            name: hypervisor-kvm
+            name: hypervisor-{{$hypervisor.name}}
         - name: nova-etc
           configMap:
             name: nova-etc

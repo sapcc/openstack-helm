@@ -60,7 +60,7 @@ spec:
             name: nova-patches
         - name: hypervisor-config
           configMap:
-            name:  hypervisor-ironic
+            name:  hypervisor-{{$hypervisor.name}}
         - name: container-init
           configMap:
             name: nova-bin

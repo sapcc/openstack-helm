@@ -5,7 +5,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: hypervisor-ironic
+  name: hypervisor-{{$hypervisor.name}}
   labels:
     system: openstack
     type: configuration
