@@ -24,5 +24,19 @@ port_metrics: '9102'
 
 sentry_dsn_key: DEFINE-IN-REGION-CHART
 
+shares_netapp:
+  - name: DEFINED-IN-REGION-CHART
+    vserver: DEFINED-IN-REGION-CHART
+    host: DEFINED-IN-REGION-CHART
+    username: DEFINED-IN-REGION-CHART
+    password: DEFINED-IN-REGION-CHART
+    root_volume_aggregate: DEFINED-IN-REGION-CHART
+    aggregate_search_pattern: DEFINED-IN-REGION-CHART
+    port_search_pattern: DEFINED-IN-REGION-CHART
+    physical_network: DEFINED-IN-REGION-CHART
+    mtu: DEFINED-IN-REGION-CHART
+
+
+
 postgres:
   name: manila
