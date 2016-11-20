@@ -9,6 +9,12 @@ global:
   neutron_api_port_internal: '9696'
   neutron_api_port_public: '443'
 
+  hypervisors_vmware:
+    - name: DEFINED-IN-REGION-CHART
+      username: DEFINED-IN-REGION-CHART
+      password: DEFINED-IN-REGION-CHART
+      host: DEFINED-IN-REGION-CHART
+      availability_zone: DEFINED-IN-REGION-CHART
 
 debug: "True"
 
