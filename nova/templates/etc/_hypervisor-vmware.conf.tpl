@@ -8,7 +8,7 @@ compute_driver=nova.virt.vmwareapi.VMwareVCDriver
 [vmware]
 insecure = True
 integration_bridge = br-int
-cache_prefix= bb70-images
+cache_prefix= {{$hypervisor.name}}-images
 host_ip={{$hypervisor.host}}
 host_username={{$hypervisor.username}}
 host_password={{$hypervisor.password}}
