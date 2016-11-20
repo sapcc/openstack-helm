@@ -1,9 +1,9 @@
 {{- $context := . -}}
-{{- range $i, $share := .Values.shares_netapp -}}
+{{- range $i, $share := .Values.global.shares_netapp -}}
 {{ tuple $context $share |include "share_netapp" }}
 ---
 {{ tuple $context $share |include "share_netapp_configmap" }}
-{{ if lt $i (sub (len $context.Values.shares_netapp) 1) }}
+{{ if lt $i (sub (len $context.Values.global.shares_netapp) 1) }}
 ---
 {{end}}
 {{- end -}}

@@ -12,6 +12,20 @@ global:
   nova_novnc_port_public: '443'
   nova_spicehtml5_port_public: '6082'
 
+  hypervisors_vmware:
+    - name: DEFINED-IN-REGION-CHART
+      username: DEFINED-IN-REGION-CHART
+      password: DEFINED-IN-REGION-CHART
+      host: DEFINED-IN-REGION-CHART
+      cluster_name: DEFINED-IN-REGION-CHART
+      datastore_regex: DEFINED-IN-REGION-CHART
+  hypervisors_kvm:
+    - name: DEFINED-IN-REGION-CHART
+      node_name : DEFINED-IN-REGION-CHART
+  hypervisors_ironic:
+    - name: ironic
+
+
 debug: "True"
 
 db_name: nova
@@ -41,18 +55,6 @@ image_version_nova_novncproxy: DEFINED-IN-REGION-CHART
 image_version_nova_spicehtml5proxy: DEFINED-IN-REGION-CHART
 image_version_nova_scheduler: DEFINED-IN-REGION-CHART
 
-hypervisors_vmware:
-  - name: DEFINED-IN-REGION-CHART
-    username: DEFINED-IN-REGION-CHART
-    password: DEFINED-IN-REGION-CHART
-    host: DEFINED-IN-REGION-CHART
-    cluster_name: DEFINED-IN-REGION-CHART
-    datastore_regex: DEFINED-IN-REGION-CHART
-hypervisors_kvm:
-  - name: DEFINED-IN-REGION-CHART
-    node_name : DEFINED-IN-REGION-CHART
-hypervisors_ironic:
-  - name: ironic
 
 
 
