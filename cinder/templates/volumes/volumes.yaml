@@ -1,0 +1,20 @@
+{{- $context := . -}}
+{{- range $i, $volume := .Values.volumes_vmware -}}
+{{ tuple $context $volume |include "volume_vmware" }}
+---
+{{ tuple $context $volume |include "volume_vmware_configmap" }}
+{{ if lt $i (sub (len $context.Values.volumes_vmware) 1) }}
+---
+{{end}}
+{{- end -}}
+{{ if and (ge (len .Values.volumes_netapp) 1)  (ge (len .Values.volumes_vmware) 1) }}
+---
+{{end}}
+{{- range $i, $volume := .Values.volumes_netapp -}}
+{{ tuple $context $volume |include "volume_netapp" }}
+---
+{{ tuple $context $volume |include "volume_netapp_configmap" }}
+{{ if lt $i (sub (len $context.Values.volumes_netapp) 1) }}
+---
+{{end}}
+{{- end -}}
