@@ -32,5 +32,9 @@ sentry_dsn_key: DEFINED-IN-REGION-CHART
 
 cloud_admin_project: DEFINED-IN-REGION-CHART
 
+fernet_secrets:
+  - DEFINED-IN-REGION-CHART
+  - DEFINED-IN-REGION-CHART
+
 postgres:
   name: keystone
