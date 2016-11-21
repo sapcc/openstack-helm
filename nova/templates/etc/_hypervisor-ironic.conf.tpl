@@ -1,7 +1,6 @@
 {{- define "ironic_conf" -}}
 {{- $context := index . 0 -}}
 {{- $hypervisor := index . 1 -}}
-
 [DEFAULT]
 compute_driver=nova.virt.ironic.IronicDriver
 
