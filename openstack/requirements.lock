@@ -11,9 +11,6 @@ dependencies:
 - name: glance
   repository: http://localhost:8879/charts
   version: 0.1.0
-- name: neutron
-  repository: http://localhost:8879/charts
-  version: 0.1.0
 - name: ironic
   repository: http://localhost:8879/charts
   version: 0.1.0
@@ -41,5 +38,5 @@ dependencies:
 - name: designate
   repository: http://localhost:8879/charts
   version: 0.1.0
-digest: sha256:ac561128515dba6488fe311b1cf870f542c3234c1bdf8d61f027b5d3e18b6653
-generated: 2016-11-10T10:54:11.642568871Z
+digest: sha256:f9376b4d0f00b5ec8ac783d07578f6e5676c58f972153dee3e839cd1b190f641
+generated: 2016-11-21T17:07:42.902053543Z
