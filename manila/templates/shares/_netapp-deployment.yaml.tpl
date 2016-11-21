@@ -3,7 +3,6 @@
 {{- $share := index . 1 -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
-
 metadata:
   name: manila-share-netapp-{{$share.name}}
   labels:

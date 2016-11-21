@@ -1,10 +1,8 @@
 {{- define "network_agent" -}}
 {{- $context := index . 0 -}}
 {{- $agent := index . 1 -}}
-
 kind: Deployment
 apiVersion: extensions/v1beta1
-
 metadata:
   name: neutron-agents-{{$agent.name}}
   labels:

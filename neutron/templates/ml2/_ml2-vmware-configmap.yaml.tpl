@@ -1,7 +1,6 @@
 {{- define "ml2_vmware_configmap" -}}
 {{- $context := index . 0 -}}
 {{- $hypervisor := index . 1 -}}
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,8 +9,6 @@ metadata:
     system: openstack
     type: configuration
     component: neutron
-
-
 data:
   ml2-vmware.ini: |
 {{ tuple $context $hypervisor | include "ml2_vmware_ini" | indent 4 }}

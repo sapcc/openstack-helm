@@ -9,8 +9,6 @@ metadata:
     system: openstack
     type: configuration
     component: cinder
-
-
 data:
   volume.conf: |
 {{ tuple $context $volume | include "volume_vmware_conf" | indent 4 }}

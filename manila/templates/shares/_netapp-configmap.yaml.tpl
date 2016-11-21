@@ -9,8 +9,6 @@ metadata:
     system: openstack
     type: configuration
     component: manila
-
-
 data:
   backend.conf: |
 {{ tuple $context $share | include "share_netapp_conf" | indent 4 }}

@@ -3,7 +3,6 @@
 {{- $volume := index . 1 -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
-
 metadata:
   name: cinder-volume-netapp-{{$volume.name}}
   labels:

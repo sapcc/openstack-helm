@@ -1,7 +1,6 @@
 {{- define "kvm_hypervisor" -}}
 {{- $context := index . 0 -}}
 {{- $hypervisor := index . 1 -}}
-
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
