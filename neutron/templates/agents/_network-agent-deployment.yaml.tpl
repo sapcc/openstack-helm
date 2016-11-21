@@ -1,8 +1,12 @@
+{{- define "network_agent" -}}
+{{- $context := index . 0 -}}
+{{- $agent := index . 1 -}}
+
 kind: Deployment
 apiVersion: extensions/v1beta1
 
 metadata:
-  name: neutron-agents-network0
+  name: neutron-agents-{{$agent.name}}
   labels:
     system: openstack
     type: backend
@@ -15,7 +19,7 @@ spec:
 
     metadata:
       labels:
-        name: neutron-agents-network0
+        name: neutron-agents-{{$agent.name}}
       annotations:
         scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"network"}]'
     spec:
@@ -23,10 +27,10 @@ spec:
       hostPID: true
       hostIPC: true
       nodeSelector:
-        kubernetes.io/hostname: {{.Values.agent_host0}}
+        kubernetes.io/hostname: {{$agent.node}}
       containers:
         - name: neutron-dhcp-agent
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-dhcp-agent:{{.Values.image_version_neutron_dhcp_agent}}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-dhcp-agent:{{$context.Values.image_version_neutron_dhcp_agent}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -36,7 +40,7 @@ spec:
             - /container.init/neutron-dhcp-agent-start
           env:
             - name: SENTRY_DSN
-              value:  {{include "sentry_dsn_neutron" .}}
+              value:  {{include "sentry_dsn_neutron" $context}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -47,7 +51,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: neutron-metadata-agent
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-metadata-agent:{{.Values.image_version_neutron_metadata_agent}}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-metadata-agent:{{$context.Values.image_version_neutron_metadata_agent}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -57,7 +61,7 @@ spec:
             - /container.init/neutron-metadata-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" .}}
+              value: {{include "sentry_dsn_neutron" $context}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -66,7 +70,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: neutron-l3-agent
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-l3-agent:{{.Values.image_version_neutron_l3_agent}}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-l3-agent:{{$context.Values.image_version_neutron_l3_agent}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -76,7 +80,7 @@ spec:
             - /container.init/neutron-l3-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" .}}
+              value: {{include "sentry_dsn_neutron" $context}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -88,7 +92,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: neutron-ovs-agent
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{.Values.image_version_neutron_openvswitch_agent}}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{$context.Values.image_version_neutron_openvswitch_agent}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -98,7 +102,7 @@ spec:
             - /container.init/neutron-ovs-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" .}}
+              value: {{include "sentry_dsn_neutron" $context}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -111,7 +115,7 @@ spec:
               name: container-init
 
         - name: ovs
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{.Values.image_version_neutron_vswitchd}}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{$context.Values.image_version_neutron_vswitchd}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -123,7 +127,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" .}}
+              value: {{include "sentry_dsn_neutron" $context}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -133,7 +137,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: ovs-db
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{.Values.image_version_neutron_vswitchdb}}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{$context.Values.image_version_neutron_vswitchdb}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -164,3 +168,4 @@ spec:
         - name: container-init
           configMap:
             name: neutron-bin
+{{- end -}}

@@ -1,0 +1,7 @@
+{{- $context := . -}}
+{{- range $i, $agent := .Values.global.network_agents -}}
+{{ tuple $context $agent |include "network_agent" }}
+{{ if lt $i (sub (len $context.Values.global.network_agents) 1) }}
+---
+{{end}}
+{{- end -}}
