@@ -23,6 +23,7 @@ global:
 
 image_version_cinder_api_m3: 'v1'
 image_version_cinder_scheduler: 'v1'
+image_version_cinder_volume: 'v1'
 
 debug: "True"
 
