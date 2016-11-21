@@ -18,7 +18,7 @@
 {{end}}
 {{- end -}}
 {{ if and (ge (len .Values.global.hypervisors_ironic) 1) (and (ge (len .Values.global.hypervisors_kvm) 1)  (ge (len .Values.global.hypervisors_vmware) 1)) }}
---
+---
 {{end}}
 {{- range $i, $hypervisor := .Values.global.hypervisors_ironic -}}
 {{ tuple $ $hypervisor |include "ironic_hypervisor" }}
