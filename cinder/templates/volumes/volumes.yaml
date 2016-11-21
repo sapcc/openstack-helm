@@ -1,10 +1,10 @@
 #TODO For vmware we should use the hypervisor definition to define volume nodes to avoid repeating config - consider moving hypervisor, volume, share and network hardware definitions into global section.
-{{- $context := . -}}
+
 {{- range $i, $volume := .Values.global.hypervisors_vmware -}}
-{{ tuple $context $volume |include "volume_vmware" }}
+{{ tuple $ $volume |include "volume_vmware" }}
 ---
-{{ tuple $context $volume |include "volume_vmware_configmap" }}
-{{ if lt $i (sub (len $context.Values.global.hypervisors_vmware) 1) }}
+{{ tuple $ $volume |include "volume_vmware_configmap" }}
+{{ if lt $i (sub (len $.Values.global.hypervisors_vmware) 1) }}
 ---
 {{end}}
 {{- end -}}
@@ -12,10 +12,10 @@
 ---
 {{end}}
 {{- range $i, $volume := .Values.global.volumes_netapp -}}
-{{ tuple $context $volume |include "volume_netapp" }}
+{{ tuple $ $volume |include "volume_netapp" }}
 ---
-{{ tuple $context $volume |include "volume_netapp_configmap" }}
-{{ if lt $i (sub (len $context.Values.global.volumes_netapp) 1) }}
+{{ tuple $ $volume |include "volume_netapp_configmap" }}
+{{ if lt $i (sub (len $.Values.global.volumes_netapp) 1) }}
 ---
 {{end}}
 {{- end -}}

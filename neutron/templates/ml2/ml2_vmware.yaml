@@ -1,8 +1,6 @@
-
-{{- $context := . -}}
 {{- range $i, $hypervisor := .Values.global.hypervisors_vmware -}}
-{{ tuple $context $hypervisor |include "ml2_vmware_configmap" }}
-{{ if lt $i (sub (len $context.Values.global.hypervisors_vmware) 1) }}
+{{ tuple $ $hypervisor |include "ml2_vmware_configmap" }}
+{{ if lt $i (sub (len $.Values.global.hypervisors_vmware) 1) }}
 ---
 {{end}}
 {{- end -}}
