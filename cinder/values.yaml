@@ -7,6 +7,20 @@ global:
   image_namespace: DEFINED-IN-REGION-CHART
   cinder_api_port_internal: '8776'
 
+  hypervisors_vmware:
+    - name: DEFINED-IN-REGION-CHART
+      username: DEFINED-IN-REGION-CHART
+      password: DEFINED-IN-REGION-CHART
+      host: DEFINED-IN-REGION-CHART
+      availability_zone: DEFINED-IN-REGION-CHART
+  volumes_netapp:
+    - name: DEFINED-IN-REGION-CHART
+      username: DEFINED-IN-REGION-CHART
+      password: DEFINED-IN-REGION-CHART
+      host: DEFINED-IN-REGION-CHART
+      vserver: DEFINED-IN-REGION-CHART
+      availability_zone: DEFINED-IN-REGION-CHART
+
 image_version_cinder_api_m3: 'v1'
 image_version_cinder_scheduler: 'v1'
 
@@ -19,6 +33,9 @@ db_password: DEFINED-IN-REGION-CHART
 port_metrics: '9102'
 
 sentry_dsn_key: DEFINE-IN-REGION-CHART
+
+
+
 
 postgres:
   name: cinder

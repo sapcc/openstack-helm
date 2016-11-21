@@ -9,6 +9,15 @@ global:
   neutron_api_port_internal: '9696'
   neutron_api_port_public: '443'
 
+  hypervisors_vmware:
+    - name: DEFINED-IN-REGION-CHART
+      username: DEFINED-IN-REGION-CHART
+      password: DEFINED-IN-REGION-CHART
+      host: DEFINED-IN-REGION-CHART
+      availability_zone: DEFINED-IN-REGION-CHART
+  network_agents:
+    - name: DEFINED-IN-REGION-CHART
+      node: DEFINED-IN-REGION-CHART
 
 debug: "True"
 
@@ -27,9 +36,6 @@ image_version_neutron_l3_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_openvswitch_agent: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
 image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
-
-agent_host0: DEFINED-IN-REGION-CHART
-agent_host1: DEFINED-IN-REGION-CHART
 
 loggers_keys: 'root, neutron'
 
