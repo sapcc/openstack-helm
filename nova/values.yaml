@@ -23,7 +23,7 @@ global:
     - name: DEFINED-IN-REGION-CHART
       node_name : DEFINED-IN-REGION-CHART
   hypervisors_ironic:
-    - name: ironic
+    - name: DEFINED-IN-REGION-CHART
 
 
 debug: "True"
