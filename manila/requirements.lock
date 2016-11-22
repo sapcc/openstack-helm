@@ -4,6 +4,6 @@ dependencies:
   version: 0.1.0
 - name: utils
   repository: http://localhost:8879/charts
-  version: 0.1.0
-digest: sha256:4838a1897f089308b0cfbd750033d9b6347493672567319abe0f687500b15fa9
-generated: 2016-10-20T15:28:14.454901912+01:00
+  version: 0.1.1
+digest: sha256:01c5469597393b20f35a38afaf229c3517619501d18dc01ac6348ea7b5905e34
+generated: 2016-11-18T09:49:52.432517542+01:00

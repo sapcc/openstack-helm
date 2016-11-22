@@ -60,3 +60,51 @@ image_version_nova_scheduler: DEFINED-IN-REGION-CHART
 
 postgres:
   name: nova
+
+logging:
+    formatters:
+        context:
+            class: oslo_log.formatters.ContextFormatter
+        default:
+            format: "%(message)s"
+    handlers:
+        stderr:
+            class: StreamHandler
+            args: "(sys.stderr,)"
+            formatter: context
+        stdout:
+            class: StreamHandler
+            args: "(sys.stdout,)"
+            formatter: context
+        "null":
+            class: logging.NullHandler
+            args: "()"
+            formatter: default
+        sentry:
+            class: raven.handlers.logging.SentryHandler
+            level: ERROR
+            args: "()"
+    loggers:
+        root:
+            handlers: "null"
+            level: WARNING
+        nova:
+            handlers: stdout, sentry
+            level: DEBUG
+        oslo_vmware:
+            handlers: stdout, sentry
+            level: DEBUG
+        amqp:
+            handlers: stdout, sentry
+        amqplib:
+            handlers: stdout, sentry
+        boto:
+            handlers: stdout, sentry
+        eventlet.wsgi.server:
+            handlers: stdout, sentry
+            level: INFO
+        sqlalchemy:
+            handlers: stdout, sentry
+        suds:
+            handlers: stdout, sentry
+            level: INFO

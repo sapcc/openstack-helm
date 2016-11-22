@@ -25,6 +25,6 @@ data:
   neutron-policy.json: |
 {{ tuple "etc/_neutron-policy.json.tpl" . | include "template" | indent 4 }}
   logging.conf: |
-{{ tuple "etc/_neutron-logging.conf.tpl" . | include "template" | indent 4 }}
+{{ include "loggerIni" .Values.logging | indent 4 }}
 
 
