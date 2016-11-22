@@ -71,14 +71,19 @@ logging:
             level: DEBUG
         amqp:
             handlers: stdout, sentry
+            level: WARNING
         amqplib:
             handlers: stdout, sentry
+            level: WARNING
         boto:
             handlers: stdout, sentry
+            level: WARNING
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO
         sqlalchemy:
             handlers: stdout, sentry
+            level: WARNING
         suds:
             handlers: stdout, sentry
+            level: WARNING
