@@ -61,7 +61,7 @@ num_retries = 10
 [cinder]
 os_region_name = {{.Values.global.region}}
 catalog_info = volumev2:cinderv2:internalURL
-cross_az_attach=True
+cross_az_attach={{.Values.cross_az_attach}}
 
 [neutron]
 url = {{.Values.global.neutron_api_endpoint_protocol_internal}}://{{include "neutron_api_endpoint_host_internal" .}}:{{ .Values.global.neutron_api_port_internal }}

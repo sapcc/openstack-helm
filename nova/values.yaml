@@ -55,7 +55,7 @@ image_version_nova_novncproxy: DEFINED-IN-REGION-CHART
 image_version_nova_spicehtml5proxy: DEFINED-IN-REGION-CHART
 image_version_nova_scheduler: DEFINED-IN-REGION-CHART
 
-
+cross_az_attach: 'False'
 
 
 postgres:
