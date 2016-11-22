@@ -26,8 +26,6 @@ spec:
       annotations:
         pod.beta.kubernetes.io/hostname: manila-share-netapp-{{$share.name}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: manila-share-netapp-{{$share.name}}
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-manila-share-m3:{{$context.Values.image_version_manila_share_m3}}
