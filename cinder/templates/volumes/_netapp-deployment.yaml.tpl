@@ -26,8 +26,6 @@ spec:
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-netapp-{{$volume.name}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: cinder-volume-netapp-{{$volume.name}}
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{$context.Values.image_version_cinder_volume}}
