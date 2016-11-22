@@ -75,7 +75,6 @@ logging:
         stdout:
             class: StreamHandler
             args: "(sys.stdout,)"
-            formatter: context
         "null":
             class: logging.NullHandler
             args: "()"
