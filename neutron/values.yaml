@@ -51,6 +51,7 @@ logging:
         stdout:
             class: StreamHandler
             args: "(sys.stdout,)"
+            formatter: context
         "null":
             class: logging.NullHandler
             formatter: default
@@ -87,24 +88,6 @@ logging:
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO
-        networking_aci:
-            handlers: stdout, sentry
-            level: DEBUG
-        networking_cisco:
-            handlers: stdout, sentry
-            level: DEBUG
-        networking_arista:
-            handlers: stdout, sentry
-            level: DEBUG
-        f5lbaasdriver:
-            handlers: stdout, sentry
-            level: DEBUG
-        f5_openstack_agent:
-            handlers: stdout, sentry
-            level: DEBUG
-        networking_f5_ml2:
-            handlers: stdout, sentry
-            level: DEBUG
 
 postgres:
   name: neutron
