@@ -9,7 +9,7 @@ keys={{include "joinKey" $value | trimAll ","}}
 
 [{{$top_level_key | trimSuffix "s"}}_{{$item | replace "." "_"}}]
 {{- if and (eq $top_level_key "loggers") (ne $item "root")}}
-qualName={{$item}}
+qualname={{$item}}
 {{- end}}
 {{- range $key, $value := $values}}
 {{$key}}={{$value}}
