@@ -1,6 +1,7 @@
 {{- define "share_netapp_conf" -}}
 {{- $context := index . 0 -}}
 {{- $share := index . 1 -}}
+[netapp-multi]
 
 share_backend_name=netapp-multi
 share_driver=manila.share.drivers.netapp.common.NetAppDriver
