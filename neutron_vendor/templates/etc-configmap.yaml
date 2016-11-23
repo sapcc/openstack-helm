@@ -20,6 +20,7 @@ data:
 {{ tuple "etc/_ml2-conf-asr.ini.tpl" . | include "template" | indent 4 }}
   ml2-conf-manila.ini: |
 {{ tuple "etc/_ml2-conf-manila.ini.tpl" . | include "template" | indent 4 }}
-
+  ml2-conf-f5.ini: |
+{{ tuple "etc/_ml2-conf-f5.ini.tpl" . | include "template" | indent 4 }}
 
 
