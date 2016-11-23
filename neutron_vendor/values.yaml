@@ -5,6 +5,16 @@ global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
 
+
+  loadbalancers_f5:
+    - name: DEFINED-IN-REGION-CHART
+      username: DEFINED-IN-REGION-CHART
+      password: DEFINED-IN-REGION-CHART
+      guest_host: DEFINED-IN-REGION-CHART
+      vcmp_host: DEFINED-IN-REGION-CHART
+      external_physical_mappings: DEFINED-IN-REGION-CHART
+      physical_network: DEFINED-IN-REGION-CHART
+
 debug: "True"
 
 image_version_neutron_server_m3: DEFINED-IN-REGION-CHART

@@ -1,3 +1,7 @@
+{{- define "f5_oslbaasv2_agent_ini" -}}
+{{- $context := index . 0 -}}
+{{- $loadbalancer := index . 1 -}}
+
 ###############################################################################
 # Copyright 2015-2016 F5 Networks Inc.
 #
@@ -177,7 +181,7 @@ f5_sync_mode = autosync
 # pair or scalen (1.1 and 1.2 are used for HA purposes):
 #   f5_external_physical_mappings = default:1.3:True
 #
-f5_external_physical_mappings = {{.Values.f5_external_physical_mappings}}
+f5_external_physical_mappings = {{$loadbalancer.external_physical_mappings}}
 #
 # VLAN device and interface to port mappings
 #
@@ -282,7 +286,7 @@ f5_populate_static_arp = False
 # Restrict discovery of network segmentation ID to a specific physical network
 # name.
 #
-f5_network_segment_physical_network = {{.Values.f5_physnet}}
+f5_network_segment_physical_network = {{$loadbalancer.physical_network}}
 #
 # Periodically scan for disconected listeners (a.k.a virtual servers).  The
 # interval is number of seconds between attempts.
@@ -522,7 +526,7 @@ f5_bigip_lbaas_device_driver = f5_openstack_agent.lbaasv2.drivers.bigip.icontrol
 # self IPs, you should specify them as a comma
 # separated list below.
 #
-icontrol_hostname = {{.Values.f5_icontrol_hostname}}
+icontrol_hostname = {{$loadbalancer.guest_host}}
 #
 # If you are using vCMP with VLANs, you will need to configure
 # your vCMP host addresses, in addition to the guests addresses.
@@ -531,17 +535,17 @@ icontrol_hostname = {{.Values.f5_icontrol_hostname}}
 # for vCMP hosts. The plug-in will automatically determine
 # which host corresponds to each guest.
 #
-# icontrol_vcmp_hostname = 192.168.1.245
+icontrol_vcmp_hostname = {{$loadbalancer.vcmp_host}}
 #
 # icontrol_username must be a valid Administrator username
 # on all devices in a device sync failover group.
 #
-icontrol_username = {{.Values.f5_icontrol_username}}
+icontrol_username = {{$loadbalancer.username}}
 #
 # icontrol_password must be a valid Administrator password
 # on all devices in a device sync failover group.
 #
-icontrol_password = {{.Values.f5_icontrol_password}}
+icontrol_password = {{$loadbalancer.password}}
 #
 ###############################################################################
 # Certificate Manager
@@ -565,12 +569,12 @@ cert_manager = f5_openstack_agent.lbaasv2.drivers.bigip.barbican_cert.BarbicanCe
 #
 
 auth_version = v3
-os_auth_url = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}/v3
-os_username = {{ .Values.global.neutron_service_user }}
-os_password = {{ .Values.global.neutron_service_password }}
-os_user_domain_name = {{.Values.global.keystone_service_domain}}
-os_project_name = {{.Values.global.keystone_service_project}}
-os_project_domain_name = {{.Values.global.keystone_service_domain}}
+os_auth_url = {{$context.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" $context}}:{{ $context.Values.global.keystone_api_port_internal }}/v3
+os_username = {{ $context.Values.global.neutron_service_user }}
+os_password = {{ $context.Values.global.neutron_service_password }}
+os_user_domain_name = {{$context.Values.global.keystone_service_domain}}
+os_project_name = {{$context.Values.global.keystone_service_project}}
+os_project_domain_name = {{$context.Values.global.keystone_service_domain}}
 insecure = True
 
 
@@ -584,3 +588,4 @@ insecure = True
 # and if it does not exist on your BIG-IP system the agent will use the default
 # profile, clientssl.
 f5_parent_ssl_profile = clientssl
+{{- end -}}

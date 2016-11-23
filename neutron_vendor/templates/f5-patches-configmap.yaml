@@ -16,3 +16,5 @@ data:
 {{ .Files.Get "patches/f5/network_helper.diff" | indent 4 }}
   keystone.diff: |
 {{ .Files.Get "patches/f5/keystone.diff" | indent 4 }}
+  bigip-init.diff: |
+{{ .Files.Get "patches/f5/bigip_init.diff" | indent 4 }}

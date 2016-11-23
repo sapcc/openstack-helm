@@ -1,8 +1,11 @@
+{{- define "f5_deployment" -}}
+{{- $context := index . 0 -}}
+{{- $loadbalancer := index . 1 -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
 metadata:
-  name: neutron-f5-agent
+  name: neutron-f5agent-{{ $loadbalancer.name }}
   labels:
     system: openstack
     type: backend
@@ -16,17 +19,17 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-      name: neutron-f5-agent
+      name: neutron-f5agent-{{ $loadbalancer.name }}
   template:
     metadata:
       labels:
-        name: neutron-f5-agent
+        name: neutron-f5agent-{{ $loadbalancer.name }}
       annotations:
-        pod.beta.kubernetes.io/hostname:  f5-pet
+        pod.beta.kubernetes.io/hostname:  f5-{{ $loadbalancer.name }}
     spec:
       containers:
-        - name: neutron-f5-agent
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
+        - name: neutron-f5agent-{{ $loadbalancer.name }}
+          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -39,10 +42,12 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: "{{ include "sentry_dsn_neutron" . }}"
+              value: "{{ include "sentry_dsn_neutron" $context }}"
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc
+            - mountPath: /f5-etc
+              name: f5-etc
             - mountPath: /neutron-etc-vendor
               name: neutron-etc-vendor
             - mountPath: /f5-patches
@@ -56,6 +61,9 @@ spec:
         - name: neutron-etc-vendor
           configMap:
             name: neutron-etc-vendor
+        - name: f5-etc
+          configMap:
+            name: neutron-f5-etc-{{$loadbalancer.name}}
         - name: f5-patches
           configMap:
             name: f5-patches
@@ -65,4 +73,4 @@ spec:
         - name: container-init
           configMap:
             name: neutron-bin-vendor
-
+{{- end -}}
