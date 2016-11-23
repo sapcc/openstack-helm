@@ -22,7 +22,7 @@ spec:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
-              value: "postgres-ironic"
+              value: "postgres-keystone"
           volumeMounts:
             - mountPath: /keystone-etc
               name: keystone-etc
