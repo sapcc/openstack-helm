@@ -5,7 +5,9 @@ use_syslog=yes
 #admin_token =
 enabled_drivers=pxe_ipmitool,agent_ipmitool
 network_provider=neutron_plugin
-enabled_network_drivers=neutron
+
+enabled_network_interfaces=noop,flat,neutron
+default_network_interface=neutron
 
 [dhcp]
 dhcp_provider=none
