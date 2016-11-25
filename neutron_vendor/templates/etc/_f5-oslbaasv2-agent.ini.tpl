@@ -113,6 +113,9 @@ periodic_interval = 10
 ###############################################################################
 #  Static Agent Configuration Setting
 ###############################################################################
+
+agent_id={{$loadbalancer.name}}
+
 #
 # Static configuration data to sent back to the plugin. This can be used
 # on the plugin side of neutron to provide agent identification for custom
@@ -138,7 +141,7 @@ periodic_interval = 10
 # appropriate HA mode or else the driver will not provision devices
 #
 f5_device_type = external
-f5_ha_type = standalone
+f5_ha_type = {{$loadbalancer.ha_type}}
 #
 #
 # Sync mode
@@ -147,8 +150,8 @@ f5_ha_type = standalone
 #            synced to the group
 # replication - each device configured separately
 #
-#f5_sync_mode = replication
-f5_sync_mode = autosync
+f5_sync_mode = {{$loadbalancer.sync_mode}}
+#f5_sync_mode = autosync
 
 #
 ###############################################################################
