@@ -7,6 +7,8 @@ europe-example-region: build-europe-example-region
 openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq neutron_vendor healthchecks
 openstack: build-openstack
 
+healthchecks: build-healthchecks
+
 barbican: utils postgres
 barbican: build-barbican
 
