@@ -38,5 +38,8 @@ dependencies:
 - name: designate
   repository: http://localhost:8879/charts
   version: 0.1.1
-digest: sha256:fc6f1a2a401d706988ca4e9f58d7ff21f785488e8058c24b87af6bb020b6888b
-generated: 2016-11-22T09:52:43.230311791+01:00
+- name: healthchecks
+  repository: http://localhost:8879/charts
+  version: 0.1.0
+digest: sha256:1b352ca8cfc48ee36d07633859b10be6009a7dd126214724fb32e1fdf00c1594
+generated: 2016-11-28T15:45:06.257214756+01:00

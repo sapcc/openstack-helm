@@ -1,0 +1,3 @@
+description: A Helm chart for Healthchecks
+name: healthchecks
+version: 0.1.0

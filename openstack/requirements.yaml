@@ -38,3 +38,6 @@ dependencies:
   - name: designate
     repository: http://localhost:8879/charts
     version: 0.1.1
+  - name: healthchecks
+    repository: http://localhost:8879/charts
+    version: 0.1.0

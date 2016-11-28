@@ -1,10 +1,10 @@
 .PHONY: $(shell find * -type d -depth 0)
 
-all: openstack europe-example-region
+all: clean openstack europe-example-region
 
 europe-example-region: build-europe-example-region
 
-openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq neutron_vendor
+openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq neutron_vendor healthchecks
 openstack: build-openstack
 
 barbican: utils postgres
@@ -60,3 +60,5 @@ lint: lint-neutron_vendor lint-rabbitmq lint-utils
 lint-%:
 	helm lint $*
 
+clean:
+	find . -name "*.tgz" -exec rm '{}' +
