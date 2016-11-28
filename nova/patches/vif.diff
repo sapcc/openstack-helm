@@ -1,5 +1,5 @@
---- vif.orig.py	2016-10-10 09:54:52.000000000 +0100
-+++ vif.patch.py	2016-10-10 09:54:52.000000000 +0100
+--- a/nova/virt/vmwareapi/vif.py	2016-10-10 09:54:52.000000000 +0100
++++ b/nova/virt/vmwareapi/vif.py	2016-10-10 09:54:52.000000000 +0100
 @@ -138,7 +138,10 @@
          if network_id is None:
              # Make use of the original one, in the event that the
