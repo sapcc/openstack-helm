@@ -54,7 +54,7 @@ rabbit_ha_queues = true
 lock_path = /var/lib/nova/tmp
 
 [glance]
-api_servers = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
+api_servers = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}/v2
 num_retries = 10
 
 
