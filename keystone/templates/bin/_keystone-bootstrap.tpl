@@ -4,26 +4,6 @@
 
 cp /keystone-etc/keystone.conf  /etc/keystone/keystone.conf
 
-URL_BASE={{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{.Values.global.keystone_api_port_admin}}
-
-echo "Waiting for keystone application.."
-
-n=1
-m=12
-until [ $n -ge $m ]
-do
-    curl $URL_BASE > /dev/null 2>&1  && break
-    echo "Attempt $n of $m waiting 10 seconds to retry"
-    n=$[$n+1]
-    sleep 10
-done
-
-if [ $n -eq $m ]
-then
-    echo "Keystone not available within 120 seconds"
-    exit 1
-fi
-
 # seed just enough to have a functional v3 api
 export OS_BOOTSTRAP_USER={{.Values.bootstrap_user}}
 export OS_BOOTSTRAP_PASSWORD={{.Values.bootstrap_password}}

@@ -45,9 +45,9 @@ spec:
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
-              value: "keystone-migration"
+              value: "keystone-migration,keystone-bootstrap"
             - name: DEPENDENCY_SERVICE
-              value: "postgres-keystone,rabbitmq"
+              value: "postgres-keystone,rabbitmq,memcached"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN

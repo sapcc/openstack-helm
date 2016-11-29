@@ -37,7 +37,7 @@ spec:
             - name: DEPENDENCY_JOBS
               value: "keystone-migration,keystone-bootstrap"
             - name: DEPENDENCY_SERVICE
-              value: "postgres-keystone,rabbitmq"
+              value: "postgres-keystone,rabbitmq,keystone"
             - name: DEBUG_CONTAINER
           volumeMounts:
             - mountPath: /keystone-etc
