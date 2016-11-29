@@ -44,10 +44,6 @@ logging:
         default:
             format: "%(message)s"
     handlers:
-        stderr:
-            class: StreamHandler
-            args: "(sys.stderr,)"
-            formatter: context
         stdout:
             class: StreamHandler
             args: "(sys.stdout,)"
