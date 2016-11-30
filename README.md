@@ -102,3 +102,16 @@ spec:
   nodeSelector:
     kubernetes.io/hostname: minion1
 ```
+
+
+## Hot-Fixing
+
+While generally patches should be integrated in the image used, we provide a pattern to apply patches on the start of a container via configMaps.
+The startup script will try to apply all files matching the pattern `/*-patches/*.patch` to the kolla venv site-packages directory.
+Patches, where the first file does not seem to match any existing file will be silently ignored.
+
+The files have to be unified diff, containing the relative path to the base directory of the package.
+The most basic way do to so is running `diff -ruN <original.dir> <patched.dir>`. If the changes are in a git repository or any other source-control system, you have an easier way to generate the output.
+For git, you can simply to a `git diff <ORIGINAL>:<PATCHED>`, or `git format-patch -o <helm-directory>/patches <ORGINAL>:<PATCHED>` .
+
+You still have to add the patches to either the config-map specified in the deployment, or amount another configmap ending in "-patches" containing the files.

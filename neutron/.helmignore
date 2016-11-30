@@ -21,5 +21,5 @@
 *.tmproj
 
 patches/*.orig
-patches/*.patch
+patches/*.rej
 patches/*.py
