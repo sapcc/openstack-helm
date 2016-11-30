@@ -89,7 +89,7 @@ logging:
             level: DEBUG
         oslo_vmware:
             handlers: stdout, sentry
-            level: DEBUG
+            level: INFO
         amqp:
             handlers: stdout, sentry
             level: WARNING
