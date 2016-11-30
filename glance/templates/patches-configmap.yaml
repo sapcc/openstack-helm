@@ -8,8 +8,5 @@ metadata:
     component: neutron
 
 data:
-  connection-manager.diff: |
+  connection-manager.patch: |
 {{ .Files.Get "patches/connection_manager.diff" | indent 4 }}
-
-
-

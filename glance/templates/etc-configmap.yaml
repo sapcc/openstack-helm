@@ -18,4 +18,53 @@ data:
 {{ tuple "etc/_glance-policy.json.tpl" . | include "template" | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}
+  glance-api-paste.ini: |
+    # Use this pipeline for keystone auth
+    [pipeline:glance-api-keystone]
+    pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation osprofiler authtoken context rootapp
 
+    [pipeline:apiversions]
+    pipeline = http_proxy_to_wsgi apiversionsapp
+
+    [composite:rootapp]
+    paste.composite_factory = glance.api:root_app_factory
+    /: apiversions
+    /v1: apiv1app
+    /v2: apiv2app
+
+    [app:apiversionsapp]
+    paste.app_factory = glance.api.versions:create_resource
+
+    [app:apiv1app]
+    paste.app_factory = glance.api.v1.router:API.factory
+
+    [app:apiv2app]
+    paste.app_factory = glance.api.v2.router:API.factory
+
+    [filter:cors]
+    paste.filter_factory =  oslo_middleware.cors:filter_factory
+    oslo_config_project = glance
+    oslo_config_program = glance-api
+
+    [filter:healthcheck]
+    paste.filter_factory = oslo_middleware:Healthcheck.factory
+    backends = disable_by_file
+    disable_by_file_path = /etc/glance/healthcheck_disable
+
+    [filter:http_proxy_to_wsgi]
+    paste.filter_factory = oslo_middleware:HTTPProxyToWSGI.factory
+
+    [filter:versionnegotiation]
+    paste.filter_factory = glance.api.middleware.version_negotiation:VersionNegotiationFilter.factory
+
+    [filter:osprofiler]
+    paste.filter_factory = osprofiler.web:WsgiMiddleware.factory
+    hmac_keys = SECRET_KEY
+    enabled = yes
+
+    [filter:authtoken]
+    paste.filter_factory = keystonemiddleware.auth_token:filter_factory
+    delay_auth_decision = true
+
+    [filter:context]
+    paste.filter_factory = glance.api.middleware.context:ContextMiddleware.factory

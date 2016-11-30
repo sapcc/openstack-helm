@@ -1,5 +1,5 @@
---- connection_manager.orig.py	2016-09-17 14:03:23.000000000 +0100
-+++ connection_manager.patch.py	2016-09-19 17:42:45.000000000 +0100
+--- a/glance_store/_drivers/swift/connection_manager.py	2016-09-17 14:03:23.000000000 +0100
++++ b/glance_store/_drivers/swift/connection_manager.py	2016-09-19 17:42:45.000000000 +0100
 @@ -24,6 +24,7 @@
  from glance_store import exceptions
  from glance_store.i18n import _

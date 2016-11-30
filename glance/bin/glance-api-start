@@ -5,20 +5,17 @@ set -e
 . /container.init/common.sh
 
 function process_config {
+    for f in /glance-etc/*; do
+        cp $f /etc/glance
+    done
 
-    patch /var/lib/kolla/venv/lib/python2.7/site-packages/glance_store/_drivers/swift/connection_manager.py /glance-patches/connection-manager.diff
-
-    cp /glance-etc/glance-api.conf  /etc/glance/glance-api.conf
-    cp /glance-etc/swift-store.conf /etc/glance/swift-store.conf
-    cp /glance-etc/logging.conf /etc/glance/logging.conf
-    cp /glance-etc/policy.json /etc/glance/policy.json
+    apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
 }
 
 function _start_application {
     #chown -R glance: /glance_store
     exec  /var/lib/kolla/venv/bin/glance-api
 }
-
 
 process_config
 start_application
