@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: {{.Values.global.glance_api_port_internal}}
             initialDelaySeconds: 15
             timeoutSeconds: 5
@@ -68,6 +68,10 @@ spec:
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 9191
           env:
             - name: COMMAND
               value: "bash /container.init/glance-registry-start"
