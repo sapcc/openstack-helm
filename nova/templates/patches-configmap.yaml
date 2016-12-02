@@ -10,3 +10,5 @@ metadata:
 data:
   vif.patch: |
 {{ .Files.Get "patches/vif.patch" | indent 4}}
+  ova-import.patch: |
+{{ .Files.Get "patches/ova_import.patch" | indent 4}}

@@ -1,0 +1,83 @@
+diff --git a/nova/virt/vmwareapi/images.py b/nova/virt/vmwareapi/images.py
+index 1f5d24d..df4df2c 100644
+--- a/nova/virt/vmwareapi/images.py
++++ b/nova/virt/vmwareapi/images.py
+@@ -410,7 +410,14 @@ def fetch_image_ova(context, instance, session, vm_name, ds_name,
+                                      imported_vm_ref)
+                 LOG.info(_LI("The imported VM was unregistered"),
+                          instance=instance)
+-                return vmdk.capacity_in_bytes
++
++
++                try:
++                    return vmdk.capacity_in_bytes, vmdk.path.parent
++                except AttributeError:
++                    from oslo_vmware.objects.datastore import DatastorePath
++                    return vmdk.capacity_in_bytes, DatastorePath.parse(vmdk.path).parent
++
+         raise exception.ImageUnacceptable(
+             reason=_("Extracting vmdk from OVA failed."),
+             image_id=image_ref)
+diff --git a/nova/virt/vmwareapi/vmops.py b/nova/virt/vmwareapi/vmops.py
+index 033f512..434fa5e 100644
+--- a/nova/virt/vmwareapi/vmops.py
++++ b/nova/virt/vmwareapi/vmops.py
+@@ -432,20 +432,25 @@ class VMwareVMOps(object):
+         # size because there is no VMDK descriptor.
+         vi.ii.file_size = image_size
+ 
+-    def _fetch_image_as_ova(self, context, vi, image_ds_loc):
++    def _fetch_image_as_ova(self, context, vi, _):
+         """Download root disk of an OVA image as streamOptimized."""
+ 
+         # The directory of the imported disk is the unique name
+         # of the VM use to import it with.
+-        vm_name = image_ds_loc.parent.basename
++        vm_name = vi.ii.image_id
+ 
+-        image_size = images.fetch_image_ova(context,
++        image_size, src_folder_ds_path = images.fetch_image_ova(context,
+                                vi.instance,
+                                self._session,
+                                vm_name,
+                                vi.datastore.name,
+                                vi.dc_info.vmFolder,
+                                self._root_resource_pool)
++
++        self._move_to_cache(vi.dc_info.ref,
++                            src_folder_ds_path,
++                            vi.cache_image_folder)
++
+         # The size of the image is different from the size of the virtual disk.
+         # We want to use the latter. On vSAN this is the only way to get this
+         # size because there is no VMDK descriptor.
+@@ -544,6 +549,7 @@ class VMwareVMOps(object):
+                             tmp_image_ds_loc.parent,
+                             vi.cache_image_folder)
+ 
++
+     def _get_vm_config_info(self, instance, image_info,
+                             extra_specs):
+         """Captures all relevant information from the spawn parameters."""
+@@ -579,7 +585,10 @@ class VMwareVMOps(object):
+         else:
+             image_fetch = self._fetch_image_as_file
+ 
+-        if vi.ii.is_iso:
++        if vi.ii.is_ova:
++            image_prepare = lambda vi: (None, None)
++            image_cache   = lambda vi, image_loc: None
++        elif vi.ii.is_iso:
+             image_prepare = self._prepare_iso_image
+             image_cache = self._cache_iso_image
+         elif disk_type == constants.DISK_TYPE_SPARSE:
+@@ -616,7 +625,8 @@ class VMwareVMOps(object):
+                 image_cache(vi, tmp_image_ds_loc)
+                 LOG.debug("Cleaning up location %s", str(tmp_dir_loc),
+                           instance=vi.instance)
+-                self._delete_datastore_file(str(tmp_dir_loc), vi.dc_info.ref)
++                if tmp_dir_loc:
++                    self._delete_datastore_file(str(tmp_dir_loc), vi.dc_info.ref)
+ 
+     def _create_and_attach_thin_disk(self, instance, vm_ref, dc_info, size,
+                                      adapter_type, path):
