@@ -13,3 +13,6 @@ global:
   rabbitmq_default_pass: DEFINED-IN-REGION-CHART
   rabbitmq_admin_pass: DEFINED-IN-REGION-CHART
   rabbitmq_metrics_pass: DEFINED-IN-REGION-CHART
+
+persistence:
+  enabled: true

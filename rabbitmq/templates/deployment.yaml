@@ -21,8 +21,12 @@ spec:
     spec:
       volumes:
         - name: rabbitmq-persistent-storage
+        {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: rabbitmq-pvclaim
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
         - name: container-init
           configMap:
             name: rabbitmq-bin

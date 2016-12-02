@@ -23,8 +23,12 @@ spec:
       hostPID: false
       volumes:
         - name: postgres-persistent-storage
+        {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
             claimName: db-{{.Values.name}}-pvclaim
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
         - name: db-init
           configMap:
             name: db-init-{{.Values.name}}

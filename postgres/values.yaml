@@ -15,4 +15,6 @@ port_private: '5432'
 port_metrics: '9113'
 hba_cidr: 0.0.0.0/0
 
+persistence:
+  enabled: true
 
