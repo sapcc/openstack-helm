@@ -20,6 +20,7 @@ data:
     psql <<- EOSQL
 
         ALTER ROLE {{.Values.db_user}} WITH ENCRYPTED PASSWORD '{{.Values.db_password}}';
+        ALTER ROLE {{.Values.api_db_user}} WITH ENCRYPTED PASSWORD '{{.Values.api_db_password}}';
         ALTER ROLE {{.Values.postgres.user}} WITH ENCRYPTED PASSWORD '{{.Values.postgres.password}}';
 
     EOSQL
