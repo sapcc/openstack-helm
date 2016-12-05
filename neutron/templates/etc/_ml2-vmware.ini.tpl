@@ -6,7 +6,7 @@
 # Defines configuration options specific for VMWare DVS ML2 Mechanism driver
 
 [securitygroup]
-firewall_driver = networking_dvs.plugins.ml2.drivers.mech_dvs.agent.dvs_firewall.DvsSecurityGroupsDriver
+firewall_driver = {{$hypervisor.firewall}}
 
 [ml2_vmware]
 # Hostname or ip address of vmware vcenter server
