@@ -10,6 +10,7 @@ metadata:
     component: {{.Values.name}}
 spec:
   replicas: 1
+  revisionHistoryLimit: 5
   strategy:
     type: Recreate
   selector:

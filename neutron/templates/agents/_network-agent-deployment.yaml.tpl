@@ -11,6 +11,7 @@ metadata:
     component: neutron
 spec:
   replicas: 1
+  revisionHistoryLimit: 5
   strategy:
     type: Recreate
   template:

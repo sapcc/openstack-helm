@@ -11,6 +11,7 @@ metadata:
     component: manila
 spec:
   replicas: 1
+  revisionHistoryLimit: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:

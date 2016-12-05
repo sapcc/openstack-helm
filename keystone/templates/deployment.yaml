@@ -9,6 +9,7 @@ metadata:
     component: keystone
 spec:
   replicas: 2
+  revisionHistoryLimit: 5
   minReadySeconds: 5
   strategy:
     type: RollingUpdate
