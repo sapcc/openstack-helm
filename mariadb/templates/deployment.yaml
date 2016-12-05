@@ -25,10 +25,8 @@ spec:
         image: {{.Values.image}}
         env:
         - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: mariadb-{{.Values.name}}
-              key: root-password
+          value:
+            {{.Values.root_password}}
         ports:
           - name: mariadb
             containerPort: 3306
