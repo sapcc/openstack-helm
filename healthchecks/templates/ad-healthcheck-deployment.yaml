@@ -27,8 +27,6 @@ spec:
       annotations:
         chart-version: {{.Chart.Version}}
     spec:
-      nodeSelector:
-        zone: farm
       containers:
         - name: ad-healthcheck
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ad-healthcheck:{{.Values.image_version_ad_healthcheck}}
