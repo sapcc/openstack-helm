@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: ironic-inspector
+  labels:
+    system: openstack
+    type: inspector
+    component: ironic
+spec:
+  selector:
+    name: ironic-inspector
+  ports:
+    - name: ironic-inspector
+      port: {{.Values.global.ironic_inspector_port_internal}}

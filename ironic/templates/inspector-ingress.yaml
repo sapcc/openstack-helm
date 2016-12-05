@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+
+metadata:
+  name: ironic-inspector
+  labels:
+    system: openstack
+    type: inspector
+    component: ironic
+spec:
+  rules:
+    - host: {{include "ironic_inspector_endpoint_host_public" .}}
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: ironic-inspector
+            servicePort: {{.Values.global.ironic_inspector_port_internal}}

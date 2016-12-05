@@ -11,14 +11,31 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-        - name: ironic-migration
+        - name: ironic-api-migration
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_api}}
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/db-migrate"
+              value: "bash /container.init/db-migrate-api"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-ironic"
+          volumeMounts:
+            - mountPath: /ironic-etc
+              name: ironic-etc
+            - mountPath: /container.init
+              name: container-init
+        - name: ironic-inspector-migration
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/db-migrate-inspector"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE

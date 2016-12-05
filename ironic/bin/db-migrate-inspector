@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+. /container.init/common.sh
+
+
+
+function process_config {
+    cp /ironic-etc/ironic-inspector.conf  /etc/ironic-inspector/ironic.conf
+}
+
+process_config
+ironic-inspector-dbsync --config-file /etc/ironic-inspector/ironic.conf upgrade

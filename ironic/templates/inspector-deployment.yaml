@@ -36,7 +36,7 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
             - name: DEBUG_CONTAINER
-              value: "true"
+              value: "false"
           volumeMounts:
             - mountPath: /ironic-etc
               name: ironic-etc

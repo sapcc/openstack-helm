@@ -15,13 +15,29 @@ dhcp_provider=none
 [api]
 host_ip = 0.0.0.0
 
-[conductor]
-api_url = {{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}
-clean_nodes = false
+
+[firewall]
+manage_firewall=False
+
+[processing]
+always_store_ramdisk_logs=true
+ramdisk_logs_dir=/var/log/ironic-inspector/
+add_ports=all
+keep_ports=all
+ipmi_address_fields=ilo_address
+enable_setting_ipmi_credentials=true
+log_bmc_address=true
+node_not_found_hook=enroll
+default_processing_hooks=ramdisk_error,root_disk_selection,scheduler,validate_interfaces,capabilities,pci_devices,extra_hardware
+processing_hooks=$default_processing_hooks, local_link_connection
+
+[discovery]
+enroll_node_driver=agent_ipmitool
+
 
 
 [database]
-connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
+connection = postgresql://{{.Values.inspector_db_user}}:{{.Values.inspector_db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.inspector_db_name}}
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
@@ -35,20 +51,6 @@ project_domain_name = {{.Values.global.keystone_service_domain}}
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 insecure = True
 
-
-[glance]
-glance_host = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
-auth_strategy=keystone
-swift_temp_url_key={{ .Values.swift_tempurl }}
-swift_temp_url_duration=1200
-swift_endpoint_url={{.Values.global.swift_endpoint_protocol}}://{{include "swift_endpoint_host" .}}:{{ .Values.global.swift_api_port_public }}
-swift_api_version=v1
-swift_account={{ .Values.swift_account }}
-
-[neutron]
-url = {{.Values.global.neutron_api_endpoint_protocol_internal}}://{{include "neutron_api_endpoint_host_internal" .}}:{{ .Values.global.neutron_api_port_internal }}
-cleaning_network_uuid={{ .Values.network_cleaning_uuid }}
-provisioning_network_uuid={{ .Values.network_management_uuid }}
 
 [oslo_messaging_rabbit]
 rabbit_userid = {{ .Values.global.rabbitmq_default_user }}

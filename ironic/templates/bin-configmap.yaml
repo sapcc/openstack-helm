@@ -16,8 +16,11 @@ data:
 {{ .Files.Get "bin/ironic-inspector-start" | indent 4 }}
   ironic-pxe-start: |
 {{ .Files.Get "bin/ironic-pxe-start" | indent 4 }}
-  db-migrate: |
-{{ .Files.Get "bin/db-migrate" | indent 4 }}
+  db-migrate-api: |
+{{ .Files.Get "bin/db-migrate-api" | indent 4 }}
+  db-migrate-inspector: |
+{{ .Files.Get "bin/db-migrate-inspector" | indent 4 }}
+
   common.sh: |
 {{ include "common.sh" . | indent 4 }}
 
