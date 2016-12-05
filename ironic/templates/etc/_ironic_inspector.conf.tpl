@@ -9,6 +9,17 @@ network_provider=neutron_plugin
 enabled_network_interfaces=noop,flat,neutron
 default_network_interface=neutron
 
+[ironic]
+os_region= {{.Values.global.region}}
+auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
+auth_type = v3password
+username = {{ .Values.global.ironic_service_user }}
+password = {{ .Values.global.ironic_service_password }}
+user_domain_name = {{.Values.global.keystone_service_domain}}
+project_name = {{.Values.global.keystone_service_project}}
+project_domain_name = {{.Values.global.keystone_service_domain}}
+
+
 [dhcp]
 dhcp_provider=none
 
@@ -49,6 +60,7 @@ user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
+region_name = {{.Values.global.region}}
 insecure = True
 
 
