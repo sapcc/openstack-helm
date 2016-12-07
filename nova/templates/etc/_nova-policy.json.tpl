@@ -6,7 +6,7 @@
     "viewer": "role:compute_viewer and rule:owner",
     "admin": "role:compute_admin and rule:owner",
     "context_is_compute_admin": "rule:context_is_admin or rule:admin",
-    "context_is_editor": "rule:context_is_admin or rule:member",
+    "context_is_editor": "rule:context_is_compute_admin or rule:member",
     "context_is_viewer":  "rule:context_is_editor or rule:viewer",
     "default": "rule:context_is_admin",
 
