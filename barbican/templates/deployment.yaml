@@ -40,6 +40,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-barbican,rabbitmq"
+            - name: DEBUG_CONTAINER
+              value: "false"
           livenessProbe:
             httpGet:
               path: /
