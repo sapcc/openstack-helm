@@ -37,28 +37,11 @@
 {{define "ironic_inspector_endpoint_host_internal"}}ironic-inspector.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "ironic_inspector_endpoint_host_public"}}baremetal-inspector-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
-
-
-{{define "sentry_dsn_keystone"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/4?verify_ssl=0{{end}}
-{{define "sentry_dsn_keystone_region"}}https://{{.Values.openstack.keystone.sentry_dsn_key}}@sentry.{{.Values.openstack.global.region}}.{{.Values.openstack.global.tld}}/4?verify_ssl=0{{end}}
-
-
 {{define "sentry_dsn_glance"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/5?verify_ssl=0{{end}}
-{{define "sentry_dsn_glance_region"}}https://{{.Values.openstack.glance.sentry_dsn_key}}@sentry.{{.Values.openstack.global.region}}.{{.Values.openstack.global.tld}}/5?verify_ssl=0{{end}}
-
 {{define "sentry_dsn_nova"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/6?verify_ssl=0{{end}}
-{{define "sentry_dsn_nova_region"}}https://{{.Values.openstack.nova.sentry_dsn_key}}@sentry.{{.Values.openstack.global.region}}.{{.Values.openstack.global.tld}}/6?verify_ssl=0{{end}}
-
 {{define "sentry_dsn_neutron"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/7?verify_ssl=0{{end}}
-{{define "sentry_dsn_neutron_region"}}https://{{.Values.openstack.neutron.sentry_dsn_key}}@sentry.{{.Values.openstack.global.region}}.{{.Values.openstack.global.tld}}/7?verify_ssl=0{{end}}
-
 {{define "sentry_dsn_cinder"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/9?verify_ssl=0{{end}}
-{{define "sentry_dsn_cinder_region"}}https://{{.Values.openstack.cinder.sentry_dsn_key}}@sentry.{{.Values.openstack.global.region}}.{{.Values.openstack.global.tld}}/9?verify_ssl=0{{end}}
-
 {{define "sentry_dsn_designate"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/9?verify_ssl=0{{end}}
-{{define "sentry_dsn_designate_region"}}https://{{.Values.openstack.designate.sentry_dsn_key}}@sentry.{{.Values.openstack.global.region}}.{{.Values.openstack.global.tld}}/9?verify_ssl=0{{end}}
-
-
 
 {{define "barbican_db_host"}}postgres-barbican.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "barbican_api_endpoint_host_admin"}}barbican-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
