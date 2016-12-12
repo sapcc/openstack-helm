@@ -5,7 +5,7 @@
 #
 debug: "True"
 
-sentry_dsn_key: DEFINE-IN-REGION-CHART
+sentry_dsn: DEFINE-IN-REGION-CHART
 
 global:
   image_repository: DEFINED-IN-OPENSTACK-CHART

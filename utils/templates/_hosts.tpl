@@ -37,12 +37,6 @@
 {{define "ironic_inspector_endpoint_host_internal"}}ironic-inspector.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "ironic_inspector_endpoint_host_public"}}baremetal-inspector-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
-{{define "sentry_dsn_glance"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/5?verify_ssl=0{{end}}
-{{define "sentry_dsn_nova"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/6?verify_ssl=0{{end}}
-{{define "sentry_dsn_neutron"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/7?verify_ssl=0{{end}}
-{{define "sentry_dsn_cinder"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/9?verify_ssl=0{{end}}
-{{define "sentry_dsn_designate"}}https://{{.Values.sentry_dsn_key}}@sentry.{{.Values.global.region}}.{{.Values.global.tld}}/9?verify_ssl=0{{end}}
-
 {{define "barbican_db_host"}}postgres-barbican.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "barbican_api_endpoint_host_admin"}}barbican-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "barbican_api_endpoint_host_internal"}}barbican-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}

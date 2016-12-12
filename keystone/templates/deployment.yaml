@@ -52,7 +52,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: "{{.Values.sentry_dsn_keystone}}"
+              value: {{.Values.sentry_dsn | quote}}
             - name: STATSD_HOST
               value: "localhost"
             - name: STATSD_PORT

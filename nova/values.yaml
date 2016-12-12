@@ -38,7 +38,7 @@ api_db_password: DEFINED-IN-REGION-CHART
 
 port_metrics: '9102'
 
-sentry_dsn_key: DEFINE_IN_REGION_CHART
+sentry_dsn: DEFINE_IN_REGION_CHART
 
 #TODO we need to move to global or find another way to share image versions
 image_version_neutron_server_m3: DEFINED-IN-REGION-CHART

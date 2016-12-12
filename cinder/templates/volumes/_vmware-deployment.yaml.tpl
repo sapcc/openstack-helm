@@ -39,7 +39,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_cinder" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /cinder-etc
               name: cinder-etc

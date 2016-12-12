@@ -24,4 +24,4 @@ aci_apic_user: DEFINED-IN-REGION-CHART
 aci_apic_password: DEFINED-IN-REGION-CHART
 aci_apic_tenant_name: DEFINED-IN-REGION-CHART
 
-sentry_dsn_key: DEFINE-IN-REGION-CHART
+sentry_dsn: DEFINE-IN-REGION-CHART

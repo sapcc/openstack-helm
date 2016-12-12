@@ -47,7 +47,7 @@ spec:
             - name: STATSD_PORT
               value: "9125"
             - name: SENTRY_DSN
-              value: {{ include "sentry_dsn_cinder" . | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           livenessProbe:
             httpGet:
               path: /

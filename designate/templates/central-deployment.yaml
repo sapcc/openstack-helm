@@ -45,7 +45,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_designate" . | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /designate-etc
               name: designate-etc

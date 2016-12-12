@@ -51,7 +51,7 @@ spec:
             - name: STATSD_PORT
               value: "9125"
             - name: SENTRY_DSN
-              value: {{ include "sentry_dsn_glance" . | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           ports:
             - name: api
               containerPort: {{.Values.global.glance_api_port_internal}}
@@ -83,7 +83,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{ include "sentry_dsn_glance" . | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           ports:
             - name: registry
               containerPort: 9191

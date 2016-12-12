@@ -39,7 +39,7 @@ spec:
             - /container.init/neutron-dhcp-agent-start
           env:
             - name: SENTRY_DSN
-              value:  {{include "sentry_dsn_neutron" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -60,7 +60,7 @@ spec:
             - /container.init/neutron-metadata-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -79,7 +79,7 @@ spec:
             - /container.init/neutron-l3-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -101,7 +101,7 @@ spec:
             - /container.init/neutron-ovs-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -126,7 +126,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run

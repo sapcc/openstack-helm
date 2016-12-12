@@ -35,7 +35,7 @@ db_password: DEFINED-IN-REGION-CHART
 
 port_metrics: '9102'
 
-sentry_dsn_key: DEFINE-IN-REGION-CHART
+sentry_dsn: DEFINE-IN-REGION-CHART
 
 
 

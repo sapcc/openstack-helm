@@ -28,7 +28,7 @@ inspector_db_password: DEFINE_IN_REGION_CHART
 
 
 port_metrics: '9102'
-sentry_dsn_key: DEFINE_IN_REGION_CHART
+sentry_dsn: DEFINE_IN_REGION_CHART
 
 network_management_uuid: DEFINE_IN_REGION_CHART
 network_cleaning_uuid: DEFINE_IN_REGION_CHART

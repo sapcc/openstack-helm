@@ -53,7 +53,7 @@ spec:
             - name: STATSD_PORT
               value: "9125"
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_neutron" .}}
+              value: {{.Values.sentry_dsn | quote}}
           ports:
             - name: neutron-api
               containerPort: {{.Values.global.neutron_api_port_internal}}

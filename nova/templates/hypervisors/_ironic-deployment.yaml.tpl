@@ -41,7 +41,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{include "sentry_dsn_nova" $context}}
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /hypervisor-config
               name: hypervisor-config

@@ -43,7 +43,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: "{{ include "sentry_dsn_neutron" $context }}"
+              value: {{$context.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc

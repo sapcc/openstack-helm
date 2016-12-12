@@ -64,7 +64,7 @@ openstack:
     db_password: YourOwnSecret!
     admin_token: abc12345678899
     bootstrap_password: openstack
-    sentry_dsn_key: 'add your own'
+    sentry_dsn: 'add your own'
     cloud_admin_project: 'add your own'
     postgres:
       password: YourOwnSecret!
@@ -79,7 +79,7 @@ openstack:
     image_version_nova_scheduler: 'v1'
     db_password: YourOwnSecret!
     api_db_password: YourOwnSecret!
-    sentry_dsn_key: 'add your own'
+    sentry_dsn: 'add your own'
 
     vcenter_host: vcenter1.your.domain
     vcenter_username: administrator@vsphere.local
@@ -95,7 +95,7 @@ openstack:
     image_version_glance_api_m3: 'v1'
     image_version_glance_registry: 'v1'
     db_password: YourOwnSecret!
-    sentry_dsn_key: 'add your own'
+    sentry_dsn: 'add your own'
     default_store: swift
     swift_domain: Default
     swift_project: admin
@@ -108,7 +108,7 @@ openstack:
     image_version_cinder_scheduler: 'v1'
     image_version_cinder_volume: 'v1'
     db_password: YourOwnSecret!
-    sentry_dsn_key: 'add your own'
+    sentry_dsn: 'add your own'
     postgres:
       password: YourOwnSecret!
 
@@ -117,7 +117,7 @@ openstack:
     image_version_manila_scheduler_m3: 'v1'
     image_version_manila_share_m3: 'v1'
     db_password: YourOwnSecret!
-    sentry_dsn_key: 'add your own'
+    sentry_dsn: 'add your own'
     postgres:
       password: YourOwnSecret!
 
@@ -130,7 +130,7 @@ openstack:
     image_version_neutron_vswitchd: 'v1'
     image_version_neutron_vswitchdb: 'v1'
     db_password: YourOwnSecret!
-    sentry_dsn_key: 'add your own'
+    sentry_dsn: 'add your own'
 
     cp_physical_network: bb99-fi
     cp_network_interface: bond1
@@ -197,7 +197,7 @@ openstack:
     image_version_ironic_inspector: 'v1'
     image_version_ironic_pxe: 'v1'
     db_password: YourOwnSecret!
-    sentry_dsn_key: "add your own"
+    sentry_dsn: "add your own"
     network_management_uuid: "add your own"
     network_cleaning_uuid: "add your own"
     swift_account: AUTH_ADD_YOUR_OWN
@@ -208,7 +208,7 @@ openstack:
   barbican:
     image_version_barbican_m3: 'v1'
     db_password: YourOwnSecret!
-    sentry_dsn_key: TODO
+    sentry_dsn: TODO
     postgres:
       password: YourOwnSecret!
 
@@ -220,7 +220,7 @@ openstack:
     image_version_designate_central_m3: 'v1'
     image_version_designate_mdns_m3: 'v1'
     image_version_designate_poolmanager_m3: 'v1'
-    sentry_dsn_key: "add your own"
+    sentry_dsn: "add your own"
     mariadb:
       root_password: YourOwnSecret!
     rndc_key: YourKey

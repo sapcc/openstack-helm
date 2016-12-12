@@ -28,7 +28,7 @@ admin_token: DEFINED-IN-REGION-CHART
 bootstrap_user: admin
 bootstrap_password: DEFINED-IN-REGION-CHART
 
-sentry_dsn_keystone: DEFINED-IN-REGION-CHART
+sentry_dsn: DEFINED-IN-REGION-CHART
 
 cloud_admin_project: DEFINED-IN-REGION-CHART
 
