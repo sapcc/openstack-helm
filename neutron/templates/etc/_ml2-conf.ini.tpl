@@ -13,7 +13,7 @@ mechanism_drivers = {{.Values.ml2_mechanismdrivers}}
 extension_drivers = {{.Values.dns_ml2_extension}}
 
 path_mtu = {{.Values.global.default_mtu}}
-
+segment_mtu = {{.Values.global.default_mtu}}
 
 [ml2_type_vlan]
 network_vlan_ranges = lab-cfm:2980:2999
