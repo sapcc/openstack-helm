@@ -31,6 +31,9 @@ dhcp_lease_duration = {{.Values.dhcp_lease_duration}}
 dns_domain =  {{.Values.dns_local_domain}}
 external_dns_driver = {{.Values.dns_external_driver}}
 
+global_physnet_mtu = {{.Values.global.default_mtu}}
+advertise_mtu = True
+
 [nova]
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_plugin = v3password

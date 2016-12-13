@@ -10,6 +10,8 @@ global:
 
   default_availability_zone: nova
 
+  default_mtu: '9000'
+
   # TODO change to chart setting
   postgres_port_public: '5432'
 
