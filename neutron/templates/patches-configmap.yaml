@@ -14,4 +14,6 @@ data:
 {{ .Files.Get "patches/dns_integration.diff" | indent 4 }}
   loadbalancer-dbv2.diff: |
 {{ .Files.Get "patches/lbaas/loadbalancer_dbv2.diff" | indent 4 }}
+  ipam-backend-mixin.diff: |
+{{ .Files.Get "patches/ipam_backend_mixin.diff" | indent 4 }}
 
