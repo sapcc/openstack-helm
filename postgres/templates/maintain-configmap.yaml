@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-maintain-{{.Values.name}}
+  labels:
+    system: openstack
+    type: configuration
+    component: database
+
+data:
+{{- if .Values.backup.enabled }}
+  create-barman-users.sh: |
+    #!/bin/bash
+    set -e
+
+    echo "Adding Barman users..."
+
+    # Create barman users
+    psql -v ON_ERROR_STOP=1 --username "{{.Values.password}}" <<-EOSQL
+        CREATE USER barman SUPERUSER PASSWORD '{{.Values.password_barman}}';
+        CREATE USER streaming_barman REPLICATION PASSWORD '{{.Values.password_barman_streaming}}';
+    EOSQL
+{{- end }}
+
+

@@ -7,6 +7,11 @@ name: DEFINED-IN-COMPONENT-CHART
 image: mariadb:10.1
 port_public: 3306
 #
-#root_password: 
+#root_password:
 #initdb_configmap:
 #persistance_claim:
+backup:
+  enabled: true
+  image: sapcc/backup-tools:v0.1.2
+  interval_full: 3 days
+  interval_incr: 3 hours
