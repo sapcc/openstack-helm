@@ -17,4 +17,11 @@ service_name=lbaas
 auth_version = 3
 insecure=True
 
+[quotas]
+quota_loadbalancer=0
+quota_listener=0
+quota_pool=0
+quota_member=0
+quota_healthmonitor=0
+
 
