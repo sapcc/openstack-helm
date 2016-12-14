@@ -9,4 +9,3 @@ enable_isolated_metadata=True
 metadata_proxy_socket=/run/metadata_proxy
 dnsmasq_dns_servers = {{.Values.dns_forwarders}}
 dhcp_domain = {{.Values.dns_local_domain}}
-network_device_mtu=  {{.Values.global.default_mtu}}

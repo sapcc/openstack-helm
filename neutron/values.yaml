@@ -8,7 +8,7 @@ global:
   neutron_api_port_admin: '9696'
   neutron_api_port_internal: '9696'
   neutron_api_port_public: '443'
-  default_mtu: '9000'
+  default_mtu: '9050'
 
   hypervisors_vmware:
     - name: DEFINED-IN-REGION-CHART
