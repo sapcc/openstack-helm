@@ -57,7 +57,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: metrics
-          image: kbudde/rabbitmq-exporter
+          image: kbudde/rabbitmq-exporter:0.16.0
           env:
             - name: PUBLISH_PORT
               value: "{{.Values.global.rabbitmq_port_metrics}}"
