@@ -26,13 +26,14 @@ spec:
       containers:
         - name: memcached
           image: memcached
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - name: memcache
               containerPort: {{.Values.global.memcached_port_public}}
           command: ["memcached", "-m", "1024"]
         - name: metrics
           image: prom/memcached-exporter:master
+          imagePullPolicy: IfNotPresent
           ports:
             - name: metrics
               containerPort: {{.Values.global.memcached_port_metrics}}

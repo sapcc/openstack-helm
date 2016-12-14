@@ -58,6 +58,7 @@ spec:
               name: container-init
         - name: metrics
           image: kbudde/rabbitmq-exporter:0.16.0
+          imagePullPolicy: IfNotPresent
           env:
             - name: PUBLISH_PORT
               value: "{{.Values.global.rabbitmq_port_metrics}}"

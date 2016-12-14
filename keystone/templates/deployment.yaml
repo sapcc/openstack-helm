@@ -71,7 +71,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: statsd
-          image: prom/statsd-exporter
+          image: prom/statsd-exporter:master
           imagePullPolicy: IfNotPresent
           ports:
             - name: statsd

@@ -198,6 +198,9 @@ global:
   webcli_api_endpoint_protocol_public: https
   webcli_api_port_public: '443'
 
+  cfm_api_endpoint_protocol_public: https
+  cfm_api_port_public: '443'
+  cfm_service_password: DEFINED-IN-REGION-CHART
 
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
