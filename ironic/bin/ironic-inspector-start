@@ -5,6 +5,7 @@ set -e
 . /container.init/common.sh
 
 function process_config {
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/ironic_inspector/node_cache.py /ironic-patches/node-cache.diff
     cp /ironic-etc/ironic-inspector.conf  /etc/ironic-inspector/ironic.conf
 }
 

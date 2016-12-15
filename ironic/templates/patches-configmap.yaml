@@ -10,3 +10,5 @@ metadata:
 data:
   app.diff: |
 {{ .Files.Get "patches/app.diff"| indent 4 }}
+  node-cache.diff: |
+{{ .Files.Get "patches/node_cache.diff"| indent 4 }}
