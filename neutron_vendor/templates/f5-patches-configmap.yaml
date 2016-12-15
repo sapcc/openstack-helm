@@ -18,3 +18,5 @@ data:
 {{ .Files.Get "patches/f5/keystone.diff" | indent 4 }}
   bigip-init.diff: |
 {{ .Files.Get "patches/f5/bigip_init.diff" | indent 4 }}
+  l2-service.diff: |
+{{ .Files.Get "patches/f5/l2_service.diff" | indent 4 }}
