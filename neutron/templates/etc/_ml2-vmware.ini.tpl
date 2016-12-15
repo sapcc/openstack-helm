@@ -1,8 +1,6 @@
 {{- define "ml2_vmware_ini" -}}
 {{- $context := index . 0 -}}
 {{- $hypervisor := index . 1 -}}
-
-
 # Defines configuration options specific for VMWare DVS ML2 Mechanism driver
 
 [securitygroup]
@@ -11,6 +9,7 @@ firewall_driver = {{$hypervisor.firewall}}
 [ml2_vmware]
 # Hostname or ip address of vmware vcenter server
 vsphere_hostname={{$hypervisor.host}}
+cluster_name={{$hypervisor.cluster_name}}
 
 # Login username and password of vcenter server
 vsphere_login={{$hypervisor.username}}
@@ -25,5 +24,4 @@ vsphere_password={{$hypervisor.password}}
 
 # The mappings between local physical network device and distributed vswitch
 network_maps = default:openstack
-
 {{- end -}}
