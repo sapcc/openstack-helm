@@ -23,5 +23,5 @@ vsphere_password={{$hypervisor.password}}
 # api_retry_count=10
 
 # The mappings between local physical network device and distributed vswitch
-network_maps = default:openstack
+network_maps = {{$hypervisor.network_maps | default "default:openstack" }}
 {{- end -}}
