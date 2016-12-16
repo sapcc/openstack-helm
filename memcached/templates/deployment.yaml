@@ -24,7 +24,7 @@ spec:
         name: memcached
     spec:
       containers:
-        - name: memcached
+        - name: memcached:1.4.33
           image: memcached
           imagePullPolicy: IfNotPresent
           ports:
