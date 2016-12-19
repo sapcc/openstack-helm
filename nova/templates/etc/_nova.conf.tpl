@@ -8,6 +8,7 @@ api_paste_config = /etc/nova/api-paste.ini
 state_path = /var/lib/nova
 
 security_group_api = neutron
+use_neutron = True
 network_api_class = nova.network.neutronv2.api.API
 firewall_driver = nova.virt.firewall.NoopFirewallDriver
 
