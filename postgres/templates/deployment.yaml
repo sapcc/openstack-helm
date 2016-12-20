@@ -102,7 +102,7 @@ spec:
               mountPath: /var/run/postgresql
 {{- end }}
 {{- if .Values.backup.enabled }}
-        - image: {.Values.backup.image}}
+        - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{.Values.backup.image_version}}
           name: backup
           env:
           - name: MY_POD_NAME
