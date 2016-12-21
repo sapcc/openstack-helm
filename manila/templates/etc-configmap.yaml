@@ -10,4 +10,5 @@ metadata:
 data:
   manila.conf: |
 {{ tuple "etc/_manila.conf.tpl" . | include "template" | indent 4 }}
-
+  logging.conf: |
+{{ include "loggerIni" .Values.logging | indent 4 }}

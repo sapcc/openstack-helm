@@ -21,7 +21,7 @@ global:
       port_search_pattern: DEFINED-IN-REGION-CHART
       physical_network: DEFINED-IN-REGION-CHART
       mtu: DEFINED-IN-REGION-CHART
-
+      availability_zone: DEFINED-IN-REGION-CHART
 
 debug: "True"
 
@@ -37,8 +37,50 @@ port_metrics: '9102'
 
 sentry_dsn: DEFINE-IN-REGION-CHART
 
-
-
-
 postgres:
   name: manila
+
+logging:
+    formatters:
+        context:
+            class: oslo_log.formatters.ContextFormatter
+        default:
+            format: "%(message)s"
+    handlers:
+        stdout:
+            class: StreamHandler
+            args: "(sys.stdout,)"
+            formatter: context
+        "null":
+            class: logging.NullHandler
+            formatter: default
+            args: "()"
+        sentry:
+            class: "raven.handlers.logging.SentryHandler"
+            level: ERROR
+            args: "()"
+    loggers:
+        root:
+            handlers: "null"
+            level: WARNING
+        manila:
+            handlers: stdout, sentry
+            level: DEBUG
+        amqp:
+            handlers: stdout, sentry
+            level: WARNING
+        amqplib:
+            handlers: stdout, sentry
+            level: WARNING
+        sqlalchemy:
+            handlers: stdout, sentry
+            level: WARNING
+        boto:
+            handlers: stdout, sentry
+            level: WARNING
+        suds:
+            handlers: stdout, sentry
+            level: INFO
+        eventlet.wsgi.server:
+            handlers: stdout, sentry
+            level: INFO

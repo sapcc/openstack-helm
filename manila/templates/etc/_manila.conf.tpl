@@ -1,20 +1,9 @@
 [DEFAULT]
 debug = {{.Values.debug }}
 
-#use_syslog = True
-#syslog_log_facility = LOG_LOCAL0
-log_dir = /var/log/manila
-
-logging_exception_prefix = %(color)s%(asctime)s.%(msecs)d TRACE %(name)s ^[[01;35m%(instance)s^[[00m
-logging_debug_format_suffix = ^[[00;33mfrom (pid=%(process)d) %(funcName)s %(pathname)s:%(lineno)d^[[00m
-logging_default_format_string = %(asctime)s.%(msecs)d %(color)s%(levelname)s %(name)s [^[[00;36m-%(color)s] ^[[01;35m%(instance)s%(color)s%(message)s^[[00m
-logging_context_format_string = %(asctime)s.%(msecs)d %(color)s%(levelname)s %(name)s [^[[01;36m%(request_id)s ^[[00;36m%(user_id)s %(project_id)s%(color)s] ^[[01;35m%(instance)s%(color)s%(message)s^[[00m
-
-
+log_config_append = /etc/manila/logging.conf
 
 use_forwarded_for = true
-
-
 
 # Following opt is used for definition of share backends that should be enabled.
 # Values are conf groupnames that contain per manila-share service opts.
@@ -30,8 +19,8 @@ api_paste_config = /etc/manila/api-paste.ini
 rpc_backend = rabbit
 
 auth_strategy = keystone
-
 os_region_name = {{.Values.global.region}}
+
 osapi_share_listen = 0.0.0.0
 
 
@@ -68,7 +57,6 @@ region_name = {{.Values.global.region}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 insecure = True
-
 
 
 [oslo_messaging_rabbit]

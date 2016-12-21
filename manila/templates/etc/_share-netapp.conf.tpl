@@ -1,8 +1,10 @@
 {{- define "share_netapp_conf" -}}
 {{- $context := index . 0 -}}
 {{- $share := index . 1 -}}
-[netapp-multi]
+[DEFAULT]
+storage_availability_zone = {{$share.availability_zone}}
 
+[netapp-multi]
 share_backend_name=netapp-multi
 share_driver=manila.share.drivers.netapp.common.NetAppDriver
 driver_handles_share_servers=True
@@ -13,8 +15,6 @@ netapp_transport_type=https
 netapp_login={{$share.username}}
 netapp_password={{$share.password}}
 netapp_mtu={{$share.mtu}}
-
-
 
 netapp_root_volume_aggregate={{$share.root_volume_aggregate}}
 netapp_aggregate_name_search_pattern={{$share.aggregate_search_pattern}}

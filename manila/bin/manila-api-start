@@ -5,12 +5,11 @@ set -e
 . /container.init/common.sh
 
 function process_config {
-    cp /manila-etc/manila.conf  /etc/manila/manila.conf
+    cp /manila-etc/*.conf /etc/manila/
 }
 
 
 function _start_application {
-    mkdir /var/log/manila
     exec /var/lib/kolla/venv/bin/manila-api --config-file /etc/manila/manila.conf
 }
 
@@ -18,5 +17,3 @@ function _start_application {
 process_config
 
 start_application
-
-
