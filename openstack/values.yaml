@@ -75,6 +75,12 @@ global:
   keystone_service_project: service
   keystone_demo_project: demo
 
+  monasca_api_endpoint_protocol_admin: http
+  monasca_api_endpoint_protocol_public:  https
+  monasca_api_endpoint_protocol_internal: http
+  monasca_api_port_admin: '8070'
+  monasca_api_port_public: '443'
+  monasca_api_port_internal: '8070'
 
   ironic_service_user: ironic
   ironic_service_password: DEFINED-IN-REGION-CHART
