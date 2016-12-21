@@ -1,8 +1,11 @@
+{{define "scheduler"}}
+{{$az := index . 1}}
+{{with index . 0}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
 metadata:
-  name: manila-scheduler
+  name: manila-scheduler-{{$az}}
   labels:
     system: openstack
     type: backend
@@ -17,11 +20,11 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-      name: manila-scheduler
+      name: manila-scheduler-{{$az}}
   template:
     metadata:
       labels:
-        name: manila-scheduler
+        name: manila-scheduler-{{$az}}
     spec:
       containers:
         - name: manila-scheduler
@@ -41,12 +44,19 @@ spec:
           volumeMounts:
             - mountPath: /manila-etc
               name: manila-etc
+            - mountPath: /manila-scheduler-etc
+              name: manila-scheduler-etc
             - mountPath: /container.init
               name: container-init
       volumes:
         - name: manila-etc
           configMap:
             name: manila-etc
+        - name: manila-scheduler-etc
+          configMap:
+            name: manila-storage-availability-zone-{{$az}}
         - name: container-init
           configMap:
             name: manila-bin
+{{ end }}
+{{ end }}

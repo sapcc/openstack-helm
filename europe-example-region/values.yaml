@@ -62,17 +62,6 @@ global:
 
   volumes_netapp: []
 
-  shares_netapp:
-    - name: share1
-      vserver: vs1
-      host: netapp.yourdomain.com
-      username: admin
-      password: YourOwnSecret!
-      root_volume_aggregate: aggr_1
-      aggregate_search_pattern: 'aggr_2'
-      port_search_pattern: (a0b)
-      physical_network: control_plane
-      mtu: '1500'
   network_agents:
     - name: network0
       node: network0.yourdomain.com
@@ -165,6 +154,19 @@ openstack:
     sentry_dsn: 'add your own'
     postgres:
       password: YourOwnSecret!
+    shares:
+      nova:
+        shares_netapp:
+          - name: share1
+            vserver: vs1
+            host: netapp.yourdomain.com
+            username: admin
+            password: YourOwnSecret!
+            root_volume_aggregate: aggr_1
+            aggregate_search_pattern: 'aggr_2'
+            port_search_pattern: (a0b)
+            physical_network: control_plane
+            mtu: '1500'
 
   neutron:
     image_version_neutron_server_m3: 'v1'

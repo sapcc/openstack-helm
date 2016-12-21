@@ -1,6 +1,6 @@
 {{- define "share_netapp" -}}
-{{- $context := index . 0 -}}
-{{- $share := index . 1 -}}
+{{$share := index . 1 -}}
+{{with index . 0}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: manila-share-netapp-{{$share.name}}
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-manila-share-m3:{{$context.Values.image_version_manila_share_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-share-m3:{{.Values.image_version_manila_share_m3}}
           imagePullPolicy: IfNotPresent
           command:
             - bash
@@ -55,4 +55,5 @@ spec:
         - name: container-init
           configMap:
             name: manila-bin
+{{ end }}
 {{- end -}}

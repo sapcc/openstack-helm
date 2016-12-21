@@ -1,0 +1,25 @@
+{{- range $az, $shares := .Values.shares -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: manila-storage-availability-zone-{{$az}}
+  labels:
+    system: openstack
+    type: configuration
+    component: manila
+data:
+  storage-availability-zone.conf: |
+    [DEFAULT]
+    storage_availability_zone = {{$az}}
+---
+{{ tuple $ $az | include "scheduler" }}
+---
+{{- range $i, $share := $shares.shares_netapp -}}
+{{ tuple $ $share | include "share_netapp" }}
+---
+{{ tuple $ $share | include "share_netapp_configmap" }}
+{{ if lt $i (sub (len $shares.shares_netapp) 1) }}
+---
+{{end}}
+{{- end -}}
+{{- end -}}

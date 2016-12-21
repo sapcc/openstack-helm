@@ -6,11 +6,12 @@ set -e
 
 function process_config {
     cp /manila-etc/*.conf /etc/manila/
+    cp /manila-scheduler-etc/*.conf /etc/manila/
 }
 
 
 function _start_application {
-    exec /var/lib/kolla/venv/bin/manila-scheduler --config-file /etc/manila/manila.conf
+    exec /var/lib/kolla/venv/bin/manila-scheduler --config-file /etc/manila/manila.conf --config-file /etc/manila/storage-availability-zone.conf
 }
 
 
