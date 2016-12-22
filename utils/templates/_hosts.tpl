@@ -63,8 +63,8 @@
 {{define "billing_api_endpoint_host_public"}}sapcc-billing.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "webcli_api_endpoint_host_public"}}webcli.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "keystone_router_api_endpoint_host_public"}}identity.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
-{{define "monasca_api_endpoint_host_admin"}}monasca-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
-{{define "monasca_api_endpoint_host_internal"}}monasca-api.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "monasca_api_endpoint_host_admin"}}monasca-api.monasca.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "monasca_api_endpoint_host_internal"}}monasca-api.monasca.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "monasca_api_endpoint_host_public"}}monitoring.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
 {{define "swift_endpoint_host"}}objectstore.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
