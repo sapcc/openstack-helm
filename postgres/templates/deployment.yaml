@@ -91,9 +91,9 @@ spec:
             - name: OS_AUTH_URL
               value: {{.Values.backup.os_auth_url}}
             - name: OS_AUTH_VERSION
-              value: {{.Values.backup.os_auth_version}}
+              value: {{.Values.backup.os_auth_version | quote}}
             - name: OS_IDENTITY_API_VERSION
-              value: {{.Values.backup.os_identity_api_version}}
+              value: {{.Values.backup.os_identity_api_version | quote}}
             - name: OS_USERNAME
               value: {{.Values.backup.os_username}}
             - name: OS_USER_DOMAIN_NAME
@@ -105,11 +105,11 @@ spec:
             - name: OS_REGION_NAME
               value: {{.Values.backup.os_region_name}}
             - name: OS_PASSWORD
-              value: {{.Values.backup.os_password}}
+              value: {{.Values.backup.os_password | quote}}
             - name: BACKUP_PGSQL_FULL
-              value: {{.Values.backup.interval_full}}
+              value: {{.Values.backup.interval_full | quote}}
             - name: BACKUP_PGSQL_INCR
-              value: {{.Values.backup.interval_incr}}
+              value: {{.Values.backup.interval_incr | quote}}
 {{- end }}
         - name: metrics
           image: wrouesnel/postgres_exporter:v0.1.1

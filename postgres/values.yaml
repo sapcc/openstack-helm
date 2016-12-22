@@ -21,7 +21,7 @@ persistence:
   enabled: true
 
 backup:
-  enabled: true
+  enabled: false
   repository: sapcc/backup-tools
   image_version: v0.4.1
   interval_full: 3 days
