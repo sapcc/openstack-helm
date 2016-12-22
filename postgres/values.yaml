@@ -10,6 +10,8 @@ global:
 name: DEFINED-IN-COMPONENT-CHART
 user: postgres
 password: DEFINED-IN-REGION-CHART
+password_barman: DEFINED-IN-REGION-CHART
+password_barman_streaming: DEFINED-IN-REGION-CHART
 port_public: '5432'
 port_private: '5432'
 port_metrics: '9187'
@@ -20,3 +22,8 @@ image_version_postgres: '9.4'
 persistence:
   enabled: true
 
+backup:
+  enabled: true
+  image_version: v0.1.2
+  interval_full: 3 days
+  interval_incr: 3 hours

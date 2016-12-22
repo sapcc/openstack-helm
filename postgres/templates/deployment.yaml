@@ -42,6 +42,13 @@ spec:
         - name: container-init
           configMap:
             name: postgres-bin-{{.Values.name}}
+{{- if .Values.backup.enabled }}
+        - name: postgres-socket
+          emptyDir: {}
+        - name: postgres-backup-config-volume
+          configMap:
+            name: postgres-backup-{{.Values.name}}
+{{- end }}
       containers:
         - name: postgres
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/postgres:{{.Values.image_version_postgres}}
@@ -65,6 +72,16 @@ spec:
               value: {{.Values.user}}
             - name: POSTGRES_PASSWORD
               value: {{.Values.password}}
+{{- if .Values.backup.enabled }}
+            - name: BARMAN_PASSWORD
+              value: {{.Values.password_barman}}
+            - name: BARMAN_STREAMING_PASSWORD
+              value: {{.Values.password_barman_streaming}}
+            - name: MY_POD_NAME
+              value: postgres-{{.Values.name}}
+            - name: MY_POD_NAMESPACE
+              value: {{.Release.Namespace}}
+{{- end }}
 
           ports:
             - name: postgres
@@ -80,6 +97,26 @@ spec:
               mountPath: /postgresql-conf
             - name: container-init
               mountPath: /container-init
+{{- if .Values.backup.enabled }}
+            - name: postgres-socket
+              mountPath: /var/run/postgresql
+{{- end }}
+{{- if .Values.backup.enabled }}
+        - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{.Values.backup.image_version}}
+          name: backup
+          env:
+          - name: MY_POD_NAME
+            value: postgres-{{.Values.name}}
+          - name: MY_POD_NAMESPACE
+            value: {{.Release.Namespace}}
+          volumeMounts:
+          - mountPath: /db/data
+            name: postgres-persistent-storage
+          - mountPath: /db/socket
+            name: postgres-socket
+          - mountPath: /etc/db-backup
+            name: postgres-backup-config-volume
+{{- end }}
         - name: metrics
           image: wrouesnel/postgres_exporter:v0.1.1
           imagePullPolicy: IfNotPresent

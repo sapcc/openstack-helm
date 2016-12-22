@@ -25,8 +25,11 @@ spec:
         image: {{.Values.image}}
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value:
-            {{.Values.root_password}}
+          value: {{.Values.root_password}}
+        - name: MY_POD_NAME
+          value: mariadb-{{.Values.name}}
+        - name: MY_POD_NAMESPACE
+          value: {{.Release.Namespace}}
         ports:
           - name: mariadb
             containerPort: 3306
@@ -34,16 +37,43 @@ spec:
           - name: mariadb-persistent-storage
             mountPath: /var/lib/mysql
             readOnly: false
-          - name: initdb 
+          - name: initdb
             mountPath: /docker-entrypoint-initdb.d
+{{- if .Values.backup.enabled }}
+          - name: mariadb-socket
+            mountPath: /var/run/mysqld
+{{- end }}
+{{- if .Values.backup.enabled }}
+      - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{.Values.backup.image_version}}
+        name: backup
+        env:
+        - name: MY_POD_NAME
+          value: mariadb-{{.Values.name}}
+        - name: MY_POD_NAMESPACE
+          value: {{.Release.Namespace}}
+        volumeMounts:
+        - mountPath: /db/data
+          name: mariadb-persistent-storage
+        - mountPath: /db/socket
+          name: mariadb-socket
+        - mountPath: /etc/db-backup
+          name: mariadb-backup-config-volume
+{{- end }}
       volumes:
+{{- if .Values.backup.enabled }}
+        - name: mariadb-socket
+          emptyDir: {}
+        - name: mariadb-backup-config-volume
+          configMap:
+            name: mariadb-backup-{{.Values.name}}
+{{- end }}
 {{- if .Values.persistence_claim }}
         - name: mariadb-persistent-storage
           persistentVolumeClaim:
            claimName: {{.Values.persistence_claim }}
 {{- end }}
 {{- if .Values.initdb_configmap }}
-        - name: initdb 
+        - name: initdb
           configMap:
-            name: {{ .Values.initdb_configmap }}  
+            name: {{ .Values.initdb_configmap }}
 {{ end }}

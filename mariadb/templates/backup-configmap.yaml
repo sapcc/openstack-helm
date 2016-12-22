@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-backup-{{.Values.name}}
+  labels:
+    system: openstack
+    type: configuration
+    component: database
+
+data:
+  mysql.backup.full: {{ .Values.backup.interval_full }}
+  mysql.backup.incr: {{ .Values.backup.interval_incr }}
