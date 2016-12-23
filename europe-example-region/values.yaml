@@ -104,18 +104,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
   nova:
     image_version_nova_api_m3: 'v1'
@@ -141,18 +131,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
 
   glance:
@@ -168,18 +148,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
 
   cinder:
@@ -192,18 +162,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
 
   manila:
@@ -216,18 +176,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
     shares:
       nova:
@@ -314,18 +264,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
 
   ironic:
@@ -343,18 +283,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
 
   barbican:
@@ -365,18 +295,8 @@ openstack:
       password: YourOwnSecret!
       backup:
         enabled: false
-        repository: sapcc/backup-tools
-        image_version: v0.4.1
         interval_full: 3 days
         interval_incr: 3 days
-        os_auth_url: https://identity.region.domain.tld/v3
-        os_auth_version: 3
-        os_identity_api_version: 3
-        os_username: backup_username
-        os_user_domain: Default
-        os_project_name: master
-        os_project_domain: ccmaster
-        os_region_name: eu
         os_password: YourOwnSecret!
 
   horizon:

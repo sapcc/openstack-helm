@@ -81,7 +81,7 @@ spec:
             - name: container-init
               mountPath: /container-init
 {{- if .Values.backup.enabled }}
-        - image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
+        - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{.Values.backup.image_version}}
           name: backup
           env:
             - name: MY_POD_NAME
@@ -89,11 +89,11 @@ spec:
             - name: MY_POD_NAMESPACE
               value: {{.Release.Namespace}}
             - name: OS_AUTH_URL
-              value: {{.Values.backup.os_auth_url}}
+              value: {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{.Values.global.keystone_api_port_internal}}/v3
             - name: OS_AUTH_VERSION
-              value: {{.Values.backup.os_auth_version | quote}}
+              value: "3"
             - name: OS_IDENTITY_API_VERSION
-              value: {{.Values.backup.os_identity_api_version | quote}}
+              value: "3"
             - name: OS_USERNAME
               value: {{.Values.backup.os_username}}
             - name: OS_USER_DOMAIN_NAME
@@ -103,7 +103,7 @@ spec:
             - name: OS_PROJECT_DOMAIN_NAME
               value: {{.Values.backup.os_project_domain}}
             - name: OS_REGION_NAME
-              value: {{.Values.backup.os_region_name}}
+              value: {{.Values.global.region}}
             - name: OS_PASSWORD
               value: {{.Values.backup.os_password | quote}}
             - name: BACKUP_PGSQL_FULL
