@@ -1,0 +1,58 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: designate-worker
+  labels:
+    system: openstack
+    type: backend
+    component: designate
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      app: designate-worker
+  template:
+    metadata:
+      labels:
+        app: designate-worker
+      annotations:
+        chart-version: {{.Chart.Version}}
+    spec:
+      containers:
+        - name: designate-worker
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-worker-m3:{{.Values.image_version_designate_worker_m3}}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/designate-worker-start"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEBUG_CONTAINER
+              value: "false"
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
+          volumeMounts:
+            - mountPath: /designate-etc
+              name: designate-etc
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: designate-etc
+          configMap:
+            name: designate-etc
+        - name: container-init
+          configMap:
+            name: designate-bin
+
+

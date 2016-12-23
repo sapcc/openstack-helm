@@ -33,6 +33,13 @@ notification_topics = notifications
 # Supported record types
 #supported_record_type = A, AAAA, CNAME, MX, SRV, TXT, SPF, NS, PTR, SSHFP, SOA
 
+# Setting SOA defaults
+default-soa-refresh-min = 3500
+default-soa-refresh-max = 3600
+default-soa-retry = 600
+default-soa-expire = 3600000
+default-soa-minimum = 300
+
 # Setting default quotas
 quota_zones = 0
 quota_zone_recordsets = 400
@@ -85,7 +92,7 @@ default_pool_id = '794ccc2c-d751-44fe-b57f-8894c9f5c842'
 
 # What filters to use. They are applied in order listed in the option, from
 # left to right
-#scheduler_filters = default_pool
+scheduler_filters = default_pool
 
 #-----------------------
 # API Service
@@ -328,6 +335,7 @@ port = 5354
 
 # The ID of the pool managed by this instance of the Pool Manager
 pool_id = 794ccc2c-d751-44fe-b57f-8894c9f5c842
+#pool_id = 9c489bf4-9eac-4887-95a7-20fa483018b3
 
 # The percentage of servers requiring a successful update for a domain change
 # to be considered active
@@ -366,9 +374,9 @@ pool_id = 794ccc2c-d751-44fe-b57f-8894c9f5c842
 #periodic_sync_max_attempts = 3
 #periodic_sync_retry_interval = 30
 
-
 # The cache driver to use
 #cache_driver = memcache
+cache_driver = noop
 
 ###################################
 ## Pool Manager Cache Configuration
