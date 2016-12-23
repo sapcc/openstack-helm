@@ -29,17 +29,17 @@ bind_pools:
         ip:  DEFINED-REGION-CHART
       - hostname: DEFINED-REGION-CHART
         ip:  DEFINED-REGION-CHART
- akamai_pools:
-      - name: akamai_pool
-        nameservers:
-          - hostname: DEFINED-REGION-CHART
-            ip: DEFINED-REGION-CHART
-        options:
-          username: DEFINED-REGION-CHART
-          password: DEFINED-REGION-CHART
-          tsig_key_name: DEFINED-REGION-CHART
-          tsig_key_secret: DEFINED-REGION-CHART
-          tsig_key_algorithm: DEFINED-REGION-CHART
+akamai_pools:
+  - name: akamai_pool
+    nameservers:
+      - hostname: DEFINED-REGION-CHART
+        ip: DEFINED-REGION-CHART
+    options:
+      username: DEFINED-REGION-CHART
+      password: DEFINED-REGION-CHART
+      tsig_key_name: DEFINED-REGION-CHART
+      tsig_key_secret: DEFINED-REGION-CHART
+      tsig_key_algorithm: DEFINED-REGION-CHART
 
 rndc_key: DEFINED-IN-REGION-CHART
 
