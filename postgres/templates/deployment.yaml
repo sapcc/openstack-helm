@@ -82,6 +82,7 @@ spec:
               mountPath: /container-init
 {{- if .Values.backup.enabled }}
         - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{.Values.backup.image_version}}
+          imagePullPolicy: IfNotPresent
           name: backup
           env:
             - name: MY_POD_NAME
