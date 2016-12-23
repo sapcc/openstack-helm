@@ -102,6 +102,21 @@ openstack:
     cloud_admin_project: 'add your own'
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
   nova:
     image_version_nova_api_m3: 'v1'
     image_version_nova_compute_m3: 'v1'
@@ -124,6 +139,21 @@ openstack:
 
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
 
   glance:
     image_version_glance_api_m3: 'v1'
@@ -136,6 +166,21 @@ openstack:
     swift_multi_tenant: 'True'
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
 
   cinder:
     image_version_cinder_api_m3: 'v1'
@@ -145,6 +190,21 @@ openstack:
     sentry_dsn: 'add your own'
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
 
   manila:
     image_version_manila_api_m3: 'v1'
@@ -154,6 +214,21 @@ openstack:
     sentry_dsn: 'add your own'
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
     shares:
       nova:
         shares_netapp:
@@ -237,6 +312,21 @@ openstack:
 
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
 
   ironic:
     image_version_ironic_api: 'v1'
@@ -251,6 +341,21 @@ openstack:
     swift_tempurl: "add your own"
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
 
   barbican:
     image_version_barbican_m3: 'v1'
@@ -258,6 +363,21 @@ openstack:
     sentry_dsn: TODO
     postgres:
       password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
 
   horizon:
     image_version_horizon_m3: 'v1'
