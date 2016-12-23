@@ -109,8 +109,8 @@ spec:
               value: {{.Values.backup.os_password | quote}}
             - name: BACKUP_PGSQL_FULL
               value: {{.Values.backup.interval_full | quote}}
-            - name: BACKUP_PGSQL_INCR
-              value: {{.Values.backup.interval_incr | quote}}
+#            - name: BACKUP_PGSQL_INCR
+#              value: {{.Values.backup.interval_incr | quote}}
 {{- end }}
         - name: metrics
           image: wrouesnel/postgres_exporter:v0.1.1

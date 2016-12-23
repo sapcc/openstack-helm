@@ -22,9 +22,8 @@ persistence:
 
 backup:
   enabled: false
-  image_version: v0.4.2
-  interval_full: 3 days
-  interval_incr: 3 days
+  image_version: v0.4.4
+  interval_full: 3 hours
   os_username: db_backup
   os_user_domain: Default
   os_password: DEFINED-IN-REGION-SECRETS
