@@ -92,7 +92,7 @@ default_pool_id = '794ccc2c-d751-44fe-b57f-8894c9f5c842'
 
 # What filters to use. They are applied in order listed in the option, from
 # left to right
-scheduler_filters = default_pool
+scheduler_filters = {{ .Values.scheduler_filters }}
 
 #-----------------------
 # API Service
@@ -261,7 +261,7 @@ port = 5354
 #tcp_recv_timeout = 0.5
 
 # Enforce all incoming queries (including AXFR) are TSIG signed
-#query_enforce_tsig = False
+query_enforce_tsig = {{ .Values.query_enforce_tsig }}
 
 # Send all traffic over TCP
 #all_tcp = False
@@ -375,8 +375,41 @@ pool_id = 794ccc2c-d751-44fe-b57f-8894c9f5c842
 #periodic_sync_retry_interval = 30
 
 # The cache driver to use
-#cache_driver = memcache
-cache_driver = noop
+cache_driver = memcache
+
+#-----------------------
+# Worker Service
+#-----------------------
+[service:worker]
+# Whether to send events to worker instead of Pool Manager
+enabled = {{.Values.worker_enabled}}
+
+# Number of Worker processes to spawn
+#workers = None
+
+# Number of Worker greenthreads to spawn
+#threads = 1000
+
+# The percentage of servers requiring a successful update for a zone change
+# to be considered active
+#threshold_percentage = 100
+
+# The time to wait for a response from a server
+#poll_timeout = 30
+
+# The time between retrying to send a request and waiting for a response from a
+# server
+#poll_retry_interval = 15
+
+# The maximum number of times to retry sending a request and wait for a
+# response from a server
+#poll_max_retries = 10
+
+# The time to wait before sending the first request to a server
+#poll_delay = 5
+
+# Whether to allow worker to send NOTIFYs. NOTIFY requests to mdns will noop
+# notify = False
 
 ###################################
 ## Pool Manager Cache Configuration

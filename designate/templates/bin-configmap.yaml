@@ -15,6 +15,10 @@ data:
 {{ .Files.Get "bin/designate-mdns-start" | indent 4 }}
   designate-poolmanager-start: |
 {{ .Files.Get "bin/designate-poolmanager-start" | indent 4 }}
+  designate-worker-start: |
+{{ .Files.Get "bin/designate-worker-start" | indent 4 }}
+  designate-producer-start: |
+{{ .Files.Get "bin/designate-producer-start" | indent 4 }}
   db-migrate: |
 {{ .Files.Get "bin/db-migrate" | indent 4 }}
   manage-pools: |
