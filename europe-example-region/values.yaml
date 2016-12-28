@@ -310,6 +310,21 @@ openstack:
     sentry_dsn: "add your own"
     mariadb:
       root_password: YourOwnSecret!
+      backup:
+        enabled: false
+        repository: sapcc/backup-tools
+        image_version: v0.4.1
+        interval_full: 3 days
+        interval_incr: 3 days
+        os_auth_url: https://identity.region.domain.tld/v3
+        os_auth_version: 3
+        os_identity_api_version: 3
+        os_username: backup_username
+        os_user_domain: Default
+        os_project_name: master
+        os_project_domain: ccmaster
+        os_region_name: eu
+        os_password: YourOwnSecret!
     rndc_key: YourKey
     bind_pools:
       - name: default
