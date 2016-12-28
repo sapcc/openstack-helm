@@ -37,35 +37,35 @@ spec:
           - name: initdb 
             mountPath: /docker-entrypoint-initdb.d
 {{- if .Values.backup.enabled }}
-        - image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
-          name: backup
-          env:
-            - name: MY_POD_NAME
-              value: mysql-backup-{{.Values.name}}
-            - name: MY_POD_NAMESPACE
-              value: {{.Release.Namespace}}
-            - name: OS_AUTH_URL
-              value: {{.Values.backup.os_auth_url}}
-            - name: OS_AUTH_VERSION
-              value: {{.Values.backup.os_auth_version | quote}}
-            - name: OS_IDENTITY_API_VERSION
-              value: {{.Values.backup.os_identity_api_version | quote}}
-            - name: OS_USERNAME
-              value: {{.Values.backup.os_username}}
-            - name: OS_USER_DOMAIN_NAME
-              value: {{.Values.backup.os_user_domain}}
-            - name: OS_PROJECT_NAME
-              value: {{.Values.backup.os_project_name}}
-            - name: OS_PROJECT_DOMAIN_NAME
-              value: {{.Values.backup.os_project_domain}}
-            - name: OS_REGION_NAME
-              value: {{.Values.backup.os_region_name}}
-            - name: OS_PASSWORD
-              value: {{.Values.backup.os_password | quote}}
-            - name: BACKUP_MYSQL_FULL
-              value: {{.Values.backup.interval_full | quote}}
-            - name: BACKUP_MYSQL_INCR
-              value: {{.Values.backup.interval_incr | quote}}
+      - name: backup
+        image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
+        env:
+          - name: MY_POD_NAME
+            value: mysql-backup-{{.Values.name}}
+          - name: MY_POD_NAMESPACE
+            value: {{.Release.Namespace}}
+          - name: OS_AUTH_URL
+            value: {{.Values.backup.os_auth_url}}
+          - name: OS_AUTH_VERSION
+            value: {{.Values.backup.os_auth_version | quote}}
+          - name: OS_IDENTITY_API_VERSION
+            value: {{.Values.backup.os_identity_api_version | quote}}
+          - name: OS_USERNAME
+            value: {{.Values.backup.os_username}}
+          - name: OS_USER_DOMAIN_NAME
+            value: {{.Values.backup.os_user_domain}}
+          - name: OS_PROJECT_NAME
+            value: {{.Values.backup.os_project_name}}
+          - name: OS_PROJECT_DOMAIN_NAME
+            value: {{.Values.backup.os_project_domain}}
+          - name: OS_REGION_NAME
+            value: {{.Values.backup.os_region_name}}
+          - name: OS_PASSWORD
+            value: {{.Values.backup.os_password | quote}}
+          - name: BACKUP_MYSQL_FULL
+            value: {{.Values.backup.interval_full | quote}}
+          - name: BACKUP_MYSQL_INCR
+            value: {{.Values.backup.interval_incr | quote}}
 {{- end }}
       volumes:
 {{- if .Values.persistence_claim }}

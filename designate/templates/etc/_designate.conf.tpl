@@ -135,7 +135,7 @@ enabled_extensions_v1 = diagnostics, quotas, reports, sync, touch
 enable_api_v2 = True
 
 # Enabled API Version 2 extensions
-#enabled_extensions_v2 = quotas, reports
+enabled_extensions_v2 = quotas, reports
 
 # Default per-page limit for the V2 API, a value of None means show all results
 # by default
@@ -145,12 +145,12 @@ enable_api_v2 = True
 #max_limit_v2 = 1000
 
 # Enable Admin API (experimental)
-enable_api_admin = True
+#enable_api_admin = True
 
 # Enabled Admin API extensions
 # Can be one or more of : reports, quotas, counts, tenants, target_sync
 # zone export is in zones extension
-enabled_extensions_admin = quotas
+#enabled_extensions_admin = quotas
 
 # Default per-page limit for the Admin API, a value of None means show all results
 # by default
