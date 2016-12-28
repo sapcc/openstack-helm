@@ -38,6 +38,8 @@ spec:
           - name: initdb 
             mountPath: /docker-entrypoint-initdb.d
 {{- if .Values.backup.enabled }}
+          - name: db-socket
+            mountPath: /var/run/mysqld
       - name: backup
         image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
         imagePullPolicy: IfNotPresent
@@ -68,12 +70,22 @@ spec:
             value: {{.Values.backup.interval_full | quote}}
           - name: BACKUP_MYSQL_INCR
             value: {{.Values.backup.interval_incr | quote}}
+        volumeMounts:
+        - mountPath: /db/data
+          name: mariadb-persistent-storage
+          readOnly: true
+        - mountPath: /db/socket
+          name: db-socket
 {{- end }}
       volumes:
 {{- if .Values.persistence_claim }}
         - name: mariadb-persistent-storage
           persistentVolumeClaim:
            claimName: {{.Values.persistence_claim }}
+{{- end }}
+{{- if .Values.backup.enabled }}
+        - name: db-socket
+          emptyDir: {}
 {{- end }}
 {{- if .Values.initdb_configmap }}
         - name: initdb 
