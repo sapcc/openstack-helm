@@ -37,6 +37,10 @@ spec:
             readOnly: false
           - name: initdb 
             mountPath: /docker-entrypoint-initdb.d
+          - mountPath: /var/lib/mysql
+            name: db-data
+          - mountPath: /var/run/mysqld
+            name: db-socket
 {{- if .Values.backup.enabled }}
       - name: backup
         image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
@@ -68,6 +72,16 @@ spec:
             value: {{.Values.backup.interval_full | quote}}
           - name: BACKUP_MYSQL_INCR
             value: {{.Values.backup.interval_incr | quote}}
+        volumeMounts:
+        - mountPath: /db/data
+          name: db-data
+        - mountPath: /db/socket
+          name: db-socket
+      volumes:
+      - name: db-data
+        emptyDir: {}
+      - name: db-socket
+        emptyDir: {}
 {{- end }}
       volumes:
 {{- if .Values.persistence_claim }}
