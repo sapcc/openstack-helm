@@ -4,6 +4,6 @@ dependencies:
   version: 0.1.1
 - name: mariadb
   repository: http://localhost:8879/charts
-  version: 0.1.0
-digest: sha256:1302631c782a006f03f8eab38c9e4cf123d6977a9eb90c4440a63e89c1839284
-generated: 2016-11-18T09:49:50.009771335+01:00
+  version: 0.1.1
+digest: sha256:4569e704e2466a0a3225ad0983f7b5c9abec1704ee1f8eeedf25ff872391854d
+generated: 2016-12-28T13:42:55.440686297+01:00

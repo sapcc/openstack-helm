@@ -23,6 +23,7 @@ spec:
       containers:
       - name: mariadb
         image: {{.Values.image}}
+        imagePullPolicy: IfNotPresent
         env:
         - name: MYSQL_ROOT_PASSWORD
           value:
@@ -39,6 +40,7 @@ spec:
 {{- if .Values.backup.enabled }}
       - name: backup
         image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
+        imagePullPolicy: IfNotPresent
         env:
           - name: MY_POD_NAME
             value: mysql-backup-{{.Values.name}}
