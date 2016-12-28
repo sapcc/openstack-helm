@@ -8,6 +8,9 @@ log_config_append = /etc/neutron/logging.conf
 #lock_path = /var/lock/neutron
 api_paste_config = /etc/neutron/api-paste.ini
 
+allow_pagination = true
+allow_sorting = true
+
 interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 allow_overlapping_ips = true
