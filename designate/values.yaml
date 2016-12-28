@@ -65,6 +65,7 @@ logging:
         stdout:
             class: StreamHandler
             args: "(sys.stdout,)"
+            formatter: context
         "null":
             class: logging.NullHandler
             args: "()"
@@ -94,7 +95,7 @@ logging:
             level: INFO
         sqlalchemy:
             handlers: stdout, sentry
-            level: WARNING
+            level: DEBUG
         suds:
             handlers: stdout, sentry
             level: WARNING
