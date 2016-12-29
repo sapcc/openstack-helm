@@ -44,6 +44,8 @@ spec:
         image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
         imagePullPolicy: IfNotPresent
         env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{.Values.root_password}}
           - name: MY_POD_NAME
             value: mysql-backup-{{.Values.name}}
           - name: MY_POD_NAMESPACE
