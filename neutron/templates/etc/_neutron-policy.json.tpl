@@ -212,12 +212,12 @@
     "get_rule_type": "rule:regular_user",
 
     "restrict_wildcard": "(not field:rbac_policy:target_tenant=*) or rule:admin_only",
-    "create_rbac_policy": "",
+    "create_rbac_policy": "rule:cloud_admin_or_network_admin",
     "create_rbac_policy:target_tenant": "rule:restrict_wildcard",
-    "update_rbac_policy": "rule:admin_or_owner",
-    "update_rbac_policy:target_tenant": "rule:restrict_wildcard and rule:admin_or_owner",
+    "update_rbac_policy": "rule:cloud_admin_or_network_admin",
+    "update_rbac_policy:target_tenant": "rule:restrict_wildcard and rule:cloud_admin_or_network_admin",
     "get_rbac_policy": "rule:admin_or_owner",
-    "delete_rbac_policy": "rule:admin_or_owner",
+    "delete_rbac_policy": "rule:cloud_admin_or_network_admin",
 
     "create_flavor_service_profile": "rule:admin_only",
     "delete_flavor_service_profile": "rule:admin_only",
