@@ -8,7 +8,7 @@ metadata:
     component: nova
 
 data:
-  vif.patch: |
-{{ .Files.Get "patches/vif.patch" | indent 4}}
+  bridge-name.patch: |
+{{ .Files.Get "patches/bridge_name.patch" | indent 4}}
   ova-import.patch: |
 {{ .Files.Get "patches/ova_import.patch" | indent 4}}
