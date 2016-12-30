@@ -26,7 +26,7 @@
     "update_subnet": "rule:admin_or_network_owner",
     "delete_subnet": "rule:admin_or_network_owner",
 
-    "create_subnetpool": "",
+    "create_subnetpool": "cloud_admin_or_network_admin",
     "create_subnetpool:shared": "rule:admin_only",
     "create_subnetpool:is_default": "rule:admin_only",
     "get_subnetpool": "rule:admin_or_owner or rule:shared_subnetpools",
@@ -34,7 +34,7 @@
     "update_subnetpool:is_default": "rule:admin_only",
     "delete_subnetpool": "rule:admin_or_owner",
 
-    "create_address_scope": "",
+    "create_address_scope": "cloud_admin_or_network_admin",
     "create_address_scope:shared": "rule:admin_only",
     "get_address_scope": "rule:admin_or_owner or rule:shared_address_scopes",
     "update_address_scope": "rule:admin_or_owner",
