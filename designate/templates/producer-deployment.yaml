@@ -1,3 +1,4 @@
+{{- if .Values.worker_enabled }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -54,5 +55,4 @@ spec:
         - name: container-init
           configMap:
             name: designate-bin
-
-
+{{- end }}
