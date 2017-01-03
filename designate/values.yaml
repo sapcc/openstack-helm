@@ -95,7 +95,7 @@ logging:
             level: INFO
         sqlalchemy:
             handlers: stdout, sentry
-            level: DEBUG
+            level: WARNING
         suds:
             handlers: stdout, sentry
             level: WARNING

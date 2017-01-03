@@ -392,7 +392,7 @@ enabled = {{.Values.worker_enabled}}
 
 # The percentage of servers requiring a successful update for a zone change
 # to be considered active
-#threshold_percentage = 100
+threshold_percentage =  {{ .Values.worker_threshold_percentage }}
 
 # The time to wait for a response from a server
 #poll_timeout = 30
@@ -409,7 +409,7 @@ enabled = {{.Values.worker_enabled}}
 #poll_delay = 5
 
 # Whether to allow worker to send NOTIFYs. NOTIFY requests to mdns will noop
-# notify = False
+notify = {{ .Values.worker_notify }}
 
 ###################################
 ## Pool Manager Cache Configuration

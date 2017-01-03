@@ -44,10 +44,10 @@
       priority: {{ add1 $idx }}
     {{- end}}
   nameservers:
-    #{{- range $prio, $srv := $pool.nameservers}}
-    #- host: {{ $srv.ip }}
-    #  port: 53
-    #{{- end}}
+    {{- range $prio, $srv := $pool.nameservers}}
+    - host: {{ $srv.ip }}
+      port: 53
+    {{- end}}
   targets:
     - type: akamai
       description: Akamai API
@@ -60,6 +60,8 @@
 
       # Akamai Configuration options
       options:
+        host: {{$pool.options.host}}
+        port: {{$pool.options.port}}
         username: {{$pool.options.username}}
         password: {{$pool.options.password}}
         tsig_key_name: "{{$pool.options.tsig_key_name}}"
