@@ -17,7 +17,7 @@
     "shared_subnetpools": "field:subnetpools:shared=True",
     "shared_address_scopes": "field:address_scopes:shared=True",
     "external": "field:networks:router:external=True",
-    "default": "rule:admin_or_owner or rule:shared",
+    "default": "rule:cloud_admin_or_network_admin or rule:shared",
 
     "create_subnet": "rule:admin_or_network_owner",
     "create_subnet:segment_id": "rule:admin_only",
@@ -109,7 +109,7 @@
     "update_router:external_gateway_info:enable_snat": "rule:admin_only",
     "update_router:distributed": "rule:admin_only",
     "update_router:ha": "rule:admin_only",
-    "delete_router": "rule:admin_or_owner",
+    "delete_router": "rule:cloud_admin_or_network_admin",
 
     "add_router_interface": "rule:admin_or_owner",
     "remove_router_interface": "rule:admin_or_owner",
