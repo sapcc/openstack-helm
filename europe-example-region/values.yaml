@@ -60,7 +60,7 @@ global:
   hypervisors_ironic:
     - name: ironic
 
-  volumes_netapp: []
+  volumes: []
 
   network_agents:
     - name: network0

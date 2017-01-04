@@ -1,6 +1,6 @@
 {{- define "volume_netapp" -}}
-{{- $context := index . 0 -}}
 {{- $volume := index . 1 -}}
+{{- with index . 0 -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: cinder-volume-netapp-{{$volume.name}}
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{$context.Values.image_version_cinder_volume}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}
           imagePullPolicy: IfNotPresent
           command:
             - bash
@@ -39,7 +39,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /cinder-etc
               name: cinder-etc
@@ -57,4 +57,5 @@ spec:
         - name: container-init
           configMap:
             name: cinder-bin
+{{- end -}}
 {{- end -}}

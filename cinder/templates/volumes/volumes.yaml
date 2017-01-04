@@ -17,3 +17,15 @@
 ---
 {{end}}
 {{- end -}}
+
+{{ if and .Values.global.volumes (ge (len .Values.global.volumes) 1) }}
+---
+{{range $i, $volume := .Values.global.volumes -}}
+{{ tuple $ $volume |include "volume_deployment" }}
+---
+{{ tuple $ $volume |include "volume_configmap" }}
+{{ if lt $i (sub (len $.Values.global.volumes) 1) }}
+---
+{{end}}
+{{- end -}}
+{{end}}

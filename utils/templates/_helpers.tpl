@@ -1,6 +1,7 @@
 {{- define "joinKey" -}}
 {{range $item, $_ := . -}}{{$item | replace "." "_" -}},{{- end}}
 {{- end -}}
+
 {{- define "loggerIni" -}}
 {{range $top_level_key, $value := .}}
 [{{$top_level_key}}]

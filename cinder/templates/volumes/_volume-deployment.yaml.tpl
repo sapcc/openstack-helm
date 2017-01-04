@@ -1,10 +1,10 @@
-{{- define "volume_vmware" -}}
+{{- define "volume_deployment" -}}
 {{- $volume := index . 1 -}}
 {{- with index . 0 -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  name: cinder-volume-vmware-{{$volume.name}}
+  name: cinder-volume-{{$volume.name}}
   labels:
     system: openstack
     type: backend
@@ -19,16 +19,16 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-        name: cinder-volume-vmware-{{$volume.name}}
+        name: cinder-{{$volume.name}}
   template:
     metadata:
       labels:
-        name: cinder-volume-vmware-{{$volume.name}}
+        name: cinder-{{$volume.name}}
       annotations:
-        pod.beta.kubernetes.io/hostname: cinder-volume-vmware-{{$volume.name}}
+        pod.beta.kubernetes.io/hostname: cinder-volume-{{$volume.name}}
     spec:
       containers:
-        - name: cinder-volume-vmware-{{$volume.name}}
+        - name: cinder-volume-{{$volume.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}
           imagePullPolicy: IfNotPresent
           command:
@@ -53,7 +53,7 @@ spec:
             name: cinder-etc
         - name: volume-config
           configMap:
-            name:  volume-vmware-{{$volume.name}}
+            name:  volume-{{$volume.name}}
         - name: container-init
           configMap:
             name: cinder-bin
