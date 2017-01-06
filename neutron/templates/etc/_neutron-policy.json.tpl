@@ -17,7 +17,7 @@
     "shared_subnetpools": "field:subnetpools:shared=True",
     "shared_address_scopes": "field:address_scopes:shared=True",
     "external": "field:networks:router:external=True",
-    "default": "rule:cloud_admin_or_network_admin or rule:shared",
+    "default": "rule:admin_or_owner or rule:shared",
 
     "create_subnet": "rule:admin_or_network_owner",
     "create_subnet:segment_id": "rule:admin_only",
