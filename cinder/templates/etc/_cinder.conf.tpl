@@ -4,12 +4,12 @@ debug = {{ .Values.debug}}
 log_config_append = /etc/cinder/logging.conf
 
 enable_v1_api=True
-volume_name_template = %s
+volume_name_template = '%s'
 
 glance_api_servers = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
 glance_api_version = 2
 
-os_region_name = {{ .Values.region}}
+os_region_name = {{.Values.global.region}}
 
 default_availability_zone={{.Values.global.default_availability_zone}}
 default_volume_type = vmware
@@ -47,5 +47,3 @@ rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
 rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
 rabbit_host =  {{include "rabbitmq_host" .}}
 rabbit_ha_queues = true
-
-
