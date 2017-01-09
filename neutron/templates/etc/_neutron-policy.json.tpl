@@ -117,6 +117,16 @@
     "create_router:external_gateway_info:external_fixed_ips": "rule:cloud_admin_or_network_admin",
     "update_router:external_gateway_info:external_fixed_ips": "rule:cloud_admin_or_network_admin",
 
+    "create_security_group": "rule:regular_user",
+    "get_security_group": "rule:admin_or_owner",
+    "update_security_group": "rule:admin_or_owner",
+    "delete_security_group": "rule:admin_or_owner",
+
+    "create_security_group_rule": "rule:regular_user",
+    "get_security_group_rule": "rule:admin_or_owner",
+    "update_security_group_rule": "rule:admin_or_owner",
+    "delete_security_group_rule": "rule:admin_or_owner",
+
     "create_firewall": "",
     "get_firewall": "rule:admin_or_owner",
     "create_firewall:shared": "rule:admin_only",
