@@ -11,3 +11,4 @@ dnsmasq_dns_servers = {{.Values.dns_forwarders}}
 dhcp_domain = {{.Values.dns_local_domain}}
 
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
+rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}

@@ -43,6 +43,7 @@ global:
   designate_service_password: YourOwnSecret!
 
   rpc_response_timeout: 120
+  rpc_workers: 5
 
   # Define hardware components
   hypervisors_vmware:

@@ -12,3 +12,4 @@ metadata_proxy_shared_secret = {{.Values.global.nova_metadata_secret}}
 metadata_proxy_socket=/run/metadata_proxy
 
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
+rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}

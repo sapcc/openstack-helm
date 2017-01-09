@@ -1,8 +1,8 @@
 [DEFAULT]
-
 log_config_append = /etc/neutron/logging.conf
 
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
+rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
 [service_providers]
 service_provider = LOADBALANCERV2:F5Networks:neutron_lbaas.drivers.f5.driver_v2.F5LBaaSV2Driver:default
@@ -25,5 +25,3 @@ quota_listener=0
 quota_pool=0
 quota_member=0
 quota_healthmonitor=0
-
-
