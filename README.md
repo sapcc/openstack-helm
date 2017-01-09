@@ -6,7 +6,7 @@ Includes charts for Openstack
 
 - Barbican
 - Cinder
-- Desgnate
+- Designate
 - Glance
 - Horizon
 - Ironic
@@ -19,7 +19,7 @@ And infrastructure components
 - Postgres
 - Mariadb
 - RabbitMQ
-- Memached
+- Memcached
 
 The charts themselves will not install and run directly. They are included in the "openstack" chart as requirements,
 the openstack chart is effectively an abstract region and is intended to be required by a concrete region chart. There is an example
@@ -31,7 +31,7 @@ In general the following approach is used to determine where values are set/over
 1. Only used in chart and not sensitive data > set as chart value
 2. Shared by two or more charts and not sensitive data > set in openstack chart as global value
 3. Only used in chart and sensitive data > stored in region values and overridden as a chart value
-4. Shared by two or more charts and sensistive data > stored in region values and overridden as a global value
+4. Shared by two or more charts and sensitive data > stored in region values and overridden as a global value
 
 The region charts then contain all sensitive data and can be secured separately to the generic charts.
 
@@ -78,7 +78,7 @@ annotations:
 ```
 
 These pods could still go to any node though. We need to confine KVM pods to
-the hyperivsors and neutron agents to their dedicated network nodes. We do this
+the hypervisors and neutron agents to their dedicated network nodes. We do this
 by labeling the nodes:
 
 ```
