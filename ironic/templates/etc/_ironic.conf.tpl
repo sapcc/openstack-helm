@@ -53,7 +53,11 @@ url = {{.Values.global.neutron_api_endpoint_protocol_internal}}://{{include "neu
 cleaning_network_uuid={{ .Values.network_cleaning_uuid }}
 provisioning_network_uuid={{ .Values.network_management_uuid }}
 
-{{include "oslo_messaging_rabbit" .}}
+[oslo_messaging_rabbit]
+rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
+rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
+rabbit_host =  {{include "rabbitmq_host" .}}
+rabbit_ha_queues = true
 
 [oslo_middleware]
 enable_proxy_headers_parsing = True

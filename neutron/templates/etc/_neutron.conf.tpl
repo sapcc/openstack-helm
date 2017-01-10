@@ -70,7 +70,11 @@ ipv4_ptr_zone_prefix_size = 24
 [oslo_concurrency]
 lock_path = /var/lib/neutron/tmp
 
-{{include "oslo_messaging_rabbit" .}}
+[oslo_messaging_rabbit]
+rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
+rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
+rabbit_host =  {{include "rabbitmq_host" .}}
+rabbit_ha_queues = true
 
 [oslo_middleware]
 enable_proxy_headers_parsing = true

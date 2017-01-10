@@ -54,7 +54,15 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
-{{include "oslo_messaging_rabbit" .}}
+#-----------------------
+# RabbitMQ Config
+#-----------------------
+[oslo_messaging_rabbit]
+rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
+rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
+#rabbit_virtual_host = /
+#rabbit_use_ssl = False
+rabbit_hosts = {{ include "rabbitmq_host" . }}
 
 ########################
 ## Service Configuration

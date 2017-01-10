@@ -63,7 +63,12 @@ memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_por
 region_name = {{.Values.global.region}}
 insecure = True
 
-{{include "oslo_messaging_rabbit" .}}
+
+[oslo_messaging_rabbit]
+rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
+rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
+rabbit_host =  {{include "rabbitmq_host" .}}
+rabbit_ha_queues = true
 
 [oslo_middleware]
 enable_proxy_headers_parsing = True

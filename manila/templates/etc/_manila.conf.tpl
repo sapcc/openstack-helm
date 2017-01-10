@@ -64,7 +64,12 @@ project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 insecure = True
 
-{{include "oslo_messaging_rabbit" .}}
+
+[oslo_messaging_rabbit]
+rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
+rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
+rabbit_host =  {{include "rabbitmq_host" .}}
+rabbit_ha_queues = true
 
 [oslo_concurrency]
 lock_path = /var/lib/manila/tmp

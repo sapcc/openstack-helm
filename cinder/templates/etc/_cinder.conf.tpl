@@ -47,4 +47,8 @@ insecure = True
 [oslo_concurrency]
 lock_path = /var/lib/cinder/tmp
 
-{{include "oslo_messaging_rabbit" .}}
+[oslo_messaging_rabbit]
+rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
+rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
+rabbit_host =  {{include "rabbitmq_host" .}}
+rabbit_ha_queues = true
