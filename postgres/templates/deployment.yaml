@@ -119,7 +119,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: {{.Values.password}}
             - name: DATA_SOURCE_NAME
-              value: "postgresql://{{.Values.user}}:{{.Values.password}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
+              value: "postgresql://{{.Values.user}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
           ports:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
