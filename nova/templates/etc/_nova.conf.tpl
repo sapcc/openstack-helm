@@ -45,12 +45,7 @@ novncproxy_host= 0.0.0.0
 novncproxy_port = {{ .Values.global.nova_novnc_port_public}}
 
 
-[oslo_messaging_rabbit]
-rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
-rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
-rabbit_host =  {{include "rabbitmq_host" .}}
-rabbit_ha_queues = true
-
+{{include "oslo_messaging_rabbit" .}}
 
 [oslo_concurrency]
 lock_path = /var/lib/nova/tmp

@@ -51,8 +51,4 @@ allow_redelegation = true
 admin_project_domain_name = ccadmin
 admin_project_name = cloud_admin
 
-[oslo_messaging_rabbit]
-rabbit_userid = {{ .Values.global.rabbitmq_default_user }}
-rabbit_password = {{ .Values.global.rabbitmq_default_pass }}
-rabbit_host = {{include "rabbitmq_host" .}}
-rabbit_ha_queues = true
+{{include "oslo_messaging_rabbit" .}}
