@@ -10,6 +10,9 @@ logging_exception_prefix = %(process)d ERROR %(name)s %(instance)s
 notification_driver = messaging
 rpc_backend = rabbit
 
+rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 300 }}
+rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
+
 [cache]
 backend = oslo_cache.memcache_pool
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}

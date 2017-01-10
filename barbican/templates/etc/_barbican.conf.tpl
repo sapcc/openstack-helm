@@ -40,3 +40,6 @@ max_allowed_request_size_in_bytes = 1000000
 # Uncomment for a more global development environment
 
 sql_connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "barbican_db_host" .}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
+
+rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
+rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
