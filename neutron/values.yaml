@@ -63,10 +63,10 @@ logging:
             level: WARNING
         neutron:
             handlers: stdout, sentry
-            level: DEBUG
+            level: WARNING
         neutron_lbaas:
             handlers: stdout, sentry
-            level: DEBUG
+            level: WARNING
         amqp:
             handlers: stdout, sentry
             level: WARNING
