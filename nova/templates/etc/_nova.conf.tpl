@@ -27,6 +27,10 @@ default_availability_zone = {{.Values.global.default_availability_zone}}
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
+wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
+max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
+max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+
 [spice]
 enabled = False
 html5proxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{.Values.global.nova_spicehtml5_port_public}}/spice_auto.html
