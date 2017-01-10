@@ -366,25 +366,26 @@ class LBaaSv2ServiceBuilder(object):
 
     @log_helpers.log_method_call
     def _is_common_network(self, network, agent):
-        common_external_networks = False
-        common_networks = {}
-
-        if agent and "configurations" in agent:
-            agent_configs = self.deserialize_agent_configurations(
-                agent['configurations'])
-
-            if 'common_networks' in agent_configs:
-                common_networks = agent_configs['common_networks']
-
-            if 'f5_common_external_networks' in agent_configs:
-                common_external_networks = (
-                    agent_configs['f5_common_external_networks'])
-
-        return (network['shared'] or
-                (network['id'] in common_networks) or
-                ('router:external' in network and
-                 network['router:external'] and
-                 common_external_networks))
+        # common_external_networks = False
+        # common_networks = {}
+        #
+        # if agent and "configurations" in agent:
+        #     agent_configs = self.deserialize_agent_configurations(
+        #         agent['configurations'])
+        #
+        #     if 'common_networks' in agent_configs:
+        #         common_networks = agent_configs['common_networks']
+        #
+        #     if 'f5_common_external_networks' in agent_configs:
+        #         common_external_networks = (
+        #             agent_configs['f5_common_external_networks'])
+        #
+        # return (network['shared'] or
+        #         (network['id'] in common_networks) or
+        #         ('router:external' in network and
+        #          network['router:external'] and
+        #          common_external_networks))
+        return True
 
     def _valid_tenant_ids(self, network, lb_tenant_id, agent):
         if (network['tenant_id'] == lb_tenant_id):

@@ -1,5 +1,5 @@
---- neutron/patches/f5/service_builder.orig.py	2016-11-09 14:37:09.000000000 +0000
-+++ neutron/patches/f5/service_builder.patch.py	2016-11-09 14:37:09.000000000 +0000
+--- service_builder.orig.py	2016-11-11 15:07:51.000000000 +0100
++++ service_builder.patch.py	2017-01-10 10:31:35.000000000 +0100
 @@ -94,11 +94,10 @@
              segment_data = self.disconnected_service.get_network_segment(
                  context, agent_config, network)
@@ -16,3 +16,49 @@
              network_map[network_id] = network
  
              # Check if the tenant can create a loadbalancer on the network.
+@@ -367,25 +366,26 @@
+ 
+     @log_helpers.log_method_call
+     def _is_common_network(self, network, agent):
+-        common_external_networks = False
+-        common_networks = {}
+-
+-        if agent and "configurations" in agent:
+-            agent_configs = self.deserialize_agent_configurations(
+-                agent['configurations'])
+-
+-            if 'common_networks' in agent_configs:
+-                common_networks = agent_configs['common_networks']
+-
+-            if 'f5_common_external_networks' in agent_configs:
+-                common_external_networks = (
+-                    agent_configs['f5_common_external_networks'])
+-
+-        return (network['shared'] or
+-                (network['id'] in common_networks) or
+-                ('router:external' in network and
+-                 network['router:external'] and
+-                 common_external_networks))
++        # common_external_networks = False
++        # common_networks = {}
++        #
++        # if agent and "configurations" in agent:
++        #     agent_configs = self.deserialize_agent_configurations(
++        #         agent['configurations'])
++        #
++        #     if 'common_networks' in agent_configs:
++        #         common_networks = agent_configs['common_networks']
++        #
++        #     if 'f5_common_external_networks' in agent_configs:
++        #         common_external_networks = (
++        #             agent_configs['f5_common_external_networks'])
++        #
++        # return (network['shared'] or
++        #         (network['id'] in common_networks) or
++        #         ('router:external' in network and
++        #          network['router:external'] and
++        #          common_external_networks))
++        return True
+ 
+     def _valid_tenant_ids(self, network, lb_tenant_id, agent):
+         if (network['tenant_id'] == lb_tenant_id):
