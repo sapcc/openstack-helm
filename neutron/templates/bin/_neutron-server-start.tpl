@@ -8,11 +8,6 @@ set -e
 
 function process_config {
     #TODO Fix or understand upstream
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/networking_cisco/db/migration/alembic_migrations/versions/liberty/contract/53f08de0523f_neutron_routers_in_cisco_devices.py /cisco-patches/53f08de0523f-neutron-routers-in-cisco-devices.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/networking_cisco/plugins/cisco/l3/schedulers/l3_router_hosting_device_scheduler.py /cisco-patches/l3-router-hosting-device-scheduler.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/networking_cisco/plugins/cisco/device_manager/plugging_drivers/hw_vlan_trunking_driver.py /cisco-patches/hw-vlan-trunking-driver.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/networking_cisco/plugins/cisco/db/device_manager/hosting_device_manager_db.py /cisco-patches/hosting-device-manager-db.diff
-
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5lbaasdriver/v2/bigip/service_builder.py /f5-patches/service-builder.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/plugins/ml2/extensions/dns_integration.py /neutron-patches/dns-integration.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/db/ipam_backend_mixin.py /neutron-patches/ipam-backend-mixin.diff

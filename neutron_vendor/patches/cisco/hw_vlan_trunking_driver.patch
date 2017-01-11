@@ -1,5 +1,5 @@
---- hw_vlan_trunking_driver.orig.py	2016-09-01 11:57:41.000000000 +0100
-+++ hw_vlan_trunking_driver.patch.py	2016-08-17 08:59:34.000000000 +0100
+--- a/networking_cisco/plugins/cisco/device_manager/plugging_drivers/hw_vlan_trunking_driver.py	2016-09-01 11:57:41.000000000 +0100
++++ b/networking_cisco/plugins/cisco/device_manager/plugging_drivers/hw_vlan_trunking_driver.py	2016-08-17 08:59:34.000000000 +0100
 @@ -73,19 +73,35 @@
          hosting_info['physical_interface'] = self._get_interface_info(
              hosting_device['id'], port_db.network_id, is_external)

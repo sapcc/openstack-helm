@@ -1,5 +1,5 @@
---- l3_router_hosting_device_scheduler.orig.py	2016-09-01 11:58:52.000000000 +0100
-+++ l3_router_hosting_device_scheduler.patch.py	2016-08-17 08:59:34.000000000 +0100
+--- a/networking_cisco/plugins/cisco/l3/schedulers/l3_router_hosting_device_scheduler.py	2016-09-01 11:58:52.000000000 +0100
++++ b/networking_cisco/plugins/cisco/l3/schedulers/l3_router_hosting_device_scheduler.py	2016-08-17 08:59:34.000000000 +0100
 @@ -109,8 +109,8 @@
          query = query.having(
              expr.or_(func.sum(

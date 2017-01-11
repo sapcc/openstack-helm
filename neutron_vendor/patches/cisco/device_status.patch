@@ -1,5 +1,5 @@
---- device_status.orig.py	2016-09-01 11:55:29.000000000 +0100
-+++ device_status.patch.py	2016-09-01 11:55:29.000000000 +0100
+--- a/networking_cisco/plugins/cisco/cfg_agent/device_status.py	2016-09-01 11:55:29.000000000 +0100
++++ b/networking_cisco/plugins/cisco/cfg_agent/device_status.py	2016-09-01 11:55:29.000000000 +0100
 @@ -168,9 +168,14 @@
              return False
  

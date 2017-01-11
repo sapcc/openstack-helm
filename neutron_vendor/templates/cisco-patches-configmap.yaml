@@ -8,14 +8,3 @@ metadata:
     component: neutron
 
 data:
-  53f08de0523f-neutron-routers-in-cisco-devices.diff: |
-{{ .Files.Get "patches/cisco/53f08de0523f_neutron_routers_in_cisco_devices.diff" | indent 4 }}
-  device-status.diff: |
-{{ .Files.Get "patches/cisco/device_status.diff" | indent 4 }}
-  hosting-device-manager-db.diff: |
-{{ .Files.Get "patches/cisco/hosting_device_manager_db.diff" | indent 4 }}
-  hw-vlan-trunking-driver.diff: |
-{{ .Files.Get "patches/cisco/hw_vlan_trunking_driver.diff" | indent 4 }}
-  l3-router-hosting-device-scheduler.diff: |
-{{ .Files.Get "patches/cisco/l3_router_hosting_device_scheduler.diff" | indent 4 }}
-
