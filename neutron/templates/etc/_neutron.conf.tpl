@@ -39,6 +39,7 @@ advertise_mtu = True
 
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
+{{ if .Values.api_workers | default .Values.global.api_workers }}api_workers = {{ .Values.api_workers | default .Values.global.api_workers }}{{ end }}
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
