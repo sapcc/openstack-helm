@@ -91,7 +91,7 @@
     "update_port": "rule:admin_or_owner or rule:context_is_advsvc",
     "update_port:device_owner": "not rule:network_device or rule:context_is_advsvc or rule:admin_or_network_owner",
     "update_port:mac_address": "rule:admin_only or rule:context_is_advsvc",
-    "update_port:fixed_ips": "rule:context_is_advsvc or rule:admin_or_network_owner",
+    "update_port:fixed_ips": "rule:admin_or_owner or rule:context_is_advsvc",
     "update_port:port_security_enabled": "rule:context_is_advsvc or rule:admin_or_network_owner",
     "update_port:binding:host_id": "rule:admin_only",
     "update_port:binding:profile": "rule:admin_only",
