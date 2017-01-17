@@ -7,6 +7,7 @@ set -x
 
 function process_config {
     cp /cinder-etc/cinder.conf  /etc/cinder/cinder.conf
+    cp /cinder-etc/policy.json  /etc/cinder/policy.json
     cp /volume-config/volume.conf /etc/cinder/volume.conf
     cp /cinder-etc/logging.conf /etc/cinder/logging.conf
 }
@@ -20,5 +21,3 @@ function start_application {
 
 process_config
 start_application
-
-
