@@ -1,6 +1,6 @@
 {{ range $pool := .Values.bind_pools }}
 - name: {{ $pool.name }}
-  description: Bind9 Pool 
+  description: Bind9 Pool
   attributes:
     internal: true
   ns_records:
@@ -31,6 +31,9 @@
         rndc_host: {{$srv.ip}}
         rndc_port: 953
         rndc_key_file: /etc/designate/rndc.key
+        tsig_key_name: "{{$pool.options.tsig_key_name}}"
+        tsig_key_secret: "{{$pool.options.tsig_key_secret}}"
+        tsig_key_algorithm: "{{$pool.options.tsig_key_algorithm}}"
     {{end}}
 {{ end }}
 {{ range $pool := .Values.akamai_pools }}
