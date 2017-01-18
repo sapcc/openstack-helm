@@ -99,13 +99,13 @@
     "diagnostics_sync_zone": "rule:admin",
     "diagnostics_sync_record": "rule:admin",
 
-    "create_zone_transfer_request": "rule:admin_or_owner",
+    "create_zone_transfer_request": "rule:cloud_admin_or_dns_admin",
     "get_zone_transfer_request": "rule:admin_or_owner or tenant:%(target_tenant_id)s or None:%(target_tenant_id)s",
-    "get_zone_transfer_request_detailed": "rule:admin_or_owner",
+    "get_zone_transfer_request_detailed": "rule:cloud_admin_or_dns_admin",
     "find_zone_transfer_requests": "@",
     "find_zone_transfer_request": "@",
-    "update_zone_transfer_request": "rule:admin_or_owner",
-    "delete_zone_transfer_request": "rule:admin_or_owner",
+    "update_zone_transfer_request": "rule:cloud_admin_or_dns_admin",
+    "delete_zone_transfer_request": "rule:cloud_admin_or_dns_admin",
 
     "create_zone_transfer_accept": "rule:admin_or_owner or tenant:%(target_tenant_id)s or None:%(target_tenant_id)s",
     "get_zone_transfer_accept": "rule:admin_or_owner",
