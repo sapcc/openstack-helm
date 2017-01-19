@@ -14,6 +14,8 @@ data:
 {{ tuple "bin/_keystone-bootstrap.tpl" . | include "template" | indent 4 }}
   keystone-seed: |
 {{ tuple "bin/_keystone-seed.tpl" . | include "template" | indent 4 }}
+  keystone-operator: |
+{{ tuple "bin/_keystone-operator.tpl" . | include "template" | indent 4 }}
   keystone-start: |
 {{ tuple "bin/_keystone-start.tpl" . | include "template" | indent 4 }}
   db-migrate: |

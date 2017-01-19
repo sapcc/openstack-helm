@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+
+metadata:
+  name: keystone-operator
+  labels:
+    system: openstack
+    type: kubernetes-operator
+    component: keystone-operator
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: keystone-operator
+  template:
+    metadata:
+      labels:
+        name: keystone-operator
+    spec:
+      containers:
+        - name: keystone-operator
+          image: {{.Values.global.image_repository}}/monsoon/keystone-operator:{{.Values.image_version_keystone_operator}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /usr/local/bin/kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "bash /container.init/keystone-operator"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "keystone-migration,keystone-bootstrap"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-keystone,keystone"
+          volumeMounts:
+            - mountPath: /container.init
+              name: container-init
+      volumes:
+        - name: container-init
+          configMap:
+            name: keystone-bin

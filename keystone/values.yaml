@@ -16,6 +16,7 @@ debug: "True"
 
 
 image_version_keystone_m3: DEFINED-IN-REGION-CHART
+image_version_keystone_operator: DEFINED-IN-REGION-CHART
 
 port_metrics: '9102'
 
