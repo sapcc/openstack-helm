@@ -10,9 +10,7 @@ function process_config {
 }
 
 
-
 function _start_application {
-
     mkdir /tftpboot
 
     for pxe_file in /var/lib/tftpboot/pxelinux.0 /var/lib/tftpboot/chain.c32 /usr/lib/syslinux/pxelinux.0 /usr/lib/syslinux/chain.c32; do
@@ -22,7 +20,6 @@ function _start_application {
     done
 
     exec /usr/sbin/in.tftpd --verbose --foreground --user root --address 0.0.0.0:69 --ipv4 --map-file /map-file /tftpboot
-
 }
 
 

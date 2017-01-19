@@ -5,10 +5,11 @@ set -e
 . /container.init/common.sh
 
 
-
 function process_config {
+    apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
+
     cp /ironic-etc/ironic-inspector.conf  /etc/ironic-inspector/ironic.conf
 }
 
 process_config
-ironic-inspector-dbsync --config-file /etc/ironic-inspector/ironic.conf upgrade
+exec ironic-inspector-dbsync --config-file /etc/ironic-inspector/ironic.conf upgrade

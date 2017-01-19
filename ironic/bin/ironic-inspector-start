@@ -5,20 +5,16 @@ set -e
 . /container.init/common.sh
 
 function process_config {
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/ironic_inspector/node_cache.py /ironic-patches/node-cache.diff
+    apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
+
     cp /ironic-etc/ironic-inspector.conf  /etc/ironic-inspector/ironic.conf
 }
 
 
-
 function _start_application {
-
     exec /var/lib/kolla/venv/bin/ironic-inspector --config-file /etc/ironic-inspector/ironic.conf
-
 }
 
 
 process_config
 start_application
-
-
