@@ -8,6 +8,8 @@ metadata:
     component: nova
 
 data:
+  ironic.patch: |
+{{ .Files.Get "patches/ironic.patch" | indent 4}}
   bridge-name.patch: |
 {{ .Files.Get "patches/bridge_name.patch" | indent 4}}
   ova-import.patch: |

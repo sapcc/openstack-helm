@@ -1,0 +1,162 @@
+diff --git a/nova/tests/unit/virt/ironic/test_client_wrapper.py b/nova/tests/unit/virt/ironic/test_client_wrapper.py
+index c37a0ef176..64484b22a0 100644
+--- a/nova/tests/unit/virt/ironic/test_client_wrapper.py
++++ b/nova/tests/unit/virt/ironic/test_client_wrapper.py
+@@ -74,7 +74,7 @@ class IronicClientWrapperTestCase(test.NoDBTestCase):
+                     'ironic_url': CONF.ironic.api_endpoint,
+                     'max_retries': CONF.ironic.api_max_retries,
+                     'retry_interval': CONF.ironic.api_retry_interval,
+-                    'os_ironic_api_version': '1.8'}
++                    'os_ironic_api_version': '1.20'}
+         mock_ir_cli.assert_called_once_with(CONF.ironic.api_version,
+                                             **expected)
+ 
+@@ -88,7 +88,7 @@ class IronicClientWrapperTestCase(test.NoDBTestCase):
+                     'ironic_url': CONF.ironic.api_endpoint,
+                     'max_retries': CONF.ironic.api_max_retries,
+                     'retry_interval': CONF.ironic.api_retry_interval,
+-                    'os_ironic_api_version': '1.8'}
++                    'os_ironic_api_version': '1.20'}
+         mock_ir_cli.assert_called_once_with(CONF.ironic.api_version,
+                                             **expected)
+ 
+diff --git a/nova/tests/unit/virt/ironic/test_driver.py b/nova/tests/unit/virt/ironic/test_driver.py
+index 458936863e..29b7278300 100644
+--- a/nova/tests/unit/virt/ironic/test_driver.py
++++ b/nova/tests/unit/virt/ironic/test_driver.py
+@@ -1646,32 +1646,33 @@ class IronicDriverTestCase(test.NoDBTestCase):
+                 detach_block_devices=None, attach_block_devices=None)
+ 
+     @mock.patch.object(FAKE_CLIENT.node, 'get')
+-    def _test_network_binding_host_id(self, is_neutron, mock_get):
++    def _test_network_binding_host_id(self, network_interface, mock_get):
+         node_uuid = uuidutils.generate_uuid()
+         hostname = 'ironic-compute'
+         instance = fake_instance.fake_instance_obj(self.ctx,
+                                                    node=node_uuid,
+                                                    host=hostname)
+-        if is_neutron:
+-            provider = 'neutron'
++        if network_interface == 'neutron':
+             expected = None
+         else:
+-            provider = 'none'
+             expected = hostname
+         node = ironic_utils.get_test_node(uuid=node_uuid,
+                                           instance_uuid=self.instance_uuid,
+                                           instance_type_id=5,
+-                                          network_provider=provider)
++                                          network_interface=network_interface)
+         mock_get.return_value = node
+ 
+         host_id = self.driver.network_binding_host_id(self.ctx, instance)
+         self.assertEqual(expected, host_id)
+ 
+     def test_network_binding_host_id_neutron(self):
+-        self._test_network_binding_host_id(True)
++        self._test_network_binding_host_id('neutron')
+ 
+-    def test_network_binding_host_id_none(self):
+-        self._test_network_binding_host_id(False)
++    def test_network_binding_host_id_flat(self):
++        self._test_network_binding_host_id('flat')
++
++    def test_network_binding_host_id_noop(self):
++        self._test_network_binding_host_id('noop')
+ 
+ 
+ @mock.patch.object(instance_metadata, 'InstanceMetadata')
+diff --git a/nova/tests/unit/virt/ironic/utils.py b/nova/tests/unit/virt/ironic/utils.py
+index d25930ed85..7bec7f78a8 100644
+--- a/nova/tests/unit/virt/ironic/utils.py
++++ b/nova/tests/unit/virt/ironic/utils.py
+@@ -45,7 +45,7 @@ def get_test_node(**kw):
+                 'properties': kw.get('properties', {}),
+                 'reservation': kw.get('reservation'),
+                 'maintenance': kw.get('maintenance', False),
+-                'network_provider': kw.get('network_provider'),
++                'network_interface': kw.get('network_interface'),
+                 'extra': kw.get('extra', {}),
+                 'updated_at': kw.get('created_at'),
+                 'created_at': kw.get('updated_at')})()
+diff --git a/nova/virt/ironic/client_wrapper.py b/nova/virt/ironic/client_wrapper.py
+index 4b38fdb060..0073b839e8 100644
+--- a/nova/virt/ironic/client_wrapper.py
++++ b/nova/virt/ironic/client_wrapper.py
+@@ -31,7 +31,7 @@ CONF = cfg.CONF
+ ironic = None
+ 
+ # The API version required by the Ironic driver
+-IRONIC_API_VERSION = (1, 8)
++IRONIC_API_VERSION = (1, 20)
+ 
+ 
+ class IronicClientWrapper(object):
+diff --git a/nova/virt/ironic/driver.py b/nova/virt/ironic/driver.py
+index 0b227eb934..d9e4e87951 100644
+--- a/nova/virt/ironic/driver.py
++++ b/nova/virt/ironic/driver.py
+@@ -1161,22 +1161,34 @@ class IronicDriver(virt_driver.ComputeDriver):
+     def network_binding_host_id(self, context, instance):
+         """Get host ID to associate with network ports.
+ 
+-        This defines the binding:host_id parameter to the port-create
+-        calls for Neutron. If using a flat network, use the default behavior
+-        and allow the port to bind immediately. If using separate networks
+-        for the control plane and tenants, return None here to indicate
+-        that the port should not yet be bound; Ironic will make a port-update
+-        call to Neutron later to tell Neutron to bind the port.
++        This defines the binding:host_id parameter to the port-create calls for
++        Neutron. If using the neutron network interface (separate networks for
++        the control plane and tenants), return None here to indicate that the
++        port should not yet be bound; Ironic will make a port-update call to
++        Neutron later to tell Neutron to bind the port. Otherwise, use the
++        default behavior and allow the port to be bound immediately.
++
++        NOTE: the late binding is important for security. If an ML2 mechanism
++        manages to connect the tenant network to the baremetal machine before
++        deployment is done (e.g. port-create time), then the tenant potentially
++        has access to the deploy agent, which may contain firmware blobs or
++        secrets. ML2 mechanisms may be able to connect the port without the
++        switchport info that comes from ironic, if they store that switchport
++        info for some reason. As such, we should *never* pass binding:host_id
++        in the port-create call when using the 'neutron' network_interface,
++        because a null binding:host_id indicates to Neutron that it should
++        not connect the port yet.
+ 
+         :param context:  request context
+         :param instance: nova.objects.instance.Instance that the network
+                          ports will be associated with
+-        :returns: a string representing the host ID
++        :returns: a string representing the host ID, or None
+         """
+ 
+-        node = self._get_node(instance.node)
+-        if getattr(node, 'network_provider', 'none') == 'none':
+-            # flat network, go ahead and allow the port to be bound
+-            return super(IronicDriver, self).network_binding_host_id(
+-                context, instance)
+-        return None
++        node = self.ironicclient.call('node.get', instance.node,
++                                      fields=['network_interface'])
++        if node.network_interface == 'neutron':
++            return None
++        # flat network, go ahead and allow the port to be bound
++        return super(IronicDriver, self).network_binding_host_id(
++            context, instance)
+diff --git a/releasenotes/notes/ironic-multitenant-networking-6f124964831d4a6c.yaml b/releasenotes/notes/ironic-multitenant-networking-6f124964831d4a6c.yaml
+new file mode 100644
+index 0000000000..b263e68049
+--- /dev/null
++++ b/releasenotes/notes/ironic-multitenant-networking-6f124964831d4a6c.yaml
+@@ -0,0 +1,10 @@
++---
++features:
++  - Multitenant networking for the ironic compute driver is now supported.
++    To enable this feature, ironic nodes must be using the 'neutron'
++    network_interface.
++upgrade:
++  - The ironic driver now requires python-ironicclient>=1.5.0 (previously
++    >=1.1.0), and requires the ironic service to support API version 1.20 or
++    higher. As usual, ironic should be upgraded before nova for a
++    smooth upgrade process.
