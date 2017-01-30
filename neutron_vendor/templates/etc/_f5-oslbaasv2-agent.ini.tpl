@@ -393,7 +393,7 @@ max_namespaces_per_tenant = 1
 #
 # This setting is only valid if use_namespaces = True.
 #
-f5_route_domain_strictness = False
+f5_route_domain_strictness = True
 #
 # SNAT Mode and SNAT Address Counts
 #
