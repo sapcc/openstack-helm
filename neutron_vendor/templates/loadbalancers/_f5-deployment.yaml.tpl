@@ -55,6 +55,8 @@ spec:
               name: f5-patches
             - mountPath: /container.init
               name: container-init
+            - mountPath: /development
+              name: development
       volumes:
         - name: neutron-etc
           configMap:
