@@ -25,7 +25,7 @@
   "volume:delete_snapshot": "rule:context_is_editor",
   "volume:update_snapshot": "rule:context_is_editor",
   "volume:extend": "rule:context_is_editor",
-  "volume:update_readonly_flag": "rule:context_is_editor",
+  "volume:update_readonly_flag": "rule:context_is_volume_admin",
   "volume:retype": "rule:context_is_editor",
   "volume:update": "rule:context_is_editor",
 
@@ -82,11 +82,11 @@
   "volume:failover_replication": "rule:context_is_admin",
   "volume:list_replication_targets": "rule:context_is_admin",
 
-  "backup:create" : "rule:context_is_editor",
-  "backup:delete": "rule:context_is_editor",
-  "backup:get": "rule:context_is_viewer",
-  "backup:get_all": "rule:context_is_viewer",
-  "backup:restore": "rule:context_is_editor",
+  "backup:create" : "rule:context_is_admin",
+  "backup:delete": "rule:context_is_admin",
+  "backup:get": "rule:context_is_adminr",
+  "backup:get_all": "rule:context_is_admin",
+  "backup:restore": "rule:context_is_admin",
   "backup:backup-import": "rule:context_is_admin",
   "backup:backup-export": "rule:context_is_admin",
 
@@ -94,16 +94,16 @@
   "snapshot_extension:snapshot_manage": "rule:context_is_admin",
   "snapshot_extension:snapshot_unmanage": "rule:context_is_admin",
 
-  "consistencygroup:create" : "group:nobody",
-  "consistencygroup:delete": "group:nobody",
-  "consistencygroup:update": "group:nobody",
-  "consistencygroup:get": "group:nobody",
-  "consistencygroup:get_all": "group:nobody",
+  "consistencygroup:create" : "rule:context_is_admin",
+  "consistencygroup:delete": "rule:context_is_admin",
+  "consistencygroup:update": "rule:context_is_admin",
+  "consistencygroup:get": "rule:context_is_admin",
+  "consistencygroup:get_all": "rule:context_is_admin",
 
-  "consistencygroup:create_cgsnapshot" : "group:nobody",
-  "consistencygroup:delete_cgsnapshot": "group:nobody",
-  "consistencygroup:get_cgsnapshot": "group:nobody",
-  "consistencygroup:get_all_cgsnapshots": "group:nobody",
+  "consistencygroup:create_cgsnapshot" : "rule:context_is_admin",
+  "consistencygroup:delete_cgsnapshot": "rule:context_is_admin",
+  "consistencygroup:get_cgsnapshot": "rule:context_is_admin",
+  "consistencygroup:get_all_cgsnapshots": "rule:context_is_admin",
 
   "scheduler_extension:scheduler_stats:get_pools" : "rule:context_is_admin"
 }
