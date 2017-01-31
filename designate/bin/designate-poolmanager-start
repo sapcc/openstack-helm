@@ -11,6 +11,8 @@ function process_config {
     cp /designate-etc/pools.yaml /etc/designate/pools.yaml
     cp /designate-etc/rndc.key /etc/designate/rndc.key
     cp /designate-etc/policy.json  /etc/designate/policy.json
+
+    apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
 }
 
 

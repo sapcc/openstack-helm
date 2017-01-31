@@ -52,6 +52,8 @@ spec:
               name: designate-etc
             - mountPath: /container.init
               name: container-init
+            - mountPath: /designate-patches
+              name: designate-patches
       volumes:
         - name: designate-etc
           configMap:
@@ -59,5 +61,8 @@ spec:
         - name: container-init
           configMap:
             name: designate-bin
+        - name: designate-patches
+          configMap:
+            name: designate-patches
 
 

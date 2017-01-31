@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: designate-patches
+  labels:
+    system: openstack
+    type: patches
+    component: designate
+
+data:
+  mypatch.patch: |
+{{ .Files.Get "patches/mypatch.patch" | indent 4 }}
+

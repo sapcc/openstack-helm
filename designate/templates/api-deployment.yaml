@@ -64,6 +64,8 @@ spec:
               name: designate-etc
             - mountPath: /container.init
               name: container-init
+            - mountPath: /designate-patches
+              name: designate-patches
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -77,6 +79,9 @@ spec:
         - name: designate-etc
           configMap:
             name: designate-etc
+        - name: designate-patches
+          configMap:
+            name: designate-patches
         - name: container-init
           configMap:
             name: designate-bin

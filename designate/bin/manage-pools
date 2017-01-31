@@ -11,6 +11,8 @@ function process_config {
     cp /designate-etc/policy.json  /etc/designate/policy.json
     cp /designate-etc/logging.conf /etc/designate/logging.conf
     cp /designate-etc/pools.yaml /etc/designate/pools.yaml
+
+    apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
 }
 
 process_config
