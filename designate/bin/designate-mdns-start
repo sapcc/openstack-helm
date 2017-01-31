@@ -10,7 +10,7 @@ function process_config {
     cp /designate-etc/logging.conf /etc/designate/logging.conf
 }
 
-function start_application {
+function _start_application {
     exec /var/lib/kolla/venv/bin/designate-mdns
 }
 
