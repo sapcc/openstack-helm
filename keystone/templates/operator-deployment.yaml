@@ -2,11 +2,11 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 
 metadata:
-  name: keystone-operator
+  name: openstack-operator
   labels:
     system: openstack
     type: kubernetes-operator
-    component: keystone-operator
+    component: openstack-operator
 spec:
   replicas: 1
   revisionHistoryLimit: 5
@@ -18,21 +18,21 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-      name: keystone-operator
+      name: openstack-operator
   template:
     metadata:
       labels:
-        name: keystone-operator
+        name: openstack-operator
     spec:
       containers:
-        - name: keystone-operator
-          image: {{.Values.global.image_repository}}/monsoon/keystone-operator:{{.Values.image_version_keystone_operator}}
+        - name: openstack-operator
+          image: {{.Values.global.image_repository}}/monsoon/openstack-operator:{{.Values.image_version_openstack_operator}}
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/keystone-operator"
+              value: "bash /container.init/openstack-operator"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS

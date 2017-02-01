@@ -29,9 +29,10 @@ export OS_PASSWORD={{.Values.bootstrap_password}}
 export OS_USER_DOMAIN_ID=default
 export OS_DOMAIN_ID=default
 export OS_REGION={{.Values.global.region}}
+export SENTRY_DSN={{.Values.operator.sentry_dsn}}
 
 export http_proxy=
 export all_proxy=
 
-echo "Starting keystone-operator.."
-/keystone-operator --v 1
+echo "Starting openstack-operator.."
+/openstack-operator --v 1
