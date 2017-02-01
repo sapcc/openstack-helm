@@ -102,7 +102,7 @@
     "identity:list_role_inference_rules": "rule:cloud_admin",
     "identity:check_implied_role": "rule:cloud_admin",
 
-    "blacklist_roles": "'cloud_network_admin':%(target.role.name)s or 'network_admin':%(target.role.name)s or 'cloud_dns_admin':%(target.role.name)s or 'dns_admin':%(target.role.name)s or 'cloud_image_admin':%(target.role.name)s or 'cloud_compute_admin':%(target.role.name)s or 'cloud_keymanager_admin':%(target.role.name)s or 'swiftreseller':%(target.role.name)s or 'service':%(target.role.name)s",
+    "blacklist_roles": "'cloud_network_admin':%(target.role.name)s or 'network_admin':%(target.role.name)s or 'cloud_dns_admin':%(target.role.name)s or 'dns_admin':%(target.role.name)s or 'cloud_image_admin':%(target.role.name)s or 'cloud_compute_admin':%(target.role.name)s or 'cloud_keymanager_admin':%(target.role.name)s or 'cloud_volume_admin':%(target.role.name)s or 'swiftreseller':%(target.role.name)s or 'service':%(target.role.name)s",
     "blacklist_projects": "'{{.Values.cloud_admin_project}}':%(target.project.id)s",
     "identity:check_grant": "rule:cloud_admin or rule:domain_admin_for_grants or rule:project_admin_for_grants",
     "identity:list_grants": "rule:cloud_admin or rule:domain_admin_for_list_grants or rule:project_admin_for_list_grants",
