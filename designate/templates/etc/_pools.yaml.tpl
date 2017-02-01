@@ -58,8 +58,8 @@
       # List out the designate-mdns servers from which Akamai servers should
       # request zone transfers (AXFRs) from.
       masters:
-        - host: {{ $.Values.global.designate_mdns_external_ip }}
-          port: 5354
+        - host: {{ $.Values.global.designate_mdns_akamai_ip }}
+          port: 53
 
       # Akamai Configuration options
       options:

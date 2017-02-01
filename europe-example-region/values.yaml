@@ -40,6 +40,7 @@ global:
   manila_service_password: YourOwnSecret!
 
   designate_mdns_external_ip:  10.0.0.10
+  designate_mdns_akamai_ip:  10.0.0.9
   designate_service_password: YourOwnSecret!
 
   rpc_response_timeout: 120
@@ -332,8 +333,7 @@ openstack:
         nameservers:
           - hostname: ns1.your.domain
             ip: 10.0.0.11
-          - hostname: ns2.your.domai
+          - hostname: ns2.your.domain
             ip: 10.0.0.12
-          - hostname: ns3.your.domai
-            ip: 10.0.0.12
-
+          - hostname: ns3.your.domain
+            ip: 10.0.0.13
