@@ -27,6 +27,8 @@ servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}
 
 [token]
 provider = fernet
+# default is 3600, increased to 8 hrs because of endless image upload durations to ap-au-1
+expiration = 28800
 
 [fernet_tokens]
 key_repository = /fernet-keys
