@@ -5,11 +5,6 @@ set -e
 . /container.init/common.sh
 
 function process_config {
-
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5_openstack_agent/lbaasv2/drivers/bigip/barbican_cert.py /f5-patches/barbican-cert.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5_openstack_agent/lbaasv2/drivers/bigip/l2_service.py /f5-patches/l2-service.diff
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5/bigip/__init__.py /f5-patches/bigip-init.diff
-
     cp /neutron-etc/neutron.conf /etc/neutron/neutron.conf
     cp /neutron-etc/logging.conf  /etc/neutron/logging.conf
     cp /neutron-etc/neutron-lbaas.conf /etc/neutron/neutron_lbaas.conf
