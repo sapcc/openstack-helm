@@ -42,7 +42,7 @@
     "delete_address_scope": "rule:admin_or_owner",
 
     "create_network": "rule:cloud_admin_or_network_admin",
-    "get_network": "rule:cloud_admin_or_network_admin or rule:shared or rule:external or rule:context_is_advsvc",
+    "get_network": "rule:cloud_admin_or_network_admin or rule:shared or rule:owner or rule:external or rule:context_is_advsvc",
     "get_network:router:external": "rule:regular_user",
     "get_network:segments": "rule:admin_only",
     "get_network:provider:network_type": "rule:admin_only",
