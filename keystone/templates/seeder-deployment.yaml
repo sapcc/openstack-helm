@@ -23,6 +23,10 @@ spec:
     metadata:
       labels:
         name: keystone-seeder
+      annotations:
+        chart-version: {{.Chart.Version}}
+        checksum/etc-configmap.yaml: {{ include "keystone/templates/etc-configmap.yaml" . | sha256sum }}
+        checksum/bin-configmap.yaml: {{ include "keystone/templates/bin-configmap.yaml" . | sha256sum }}
     spec:
       containers:
         - name: keystone-seeder
