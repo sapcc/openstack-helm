@@ -27,6 +27,13 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
+# all default quotas are 0 to enforce usage of the Resource Management tool in Elektra
+quota_volumes = 0
+quota_snapshots = 0
+quota_gigabytes = 0
+quota_backups = 0
+quota_backup_gigabytes = 0
+
 [database]
 connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "cinder_db_host" .}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
 

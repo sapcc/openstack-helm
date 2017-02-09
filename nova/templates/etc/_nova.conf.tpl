@@ -31,6 +31,17 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
+# most default quotas are 0 to enforce usage of the Resource Management tool in Elektra
+quota_cores = 0
+quota_instances = 0
+quota_ram = 0
+
+quota_fixed_ips = 0
+quota_floating_ips = 0
+quota_networks = 0
+quota_security_group_rules = 0
+quota_security_groups = 0
+
 [spice]
 enabled = False
 html5proxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{.Values.global.nova_spicehtml5_port_public}}/spice_auto.html

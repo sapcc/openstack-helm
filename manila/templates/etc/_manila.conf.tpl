@@ -30,6 +30,11 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
+# all default quotas are 0 to enforce usage of the Resource Management tool in Elektra
+quota_shares = 0
+quota_gigabytes = 0
+quota_snapshots = 0
+quota_snapshot_gigabytes = 0
 quota_share_networks = 0
 
 [cinder]
