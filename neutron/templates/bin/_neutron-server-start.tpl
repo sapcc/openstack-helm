@@ -8,7 +8,6 @@ set -e
 
 function process_config {
     #TODO Fix or understand upstream
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5lbaasdriver/v2/bigip/service_builder.py /f5-patches/service-builder.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/plugins/ml2/extensions/dns_integration.py /neutron-patches/dns-integration.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/db/ipam_backend_mixin.py /neutron-patches/ipam-backend-mixin.diff
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/db/loadbalancer/loadbalancer_dbv2.py /neutron-patches/loadbalancer-dbv2.diff
