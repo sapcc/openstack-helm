@@ -51,6 +51,8 @@ spec:
               name: f5-etc
             - mountPath: /neutron-etc-vendor
               name: neutron-etc-vendor
+            - mountPath: /f5-patches
+              name: f5-patches
             - mountPath: /container.init
               name: container-init
             - mountPath: /development
@@ -62,6 +64,9 @@ spec:
         - name: neutron-etc-vendor
           configMap:
             name: neutron-etc-vendor
+        - name: f5-patches
+          configMap:
+            name: f5-patches
         - name: f5-etc
           configMap:
             name: neutron-f5-etc-{{$loadbalancer.name}}
