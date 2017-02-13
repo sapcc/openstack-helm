@@ -17,7 +17,8 @@ linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 allow_resize_to_same_host = true
 enabled_apis=osapi_compute,metadata
 
-osapi_compute_workers=5
+osapi_compute_workers=8
+metadata_workers=8
 
 memcache_servers =  {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 
@@ -30,6 +31,9 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+
+[conductor]
+workers=8
 
 [spice]
 enabled = False
