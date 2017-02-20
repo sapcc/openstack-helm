@@ -65,6 +65,8 @@
 
       # Akamai Configuration options
       options:
+        host: {{$pool.options.host}}
+        port: {{$pool.options.port}}
         username: {{$pool.options.username}}
         password: {{$pool.options.password}}
         tsig_key_name: "{{$pool.options.tsig_key_name}}"
