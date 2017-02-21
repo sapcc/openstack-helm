@@ -89,11 +89,11 @@ connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include 
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
-username = {{ .Values.global.nova_service_user }}
-password = {{ .Values.global.nova_service_password }}
-user_domain_name = {{.Values.global.keystone_service_domain}}
-project_name = {{.Values.global.keystone_service_project}}
-project_domain_name = {{.Values.global.keystone_service_domain}}
+username = "{{ .Values.global.nova_service_user | replace "$" "$$" }}"
+password = "{{ .Values.global.nova_service_password | replace "$" "$$" }}"
+user_domain_name = "{{.Values.global.keystone_service_domain}}"
+project_name = "{{.Values.global.keystone_service_project}}"
+project_domain_name = "{{.Values.global.keystone_service_domain}}"
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 insecure = True
 
