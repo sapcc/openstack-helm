@@ -48,6 +48,11 @@
     - host: {{ $srv.ip }}
       port: 53
     {{- end}}
+  also_notifies:
+    {{- range $i, $notify := $pool.also_notifies}}
+    - host: {{ $notify.host }}
+      port: {{ $notify.port }}
+    {{- end}}
   targets:
     - type: akamai
       description: Akamai API

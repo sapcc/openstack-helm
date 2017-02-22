@@ -12,8 +12,8 @@ vsphere_hostname={{$hypervisor.host}}
 cluster_name={{$hypervisor.cluster_name}}
 
 # Login username and password of vcenter server
-vsphere_login={{$hypervisor.username}}
-vsphere_password={{$hypervisor.password}}
+vsphere_login={{$hypervisor.username | replace "$" "$$"}}
+vsphere_password={{$hypervisor.password | replace "$" "$$"}}
 
 # sleep time in seconds for polling an on-going async task as part of the
 # API cal

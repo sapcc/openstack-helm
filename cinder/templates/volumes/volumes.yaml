@@ -1,9 +1,11 @@
 {{- range $i, $volume := .Values.global.hypervisors_vmware -}}
+{{ if not $volume.disable_cinder }}
 {{ tuple $ $volume |include "volume_vmware" }}
 ---
 {{ tuple $ $volume |include "volume_vmware_configmap" }}
 {{ if lt $i (sub (len $.Values.global.hypervisors_vmware) 1) }}
 ---
+{{end}}
 {{end}}
 {{- end -}}
 {{ if and (ge (len .Values.global.volumes_netapp) 1)  (ge (len .Values.global.hypervisors_vmware) 1) }}

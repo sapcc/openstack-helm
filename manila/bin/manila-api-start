@@ -6,6 +6,7 @@ set -e
 
 function process_config {
     cp /manila-etc/*.conf /etc/manila/
+    cp /manila-etc/policy.json /etc/manila/policy.json
 }
 
 

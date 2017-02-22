@@ -45,12 +45,14 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
+api_workers = {{ .Values.api_workers | default .Values.global.api_workers | default 8 }}
+
 [nova]
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_plugin = v3password
 region_name = {{.Values.global.region}}
-username = {{ .Values.global.nova_service_user }}
-password = {{ .Values.global.nova_service_password }}
+username = {{ .Values.global.nova_service_user | replace "$" "$$" }}
+password = {{ .Values.global.nova_service_password | replace "$" "$$"}}
 user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
@@ -60,8 +62,8 @@ endpoint_type = internal
 [designate]
 url =  {{.Values.global.designate_api_endpoint_protocol_admin}}://{{include "designate_api_endpoint_host_admin" .}}:{{ .Values.global.designate_api_port_admin }}/v2
 admin_auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v2.0
-admin_username = {{ .Values.global.designate_service_user }}
-admin_password = {{ .Values.global.designate_service_password }}
+admin_username = {{ .Values.global.designate_service_user | replace "$" "$$"}}
+admin_password = {{ .Values.global.designate_service_password | replace "$" "$$"}}
 admin_tenant_name = {{.Values.global.keystone_service_project}}
 insecure=True
 allow_reverse_dns_lookup = False
@@ -87,8 +89,8 @@ connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include 
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
-username = {{ .Values.global.neutron_service_user }}
-password = {{ .Values.global.neutron_service_password }}
+username = {{ .Values.global.neutron_service_user | replace "$" "$$" }}
+password = {{ .Values.global.neutron_service_password | replace "$" "$$" }}
 user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}

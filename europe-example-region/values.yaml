@@ -56,6 +56,15 @@ global:
       datastore_regex: datastore.
       availability_zone: eu-1a
       firewall: neutron.agent.firewall.NoopFirewallDriver
+    - name: vcenter1-cluster2
+      username: admin
+      password: YourOwnSecret!
+      host: vcenter1.yourdomain.com
+      cluster_name: cluster2
+      datastore_regex: datastore.
+      availability_zone: eu-1a
+      disable_cinder: True
+      firewall: neutron.agent.firewall.NoopFirewallDriver
   hypervisors_kvm:
     - name: minion1
       node_name : minion1.yourdomain.com

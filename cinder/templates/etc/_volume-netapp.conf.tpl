@@ -15,7 +15,7 @@ netapp_storage_protocol = iscsi
 netapp_vserver={{$volume.vserver}}
 netapp_server_hostname={{$volume.host}}
 netapp_server_port=443
-netapp_login={{$volume.username}}
-netapp_password={{$volume.password}}
+netapp_login={{$volume.username | replace "$" "$$"}}
+netapp_password={{$volume.password | replace "$" "$$"}}
 
 {{- end -}}

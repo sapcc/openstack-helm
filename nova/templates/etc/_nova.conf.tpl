@@ -17,7 +17,8 @@ linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 allow_resize_to_same_host = true
 enabled_apis=osapi_compute,metadata
 
-osapi_compute_workers=5
+osapi_compute_workers=8
+metadata_workers=8
 
 memcache_servers =  {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 
@@ -41,6 +42,9 @@ quota_floating_ips = 0
 quota_networks = 0
 quota_security_group_rules = 0
 quota_security_groups = 0
+
+[conductor]
+workers=8
 
 [spice]
 enabled = False
@@ -96,11 +100,11 @@ connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include 
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
-username = {{ .Values.global.nova_service_user }}
-password = {{ .Values.global.nova_service_password }}
-user_domain_name = {{.Values.global.keystone_service_domain}}
-project_name = {{.Values.global.keystone_service_project}}
-project_domain_name = {{.Values.global.keystone_service_domain}}
+username = "{{ .Values.global.nova_service_user | replace "$" "$$" }}"
+password = "{{ .Values.global.nova_service_password | replace "$" "$$" }}"
+user_domain_name = "{{.Values.global.keystone_service_domain}}"
+project_name = "{{.Values.global.keystone_service_project}}"
+project_domain_name = "{{.Values.global.keystone_service_domain}}"
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 insecure = True
 

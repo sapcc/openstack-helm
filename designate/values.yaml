@@ -45,6 +45,9 @@ akamai_pools:
       tsig_key_name: DEFINED-IN-REGION-CHART
       tsig_key_secret: DEFINED-IN-REGION-CHART
       tsig_key_algorithm: DEFINED-IN-REGION-CHART
+    also_notifies:
+      - host: DEFINED-IN-REGION-CHART
+        port: DEFINED-IN-REGION-CHART
 
 rndc_key: DEFINED-IN-REGION-CHART
 

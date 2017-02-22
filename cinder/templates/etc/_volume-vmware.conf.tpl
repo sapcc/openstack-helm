@@ -10,7 +10,7 @@ storage_availability_zone={{$volume.availability_zone}}
 volume_backend_name = vmware
 volume_driver=cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver
 vmware_host_ip = {{$volume.host}}
-vmware_host_username = {{$volume.username}}
-vmware_host_password = {{$volume.password}}
+vmware_host_username = {{$volume.username | replace "$" "$$"}}
+vmware_host_password = {{$volume.password | replace "$" "$$"}}
 vmware_insecure=True
 {{- end -}}
