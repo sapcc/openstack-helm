@@ -41,9 +41,10 @@ default-soa-expire = 3600000
 default-soa-minimum = 300
 
 # Setting default quotas
+# most default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 quota_zones = 0
-quota_zone_recordsets = 400
-quota_zone_records = 350
+quota_zone_recordsets = 0
+quota_zone_records = 0
 quota_recordset_records = 20
 quota_api_export_size = 1000
 

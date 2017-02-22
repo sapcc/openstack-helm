@@ -100,9 +100,16 @@ insecure = True
 [oslo_messaging_notifications]
 driver = noop
 
+# all default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 [quotas]
 default_quota = 0
+quota_floatingip = 0
 quota_network = 0
 quota_subnet = 0
+quota_port = 0
 quota_router = 0
-quota_rbac_policy = -1
+quota_rbac_policy = 0
+# need 1 secgroup quota for "default" secgroup
+quota_security_group = 1
+# need 4 secgrouprule quota for "default" secgroup
+quota_security_group_rule = 4
