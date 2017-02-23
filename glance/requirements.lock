@@ -1,9 +1,15 @@
 dependencies:
-- name: postgres
+- condition: ""
+  enabled: false
+  name: postgres
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: utils
+- condition: ""
+  enabled: false
+  name: utils
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-digest: sha256:01c5469597393b20f35a38afaf229c3517619501d18dc01ac6348ea7b5905e34
-generated: 2016-11-18T09:49:51.933696105+01:00
+digest: sha256:287bd55dea00bb02f4f084f62e5320dfa7ccb6df4356a290dcbc7ab2ecd6cbb0
+generated: 2017-02-21T09:36:49.641862544+01:00

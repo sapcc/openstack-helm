@@ -1,9 +1,15 @@
 dependencies:
-- name: openstack
+- condition: ""
+  enabled: false
+  name: openstack
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-- name: utils
+- condition: ""
+  enabled: false
+  name: utils
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-digest: sha256:1b8f441991e4ce693793ba20bf98a53d176bc6cee58c579efe1bf82319618642
-generated: 2016-11-28T10:07:40.981121956+01:00
+digest: sha256:61830c03dcb1ea10e20d079a0d0c81b63986cee5fc08dc6d7371a89c75562190
+generated: 2017-02-21T09:36:56.063409001+01:00

@@ -1,0 +1,51 @@
+diff --git a/nova/virt/vmwareapi/ds_util.py b/nova/virt/vmwareapi/ds_util.py
+index cb9e25c3e6..f860fb048f 100644
+--- a/nova/virt/vmwareapi/ds_util.py
++++ b/nova/virt/vmwareapi/ds_util.py
+@@ -169,7 +169,10 @@ def _get_allowed_datastores(data_stores, datastore_regex):
+                                datastore_regex,
+                                ALL_SUPPORTED_DS_TYPES):
+             allowed.append(ds_obj.Datastore(ref=obj_content.obj,
+-                                            name=propdict['summary.name']))
++                                            name=propdict['summary.name'],
++                                            capacity=propdict['summary.capacity'],
++                                            freespace=propdict['summary.freeSpace'],
++                                            ))
+ 
+     return allowed
+ 
+@@ -188,7 +191,8 @@ def get_available_datastores(session, cluster=None, datastore_regex=None):
+             "get_properties_for_a_collection_of_objects",
+             "Datastore", data_store_mors,
+             ["summary.type", "summary.name", "summary.accessible",
+-            "summary.maintenanceMode"])
++             "summary.capacity", "summary.freeSpace",
++             "summary.maintenanceMode"])
+ 
+     allowed = []
+     while data_stores:
+diff --git a/nova/virt/vmwareapi/host.py b/nova/virt/vmwareapi/host.py
+index 7a401ff19a..e7e0f9a6a3 100644
+--- a/nova/virt/vmwareapi/host.py
++++ b/nova/virt/vmwareapi/host.py
+@@ -31,12 +31,16 @@ from nova.virt.vmwareapi import vm_util
+ 
+ def _get_ds_capacity_and_freespace(session, cluster=None,
+                                    datastore_regex=None):
++    capacity = 0
++    freespace = 0
+     try:
+-        ds = ds_util.get_datastore(session, cluster,
+-                                   datastore_regex)
+-        return ds.capacity, ds.freespace
++        for ds in ds_util.get_available_datastores(session, cluster, datastore_regex):
++            capacity += ds.capacity
++            freespace += ds.freespace
+     except exception.DatastoreNotFound:
+-        return 0, 0
++        pass
++
++    return capacity, freespace
+ 
+ 
+ class VCState(object):

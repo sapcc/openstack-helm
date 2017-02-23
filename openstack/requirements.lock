@@ -1,45 +1,87 @@
 dependencies:
-- name: memcached
+- condition: ""
+  enabled: false
+  name: memcached
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: rabbitmq
+- condition: ""
+  enabled: false
+  name: rabbitmq
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: keystone
+- condition: ""
+  enabled: false
+  name: keystone
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: glance
+- condition: ""
+  enabled: false
+  name: glance
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-- name: ironic
+- condition: ""
+  enabled: false
+  name: ironic
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: nova
+- condition: ""
+  enabled: false
+  name: nova
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-- name: barbican
+- condition: ""
+  enabled: false
+  name: barbican
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: cinder
+- condition: ""
+  enabled: false
+  name: cinder
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-- name: manila
+- condition: ""
+  enabled: false
+  name: manila
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: horizon
+- condition: ""
+  enabled: false
+  name: horizon
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: neutron
+- condition: ""
+  enabled: false
+  name: neutron
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-- name: neutron_vendor
+- condition: ""
+  enabled: false
+  name: neutron_vendor
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-- name: designate
+- condition: ""
+  enabled: false
+  name: designate
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.1
-- name: healthchecks
+- condition: ""
+  enabled: false
+  name: healthchecks
   repository: http://localhost:8879/charts
+  tags: null
   version: 0.1.0
-digest: sha256:1b352ca8cfc48ee36d07633859b10be6009a7dd126214724fb32e1fdf00c1594
-generated: 2016-11-28T15:45:06.257214756+01:00
+digest: sha256:2c3525424de874d23c75eb669527a8f04e88435c9245b627ae77585730f47428
+generated: 2017-02-21T09:36:54.68600924+01:00
