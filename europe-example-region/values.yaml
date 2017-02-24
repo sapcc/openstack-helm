@@ -71,7 +71,23 @@ global:
   hypervisors_ironic:
     - name: ironic
 
-  volumes: []
+
+  volumes_netapp:
+    - name: netapp1
+      username: admin
+      password: password
+      host: netapp1.example.com
+      vserver: vserv1
+      availability_zone: eu-1a
+  volumes:
+    - name: solidfirex
+      volume_backend_name: solidfire
+      volume_driver: cinder.volume.drivers.solidfire.SolidFireDriver
+      availability_zone: eu-1b
+      san_login: admin
+      san_password: password
+      san_ip: 2001:DB8::1
+      sf_allow_template_caching: "True"
 
   network_agents:
     - name: network0
