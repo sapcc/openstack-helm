@@ -1,0 +1,6 @@
+{{ range $i, $hypervisor := .Values.global.hypervisors_ironic }}
+{{ if ne $i 0 }}---{{ end }}
+{{ tuple $ $hypervisor | include "ironic_hypervisor" }}
+---
+{{ tuple $ $hypervisor | include "ironic_configmap" }}
+{{ end }}

@@ -51,25 +51,6 @@ spec:
               name: nova-patches
             - mountPath: /container.init
               name: nova-container-init
-        - name: neutron-dvs-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}
-          imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
-          command:
-            - bash
-          args:
-            - /container.init/neutron-dvs-agent-start
-          env:
-            - name: DEBUG_CONTAINER
-              value: "false"
-          volumeMounts:
-            - mountPath: /neutron-etc
-              name: neutron-etc
-            - mountPath: /ml2-conf-vmware
-              name: ml2-conf-vmware
-            - mountPath: /container.init
-              name: neutron-container-init
       volumes:
         - name: nova-etc
           configMap:
@@ -80,19 +61,7 @@ spec:
         - name: hypervisor-config
           configMap:
             name: hypervisor-{{$hypervisor.name}}
-        - name: ml2-conf-vmware
-          configMap:
-            name: ml2-vmware-{{$hypervisor.name}}-ini
-        - name: neutron-etc
-          configMap:
-            name: neutron-etc
-        - name: neutron-etc-vendor
-          configMap:
-            name: neutron-etc-vendor
         - name: nova-container-init
           configMap:
             name: nova-bin
-        - name: neutron-container-init
-          configMap:
-            name: neutron-bin-vendor
 {{- end -}}

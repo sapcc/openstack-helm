@@ -9,7 +9,7 @@
 
 global:
   region: eu
-  tld: network0.yourdomain.com
+  tld: network0.example.com
 
   default_availability_zone: eu-1a
 
@@ -28,7 +28,7 @@ global:
   neutron_service_password: YourOwnSecret!
 
   ironic_service_password: YourOwnSecret!
-  ironic_pxe_endpoint_host_public: network0.yourdomain.com
+  ironic_pxe_endpoint_host_public: network0.example.com
   ironic_pxe_endpoint_ip_public: 10.0.0.10
 
   glance_service_password: YourOwnSecret!
@@ -51,7 +51,7 @@ global:
     - name: vcenter1
       username: admin
       password: YourOwnSecret!
-      host: vcenter1.yourdomain.com
+      host: vcenter1.example.com
       cluster_name: cluster1
       datastore_regex: datastore.
       availability_zone: eu-1a
@@ -59,7 +59,7 @@ global:
     - name: vcenter1-cluster2
       username: admin
       password: YourOwnSecret!
-      host: vcenter1.yourdomain.com
+      host: vcenter1.example.com
       cluster_name: cluster2
       datastore_regex: datastore.
       availability_zone: eu-1a
@@ -67,7 +67,7 @@ global:
       firewall: neutron.agent.firewall.NoopFirewallDriver
   hypervisors_kvm:
     - name: minion1
-      node_name : minion1.yourdomain.com
+      node_name : minion1.example.com
   hypervisors_ironic:
     - name: ironic
 
@@ -75,9 +75,9 @@ global:
 
   network_agents:
     - name: network0
-      node: network0.yourdomain.com
+      node: network0.example.com
     - name: network1
-      node: network1.yourdomain.com
+      node: network1.example.com
 
   loadbalancers_f5:
     - name: f511-01
@@ -195,7 +195,7 @@ openstack:
         shares_netapp:
           - name: share1
             vserver: vs1
-            host: netapp.yourdomain.com
+            host: netapp.example.com
             username: admin
             password: YourOwnSecret!
             root_volume_aggregate: aggr_1

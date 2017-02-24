@@ -7,6 +7,7 @@ global:
   glance_api_port_internal: REQUIRED 
   image_namespace: REQUIRED
   image_repository: REQUIRED
+  hypervisors: []
 
 image_version_glance_api_m3: REQUIRED
 image_version_glance_registry: REQUIRED

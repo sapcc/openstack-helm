@@ -12,19 +12,10 @@ global:
   nova_novnc_port_public: '443'
   nova_spicehtml5_port_public: '6082'
 
-  hypervisors_vmware:
-    - name: DEFINED-IN-REGION-CHART
-      username: DEFINED-IN-REGION-CHART
-      password: DEFINED-IN-REGION-CHART
-      host: DEFINED-IN-REGION-CHART
-      cluster_name: DEFINED-IN-REGION-CHART
-      datastore_regex: DEFINED-IN-REGION-CHART
-  hypervisors_kvm:
-    - name: DEFINED-IN-REGION-CHART
-      node_name : DEFINED-IN-REGION-CHART
-  hypervisors_ironic:
-    - name: DEFINED-IN-REGION-CHART
-
+  hypervisors: []
+  hypervisors_vmware: []
+  hypervisors_kvm: []
+  hypervisors_ironic: []
 
 debug: "True"
 
