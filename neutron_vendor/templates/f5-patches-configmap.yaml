@@ -10,3 +10,5 @@ metadata:
 data:
   bigip-init.diff: |
 {{ .Files.Get "patches/f5/bigip_init.diff" | indent 4 }}
+  sessions.diff: |
+{{ .Files.Get "patches/f5/sessions.diff" | indent 4 }}
