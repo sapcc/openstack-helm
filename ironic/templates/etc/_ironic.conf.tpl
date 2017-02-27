@@ -21,7 +21,7 @@ host_ip = 0.0.0.0
 [conductor]
 api_url = {{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}
 clean_nodes = false
-
+automated_clean=false
 
 [database]
 connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
