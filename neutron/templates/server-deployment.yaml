@@ -22,6 +22,8 @@ spec:
     metadata:
       labels:
         name: neutron-server
+      annotations:
+        checksum/neutron-etc: {{ include "neutron/templates/etc-configmap.yaml" . | sha256sum }}
     spec:
       containers:
         - name: neutron-server
