@@ -59,6 +59,8 @@ spec:
               value: "localhost"
             - name: STATSD_PORT
               value: "9125"
+            - name: STATSD_PREFIX
+              value: "openstack"
           ports:
             - name: public
               containerPort: 5000
