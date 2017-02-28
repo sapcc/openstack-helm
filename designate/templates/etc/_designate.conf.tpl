@@ -399,11 +399,11 @@ threshold_percentage =  {{ .Values.worker_threshold_percentage }}
 
 # The time between retrying to send a request and waiting for a response from a
 # server
-#poll_retry_interval = 15
+poll_retry_interval = {{.Values.worker_poll_retry_interval}}
 
 # The maximum number of times to retry sending a request and wait for a
 # response from a server
-#poll_max_retries = 10
+poll_max_retries = {{.Values.worker_poll_max_retries}}
 
 # The time to wait before sending the first request to a server
 #poll_delay = 5
