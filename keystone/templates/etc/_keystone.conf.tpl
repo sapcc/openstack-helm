@@ -7,7 +7,7 @@ logging_context_format_string = %(process)d %(levelname)s %(name)s [%(request_id
 logging_default_format_string = %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s
 logging_exception_prefix = %(process)d ERROR %(name)s %(instance)s
 
-notification_format = cadf
+notification_format = {{ .Values.openstack.keystone.notification_format }}
 notification_driver = messaging
 rpc_backend = rabbit
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 300 }}
