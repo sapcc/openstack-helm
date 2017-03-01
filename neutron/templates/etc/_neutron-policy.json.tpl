@@ -49,7 +49,7 @@
 
     "create_network": "rule:context_is_network_admin",
     "get_network": "rule:context_is_viewer or rule:shared or rule:external",
-    "get_network:router:external": "rule:context_is_viewer",
+    "get_network:router:external": "",
     "get_network:segments": "rule:context_is_viewer",
     "get_network:provider:network_type": "rule:context_is_viewer",
     "get_network:provider:physical_network": "rule:context_is_viewer",
