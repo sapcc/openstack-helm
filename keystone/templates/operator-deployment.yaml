@@ -7,6 +7,9 @@ metadata:
     system: openstack
     type: kubernetes-operator
     component: openstack-operator
+      annotations:
+        chart-version: {{.Chart.Version}}
+        checksum/bin-configmap.conf: {{ include (print $.Chart.Name "/templates/bin-configmap.yaml") . | sha256sum }}
 spec:
   replicas: 1
   revisionHistoryLimit: 5

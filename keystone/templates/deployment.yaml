@@ -27,8 +27,8 @@ spec:
         name: keystone
       annotations:
         chart-version: {{.Chart.Version}}
-        checksum/etc-configmap.yaml: {{ include "keystone/templates/etc-configmap.yaml" . | sha256sum }}
-        checksum/bin-configmap.yaml: {{ include "keystone/templates/bin-configmap.yaml" . | sha256sum }}
+        checksum/etc-configmap.conf: {{ include (print $.Chart.Name "/templates/etc-configmap.yaml") . | sha256sum }}
+        checksum/bin-configmap.conf: {{ include (print $.Chart.Name "/templates/bin-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: keystone
