@@ -34,6 +34,9 @@ quota_gigabytes = 0
 quota_backups = 0
 quota_backup_gigabytes = 0
 
+# don't use quota class
+use_default_quota_class=false
+
 [database]
 connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "cinder_db_host" .}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
 
