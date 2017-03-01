@@ -7,7 +7,7 @@ logging_context_format_string = %(process)d %(levelname)s %(name)s [%(request_id
 logging_default_format_string = %(process)d %(levelname)s %(name)s [-] %(instance)s%(message)s
 logging_exception_prefix = %(process)d ERROR %(name)s %(instance)s
 
-notification_format = {{ .Values.openstack.keystone.notification_format }}
+notification_format = {{ .Values.notification_format | default "basic" }}
 notification_driver = messaging
 rpc_backend = rabbit
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 300 }}
@@ -22,8 +22,8 @@ servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}
 
 [token]
 provider = fernet
-# default is 3600, increased to 4 hrs because of endless image upload durations to ap-au-1
-expiration = 14400
+# default is 3600, increased to 8 hrs because of endless image upload durations to ap-au-1
+expiration = 28800
 
 [fernet_tokens]
 key_repository = /fernet-keys
