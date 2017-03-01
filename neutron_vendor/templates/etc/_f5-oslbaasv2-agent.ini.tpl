@@ -43,7 +43,7 @@ debug = True
 # transient notification or rpc errors. The interval is number of
 # seconds between attempts.
 #
-periodic_interval = 10
+periodic_interval = 300
 #
 # How often should the agent throw away its service cache and
 # resync assigned services with the neutron LBaaS plugin.
