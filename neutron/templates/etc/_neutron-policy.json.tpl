@@ -88,7 +88,7 @@
     "create_port:binding:profile": "rule:context_is_admin",
     "create_port:mac_learning_enabled": "rule:context_is_network_editor",
     "create_port:allowed_address_pairs": "rule:context_is_network_editor",
-    "get_port": "rule:context_is_network_viewer",
+    "get_port": "",
     "get_port:queue_id": "rule:context_is_admin",
     "get_port:binding:vif_type": "rule:context_is_admin",
     "get_port:binding:vif_details": "rule:context_is_admin",
