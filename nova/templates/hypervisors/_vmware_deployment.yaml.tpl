@@ -82,9 +82,6 @@ spec:
         - name: ml2-conf-vmware
           configMap:
             name: ml2-vmware-{{$hypervisor.name}}-ini
-        - name: neutron-etc-vendor
-          configMap:
-            name: neutron-etc-vendor
         - name: neutron-container-init
           configMap:
             name: neutron-bin-vendor
