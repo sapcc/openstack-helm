@@ -51,5 +51,6 @@ spec:
         - name: container-init
           configMap:
             name: horizon-bin
+            defaultMode: 0755
 
 

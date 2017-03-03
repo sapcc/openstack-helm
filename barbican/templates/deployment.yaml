@@ -69,3 +69,4 @@ spec:
         - name: container-init
           configMap:
             name: barbican-bin
+            defaultMode: 0755

@@ -93,3 +93,4 @@ spec:
         - name: container-init
           configMap:
             name: keystone-bin
+            defaultMode: 0755

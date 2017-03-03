@@ -57,4 +57,5 @@ spec:
         - name: container-init
           configMap:
             name: designate-bin
+            defaultMode: 0755
 {{- end }}

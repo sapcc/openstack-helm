@@ -34,8 +34,6 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
             - /container.init/nova-compute-start
           env:
             - name: DEBUG_CONTAINER
@@ -64,4 +62,5 @@ spec:
         - name: container-init
           configMap:
             name: nova-bin
+            defaultMode: 0755
 {{- end -}}

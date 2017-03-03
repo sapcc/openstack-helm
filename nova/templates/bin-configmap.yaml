@@ -6,7 +6,6 @@ metadata:
     system: openstack
     type: configuration
     component: nova
-
 data:
   nova-api-start: |
 {{ .Files.Get "bin/nova-api-start" | indent 4 }}

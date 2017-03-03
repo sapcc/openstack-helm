@@ -84,3 +84,4 @@ spec:
         - name: container-init
           configMap:
             name: nova-bin
+            defaultMode: 0755

@@ -59,5 +59,6 @@ spec:
         - name: container-init
           configMap:
             name: cinder-bin
+            defaultMode: 0755
 {{- end -}}
 {{- end -}}

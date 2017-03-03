@@ -25,17 +25,13 @@ spec:
       labels:
         name: nova-compute-{{$hypervisor.name}}
       annotations:
-        pod.beta.kubernetes.io/hostname:  nova-compute-{{$hypervisor.name}}
+        pod.beta.kubernetes.io/hostname: nova-compute-{{$hypervisor.name}}
     spec:
       containers:
         - name: nova-compute-{{$hypervisor.name}}
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{$context.Values.image_version_nova_compute_m3}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
           command:
-            - bash
-          args:
             - /container.init/nova-compute-start
           env:
             - name: DEBUG_CONTAINER
@@ -54,11 +50,7 @@ spec:
         - name: neutron-dvs-agent
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
           command:
-            - bash
-          args:
             - /container.init/neutron-dvs-agent-start
           env:
             - name: DEBUG_CONTAINER
@@ -80,19 +72,21 @@ spec:
         - name: hypervisor-config
           configMap:
             name: hypervisor-{{$hypervisor.name}}
-        - name: ml2-conf-vmware
-          configMap:
-            name: ml2-vmware-{{$hypervisor.name}}-ini
-        - name: neutron-etc
-          configMap:
-            name: neutron-etc
-        - name: neutron-etc-vendor
-          configMap:
-            name: neutron-etc-vendor
         - name: nova-container-init
           configMap:
             name: nova-bin
+            defaultMode: 0755
+        - name: neutron-etc
+          configMap:
+            name: neutron-etc
+        - name: ml2-conf-vmware
+          configMap:
+            name: ml2-vmware-{{$hypervisor.name}}-ini
+        - name: neutron-etc-vendor
+          configMap:
+            name: neutron-etc-vendor
         - name: neutron-container-init
           configMap:
             name: neutron-bin-vendor
+            defaultMode: 0755
 {{- end -}}

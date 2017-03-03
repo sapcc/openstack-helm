@@ -6,7 +6,6 @@ metadata:
     system: openstack
     type: configuration
     component: database
-
 data:
   db-init.sh: |
     #!/usr/bin/env bash

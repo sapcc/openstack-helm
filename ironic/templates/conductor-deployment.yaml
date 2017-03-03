@@ -48,3 +48,4 @@ spec:
         - name: container-init
           configMap:
             name: ironic-bin
+            defaultMode: 0755

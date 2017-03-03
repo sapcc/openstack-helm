@@ -36,8 +36,6 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
             - /container.init/nova-compute-start
           env:
             - name: DEBUG_CONTAINER
@@ -60,7 +58,6 @@ spec:
               name: nova-etc
             - mountPath: /nova-patches
               name: nova-patches
-
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-libvirt
@@ -109,7 +106,6 @@ spec:
               name: nova-etc
             - mountPath: /container.init
               name: nova-container-init
-
         - name: neutron-ovs-agent
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{$context.Values.image_version_neutron_openvswitch_agent}}
           imagePullPolicy: IfNotPresent
@@ -193,7 +189,9 @@ spec:
         - name: nova-container-init
           configMap:
             name: nova-bin
+            defaultMode: 0755
         - name: neutron-container-init
           configMap:
             name: neutron-bin
+            defaultMode: 0755
 {{- end -}}

@@ -107,3 +107,4 @@ spec:
         - name: container-init
           configMap:
             name: neutron-bin
+            defaultMode: 0755

@@ -55,5 +55,6 @@ spec:
         - name: container-init
           configMap:
             name: manila-bin
+            defaultMode: 0755
 {{ end }}
 {{- end -}}
