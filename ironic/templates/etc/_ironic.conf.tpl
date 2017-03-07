@@ -13,7 +13,7 @@ rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
 [dhcp]
-dhcp_provider=none
+dhcp_provider=neutron
 
 [api]
 host_ip = 0.0.0.0
