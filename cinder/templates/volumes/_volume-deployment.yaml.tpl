@@ -34,8 +34,6 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
             - /container.init/cinder-volume-start
           env:
             - name: DEBUG_CONTAINER

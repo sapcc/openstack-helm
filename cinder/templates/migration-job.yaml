@@ -18,7 +18,7 @@ spec:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/db-migrate"
+              value: "/container.init/db-migrate"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
