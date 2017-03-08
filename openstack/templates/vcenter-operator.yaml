@@ -1,0 +1,57 @@
+{{- if .Values.vcenter_operator_image_version }}
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: vcenter-operator
+  namespace: {{ .Values.global.admin_namespace }}
+data:
+  config.json: '{"command": "vcenter-operator"}'
+  namespace: monsoon3
+  cinder_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.cinder.image_version_cinder_volume}}
+  cinder_sentry_dsn: {{.Values.cinder.sentry_dsn }}
+  neutron_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.neutron.image_version_neutron_server_m3}}
+  neutron_sentry_dsn: {{.Values.neutron.sentry_dsn }}
+  nova_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.nova.image_version_nova_compute_m3}}
+  nova_sentry_dsn: {{.Values.nova.sentry_dsn }}
+  password: {{ .Values.global.master_password }}
+  username: {{ .Values.vcenter_operator_username }}
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: vcenter-operator
+  namespace: {{ .Values.global.admin_namespace }}
+  labels:
+    component: operator
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+  selector:
+    matchLabels:
+      name: vcenter-operator
+  template:
+    metadata:
+      labels:
+        name: vcenter-operator
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: "vcenter-operator"
+          image: "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{.Values.global.vcenter_operator_image_version}}"
+          volumeMounts:
+            - name: kolla-config
+              mountPath: /var/lib/kolla/config_files
+      volumes:
+        - name: kolla-config
+          configMap:
+            name: vcenter-operator
+            items:
+                - key: config.json
+                  path: config.json
+{{ end -}}
