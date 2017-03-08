@@ -43,7 +43,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: "vcenter-operator"
-          image: "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{.Values.global.vcenter_operator_image_version}}"
+          image: "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{.Values.vcenter_operator_image_version}}"
           volumeMounts:
             - name: kolla-config
               mountPath: /var/lib/kolla/config_files
