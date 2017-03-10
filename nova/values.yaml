@@ -48,7 +48,6 @@ image_version_nova_scheduler: DEFINED-IN-REGION-CHART
 
 cross_az_attach: 'False'
 
-
 postgres:
   name: nova
 
