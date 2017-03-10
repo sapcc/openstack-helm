@@ -37,7 +37,7 @@ spec:
             - /container.init/neutron-aci-agent-start
           env:
             - name: DEBUG_CONTAINER
-              value: "true"
+              value: "false"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
