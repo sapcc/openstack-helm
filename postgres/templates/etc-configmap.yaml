@@ -12,5 +12,7 @@ data:
 {{ tuple "etc/_postgresql.conf.tpl" . | include "template" | indent 4 }}
   pg-hba.conf: |
 {{ tuple "etc/_pg_hba.conf.tpl" . | include "template" | indent 4 }}
-
-
+{{- if .Values.exporter }}
+  queries.yaml: |
+{{ toYaml .Values.exporter | indent 4}}
+{{- end }}
