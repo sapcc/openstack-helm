@@ -43,6 +43,14 @@ spec:
           configMap:
             name: postgres-bin-{{.Values.name}}
             defaultMode: 0755
+{{- if .Values.exporter }}
+        - name: extend-query
+          configMap:
+            name: postgres-etc-{{.Values.name}}
+            items:
+            - key: queries.yaml
+              path: queries.yaml
+{{- end }}
       containers:
         - name: postgres
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/postgres:{{.Values.image_version_postgres}}
@@ -124,3 +132,9 @@ spec:
           ports:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
+{{- if .Values.exporter }}
+          args: ["-extend.query-path", "/extend/queries.yaml"]
+          volumeMounts:
+            - name: extend-query
+              mountPath: /extend
+{{- end }}
