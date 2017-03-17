@@ -24,6 +24,7 @@
     "shared_address_scopes": "field:address_scopes:shared=True",
     "default": "rule:context_is_editor or rule:shared",
     "default_viewer": "rule:context_is_viewer or rule:shared",
+    "default_network_viewer": "rule:context_is_network_viewer or rule:shared",
 
     "create_subnet": "rule:context_is_network_admin",
     "create_subnet:segment_id": "rule:context_is_admin",
@@ -55,8 +56,8 @@
     "get_network:provider:physical_network": "rule:default_viewer",
     "get_network:provider:segmentation_id": "rule:default_viewer",
     "get_network:queue_id": "rule:context_is_admin",
-    "get_network_ip_availabilities": "rule:context_is_admin",
-    "get_network_ip_availability": "rule:context_is_admin",
+    "get_network_ip_availabilities": "rule:default_network_viewer",
+    "get_network_ip_availability": "rule:default_network_viewer",
     "create_network:shared": "rule:context_is_admin",
     "create_network:router:external": "rule:context_is_admin",
     "create_network:is_default": "rule:context_is_admin",
