@@ -5,7 +5,6 @@ metadata:
   name: vcenter-operator
   namespace: {{ .Values.global.admin_namespace }}
 data:
-  config.json: '{"command": "vcenter-operator"}'
   namespace: monsoon3
   cinder_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.cinder.image_version_cinder_volume}}
   cinder_sentry_dsn: {{.Values.cinder.sentry_dsn }}
@@ -15,6 +14,8 @@ data:
   nova_sentry_dsn: {{.Values.nova.sentry_dsn }}
   password: {{ .Values.global.master_password }}
   username: {{ .Values.vcenter_operator_username }}
+{{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
+
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -51,7 +52,4 @@ spec:
         - name: kolla-config
           configMap:
             name: vcenter-operator
-            items:
-                - key: config.json
-                  path: config.json
 {{ end -}}
