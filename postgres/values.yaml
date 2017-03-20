@@ -29,3 +29,13 @@ backup:
   os_password: DEFINED-IN-REGION-SECRETS
   os_project_name: master
   os_project_domain: ccadmin
+
+metrics:
+  enabled: true
+  image: wrouesnel/postgres_exporter
+  imageTag: v0.1.1
+  imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
