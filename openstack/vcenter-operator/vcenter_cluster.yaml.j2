@@ -68,6 +68,8 @@ spec:
         name: nova-compute-{{ name }}
       annotations:
         pod.beta.kubernetes.io/hostname: nova-compute-{{ name }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9102"
     spec:
       containers:
         - name: nova-compute-{{ name }}
