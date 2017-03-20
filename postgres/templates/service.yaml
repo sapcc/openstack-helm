@@ -8,10 +8,11 @@ metadata:
     system: openstack
     type: database
     component: {{.Values.name}}
+{{- if .Values.metrics.enabled }}
   annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "{{.Values.port_metrics}}"
-
+{{- end }}
 spec:
   selector:
     name: postgres-{{.Values.name}}

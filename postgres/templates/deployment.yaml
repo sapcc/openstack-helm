@@ -43,13 +43,13 @@ spec:
           configMap:
             name: postgres-bin-{{.Values.name}}
             defaultMode: 0755
-{{- if .Values.exporter }}
-        - name: extend-query
+{{- if and  .Values.metrics.enabled .Values.metrics.customMetrics }}
+        - name: custom-metrics
           configMap:
             name: postgres-etc-{{.Values.name}}
             items:
-            - key: queries.yaml
-              path: queries.yaml
+            - key: custom-metrics.yaml
+              path: custom-metrics.yaml
 {{- end }}
       containers:
         - name: postgres
@@ -121,9 +121,10 @@ spec:
 #            - name: BACKUP_PGSQL_INCR
 #              value: {{.Values.backup.interval_incr | quote}}
 {{- end }}
+{{- if .Values.metrics.enabled }}
         - name: metrics
-          image: wrouesnel/postgres_exporter:v0.1.1
-          imagePullPolicy: IfNotPresent
+          image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
+          imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
           env:
             - name: POSTGRES_PASSWORD
               value: {{.Values.password}}
@@ -132,9 +133,11 @@ spec:
           ports:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
-{{- if .Values.exporter }}
-          args: ["-extend.query-path", "/extend/queries.yaml"]
+          {{- if .Values.metrics.customMetrics }}
+          args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
           volumeMounts:
-            - name: extend-query
-              mountPath: /extend
+            - name: custom-metrics
+              mountPath: /conf
+              readOnly: true
+          {{- end }}
 {{- end }}
