@@ -80,6 +80,19 @@ postgres:
           - running_vms:
               usage: "GAUGE"
               description: "Number of VMs running"
+
+    instances:
+      query: "SELECT project_id,  COUNT(*) AS count, vm_state FROM instances GROUP BY vm_state, project_id"
+      metrics:
+        - project_id:
+            usage: "LABEL"
+            description: "Time of VM creation "
+        - vm_state:
+            usage: "LABEL"
+            description: "Project ID"
+        - count:
+            usage: "GAUGE"
+            description: "VM Count"  
 logging:
     formatters:
         context:
