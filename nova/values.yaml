@@ -59,25 +59,25 @@ postgres:
           - host:
               usage: "LABEL"
               description: "Name of the host"
-          - free_disk_gb:
+          - free_disk_gb_gauge:
               usage: "GAUGE"
               description: "Total free disk space in GB"
-          - local_gb:
+          - local_gb_gauge:
               usage: "GAUGE"
               description: "Total local disk size in GB"
-          - free_ram_mb:
+          - free_ram_mb_gauge:
               usage: "GAUGE"
               description: "Free RAM in MiB"
-          - memory_mb:
+          - memory_mb_gauge:
               usage: "GAUGE"
               description: "Total RAM in MiB"
-          - vcpus_used:
+          - vcpus_used_gauge:
               usage: "GAUGE"
               description: "vCPUs used"
-          - vcpus:
+          - vcpus_gauge:
               usage: "GAUGE"
               description: "Total vCPUs"
-          - running_vms:
+          - running_vms_gauge:
               usage: "GAUGE"
               description: "Number of VMs running"
               
