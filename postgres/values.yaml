@@ -22,11 +22,12 @@ persistence:
 
 backup:
   enabled: false
-  image_version: v0.4.4
-  interval_full: 3 hours
+  interval_full: 1 hours
+#  interval_incr: NOT-USED-CURRENT
+  image_version: v0.5.5
+  os_password: DEFINED-IN-REGION-SECRETS
   os_username: db_backup
   os_user_domain: Default
-  os_password: DEFINED-IN-REGION-SECRETS
   os_project_name: master
   os_project_domain: ccadmin
 
