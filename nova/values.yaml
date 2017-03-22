@@ -54,7 +54,7 @@ postgres:
     enabled: true
     customMetrics:
       openstack_compute_nodes:
-        query: "SELECT host, free_disk_gb, local_gb, free_ram_mb, memory_mb, vcpus_used, vcpus, running_vms FROM compute_nodes WHERE deleted = 0;"
+        query: "SELECT host, free_disk_gb AS free_disk_gb_gauge, local_gb AS local_gb_gauge, free_ram_mb AS free_ram_mb_gauge, memory_mb AS memory_mb_gauge, vcpus_used AS vcpus_used_gauge, vcpus AS vcpus_gauge, running_vms AS running_vms_gauge FROM compute_nodes WHERE deleted = 0;"
         metrics:
           - host:
               usage: "LABEL"
@@ -82,7 +82,7 @@ postgres:
               description: "Number of VMs running"
               
       openstack_compute_instances:
-        query: "SELECT project_id,  COUNT(*) AS guage, vm_state FROM instances GROUP BY vm_state, project_id"
+        query: "SELECT project_id, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, project_id"
         metrics:
           - project_id:
               usage: "LABEL"
