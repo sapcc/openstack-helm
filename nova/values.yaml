@@ -80,16 +80,15 @@ postgres:
           - running_vms_gauge:
               usage: "GAUGE"
               description: "Number of VMs running"
-              
       openstack_compute_instances:
         query: "SELECT project_id, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, project_id"
         metrics:
           - project_id:
               usage: "LABEL"
-              description: "Time of VM creation "
+              description: "Project ID"
           - vm_state:
               usage: "LABEL"
-              description: "Project ID"
+              description: "State of the VM"
           - gauge:
               usage: "GAUGE"
               description: "VM Count"
