@@ -90,7 +90,7 @@ postgres:
           - vm_state:
               usage: "LABEL"
               description: "Project ID"
-          - count:
+          - gauge:
               usage: "GAUGE"
               description: "VM Count"
 
