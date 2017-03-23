@@ -25,7 +25,7 @@ inspector_db_user: ironic_inspector
 inspector_db_password: DEFINE_IN_REGION_CHART
 
 
-
+tftp_ip: $my_ip
 
 port_metrics: '9102'
 sentry_dsn: DEFINE_IN_REGION_CHART
