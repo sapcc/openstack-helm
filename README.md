@@ -53,6 +53,41 @@ The 'build' process is a little cumbersome, we wanted to keep config, patches an
 rather than directly in a template. We hope this (https://github.com/kubernetes/helm/issues/950) feature request
 will simplify our processing.
 
+## HELMING ( Process of pushing updates to Regions via HELM )
+
+Post installing helm, the next obvious step is to reflect our changes in the production. The below steps should help you get there:
+
+1. Validate your changes are present in the respective branch in openstack-helm repo.
+2. Make sure helm serve is running in the backgroud.
+
+```
+helm serve &
+```
+
+3. Execute `make` in the top-level directory of the openstack-helm repository (if this is your 1st attempt, you may most likely bump into the below error) :
+
+```
+find . -name "*.tgz" -exec rm '{}' +
+if [ -f utils/requirements.yaml ]; then helm dep up utils; fi
+helm package utils
+if [ -f postgres/requirements.yaml ]; then helm dep up postgres; fi
+helm package postgres
+if [ -f barbican/requirements.yaml ]; then helm dep up barbican; fi
+Error: no repository definition for http://localhost:8879/charts, http://localhost:8879/charts. Try 'helm repo add'
+make: *** [build-barbican] Error 1
+```
+
+Fix the error by adding the repo :
+
+```
+helm repo add local http://localhost:8879/charts
+```
+
+4. Get the current version of cc-regions. Thinking Why? Most of CCloud information is in this repo.
+5. Execute make in the top-level directory of cc-regions. Adding the desired region to make command saves time, else all the regions will undergo execution.
+6. If you wish to validate your changes are reflected prior to helm upgrade. `helm diff` is a great plugin to validate this, more information can be found here [helm diff](https://github.com/databus23/helm-diff)
+7. Final Step. If the expected changes are shown, execute `helm upgrade staging staging` in the top-level directory of cc-regions(it will be good if you update the slack channel with this regard, as this prevents impacting other user changes).
+
 ## Node Affinity
 
 We have two use cases for exclusive nodes:
