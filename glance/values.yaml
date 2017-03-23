@@ -18,6 +18,7 @@ db_user: glance
 db_password: DEFINE_IN_REGION_CHART
 
 port_metrics: '9102'
+ops_middleware_enabled: false
 sentry_dsn: DEFINE_IN_REGION_CHART
 
 default_store: DEFINE_IN_REGION_CHART
