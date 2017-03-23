@@ -37,6 +37,8 @@ spec:
             readOnly: false
           - name: initdb 
             mountPath: /docker-entrypoint-initdb.d
+          - name: db-socket
+            mountPath: /var/run/mysqld
 {{- if .Values.backup.enabled }}
           - name: db-socket
             mountPath: /var/run/mysqld
