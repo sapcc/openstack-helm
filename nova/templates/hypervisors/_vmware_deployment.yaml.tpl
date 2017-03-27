@@ -1,6 +1,6 @@
 {{- define "vmware_hypervisor" -}}
-{{- $context := index . 0 -}}
 {{- $hypervisor := index . 1 -}}
+{{- with index . 0 -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: nova-compute-{{$hypervisor.name}}
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{$context.Values.image_version_nova_compute_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.image_version_nova_compute_m3}}
           imagePullPolicy: IfNotPresent
           command:
             - /container.init/nova-compute-start
@@ -39,7 +39,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /hypervisor-config
               name: hypervisor-config
@@ -50,7 +50,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: neutron-dvs-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
           command:
             - /container.init/neutron-dvs-agent-start
@@ -102,3 +102,4 @@ spec:
             name: neutron-bin-vendor
             defaultMode: 0755
 {{- end -}}
+{{- end }}
