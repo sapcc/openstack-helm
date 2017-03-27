@@ -26,6 +26,8 @@ spec:
         name: nova-compute-{{$hypervisor.name}}
       annotations:
         pod.beta.kubernetes.io/hostname: nova-compute-{{$hypervisor.name}}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9102"
     spec:
       containers:
         - name: nova-compute-{{$hypervisor.name}}
@@ -55,6 +57,10 @@ spec:
           env:
             - name: DEBUG_CONTAINER
               value: "false"
+            - name: STATSD_HOST
+              value: "localhost"
+            - name: STATSD_PORT
+              value: "9125"
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc
@@ -62,6 +68,15 @@ spec:
               name: ml2-conf-vmware
             - mountPath: /container.init
               name: neutron-container-init
+        - name: statsd
+          image: prom/statsd-exporter
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: statsd
+              containerPort: 9125
+              protocol: UDP
+            - name: metrics
+              containerPort: 9102
       volumes:
         - name: nova-etc
           configMap:
