@@ -25,5 +25,3 @@ function _start_application {
 
 process_config
 start_application
-
-

@@ -35,8 +35,6 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
           imagePullPolicy: IfNotPresent
           command:
-            - bash
-          args:
             - /container.init/ironic-pxe-start
           env:
             - name: DEBUG_CONTAINER

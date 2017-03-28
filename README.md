@@ -67,6 +67,7 @@ tainting the nodes:
 kubectl taint node network0 species=network:NoSchedule
 kubectl taint node network1 species=network:NoSchedule
 kubectl taint node minion1  species=hypervisor:NoSchedule
+kubectl taint node storage0 species=swift-storage:NoSchedule
 ```
 
 Now nothing can be scheduled there. Pods that should be able to go to this need to
