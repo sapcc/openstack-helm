@@ -90,7 +90,7 @@ spec:
             - name: container-init
               mountPath: /container-init
 {{- if .Values.backup.enabled }}
-        - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{.Values.backup.image_version}}
+        - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{ .Values.backup.image_version }}
           imagePullPolicy: IfNotPresent
           name: backup
           env:
@@ -105,21 +105,21 @@ spec:
             - name: OS_IDENTITY_API_VERSION
               value: "3"
             - name: OS_USERNAME
-              value: {{.Values.backup.os_username}}
+              value: {{ .Values.backup.os_username }}
             - name: OS_USER_DOMAIN_NAME
-              value: {{.Values.backup.os_user_domain}}
+              value: {{ .Values.backup.os_user_domain }}
             - name: OS_PROJECT_NAME
-              value: {{.Values.backup.os_project_name}}
+              value: {{ .Values.backup.os_project_name }}
             - name: OS_PROJECT_DOMAIN_NAME
-              value: {{.Values.backup.os_project_domain}}
+              value: {{ .Values.backup.os_project_domain }}
             - name: OS_REGION_NAME
-              value: {{.Values.global.region}}
+              value: {{ .Values.global.region }}
             - name: OS_PASSWORD
-              value: {{.Values.backup.os_password | quote}}
+              value: {{ .Values.backup.os_password | quote }}
             - name: BACKUP_PGSQL_FULL
-              value: {{.Values.backup.interval_full | quote}}
+              value: {{ .Values.backup.interval_full | quote }}
 #            - name: BACKUP_PGSQL_INCR
-#              value: {{.Values.backup.interval_incr | quote}}
+#              value: {{ .Values.backup.interval_incr | quote }}
 {{- end }}
 {{- if .Values.metrics.enabled }}
         - name: metrics
