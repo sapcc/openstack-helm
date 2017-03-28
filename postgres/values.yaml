@@ -22,7 +22,7 @@ persistence:
 
 backup:
   enabled: false
-  image_version: v0.4.4
+  image_version: v0.5.0
   interval_full: 3 hours
   os_username: db_backup
   os_user_domain: Default
