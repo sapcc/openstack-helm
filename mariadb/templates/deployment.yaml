@@ -35,43 +35,43 @@ spec:
           - name: mariadb-persistent-storage
             mountPath: /var/lib/mysql
             readOnly: false
-          - name: initdb 
+          - name: initdb
             mountPath: /docker-entrypoint-initdb.d
 {{- if .Values.backup.enabled }}
           - name: db-socket
             mountPath: /var/run/mysqld
       - name: backup
-        image: {{.Values.backup.repository}}:{{.Values.backup.image_version}}
+        image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{ .Values.backup.image_version }}
         imagePullPolicy: IfNotPresent
         env:
           - name: MYSQL_ROOT_PASSWORD
-            value: {{.Values.root_password}}
+            value: {{ .Values.root_password }}
           - name: MY_POD_NAME
-            value: mysql-backup-{{.Values.name}}
+            value: mysql-backup-{{ .Values.name }}
           - name: MY_POD_NAMESPACE
-            value: {{.Release.Namespace}}
+            value: {{ .Release.Namespace }}
           - name: OS_AUTH_URL
-            value: {{.Values.backup.os_auth_url}}
+            value: {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{.Values.global.keystone_api_port_internal}}/v3
           - name: OS_AUTH_VERSION
-            value: {{.Values.backup.os_auth_version | quote}}
+            value: "3"
           - name: OS_IDENTITY_API_VERSION
-            value: {{.Values.backup.os_identity_api_version | quote}}
+            value: "3"
           - name: OS_USERNAME
-            value: {{.Values.backup.os_username}}
+            value: {{ .Values.backup.os_username }}
           - name: OS_USER_DOMAIN_NAME
-            value: {{.Values.backup.os_user_domain}}
+            value: {{ .Values.backup.os_user_domain }}
           - name: OS_PROJECT_NAME
-            value: {{.Values.backup.os_project_name}}
+            value: {{ .Values.backup.os_project_name }}
           - name: OS_PROJECT_DOMAIN_NAME
-            value: {{.Values.backup.os_project_domain}}
+            value: {{ .Values.backup.os_project_domain }}
           - name: OS_REGION_NAME
-            value: {{.Values.backup.os_region_name}}
+            value: {{ .Values.global.region }}
           - name: OS_PASSWORD
-            value: {{.Values.backup.os_password | quote}}
+            value: {{ .Values.backup.os_password | quote }}
           - name: BACKUP_MYSQL_FULL
-            value: {{.Values.backup.interval_full | quote}}
+            value: {{ .Values.backup.interval_full | quote }}
           - name: BACKUP_MYSQL_INCR
-            value: {{.Values.backup.interval_incr | quote}}
+            value: {{ .Values.backup.interval_incr | quote }}
         volumeMounts:
         - mountPath: /db/data
           name: mariadb-persistent-storage
@@ -90,7 +90,7 @@ spec:
           emptyDir: {}
 {{- end }}
 {{- if .Values.initdb_configmap }}
-        - name: initdb 
+        - name: initdb
           configMap:
-            name: {{ .Values.initdb_configmap }}  
+            name: {{ .Values.initdb_configmap }}
 {{ end }}
