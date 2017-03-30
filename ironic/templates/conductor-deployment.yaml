@@ -41,6 +41,8 @@ spec:
               name: ironic-etc
             - mountPath: /container.init
               name: container-init
+            - mountPath: /tftpboot
+              name: ironic-tftp
       volumes:
         - name: ironic-etc
           configMap:
@@ -49,3 +51,6 @@ spec:
           configMap:
             name: ironic-bin
             defaultMode: 0755
+        - name: ironic-tftp
+          persistentVolumeClaim:
+            claimName: ironic-tftp-pvclaim
