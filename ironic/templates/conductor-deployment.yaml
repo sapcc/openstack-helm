@@ -43,6 +43,25 @@ spec:
               name: container-init
             - mountPath: /tftpboot
               name: ironic-tftp
+        - name: ironic-pxe
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /container.init/ironic-pxe-start
+          env:
+            - name: DEBUG_CONTAINER
+              value: "false"
+          ports:
+            - name: ironic-pxe
+              protocol: UDP
+              containerPort: {{.Values.global.ironic_pxe_port_public}}
+          volumeMounts:
+            - mountPath: /ironic-etc
+              name: ironic-etc
+            - mountPath: /container.init
+              name: container-init
+            - mountPath: /tftpboot
+              name: ironic-tftp
       volumes:
         - name: ironic-etc
           configMap:

@@ -8,9 +8,13 @@ metadata:
     type: backend
     component: ironic
 spec:
+  type: NodePort
   selector:
-    name: ironic-pxe
+    name: ironic-conductor
   ports:
     - name: ironic-pxe
       protocol: UDP
       port: {{.Values.global.ironic_pxe_port_public}}
+  externalIPs:
+    - {{.Values.tftp_ip}}
+  sessionAffinity: "ClientIP"
