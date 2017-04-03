@@ -14,6 +14,12 @@ data:
   nova_sentry_dsn: {{.Values.nova.sentry_dsn }}
   password: {{ .Values.global.master_password }}
   username: {{ .Values.vcenter_operator_username }}
+{{- if .Values.vcenter_operator_dns_ip }}
+  dns_ip: {{ .Values.vcenter_operator_dns_ip }}
+{{- end }}
+{{- if .Values.vcenter_operator_dns_port }}
+  dns_port: {{ .Values.vcenter_operator_dns_port }}
+{{- end }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 
 ---
