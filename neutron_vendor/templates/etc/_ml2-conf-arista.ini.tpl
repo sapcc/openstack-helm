@@ -8,7 +8,7 @@ eapi_password = {{.Values.arista_eapi_password}}
 # use_fqdn =
 # sync_interval =
 
-switch_info = {{.Values.arista_switch_host}}:{{.Values.arista_switch_username}}:{{.Values.arista_switch_password}}
+switch_info = {{range $i, $switch := .Values.arista_switches}}{{$switch.host}}:{{$switch.user}}:{{$switch.password}}{{ if lt $i (sub (len $.Values.arista_switches) 1) }},{{end}}{{end}}
 
 region_name = {{.Values.global.region}}
 
