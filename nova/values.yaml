@@ -54,11 +54,14 @@ postgres:
     enabled: true
     customMetrics:
       openstack_compute_nodes:
-        query: "SELECT host, free_disk_gb AS free_disk_gb_gauge, local_gb AS local_gb_gauge, free_ram_mb AS free_ram_mb_gauge, memory_mb AS memory_mb_gauge, vcpus_used AS vcpus_used_gauge, vcpus AS vcpus_gauge, running_vms AS running_vms_gauge FROM compute_nodes WHERE deleted = 0;"
+        query: "SELECT host, hypervisor_type, free_disk_gb AS free_disk_gb_gauge, local_gb AS local_gb_gauge, free_ram_mb AS free_ram_mb_gauge, memory_mb AS memory_mb_gauge, vcpus_used AS vcpus_used_gauge, vcpus AS vcpus_gauge, running_vms AS running_vms_gauge FROM compute_nodes WHERE deleted = 0;"
         metrics:
           - host:
               usage: "LABEL"
               description: "Name of the host"
+          - hypervisor_type:
+              usage: "LABEL"
+              description: "Type of the hypervisor"
           - free_disk_gb_gauge:
               usage: "GAUGE"
               description: "Total free disk space in GB"
