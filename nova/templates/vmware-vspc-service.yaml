@@ -7,6 +7,7 @@ metadata:
     system: openstack
     type: backend
     component: nova
+    
 spec:
    selector:
    name: nova-vmware-vspc
@@ -14,7 +15,4 @@ spec:
      - name: proxy
        port: 13370
        targetPort: proxy
-    - name: admin
-      port: 13371 
-       targetPort: admin
-  externalIPs: ["10.44.11.151"]
+   externalIPs: ["{{.Values.vmware_vspc_ip}}"]
