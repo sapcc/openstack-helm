@@ -31,10 +31,8 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vspc:{{.Values.image_version_vspc}}
           imagePullPolicy: IfNotPresent
           ports:
-           name: proxy
- +         port: 13370
- +         targetPort: proxy
- +    -    name: admin
- +         port: 13371 
- +         targetPort: admin
+          - name: proxy
+            port: 13370
+            targetPort: proxy
+
             
