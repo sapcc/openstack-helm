@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nova-vmware-vspc-config
+  labels:
+    system: openstack
+    type: config
+    component: nova 
+data:
+  config.json: {"command" :
