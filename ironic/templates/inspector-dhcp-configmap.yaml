@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ironic-inspector-dhcp
+  labels:
+    system: openstack
+    type: configuration
+    component: ironic
+data:
+  config.json: |
+    {"command":"dnsmasq --conf-dir=/var/lib/kolla/config_files,*.conf"}
+  dnsmasq.conf: |
+    user=root
+    log-facility=-
+    log-async
+    keep-in-foreground
+    port=0  # Disable DNS
+    no-poll # Do not poll /etc/resolv.conf
+    dhcp-sequential-ip
+    dhcp-range={{.Values.inspector.dhcp.range}}
+    dhcp-option=3,{{.Values.inspector.dhcp.options.router}}
+    dhcp-boot=pxelinux.0,ironic-boot,{{.Values.tftp_ip}}

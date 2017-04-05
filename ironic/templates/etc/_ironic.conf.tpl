@@ -1,7 +1,7 @@
 [DEFAULT]
 debug = {{.Values.debug}}
-syslog_log_facility=LOG_LOCAL0
-use_syslog=yes
+log_config_append = /etc/ironic/logging.conf
+
 #admin_token =
 enabled_drivers=pxe_ipmitool,agent_ipmitool
 network_provider=neutron_plugin
@@ -40,7 +40,6 @@ project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 insecure = True
-
 
 [glance]
 glance_host = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
