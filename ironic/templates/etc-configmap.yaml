@@ -12,3 +12,5 @@ data:
 {{ tuple "etc/_ironic.conf.tpl" . | include "template" | indent 4 }}
   ironic-inspector.conf: |
 {{ tuple "etc/_ironic_inspector.conf.tpl" . | include "template" | indent 4 }}
+  logging.conf: |
+{{ include "loggerIni" .Values.logging | indent 4 }}

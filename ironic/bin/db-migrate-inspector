@@ -4,10 +4,10 @@ set -e
 
 . /container.init/common.sh
 
-
 function process_config {
     apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
 
+    cp /ironic-etc/logging.conf /etc/ironic-inspector/logging.conf
     cp /ironic-etc/ironic-inspector.conf  /etc/ironic-inspector/ironic.conf
 }
 
