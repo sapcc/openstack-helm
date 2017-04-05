@@ -45,6 +45,14 @@ spec:
               name: ironic-patches
             - mountPath: /container.init
               name: container-init
+{{- if .Values.image_version_ironic_dhcp }}
+        - name: dhcp
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-dhcp:{{.Values.image_version_ironic_dhcp}}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: dhcp-config
+              mountPath: /var/lib/kolla/config_files
+{{- end }}
       volumes:
         - name: ironic-etc
           configMap:
@@ -56,3 +64,9 @@ spec:
           configMap:
             name: ironic-bin
             defaultMode: 0755
+{{- if .Values.image_version_ironic_dhcp }}
+        - name: dhcp-config
+          configMap:
+            name: ironic-inspector-dhcp
+            defaultMode: 0400
+{{ end }}

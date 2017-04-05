@@ -1,11 +1,8 @@
 [DEFAULT]
 debug = {{.Values.debug}}
-syslog_log_facility=LOG_LOCAL0
-use_syslog=yes
-#admin_token =
-enabled_drivers=pxe_ipmitool,agent_ipmitool
-network_provider=neutron_plugin
+log_config_append = /etc/ironic-inspector/logging.conf
 
+enabled_drivers=pxe_ipmitool,agent_ipmitool
 enabled_network_interfaces=noop,flat,neutron
 default_network_interface=neutron
 
@@ -19,13 +16,8 @@ user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 
-
-[dhcp]
-dhcp_provider=none
-
 [api]
 host_ip = 0.0.0.0
-
 
 [firewall]
 manage_firewall=False
@@ -44,8 +36,6 @@ processing_hooks=$default_processing_hooks, local_link_connection
 
 [discovery]
 enroll_node_driver=agent_ipmitool
-
-
 
 [database]
 connection = postgresql://{{.Values.inspector_db_user}}:{{.Values.inspector_db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.inspector_db_name}}
