@@ -67,6 +67,6 @@
 {{define "monasca_api_endpoint_host_internal"}}monasca-api.monasca.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "monasca_api_endpoint_host_public"}}monitoring.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
-{{define "swift_endpoint_host"}}objectstore-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
+{{define "swift_endpoint_host"}}objectstore.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
 {{define "cfm_api_endpoint_host_public"}}cfm.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
