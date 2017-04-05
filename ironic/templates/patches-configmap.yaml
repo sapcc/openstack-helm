@@ -6,5 +6,5 @@ metadata:
     system: openstack
     type: patches
     component: ironic
-
 data:
+{{ (.Files.Glob "patches/*.patch").AsConfig | indent 4 }}
