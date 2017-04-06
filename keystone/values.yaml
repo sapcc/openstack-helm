@@ -32,6 +32,8 @@ sentry_dsn: DEFINED-IN-REGION-CHART
 
 cloud_admin_project: DEFINED-IN-REGION-CHART
 
+cron_schedule: "0 * * * *"
+
 fernet_secrets:
   - DEFINED-IN-REGION-CHART
   - DEFINED-IN-REGION-CHART
