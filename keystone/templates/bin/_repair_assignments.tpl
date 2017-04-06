@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
-. /container.init/common.sh
+set -ex
 
 cp /keystone-etc/keystone.conf  /etc/keystone/keystone.conf
-
-set -ex
 
 date
 
