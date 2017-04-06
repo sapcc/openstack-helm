@@ -1,0 +1,45 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: nova-vmware-vspc
+  labels:
+    system: openstack
+    type: backend
+    component: nova
+
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+        name: nova-vmware-vspc
+  template:
+    metadata:
+      labels:
+        name: nova-vmware-vspc
+      annotations:
+        pod.beta.kubernetes.io/hostname:  nova-vmware-vspc
+    spec:
+      containers:
+        - name: nova-vmware-vspc
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vspc:{{.Values.image_version_vspc}}
+          imagePullPolicy: IfNotPresent
+spec:
+  type: NodePort
+  selector:
+    name: nova-vmware-vspc
+  ports:
+    - name: proxy
+      port: 13370
+      targetPort: proxy
+    - name: admin
+      port: 13371 
+      targetPort: admin
+  externalIPs: ["10.44.11.151"]
+
