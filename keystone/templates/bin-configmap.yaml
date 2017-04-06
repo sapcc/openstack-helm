@@ -21,4 +21,4 @@ data:
   keystone-cron: |
 {{ tuple "bin/_keystone-cron.tpl" . | include "template" | indent 4 }}
   repair_assignments: |
-{{ tuple "bin/repair_assignments.tpl" . | include "template" | indent 4 }}
+{{ tuple "bin/_repair_assignments.tpl" . | include "template" | indent 4 }}
