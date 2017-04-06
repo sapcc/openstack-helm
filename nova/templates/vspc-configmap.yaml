@@ -7,4 +7,7 @@ metadata:
     type: config
     component: nova 
 data:
-  config.json: {"command" :
+  config.json: |
+{{ tuple "etc/_ config.json.tpl.tpl" . | include "template" | indent 4 }}  
+  vspc.conf: |
+{{ tuple "etc/_vspc.conf.tpl" . | include "template" | indent 4 }}
