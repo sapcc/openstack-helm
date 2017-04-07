@@ -7,7 +7,5 @@ metadata:
     type: config
     component: nova 
 data:
-  config.json: |
-{{ tuple "etc/_ config.json.tpl.tpl" . | include "template" | indent 4 }}  
-  vspc.conf: |
-{{ tuple "etc/_vspc.conf.tpl" . | include "template" | indent 4 }}
+  config.json: "command" : "vmware-vspc --config-file vspc.conf"
+  vspc.conf: "debug = True\nhost = 0.0.0.0\nport = 13370\ncert = /cc-regions/staging/certs/volume-3.staging.cloud.sap.pem\nkey = /cc-regions/staging/certs/volume-3.staging.cloud.sap.key\nuri = vmware-vspc\nserial_log_dir = /opt/vmware/vspc"
