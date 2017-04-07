@@ -27,6 +27,7 @@ inspector_db_password: DEFINE_IN_REGION_CHART
 inspector:
   dhcp:
     port: '67'
+    proxy_port: '4011'
     ip: DEFINE_IN_REGION_CHART
     range: DEFINE_IN_REGION_CHART
     options:
