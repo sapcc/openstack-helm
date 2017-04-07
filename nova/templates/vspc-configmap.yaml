@@ -7,5 +7,13 @@ metadata:
     type: config
     component: nova 
 data:
-  config.json: {command : "vmware-vspc --config-file vspc.conf"}
-  vspc.conf: "debug = True\nhost = 0.0.0.0\nport = 13370\ncert = /cc-regions/staging/certs/volume-3.staging.cloud.sap.pem\nkey = /cc-regions/staging/certs/volume-3.staging.cloud.sap.key\nuri = vmware-vspc\nserial_log_dir = /opt/vmware/vspc"
+  config.json: |
+   {"command" : "vmware-vspc --config-file vspc.conf"}
+  vspc.conf: |
+   debug = True
+   host = 0.0.0.0
+   port = 13370
+   cert = /cc-regions/staging/certs/volume-3.staging.cloud.sap.pem
+   key = /cc-regions/staging/certs/volume-3.staging.cloud.sap.key
+   uri = vmware-vspc
+   serial_log_dir = /opt/vmware/vspc
