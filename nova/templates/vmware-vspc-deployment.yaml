@@ -30,9 +30,14 @@ spec:
         - name: nova-vmware-vspc
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vspc:{{.Values.image_version_vspc}}
           imagePullPolicy: IfNotPresent
-          ports:
+        ports:
           - name: proxy
             port: 13370
             targetPort: proxy
-
-            
+        volumeMounts:
+           - mountPath: /fernet-keys
+             name: fernet-secret
+      volumes:
+        - name: fernet-secret
+          secret:
+            secretName: fernet-secret
