@@ -11,9 +11,7 @@ global:
   keystone_api_port_internal: '5000'
   keystone_api_port_public: '443'
 
-debug: "True"
-
-
+debug: "False"
 
 image_version_keystone_m3: DEFINED-IN-REGION-CHART
 
