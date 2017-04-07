@@ -45,10 +45,22 @@ spec:
               name: ironic-patches
             - mountPath: /container.init
               name: container-init
-{{- if .Values.image_version_ironic_dhcp }}
+{{- if .Values.image_version_staticdhcpd}}
         - name: dhcp
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-dhcp:{{.Values.image_version_ironic_dhcp}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-staticdhcpd:{{.Values.image_version_staticdhcpd}}
           imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          ports:
+            - name: dhcp
+              protocol: UDP
+              containerPort: {{.Values.inspector.dhcp.port}}
+            - name: dhcp-proxy
+              protocol: UDP
+              containerPort: {{.Values.inspector.dhcp.proxy_port}}
           volumeMounts:
             - name: dhcp-config
               mountPath: /var/lib/kolla/config_files
@@ -64,7 +76,7 @@ spec:
           configMap:
             name: ironic-bin
             defaultMode: 0755
-{{- if .Values.image_version_ironic_dhcp }}
+{{- if .Values.image_version_staticdhcpd }}
         - name: dhcp-config
           configMap:
             name: ironic-inspector-dhcp
