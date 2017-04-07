@@ -30,16 +30,3 @@ spec:
         - name: nova-vmware-vspc
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vspc:{{.Values.image_version_vspc}}
           imagePullPolicy: IfNotPresent
-spec:
-  type: NodePort
-  selector:
-    name: nova-vmware-vspc
-  ports:
-    - name: proxy
-      port: 13370
-      targetPort: proxy
-    - name: admin
-      port: 13371 
-      targetPort: admin
-  externalIPs: ["10.44.11.151"]
-
