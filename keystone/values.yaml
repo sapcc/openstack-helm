@@ -11,9 +11,7 @@ global:
   keystone_api_port_internal: '5000'
   keystone_api_port_public: '443'
 
-debug: "True"
-
-
+debug: "False"
 
 image_version_keystone_m3: DEFINED-IN-REGION-CHART
 
@@ -31,6 +29,8 @@ bootstrap_password: DEFINED-IN-REGION-CHART
 sentry_dsn: DEFINED-IN-REGION-CHART
 
 cloud_admin_project: DEFINED-IN-REGION-CHART
+
+cron_schedule: "0 * * * *"
 
 fernet_secrets:
   - DEFINED-IN-REGION-CHART
