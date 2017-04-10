@@ -16,7 +16,6 @@ debug: "True"
 
 
 image_version_keystone_m3: DEFINED-IN-REGION-CHART
-image_version_openstack_operator: DEFINED-IN-REGION-CHART
 
 port_metrics: '9102'
 
@@ -32,6 +31,8 @@ bootstrap_password: DEFINED-IN-REGION-CHART
 sentry_dsn: DEFINED-IN-REGION-CHART
 
 cloud_admin_project: DEFINED-IN-REGION-CHART
+
+cron_schedule: "0 * * * *"
 
 fernet_secrets:
   - DEFINED-IN-REGION-CHART

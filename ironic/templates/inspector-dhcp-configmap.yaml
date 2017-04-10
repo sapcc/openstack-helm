@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ironic-inspector-dhcp
+  labels:
+    system: openstack
+    type: configuration
+    component: ironic
+data:
+  config.json: |
+    {"command": "staticDHCPd", "config_files":[{"source": "/var/lib/kolla/config_files/*", "dest": "/conf/", "owner": "root", "perm": "0300"}]}
+  conf.py: |
+    import sys
+    sys.path.append('/etc/staticDHCPd/extensions')
+    import dynamism, ipaddress, logging, os
+    logger = logging.getLogger(__name__)
+
+    _RANGE= u'{{.Values.inspector.dhcp.range}}'.split(',')
+    _SUBNET = ipaddress.ip_network(u"{}/{}".format(_RANGE[0], _RANGE[-1]), False)
+    _RANGE[0] = ipaddress.ip_address(_RANGE[0])
+    _RANGE[1] = ipaddress.ip_address(_RANGE[1])
+
+    global _dynamic_pool
+    _dynamic_pool = dynamism.DynamicPool('ironic-inspector', 0, 1800, 'bmi',
+       subnet_mask=_RANGE[-1], gateway='{{.Values.inspector.dhcp.options.router}}',
+       broadcast_address=str(_SUBNET.broadcast_address),
+       domain_name_servers=["147.204.9.200","147.204.9.201"],
+       discourage_renewals=True
+      )
+    _dynamic_pool.add_ips([str(ip) for ip in _SUBNET if ip >= _RANGE[0] and ip <= _RANGE[1]])
+
+    DHCP_RESPONSE_INTERFACE = 'eth0'
+    DHCP_SERVER_IP = os.getenv('POD_IP')
+    DAEMON = False
+    DEBUG = True
+    WEB_ENABLED = False
+    UID = 0
+    GID = 0
+    PXE_PORT = {{.Values.inspector.dhcp.proxy_port}}
+    ALLOW_LOCAL_DHCP = False
+    ALLOW_DHCP_RELAYS = True
+    DATABASE_ENGINE = None
+    USE_CACHE = False
+    USE_POOL = False
+    EMAIL_ENABLED = False
+
+    from staticdhcpdlib.dhcp import _DHCPServer
+    from libpydhcpserver.dhcp_types.ipv4 import IPv4
+
+    _orig_DHCPServer__init__ = _DHCPServer.__init__
+    def _DHCPServer__init__(self, *args, **kwargs):
+      _orig_DHCPServer__init__(self, *args, **kwargs)
+      self._server_address =  IPv4('{{.Values.inspector.dhcp.ip}}')
+
+    _DHCPServer.__init__ = _DHCPServer__init__
+
+    def init():
+      #Perform any required imports or setup operations within this function.
+      pass
+
+    def loadDHCPPacket(packet, method, mac, definition, relay_ip, port, source_packet):
+      static_routes = []
+      #if method in ['DISCOVER', 'INFORM', 'REQUEST:RENEW', 'REQUEST:SELECTING', 'REQUEST:INIT-REBOOT']:
+      #  logger.info("Pushing 169.254.0.0/16 link-local static routes")
+      #  static_routes = [16,169,254,0,0,0,0] # we always want to push 169.254.0.0/16 as a link-local route
+
+      if static_routes:
+        default_gateway = packet.getOption('router')
+        if default_gateway:
+          static_routes += [0] + default_gateway
+        packet.setOption('classless_static_route', static_routes)
+
+      # Set the relay agent option
+      relay_agent = source_packet.getOption('relay_agent')
+
+      if relay_agent:
+        packet.setOption(82, relay_agent, force_selection=True)
+
+      if source_packet.getOption('vendor_class_identifier', convert=True):
+          packet.setOption('vendor_class_identifier', 'PXEServer:staticDHCPd')
+          packet.setOption('tftp_server_name', '{{.Values.tftp_ip}}')
+          packet.setOption('bootfile_name', 'pxelinux.0')
+          packet.setOption('siaddr', '{{.Values.tftp_ip}}')
+          packet.setOption('file', 'pxelinux.0')
+
+      return True
+
+    def handleUnknownMAC(packet, method, mac, client_ip, relay_ip, port):
+       return _dynamic_pool.handle(method, packet, mac, client_ip)
+
+    def filterRetrievedDefinitions(definitions, packet, method, mac, client_ip, relay_ip, port):
+      print(definitions)
+      return definitions[0]
+
+  dnsmasq.conf: |
+    no-resolv
+    no-poll # Do not poll /etc/resolv.conf
+    no-hosts
+    user=root
+    log-facility=-
+    log-async
+    log-dhcp
+    keep-in-foreground
+    port=0  # Disable DNS
+    dhcp-sequential-ip
+    dhcp-range={{.Values.inspector.dhcp.range}}
+    dhcp-option=3,{{.Values.inspector.dhcp.options.router}}
+    dhcp-option=6,147.204.9.200,147.204.9.201
+    dhcp-boot=pxelinux.0,ironic-boot,{{.Values.tftp_ip}}

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/local/bin/dumb-init bash
 
 set -e
 
@@ -7,16 +7,13 @@ set -e
 function process_config {
     apply_patches # Apply hot-fixes, which need to be either upstreamed or moved to the container build
 
+    cp /ironic-etc/logging.conf /etc/ironic/logging.conf
     cp /ironic-etc/ironic.conf  /etc/ironic/ironic.conf
 }
-
 
 function start_application {
     exec /var/lib/kolla/venv/bin/ironic-api
 }
 
-
 process_config
 start_application
-
-

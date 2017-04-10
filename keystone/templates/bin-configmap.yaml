@@ -14,9 +14,11 @@ data:
 {{ tuple "bin/_keystone-bootstrap.tpl" . | include "template" | indent 4 }}
   keystone-seed: |
 {{ tuple "bin/_keystone-seed.tpl" . | include "template" | indent 4 }}
-  openstack-operator: |
-{{ tuple "bin/_openstack-operator.tpl" . | include "template" | indent 4 }}
   keystone-start: |
 {{ tuple "bin/_keystone-start.tpl" . | include "template" | indent 4 }}
   db-migrate: |
 {{ tuple "bin/_db-migrate.tpl" . | include "template" | indent 4 }}
+  keystone-cron: |
+{{ tuple "bin/_keystone-cron.tpl" . | include "template" | indent 4 }}
+  repair_assignments: |
+{{ tuple "bin/_repair_assignments.tpl" . | include "template" | indent 4 }}

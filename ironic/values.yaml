@@ -24,8 +24,16 @@ inspector_db_name: ironic_inspector
 inspector_db_user: ironic_inspector
 inspector_db_password: DEFINE_IN_REGION_CHART
 
+inspector:
+  dhcp:
+    port: '67'
+    proxy_port: '4011'
+    ip: DEFINE_IN_REGION_CHART
+    range: DEFINE_IN_REGION_CHART
+    options:
+      router: DEFINE_IN_REGION_CHART
 
-tftp_ip: $my_ip
+tftp_ip: DEFINE_IN_REGION_CHART
 
 port_metrics: '9102'
 sentry_dsn: DEFINE_IN_REGION_CHART
@@ -37,3 +45,38 @@ swift_tempurl: DEFINE_IN_REGION_CHART
 
 postgres:
   name: ironic
+
+logging:
+    formatters:
+        context:
+            class: oslo_log.formatters.ContextFormatter
+        default:
+            format: "%(message)s"
+    handlers:
+        stdout:
+            class: StreamHandler
+            args: "(sys.stdout,)"
+            formatter: context
+        "null":
+            class: logging.NullHandler
+            args: "()"
+            formatter: default
+    loggers:
+        root:
+            handlers: "null"
+            level: WARNING
+        ironic:
+            handlers: stdout
+            level: DEBUG
+        amqp:
+            handlers: stdout
+            level: WARNING
+        amqplib:
+            handlers: stdout
+            level: WARNING
+        eventlet.wsgi.server:
+            handlers: stdout
+            level: INFO
+        sqlalchemy:
+            handlers: stdout
+            level: WARNING
