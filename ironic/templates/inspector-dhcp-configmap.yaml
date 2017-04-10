@@ -76,12 +76,16 @@ data:
       if relay_agent:
         packet.setOption(82, relay_agent, force_selection=True)
 
-      if source_packet.getOption('vendor_class_identifier', convert=True):
+      vendor_class_identifier = source_packet.getOption('vendor_class_identifier', convert=True)
+      logger.debug("VendorClass: {}".format(vendor_class_identifier))
+
+      if vendor_class_identifier and vendor_class_identifier.startswith("PXEClient:"):
           packet.setOption('vendor_class_identifier', 'PXEServer:staticDHCPd')
-          packet.setOption('tftp_server_name', '{{.Values.tftp_ip}}')
           packet.setOption('bootfile_name', 'pxelinux.0')
-          packet.setOption('siaddr', '{{.Values.tftp_ip}}')
-          packet.setOption('file', 'pxelinux.0')
+          packet.setOption('tftp_server_name', '{{.Values.tftp_ip}}')
+          # BOOTP
+          # packet.setOption('siaddr', '{{.Values.tftp_ip}}')
+          # packet.setOption('file', 'pxelinux.0')
 
       return True
 
