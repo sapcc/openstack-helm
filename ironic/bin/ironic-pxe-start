@@ -20,7 +20,7 @@ function _start_application {
     done
 
     if [ -x /var/lib/kolla/venv/bin/ptftpd ]; then
-        exec /var/lib/kolla/venv/bin/ptftpd -d /tftpmap.py:handle eth0 /tftpboot
+        exec /var/lib/kolla/venv/bin/ptftpd -v -d /tftpmap.py:handle eth0 /tftpboot
     else
         exec /usr/sbin/in.tftpd --verbose --foreground --user root --address 0.0.0.0:69 --ipv4 --map-file /map-file /tftpboot
     fi
