@@ -60,24 +60,22 @@ data:
 
     def loadDHCPPacket(packet, method, mac, definition, relay_ip, port, source_packet):
       static_routes = []
-      if method in ['DISCOVER', 'INFORM', 'REQUEST:RENEW', 'REQUEST:SELECTING', 'REQUEST:INIT-REBOOT']:
-        logger.info("Pushing 169.254.0.0/16 link-local static routes")
-        static_routes = [16,169,254,0,0,0,0] # we always want to push 169.254.0.0/16 as a link-local route
-      default_gateway = packet.getOption('router')
-
-      if default_gateway:
-          logger.info("Pushing default route to gateway %s" % ".".join(str(n) for n in default_gateway))
-          static_routes += [0] + default_gateway
+      #if method in ['DISCOVER', 'INFORM', 'REQUEST:RENEW', 'REQUEST:SELECTING', 'REQUEST:INIT-REBOOT']:
+      #  logger.info("Pushing 169.254.0.0/16 link-local static routes")
+      #  static_routes = [16,169,254,0,0,0,0] # we always want to push 169.254.0.0/16 as a link-local route
 
       if static_routes:
+        default_gateway = packet.getOption('router')
+        if default_gateway:
+          static_routes += [0] + default_gateway
         packet.setOption('classless_static_route', static_routes)
 
       # Set the relay agent option
       relay_agent = source_packet.getOption('relay_agent')
+
       if relay_agent:
         packet.setOption(82, relay_agent, force_selection=True)
 
-      #PXE related junk
       if source_packet.getOption('vendor_class_identifier', convert=True):
           packet.setOption('vendor_class_identifier', 'PXEServer:staticDHCPd')
           packet.setOption('tftp_server_name', '{{.Values.tftp_ip}}')
