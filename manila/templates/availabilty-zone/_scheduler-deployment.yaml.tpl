@@ -40,7 +40,9 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "manila-api,rabbitmq"
             - name: DEBUG_CONTAINER
-              value: "false"
+              value: "false
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /manila-etc
               name: manila-etc
