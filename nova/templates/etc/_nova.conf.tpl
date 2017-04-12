@@ -135,3 +135,8 @@ admin_password={{.Values.global.ironic_service_password }}
 admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v2.0
 admin_tenant_name={{.Values.global.keystone_service_project}}
 api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1
+
+# this is for the cadf audit messaging
+[audit_middleware_notifications]
+driver = messaging
+transport_url = rabbit://{{ .Values.rabbitmq_user | default .Values.global.rabbitmq_default_user }}:{{ .Values.rabbitmq_pass | default .Values.global.rabbitmq_default_pass }}@{{include "rabbitmq_host" .}}:5672/
