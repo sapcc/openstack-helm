@@ -27,49 +27,37 @@ spec:
         - name: ironic-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "/container.init/ironic-conductor-start"
+              value: "ironic-conductor"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
           volumeMounts:
-            - mountPath: /ironic-etc
+            - mountPath: /var/lib/kolla/config_files
               name: ironic-etc
-            - mountPath: /container.init
-              name: container-init
             - mountPath: /tftpboot
               name: ironic-tftp
         - name: ironic-pxe
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /container.init/ironic-pxe-start
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
+            - name: COMMAND
+              value: "ptftpd -v -d /tftpmap.py:handle eth0 /tftpboot"
           ports:
             - name: ironic-pxe
               protocol: UDP
               containerPort: {{.Values.global.ironic_pxe_port_public}}
           volumeMounts:
-            - mountPath: /ironic-etc
+            - mountPath: /var/lib/kolla/config_files
               name: ironic-etc
-            - mountPath: /container.init
-              name: container-init
             - mountPath: /tftpboot
               name: ironic-tftp
       volumes:
         - name: ironic-etc
           configMap:
             name: ironic-etc
-        - name: container-init
-          configMap:
-            name: ironic-bin
-            defaultMode: 0755
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim

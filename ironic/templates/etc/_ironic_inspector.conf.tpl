@@ -1,6 +1,6 @@
 [DEFAULT]
 debug = {{.Values.debug}}
-log_config_append = /etc/ironic-inspector/logging.conf
+log_config_append = /etc/ironic/logging.conf
 
 enabled_drivers=pxe_ipmitool,agent_ipmitool
 enabled_network_interfaces=noop,flat,neutron
