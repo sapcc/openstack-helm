@@ -38,19 +38,19 @@ use = call:nova.api.openstack.urlmap:urlmap_factory
 # NOTE: this is deprecated in favor of openstack_compute_api_v21_legacy_v2_compatible
 [composite:openstack_compute_api_legacy_v2]
 use = call:nova.api.auth:pipeline_factory
-noauth2 = cors compute_req_id faultwrap sizelimit noauth2 legacy_ratelimit osapi_compute_app_legacy_v2
-keystone = cors compute_req_id faultwrap sizelimit authtoken keystonecontext legacy_ratelimit audit osapi_compute_app_legacy_v2
-keystone_nolimit = cors compute_req_id faultwrap sizelimit authtoken keystonecontext audit osapi_compute_app_legacy_v2
+noauth2 = cors healthcheck compute_req_id statsd faultwrap sizelimit noauth2 legacy_ratelimit sentry osapi_compute_app_legacy_v2
+keystone = cors healthcheck compute_req_id statsd faultwrap sizelimit authtoken keystonecontext legacy_ratelimit sentry audit osapi_compute_app_legacy_v2
+keystone_nolimit = cors healthcheck  compute_req_id statsd faultwrap sizelimit authtoken keystonecontext sentry audit osapi_compute_app_legacy_v2
 
 [composite:openstack_compute_api_v21]
 use = call:nova.api.auth:pipeline_factory_v21
-noauth2 = cors compute_req_id faultwrap sizelimit noauth2 osapi_compute_app_v21
-keystone = cors compute_req_id faultwrap sizelimit authtoken keystonecontext audit osapi_compute_app_v21
+noauth2 = cors healthcheck compute_req_id statsd faultwrap sizelimit noauth2 sentry osapi_compute_app_v21
+keystone = cors healthcheck compute_req_id statsd faultwrap sizelimit authtoken keystonecontext sentry audit osapi_compute_app_v21
 
 [composite:openstack_compute_api_v21_legacy_v2_compatible]
 use = call:nova.api.auth:pipeline_factory_v21
-noauth2 = cors compute_req_id faultwrap sizelimit noauth2 legacy_v2_compatible osapi_compute_app_v21
-keystone = cors compute_req_id faultwrap sizelimit authtoken keystonecontext legacy_v2_compatible audit osapi_compute_app_v21
+noauth2 = cors healthcheck compute_req_id statsd faultwrap sizelimit noauth2 legacy_v2_compatible sentry osapi_compute_app_v21
+keystone = cors healthcheck compute_req_id statsd faultwrap sizelimit authtoken keystonecontext legacy_v2_compatible sentry audit osapi_compute_app_v21
 
 [filter:request_id]
 paste.filter_factory = oslo_middleware:RequestId.factory
@@ -60,6 +60,14 @@ paste.filter_factory = nova.api.compute_req_id:ComputeReqIdMiddleware.factory
 
 [filter:faultwrap]
 paste.filter_factory = nova.api.openstack:FaultWrapper.factory
+
+[filter:healthcheck]
+paste.filter_factory = oslo_middleware:Healthcheck.factory
+backends = disable_by_file
+disable_by_file_path = /etc/nova/healthcheck_disable
+
+[filter:http_proxy_to_wsgi]
+paste.filter_factory = oslo_middleware:HTTPProxyToWSGI.factory
 
 [filter:noauth2]
 paste.filter_factory = nova.api.openstack.auth:NoAuthMiddleware.factory
@@ -80,7 +88,7 @@ paste.app_factory = nova.api.openstack.compute:APIRouter.factory
 paste.app_factory = nova.api.openstack.compute:APIRouterV21.factory
 
 [pipeline:oscomputeversions]
-pipeline = faultwrap oscomputeversionapp
+pipeline = faultwrap http_proxy_to_wsgi oscomputeversionapp
 
 [app:oscomputeversionapp]
 paste.app_factory = nova.api.openstack.compute.versions:Versions.factory
@@ -98,6 +106,14 @@ paste.filter_factory = nova.api.auth:NovaKeystoneContext.factory
 
 [filter:authtoken]
 paste.filter_factory = keystonemiddleware.auth_token:filter_factory
+
+# Converged Cloud statsd & sentry middleware
+[filter:statsd]
+use = egg:ops-middleware#statsd
+
+[filter:sentry]
+use = egg:ops-middleware#sentry
+level = ERROR
 
 [filter:audit]
 paste.filter_factory = keystonemiddleware.audit:filter_factory
