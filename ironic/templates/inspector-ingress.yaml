@@ -8,6 +8,9 @@ metadata:
     type: inspector
     component: ironic
 spec:
+  tls:
+    - secretName: tls-{{ include "ironic_inspector_endpoint_host_public" . | replace "." "-" }}
+      hosts: [{{include "ironic_inspector_endpoint_host_public" .}}]
   rules:
     - host: {{include "ironic_inspector_endpoint_host_public" .}}
       http:
