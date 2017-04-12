@@ -42,6 +42,8 @@ spec:
               value: "postgres-manila,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
           livenessProbe:
             httpGet:
               path: /

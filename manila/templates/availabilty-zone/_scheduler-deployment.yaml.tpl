@@ -41,6 +41,8 @@ spec:
               value: "manila-api,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /manila-etc
               name: manila-etc
