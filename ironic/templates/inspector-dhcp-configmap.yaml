@@ -81,33 +81,14 @@ data:
 
       if vendor_class_identifier and vendor_class_identifier.startswith("PXEClient:"):
           packet.setOption('vendor_class_identifier', 'PXEServer:staticDHCPd')
+          # DHCP (Does not work with UCS)
           packet.setOption('bootfile_name', 'pxelinux.0')
           packet.setOption('tftp_server_name', '{{.Values.tftp_ip}}')
           # BOOTP
-          # packet.setOption('siaddr', '{{.Values.tftp_ip}}')
-          # packet.setOption('file', 'pxelinux.0')
+          packet.setOption('siaddr', '{{.Values.tftp_ip}}')
+          packet.setOption('file', 'pxelinux.0')
 
       return True
 
     def handleUnknownMAC(packet, method, mac, client_ip, relay_ip, port):
        return _dynamic_pool.handle(method, packet, mac, client_ip)
-
-    def filterRetrievedDefinitions(definitions, packet, method, mac, client_ip, relay_ip, port):
-      print(definitions)
-      return definitions[0]
-
-  dnsmasq.conf: |
-    no-resolv
-    no-poll # Do not poll /etc/resolv.conf
-    no-hosts
-    user=root
-    log-facility=-
-    log-async
-    log-dhcp
-    keep-in-foreground
-    port=0  # Disable DNS
-    dhcp-sequential-ip
-    dhcp-range={{.Values.inspector.dhcp.range}}
-    dhcp-option=3,{{.Values.inspector.dhcp.options.router}}
-    dhcp-option=6,147.204.9.200,147.204.9.201
-    dhcp-boot=pxelinux.0,ironic-boot,{{.Values.tftp_ip}}
