@@ -114,15 +114,15 @@ postgres:
           - gauge:
               usage: "GAUGE"
               description: "lbaas Count"
-      openstack_neutron_externalip_status:
-        query: "SELECT floating_ip_address, floating_network_id, status FROM floatingips"
+      openstack_neutron_externalIP_status:
+        query: "SELECT floating_network_id, COUNT(*) AS gauge, status FROM floatingips GROUP BY status, floating_network_id;"
         metrics:
-          - floating_ip_address:
-              usage: "LABEL"
-              description: "Floating IP Address"
           - floating_network_id:
               usage: "LABEL"
               description: "Floating Network ID"
           - status:
               usage: "LABEL"
               description: "Floating IP Status per Network"
+          - gauge:
+              usage: "GAUGE"
+              description: "Count of Floating IP wrt status"
