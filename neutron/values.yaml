@@ -84,3 +84,45 @@ logging:
 
 postgres:
   name: neutron
+  metrics:
+    enabled: true
+    customMetrics:
+      openstack_neutron_networks_count:
+        query: "SELECT COUNT(*) AS gauge, status FROM networks GROUP BY networks.status"
+        metrics:
+          - status:
+              usage: "LABEL"
+              description: "Network Status"
+          - gauge:
+              usage: "GAUGE"
+              description: "Networks Count"
+      openstack_neutron_routers_count:
+        query: "SELECT COUNT(*) AS gauge, status FROM routers GROUP BY routers.status"
+        metrics:
+          - status:
+              usage: "LABEL"
+              description: "Router Status"
+          - gauge:
+              usage: "GAUGE"
+              description: "Router Count"
+      openstack_neutron_loadbalancer_count:
+        query: "SELECT COUNT(*) AS gauge, operating_status FROM lbaas_loadbalancers GROUP BY operating_status"
+        metrics:
+          - operating_status:
+              usage: "LABEL"
+              description: "lbaas Status"
+          - gauge:
+              usage: "GAUGE"
+              description: "lbaas Count"
+      openstack_neutron_externalip_status:
+        query: "SELECT floating_ip_address, floating_network_id, status FROM floatingips"
+        metrics:
+          - floating_ip_address:
+              usage: "LABEL"
+              description: "Floating IP Address"
+          - floating_network_id:
+              usage: "LABEL"
+              description: "Floating Network ID"
+          - status:
+              usage: "LABEL"
+              description: "Floating IP Status per Network"
