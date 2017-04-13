@@ -1,9 +1,11 @@
-{{ range $pool := .Values.bind_pools }}
+{{- range $pool := .Values.bind_pools }}
 - name: {{ $pool.name }}
   description: Bind9 Pool
+  {{- if $pool.attributes}}
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
+  {{- end }}
   ns_records:
     {{- range $idx, $srv := $pool.nameservers}}
     - hostname: {{ $srv.hostname }}
@@ -32,9 +34,9 @@
         rndc_host: {{$srv.ip}}
         rndc_port: 953
         rndc_key_file: /etc/designate/rndc.key
-    {{end}}
-{{ end }}
-{{ range $pool := .Values.sap_internet_pool }}
+    {{- end}}
+{{- end }}
+{{- range $pool := .Values.sap_internet_pool }}
 - name: {{ $pool.name }}
   description: SAP Internet DNS Bind Pool
   attributes:
@@ -68,9 +70,9 @@
         rndc_host: {{$srv.ip}}
         rndc_port: 953
         rndc_key_file: /etc/designate/rndc.key
-    {{end}}
-{{ end }}
-{{ range $pool := .Values.akamai_pools }}
+    {{- end}}
+{{- end }}
+{{- range $pool := .Values.akamai_pools }}
 - name: {{ $pool.name }}
   description: Akamai Pool
   attributes:
@@ -110,4 +112,4 @@
         tsig_key_name: "{{$pool.options.tsig_key_name}}"
         tsig_key_secret: "{{$pool.options.tsig_key_secret}}"
         tsig_key_algorithm: "{{$pool.options.tsig_key_algorithm}}"
-{{ end }}
+{{- end }}
