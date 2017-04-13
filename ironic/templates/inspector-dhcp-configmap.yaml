@@ -86,7 +86,7 @@ data:
           packet.setOption('tftp_server_name', '{{.Values.global.ironic_tftp_ip}}')
           # BOOTP
           packet.setOption('siaddr', '{{.Values.global.ironic_tftp_ip}}')
-          packet.setOption('file', 'pxelinux.0')
+          packet.setOption('file', 'lpxelinux.0')
 
       return True
 
