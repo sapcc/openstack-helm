@@ -83,9 +83,9 @@ data:
           packet.setOption('vendor_class_identifier', 'PXEServer:staticDHCPd')
           # DHCP (Does not work with UCS)
           packet.setOption('bootfile_name', 'pxelinux.0')
-          packet.setOption('tftp_server_name', '{{.Values.tftp_ip}}')
+          packet.setOption('tftp_server_name', '{{.Values.global.ironic_tftp_ip}}')
           # BOOTP
-          packet.setOption('siaddr', '{{.Values.tftp_ip}}')
+          packet.setOption('siaddr', '{{.Values.global.ironic_tftp_ip}}')
           packet.setOption('file', 'pxelinux.0')
 
       return True

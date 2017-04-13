@@ -7,7 +7,7 @@ global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
   ironic_api_port_internal: '6385'
-  ironic_pxe_port_public: '69'
+  ironic_tftp_port_public: '69'
 
 image_version_ironic_api: REQUIRED
 image_version_ironic_conductor: REQUIRED

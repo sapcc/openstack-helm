@@ -16,7 +16,7 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 dhcp_provider=neutron
 
 [pxe]
-tftp_server = {{.Values.tftp_ip}}
+tftp_server = {{.Values.global.ironic_tftp_ip}}
 
 [api]
 host_ip = 0.0.0.0

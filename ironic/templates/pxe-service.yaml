@@ -1,3 +1,4 @@
+{{- if .Values.global.ironic_tftp_ip}}
 kind: Service
 apiVersion: v1
 
@@ -14,7 +15,8 @@ spec:
   ports:
     - name: ironic-pxe
       protocol: UDP
-      port: {{.Values.global.ironic_pxe_port_public}}
+      port: {{.Values.global.ironic_tftp_port_public}}
   externalIPs:
-    - {{.Values.tftp_ip}}
+    - {{.Values.global.ironic_tftp_ip}}
   sessionAffinity: "ClientIP"
+{{- end }}
