@@ -1,8 +1,9 @@
-{{- define "vmware_conf" -}}
-{{- $context := index . 0 -}}
-{{- $hypervisor := index . 1 -}}
+{{- define "vmware_conf" }}
+{{- $hypervisor := index . 1 }}
+{{- with index . 0 }}
 [DEFAULT]
 compute_driver=nova.virt.vmwareapi.VMwareVCDriver
+max_concurrent_builds={{$hypervisor.max_concurrent_builds | default .max_concurrent_builds | default 10 }}
 
 [vmware]
 insecure = True
@@ -13,4 +14,5 @@ host_username = {{$hypervisor.username | replace "$" "$$" }}
 host_password = {{$hypervisor.password | replace "$" "$$" }}
 cluster_name = {{$hypervisor.cluster_name | quote }}
 datastore_regex = {{$hypervisor.datastore_regex | quote }}
-{{- end -}}
+{{- end }}
+{{- end }}

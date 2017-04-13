@@ -1,6 +1,6 @@
-{{- define "kvm_hypervisor" -}}
-{{- $context := index . 0 -}}
-{{- $hypervisor := index . 1 -}}
+{{- define "kvm_hypervisor" }}
+{{- $hypervisor := index . 1 }}
+{{- with index . 0 }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -31,7 +31,7 @@ spec:
         kubernetes.io/hostname: {{$hypervisor.node_name}}
       containers:
         - name: nova-compute-minion1
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{$context.Values.image_version_nova_compute_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.image_version_nova_compute_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -41,7 +41,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances
@@ -61,7 +61,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-libvirt
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{$context.Values.image_version_nova_libvirt}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -84,7 +84,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-virtlog
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{$context.Values.image_version_nova_libvirt}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -107,7 +107,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: neutron-ovs-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{$context.Values.image_version_neutron_openvswitch_agent}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{.Values.image_version_neutron_openvswitch_agent}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -126,7 +126,7 @@ spec:
             - mountPath: /container.init
               name: neutron-container-init
         - name: ovs
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{$context.Values.image_version_neutron_vswitchd}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{.Values.image_version_neutron_vswitchd}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -143,7 +143,7 @@ spec:
             - mountPath: /container.init
               name: neutron-container-init
         - name: ovs-db
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{$context.Values.image_version_neutron_vswitchdb}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{.Values.image_version_neutron_vswitchdb}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -194,4 +194,5 @@ spec:
           configMap:
             name: neutron-bin
             defaultMode: 0755
-{{- end -}}
+{{- end }}
+{{- end }}

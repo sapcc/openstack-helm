@@ -1,6 +1,6 @@
-{{- define "vmware_hypervisor" -}}
-{{- $hypervisor := index . 1 -}}
-{{- with index . 0 -}}
+{{- define "vmware_hypervisor" }}
+{{- $hypervisor := index . 1 }}
+{{- with index . 0 }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -101,5 +101,5 @@ spec:
           configMap:
             name: neutron-bin-vendor
             defaultMode: 0755
-{{- end -}}
+{{- end }}
 {{- end }}

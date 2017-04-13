@@ -1,6 +1,6 @@
-{{- define "ironic_conf" -}}
-{{- $context := index . 0 -}}
-{{- $hypervisor := index . 1 -}}
+{{- define "ironic_conf" }}
+{{- $hypervisor := index . 1 }}
+{{- with index . 0 }}
 [DEFAULT]
 compute_driver=nova.virt.ironic.IronicDriver
 
@@ -8,4 +8,5 @@ compute_driver=nova.virt.ironic.IronicDriver
 
 scheduler_use_baremetal_filters=True
 scheduler_tracks_instance_changes=False
-{{- end -}}
+{{- end }}
+{{- end }}

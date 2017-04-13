@@ -1,6 +1,6 @@
-{{- define "kvm_configmap" -}}
-{{- $context := index . 0 -}}
-{{- $hypervisor := index . 1 -}}
+{{- define "kvm_configmap" }}
+{{- $hypervisor := index . 1 }}
+{{- with index . 0 }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,6 +11,6 @@ metadata:
     component: nova
 data:
   hypervisor.conf: |
-{{ tuple $context $hypervisor | include "kvm_conf" | indent 4 }}
-{{- end -}}
-
+{{ tuple . $hypervisor | include "kvm_conf" | indent 4 }}
+{{- end }}
+{{- end }}

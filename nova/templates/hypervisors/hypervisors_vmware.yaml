@@ -1,6 +1,8 @@
-{{ range $i, $hypervisor := .Values.global.hypervisors_vmware }}
-{{ if ne $i 0 }}---{{ end }}
+{{- range $i, $hypervisor := .Values.global.hypervisors_vmware }}
+{{- if ne $i 0 }}
+---
+{{- end }}
 {{ tuple $ $hypervisor | include "vmware_hypervisor" }}
 ---
 {{ tuple $ $hypervisor | include "vmware_configmap" }}
-{{ end }}
+{{- end }}

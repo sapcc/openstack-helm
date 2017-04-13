@@ -1,6 +1,6 @@
-{{- define "ironic_hypervisor" -}}
-{{- $context := index . 0 -}}
-{{- $hypervisor := index . 1 -}}
+{{- define "ironic_hypervisor" }}
+{{- $hypervisor := index . 1 }}
+{{- with index . 0 }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: nova-compute-ironic
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{$context.Values.image_version_nova_compute_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.image_version_nova_compute_m3}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -39,7 +39,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /hypervisor-config
               name: hypervisor-config
@@ -63,4 +63,5 @@ spec:
           configMap:
             name: nova-bin
             defaultMode: 0755
-{{- end -}}
+{{- end }}
+{{- end }}
