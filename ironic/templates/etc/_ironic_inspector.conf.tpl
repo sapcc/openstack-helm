@@ -24,7 +24,7 @@ manage_firewall=False
 
 [processing]
 always_store_ramdisk_logs=true
-ramdisk_logs_dir=/var/log/ironic-inspector/
+ramdisk_logs_dir=/var/log/kolla/ironic/
 add_ports=all
 keep_ports=all
 ipmi_address_fields=ilo_address

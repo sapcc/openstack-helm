@@ -29,7 +29,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: COMMAND
-              value: "ironic-conductor"
+              value: "ironic-conductor --config-file /var/lib/kolla/config_files/ironic.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
