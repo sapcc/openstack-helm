@@ -7,7 +7,6 @@ global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
   ironic_api_port_internal: '6385'
-  ironic_inspector_port_internal: '5050'
   ironic_pxe_port_public: '69'
 
 image_version_ironic_api: REQUIRED
@@ -25,6 +24,7 @@ inspector_db_user: ironic_inspector
 inspector_db_password: DEFINE_IN_REGION_CHART
 
 inspector:
+  port_internal: '5050'
   dhcp:
     port: '67'
     proxy_port: '4011'

@@ -12,7 +12,7 @@ spec:
     name: ironic-inspector
   ports:
     - name: ironic-inspector
-      port: {{.Values.global.ironic_inspector_port_internal}}
+      port: {{.Values.inspector.port_internal}}
 {{- if .Values.inspector.dhcp }}
     - name: dhcp
       protocol: UDP
@@ -21,6 +21,6 @@ spec:
       protocol: UDP
       port: {{.Values.inspector.dhcp.proxy_port}}
   externalIPs:
-    - {{.Values.inspector.dhcp.ip}}
+    - {{.Values.inspector.ip}}
 {{- end }}
   sessionAffinity: "ClientIP"

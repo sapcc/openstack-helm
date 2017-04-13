@@ -50,7 +50,7 @@ data:
     _orig_DHCPServer__init__ = _DHCPServer.__init__
     def _DHCPServer__init__(self, *args, **kwargs):
       _orig_DHCPServer__init__(self, *args, **kwargs)
-      self._server_address =  IPv4('{{.Values.inspector.dhcp.ip}}')
+      self._server_address =  IPv4('{{.Values.inspector.ip}}')
 
     _DHCPServer.__init__ = _DHCPServer__init__
 

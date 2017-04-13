@@ -11,7 +11,7 @@ data:
   # Do not copy the config to /etc/ironic-inspector, as it will overwrite the rootwrap.conf stored in the image
   # Mode Read-execute, because we create a directory, and it takes the same permissions as the file
   config.json: |
-    {"command": "kubernetes-entrypoint", "config_files":[{"source": "/var/lib/kolla/config_files/*", "dest": "/etc/ironic/", "owner": "ironic", "perm": "0500"}]}
+    {"command": "kubernetes-entrypoint"}
   ironic.conf: |
 {{ tuple "etc/_ironic_inspector.conf.tpl" . | include "template" | indent 4 }}
   logging.conf: |

@@ -1,6 +1,6 @@
 [DEFAULT]
 debug = {{.Values.debug}}
-log_config_append = /etc/ironic/logging.conf
+log-config-append = /var/lib/kolla/config_files/logging.conf
 
 #admin_token =
 enabled_drivers=pxe_ipmitool,agent_ipmitool
