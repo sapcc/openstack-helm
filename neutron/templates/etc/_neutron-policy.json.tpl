@@ -22,11 +22,12 @@
     "shared_firewall_policies": "field:firewall_policies:shared=True",
     "shared_subnetpools": "field:subnetpools:shared=True",
     "shared_address_scopes": "field:address_scopes:shared=True",
+    "dhcp_enabled": "field:subnets:enable_dhcp=True",
     "default": "rule:context_is_editor or rule:shared",
     "default_viewer": "rule:context_is_viewer or rule:shared",
     "default_network_viewer": "rule:context_is_network_viewer or rule:shared",
 
-    "create_subnet": "rule:context_is_network_admin",
+    "create_subnet": "rule:context_is_admin or (rule:network_admin and rule:dhcp_enabled)",
     "create_subnet:segment_id": "rule:context_is_admin",
     "get_subnet": "rule:default_viewer",
     "get_subnet:segment_id": "rule:default_viewer",
