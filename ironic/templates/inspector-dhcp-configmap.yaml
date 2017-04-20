@@ -79,14 +79,19 @@ data:
       vendor_class_identifier = source_packet.getOption('vendor_class_identifier', convert=True)
       logger.debug("VendorClass: {}".format(vendor_class_identifier))
 
-      if vendor_class_identifier and vendor_class_identifier.startswith("PXEClient:"):
+      if vendor_class_identifier:
+        if vendor_class_identifier.startswith("PXEClient:"):
+          image='pxelinux.0'
           packet.setOption('vendor_class_identifier', 'PXEServer:staticDHCPd')
           # DHCP (Does not work with UCS)
-          packet.setOption('bootfile_name', 'pxelinux.0')
+          packet.setOption('bootfile_name', image)
           packet.setOption('tftp_server_name', '{{.Values.global.ironic_tftp_ip}}')
           # BOOTP
           packet.setOption('siaddr', '{{.Values.global.ironic_tftp_ip}}')
-          packet.setOption('file', 'lpxelinux.0')
+          packet.setOption('file', image)
+        elif vendor_class_identifier.startswith("iPXE"):
+          packet.setOption('bootfile_name', 'inspector.ipxe')
+          packet.setOption('tftp_server_name', '{{.Values.global.ironic_tftp_ip}}')
 
       return True
 
