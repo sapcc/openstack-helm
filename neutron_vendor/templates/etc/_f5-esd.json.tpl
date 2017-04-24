@@ -2,8 +2,8 @@
 {{- $context := index . 0 -}}
 {{- $loadbalancer := index . 1 -}}
 {
-  "esd_demo_1": {
-    "lbaas_irule": ["_sys_https_redirect"]
+  "proxy_protocal_2edF_v1_0": {
+    "lbaas_irule": ["proxy_protocal_2edF_v1_0"]
   }
 }
 {{- end -}}
