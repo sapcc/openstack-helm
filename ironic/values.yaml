@@ -9,19 +9,19 @@ global:
   ironic_api_port_internal: '6385'
   ironic_tftp_port_public: '69'
 
-image_version_ironic_api: REQUIRED
-image_version_ironic_conductor: REQUIRED
-image_version_ironic_inspector: REQUIRED
-image_version_ironic_pxe: REQUIRED
+image_version_ironic_api:
+image_version_ironic_conductor:
+image_version_ironic_inspector:
+image_version_ironic_pxe:
 
 debug: "True"
 db_name: ironic
 db_user: ironic
-db_password: DEFINE_IN_REGION_CHART
+db_password:
 
 inspector_db_name: ironic_inspector
 inspector_db_user: ironic_inspector
-inspector_db_password: DEFINE_IN_REGION_CHART
+inspector_db_password:
 
 inspector:
   port_internal: '5050'
@@ -33,7 +33,7 @@ inspector:
     options:
       router: DEFINE_IN_REGION_CHART
 
-tftp_ip: DEFINE_IN_REGION_CHART
+tftp_ip:
 
 port_metrics: '9102'
 sentry_dsn: DEFINE_IN_REGION_CHART

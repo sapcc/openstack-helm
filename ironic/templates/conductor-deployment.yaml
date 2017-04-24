@@ -1,3 +1,4 @@
+{{- if .Values.image_version_ironic_conductor }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -61,3 +62,4 @@ spec:
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
+{{ end }}

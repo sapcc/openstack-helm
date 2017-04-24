@@ -1,3 +1,4 @@
+{{- if .Values.image_version_ironic_api }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -57,3 +58,4 @@ spec:
           configMap:
             name: ironic-patches
             defaultMode: 0444
+{{ end }}

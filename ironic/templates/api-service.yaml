@@ -1,3 +1,4 @@
+{{- if .Values.image_version_ironic_api }}
 kind: Service
 apiVersion: v1
 
@@ -13,3 +14,4 @@ spec:
   ports:
     - name: ironic-api
       port: {{.Values.global.ironic_api_port_internal}}
+{{ end }}
