@@ -1,4 +1,4 @@
-{{- if .Values.db_password }}
+{{- if .Values.db_password -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -25,4 +25,4 @@ data:
         ALTER ROLE {{.Values.postgres.user}} WITH ENCRYPTED PASSWORD '{{.Values.postgres.password}}';
 
     EOSQL
-{{ end }}
+{{ end -}}

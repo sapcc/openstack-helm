@@ -1,4 +1,4 @@
-{{- if .Values.image_version_ironic_api }}
+{{- if .Values.image_version_ironic_api -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -35,6 +35,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-ironic,rabbitmq"
+            - name: KOLLA_BOOTSTRAP
+              value: "1"
           livenessProbe:
             httpGet:
               path: /
@@ -58,4 +60,4 @@ spec:
           configMap:
             name: ironic-patches
             defaultMode: 0444
-{{ end }}
+{{ end -}}

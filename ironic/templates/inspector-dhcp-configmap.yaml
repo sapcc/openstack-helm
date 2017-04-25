@@ -1,4 +1,4 @@
-{{- if .Values.image_version_staticdhcpd }}
+{{- if .Values.image_version_staticdhcpd -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -98,4 +98,4 @@ data:
 
     def handleUnknownMAC(packet, method, mac, client_ip, relay_ip, port):
        return _dynamic_pool.handle(method, packet, mac, client_ip)
-{{ end }}
+{{ end -}}

@@ -1,4 +1,4 @@
-{{- if .Values.image_version_ironic_inspector }}
+{{- if .Values.image_version_ironic_inspector -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -17,4 +17,4 @@ data:
 {{ tuple "etc/_ironic_inspector.conf.tpl" . | include "template" | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}
-{{ end }}
+{{ end -}}

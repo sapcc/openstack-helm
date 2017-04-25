@@ -1,4 +1,4 @@
-{{- if .Values.image_version_ironic_conductor }}
+{{- if .Values.image_version_ironic_conductor -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -46,6 +46,8 @@ spec:
           env:
             - name: COMMAND
               value: "ptftpd -v -d /tftpmap.py:handle eth0 /tftpboot"
+            - name: KOLLA_BOOTSTRAP
+              value: "1"
           ports:
             - name: ironic-pxe
               protocol: UDP
@@ -62,4 +64,4 @@ spec:
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
-{{ end }}
+{{ end -}}

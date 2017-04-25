@@ -1,4 +1,4 @@
-{{- if .Values.image_version_ironic_inspector }}
+{{- if .Values.image_version_ironic_inspector -}}
 kind: Service
 apiVersion: v1
 
@@ -27,4 +27,4 @@ spec:
     {{- end }}
   {{- end }}
   sessionAffinity: "ClientIP"
-{{ end }}
+{{ end -}}

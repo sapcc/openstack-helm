@@ -1,4 +1,4 @@
-{{- if or .Values.image_version_ironic_api .Values.image_version_ironic_conductor .Values.image_version_ironic_inspector }}
+{{- if or .Values.image_version_ironic_api .Values.image_version_ironic_conductor .Values.image_version_ironic_inspector -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,4 +36,4 @@ data:
 
     EOSQL
 
-{{ end }}
+{{ end -}}

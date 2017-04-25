@@ -1,4 +1,4 @@
-{{- if .Values.image_version_ironic_inspector }}
+{{- if .Values.image_version_ironic_inspector -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -35,6 +35,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
+            - name: KOLLA_BOOTSTRAP
+              value: "1"
           volumeMounts:
             - mountPath: /var/lib/kolla/config_files
               name: ironic-inspector-etc
@@ -72,5 +74,5 @@ spec:
           configMap:
             name: ironic-inspector-dhcp
             defaultMode: 0400
-{{ end }}
-{{ end }}
+{{ end -}}
+{{ end -}}
