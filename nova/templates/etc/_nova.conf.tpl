@@ -35,6 +35,12 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
+# Scheduling
+scheduler_driver_task_period = {{ .Values.scheduler.driver_task_period | default 60 }}
+scheduler_driver = {{ .Values.scheduler.driver | default "nova.scheduler.filter_scheduler.FilterScheduler" }}
+scheduler_available_filters = {{ .Values.scheduler.available_filters | default "nova.scheduler.filters.all_filters" }}
+scheduler_default_filters = {{ .Values.scheduler.default_filters}}
+
 # most default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 quota_cores = 0
 quota_instances = 0

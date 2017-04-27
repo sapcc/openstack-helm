@@ -48,6 +48,9 @@ image_version_nova_scheduler: DEFINED-IN-REGION-CHART
 
 cross_az_attach: 'False'
 
+scheduler:
+  default_filters: AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter
+
 postgres:
   name: nova
   metrics:
