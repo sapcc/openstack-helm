@@ -22,7 +22,7 @@ tftp_server = {{.Values.global.ironic_tftp_ip}}
 host_ip = 0.0.0.0
 
 [conductor]
-api_url = {{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}
+api_url = {{.Values.global.ironic_api_endpoint_protocol_public}}://{{include "ironic_api_endpoint_host_public" .}}:{{ .Values.global.ironic_api_port_public }}
 clean_nodes = false
 automated_clean=false
 
