@@ -35,8 +35,6 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-ironic,rabbitmq"
-            - name: KOLLA_BOOTSTRAP
-              value: "1"
           livenessProbe:
             httpGet:
               path: /

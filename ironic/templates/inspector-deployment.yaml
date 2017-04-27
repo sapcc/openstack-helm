@@ -35,8 +35,6 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
-            - name: KOLLA_BOOTSTRAP
-              value: "1"
           volumeMounts:
             - mountPath: /var/lib/kolla/config_files
               name: ironic-inspector-etc

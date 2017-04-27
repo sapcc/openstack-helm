@@ -46,8 +46,6 @@ spec:
           env:
             - name: COMMAND
               value: "ptftpd -v -d /tftpmap.py:handle eth0 /tftpboot"
-            - name: KOLLA_BOOTSTRAP
-              value: "1"
           ports:
             - name: ironic-pxe
               protocol: UDP
