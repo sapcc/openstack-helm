@@ -219,6 +219,7 @@ openstack:
             port_search_pattern: (a0b)
             physical_network: control_plane
             mtu: '1500'
+            cifs_ou: 'CN=Computers'
 
   neutron:
     image_version_neutron_server_m3: 'v1'
