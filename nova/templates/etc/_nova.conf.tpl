@@ -52,6 +52,12 @@ quota_networks = 0
 quota_security_group_rules = 0
 quota_security_groups = 0
 
+# usage refreshes on new reservations, 0 means disabled
+# number of seconds between subsequent usage refreshes
+max_age = {{ .Values.usage_max_age | default 0 }}
+# count of reservations until usage is refreshed
+until_refresh = {{ .Values.usage_until_refresh | default 0 }}
+
 [conductor]
 workers=8
 

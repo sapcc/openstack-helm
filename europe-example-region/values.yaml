@@ -146,6 +146,8 @@ openstack:
     db_password: YourOwnSecret!
     api_db_password: YourOwnSecret!
     sentry_dsn: 'add your own'
+    usage_max_age: 86400
+    usage_until_refresh: 50
 
     vcenter_host: vcenter1.your.domain
     vcenter_username: administrator@vsphere.local
