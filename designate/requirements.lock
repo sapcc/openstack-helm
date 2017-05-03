@@ -1,15 +1,17 @@
 dependencies:
 - condition: ""
   enabled: false
+  import-values: null
   name: utils
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
 - condition: ""
   enabled: false
+  import-values: null
   name: mariadb
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
-digest: sha256:14257527c227ef0fadb98e3f61352383eabf1445535f0e6c02568eac5b4c493c
-generated: 2017-02-21T09:36:44.647873435+01:00
+digest: sha256:e803ea52c4474467d05d4e878f0c36489eb640efbe2404b74843a289d62978ef
+generated: 2017-05-03T14:06:17.155092235+02:00

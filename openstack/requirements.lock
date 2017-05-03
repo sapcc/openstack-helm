@@ -1,87 +1,101 @@
 dependencies:
 - condition: ""
   enabled: false
+  import-values: null
   name: memcached
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: rabbitmq
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: keystone
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: glance
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
 - condition: ""
   enabled: false
+  import-values: null
   name: ironic
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: nova
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
 - condition: ""
   enabled: false
+  import-values: null
   name: barbican
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: cinder
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
 - condition: ""
   enabled: false
+  import-values: null
   name: manila
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: horizon
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: neutron
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
 - condition: ""
   enabled: false
+  import-values: null
   name: neutron_vendor
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
 - condition: ""
   enabled: false
+  import-values: null
   name: designate
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
 - condition: ""
   enabled: false
+  import-values: null
   name: healthchecks
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
-digest: sha256:2c3525424de874d23c75eb669527a8f04e88435c9245b627ae77585730f47428
-generated: 2017-02-21T09:36:54.68600924+01:00
+digest: sha256:68c3312c0eeb19684198cdbfd1d31059cff43c8447f42df4df36385d851dd624
+generated: 2017-05-03T14:06:27.443967893+02:00

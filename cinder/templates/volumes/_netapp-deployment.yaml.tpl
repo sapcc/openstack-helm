@@ -26,7 +26,7 @@ spec:
         name: cinder-volume-netapp-{{$volume.name}}
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-netapp-{{$volume.name}}
-        checksum/cinder-etc: {{ include "cinder/templates/etc-configmap.yaml" . | sha256sum }}
+        checksum/cinder-etc: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
         checksum/volume-config: {{ tuple $ $volume | include "volume_netapp_configmap" | sha256sum }}
     spec:
       containers:

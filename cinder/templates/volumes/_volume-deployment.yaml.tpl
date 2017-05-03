@@ -26,7 +26,7 @@ spec:
         name: cinder-{{$volume.name}}
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-{{$volume.name}}
-        checksum/cinder-etc: {{ include "cinder/templates/etc-configmap.yaml" . | sha256sum }}
+        checksum/cinder-etc: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
         checksum/volume-config: {{ tuple $ $volume | include "volume_configmap" | sha256sum }}
     spec:
       containers:
