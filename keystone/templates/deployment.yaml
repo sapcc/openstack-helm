@@ -50,7 +50,7 @@ spec:
             - name: DEPENDENCY_JOBS
               value: "keystone-migration,keystone-bootstrap"
             - name: DEPENDENCY_SERVICE
-              value: "postgres-keystone,rabbitmq,memcached"
+              value: "postgres-keystone,rabbitmq"
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
