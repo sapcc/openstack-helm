@@ -27,34 +27,21 @@ spec:
         - name: cinder-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.image_version_cinder_scheduler}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
             - name: COMMAND
-              value: "bash /container.init/cinder-scheduler-start"
+              value: "cinder-scheduler --config-file /etc/cinder/cinder.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "cinder-api,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /development
-              name: development
-            - mountPath: /cinder-etc
+            - mountPath: /var/lib/kolla/config_files
               name: cinder-etc
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: cinder-etc
           configMap:
             name: cinder-etc
-        - name: development
-          persistentVolumeClaim:
-            claimName: development-pvclaim
-        - name: container-init
-          configMap:
-            name: cinder-bin
-            defaultMode: 0755

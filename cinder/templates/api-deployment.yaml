@@ -27,21 +27,17 @@ spec:
         - name: cinder-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api-m3:{{.Values.image_version_cinder_api_m3}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
             - name: COMMAND
-              value: "bash /container.init/cinder-api-start"
+              value: "cinder-api"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
               value: "cinder-migration"
             - name: DEPENDENCY_SERVICE
               value: "postgres-cinder,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: STATSD_HOST
               value: "localhost"
             - name: STATSD_PORT
@@ -58,10 +54,8 @@ spec:
             - name: cinder-api
               containerPort: {{.Values.global.cinder_api_port_internal}}
           volumeMounts:
-            - mountPath: /cinder-etc
+            - mountPath: /var/lib/kolla/config_files
               name: cinder-etc
-            - mountPath: /container.init
-              name: container-init
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -75,7 +69,3 @@ spec:
         - name: cinder-etc
           configMap:
             name: cinder-etc
-        - name: container-init
-          configMap:
-            name: cinder-bin
-            defaultMode: 0755

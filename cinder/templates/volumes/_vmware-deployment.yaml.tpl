@@ -26,27 +26,27 @@ spec:
         name: cinder-volume-vmware-{{$volume.name}}
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-vmware-{{$volume.name}}
-        checksum/cinder-etc: {{ include "cinder/templates/etc-configmap.yaml" . | sha256sum }}
+        checksum/cinder-etc: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
         checksum/volume-config: {{ tuple $ $volume | include "volume_vmware_configmap" | sha256sum }}
     spec:
       containers:
         - name: cinder-volume-vmware-{{$volume.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /container.init/cinder-volume-start
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
+            - name: KOLLA_CONFIG_STRATEGY
+              value: "COPY_ALWAYS"
+            - name: COMMAND
+              value: "cinder-volume --config-file /etc/cinder/cinder.conf --config-file /etc/cinder/volume.conf"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /cinder-etc
               name: cinder-etc
-            - mountPath: /volume-config
+            - mountPath: /var/lib/kolla/config_files
               name: volume-config
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: cinder-etc
           configMap:
@@ -54,9 +54,5 @@ spec:
         - name: volume-config
           configMap:
             name:  volume-vmware-{{$volume.name}}
-        - name: container-init
-          configMap:
-            name: cinder-bin
-            defaultMode: 0755
 {{- end -}}
 {{- end -}}
