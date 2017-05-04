@@ -14,7 +14,7 @@ data:
   config.json: |
     {"command": "kubernetes-entrypoint"}
   ironic.conf: |
-{{ tuple "etc/_ironic_inspector.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_ironic_inspector.conf.tpl") . | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}
 {{ end -}}

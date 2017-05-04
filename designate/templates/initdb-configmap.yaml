@@ -9,4 +9,4 @@ metadata:
 
 data:
   init.sh: |
-{{ tuple "initdb/_init.sh.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/initdb/_init.sh.tpl") . | indent 4 }}

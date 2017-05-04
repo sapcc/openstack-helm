@@ -9,12 +9,12 @@ metadata:
 
 data:
   designate.conf: |
-{{ tuple "etc/_designate.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_designate.conf.tpl") . | indent 4 }}
   rndc.key: |
-{{ tuple "etc/_rndc.key.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_rndc.key.tpl") . | indent 4 }}
   pools.yaml: |
-{{ tuple "etc/_pools.yaml.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_pools.yaml.tpl") . | indent 4 }}
   policy.json: |
-{{ tuple "etc/_designate-policy.json.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_designate-policy.json.tpl") . | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}

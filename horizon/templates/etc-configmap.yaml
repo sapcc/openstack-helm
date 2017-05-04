@@ -9,10 +9,10 @@ metadata:
 
 data:
   local-settings: |
-{{ tuple "etc/_local-settings.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_local-settings.tpl") . | indent 4 }}
   keystone-policy.json: |
-{{ tuple "etc/_horizon-keystone-policy.json.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_horizon-keystone-policy.json.tpl") . | indent 4 }}
   nova-policy.json: |
-{{ tuple "etc/_horizon-nova-policy.json.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_horizon-nova-policy.json.tpl") . | indent 4 }}
   horizon.conf: |
-{{ tuple "etc/_horizon.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_horizon.conf.tpl") . | indent 4 }}

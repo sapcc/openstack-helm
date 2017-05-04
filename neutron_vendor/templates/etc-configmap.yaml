@@ -9,18 +9,18 @@ metadata:
 
 data:
   cisco-cfg-agent.ini: |
-{{ tuple "etc/_cisco-cfg-agent.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_cisco-cfg-agent.ini.tpl") . | indent 4 }}
   cisco-device-manager-plugin.ini: |
-{{ tuple "etc/_cisco-device-manager-plugin.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_cisco-device-manager-plugin.ini.tpl") . | indent 4 }}
   cisco-router-plugin.ini: |
-{{ tuple "etc/_cisco-router-plugin.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_cisco-router-plugin.ini.tpl") . | indent 4 }}
   ml2-conf-arista.ini: |
-{{ tuple "etc/_ml2-conf-arista.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_ml2-conf-arista.ini.tpl") . | indent 4 }}
   ml2-conf-asr.ini: |
-{{ tuple "etc/_ml2-conf-asr.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_ml2-conf-asr.ini.tpl") . | indent 4 }}
   ml2-conf-manila.ini: |
-{{ tuple "etc/_ml2-conf-manila.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_ml2-conf-manila.ini.tpl") . | indent 4 }}
   ml2-conf-f5.ini: |
-{{ tuple "etc/_ml2-conf-f5.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_ml2-conf-f5.ini.tpl") . | indent 4 }}
 
 

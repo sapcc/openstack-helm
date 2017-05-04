@@ -9,14 +9,14 @@ metadata:
 
 data:
   nova.conf: |
-{{ tuple "etc/_nova.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_nova.conf.tpl") . | indent 4 }}
   libvirtd.conf: |
-{{ tuple "etc/_libvirtd.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_libvirtd.conf.tpl") . | indent 4 }}
   policy.json: |
-{{ tuple "etc/_nova-policy.json.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_nova-policy.json.tpl") . | indent 4 }}
   api-paste.ini: |
-{{ tuple "etc/_api-paste.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_api-paste.ini.tpl") . | indent 4 }}
   api_audit_map.conf: |
-{{ tuple "etc/_api_audit_map.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_api_audit_map.conf.tpl") . | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}

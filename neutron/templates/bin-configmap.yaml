@@ -8,21 +8,21 @@ metadata:
     component: neutron
 data:
   neutron-dhcp-agent-start: |
-{{ tuple "bin/_neutron-dhcp-agent-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-dhcp-agent-start.tpl") . | indent 4 }}
   neutron-l3-agent-start: |
-{{ tuple "bin/_neutron-l3-agent-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-l3-agent-start.tpl") . | indent 4 }}
   neutron-metadata-agent-start: |
-{{ tuple "bin/_neutron-metadata-agent-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-metadata-agent-start.tpl") . | indent 4 }}
   neutron-ovs-agent-start: |
-{{ tuple "bin/_neutron-ovs-agent-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-ovs-agent-start.tpl") . | indent 4 }}
   neutron-ovs-db-start: |
-{{ tuple "bin/_neutron-ovs-db-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-ovs-db-start.tpl") . | indent 4 }}
   neutron-ovs-start: |
-{{ tuple "bin/_neutron-ovs-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-ovs-start.tpl") . | indent 4 }}
   neutron-server-start: |
-{{ tuple "bin/_neutron-server-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_neutron-server-start.tpl") . | indent 4 }}
   db-migrate: |
-{{ tuple "bin/_db-migrate.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_db-migrate.tpl") . | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 
