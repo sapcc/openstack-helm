@@ -9,21 +9,21 @@ metadata:
 
 data:
   dhcp-agent.ini: |
-{{ tuple "etc/_dhcp-agent.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_dhcp-agent.ini.tpl") . | indent 4 }}
   dnsmasq.conf: |
-{{ tuple "etc/_dnsmasq.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_dnsmasq.conf.tpl") . | indent 4 }}
   l3-agent.ini: |
-{{ tuple "etc/_l3-agent.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_l3-agent.ini.tpl") . | indent 4 }}
   metadata-agent.ini: |
-{{ tuple "etc/_metadata-agent.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_metadata-agent.ini.tpl") . | indent 4 }}
   ml2-conf.ini: |
-{{ tuple "etc/_ml2-conf.ini.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_ml2-conf.ini.tpl") . | indent 4 }}
   neutron.conf: |
-{{ tuple "etc/_neutron.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_neutron.conf.tpl") . | indent 4 }}
   neutron-lbaas.conf: |
-{{ tuple "etc/_neutron-lbaas.conf.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_neutron-lbaas.conf.tpl") . | indent 4 }}
   neutron-policy.json: |
-{{ tuple "etc/_neutron-policy.json.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/etc/_neutron-policy.json.tpl") . | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}
 

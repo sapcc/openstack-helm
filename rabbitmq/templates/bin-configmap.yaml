@@ -9,7 +9,7 @@ metadata:
 
 data:
   rabbitmq-start: |
-{{ tuple "bin/_rabbitmq-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_rabbitmq-start.tpl") . | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
 

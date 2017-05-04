@@ -11,14 +11,14 @@ data:
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
   keystone-bootstrap: |
-{{ tuple "bin/_keystone-bootstrap.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_keystone-bootstrap.tpl") . | indent 4 }}
   keystone-seed: |
-{{ tuple "bin/_keystone-seed.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_keystone-seed.tpl") . | indent 4 }}
   keystone-start: |
-{{ tuple "bin/_keystone-start.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_keystone-start.tpl") . | indent 4 }}
   db-migrate: |
-{{ tuple "bin/_db-migrate.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_db-migrate.tpl") . | indent 4 }}
   keystone-cron: |
-{{ tuple "bin/_keystone-cron.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_keystone-cron.tpl") . | indent 4 }}
   repair_assignments: |
-{{ tuple "bin/_repair_assignments.tpl" . | include "template" | indent 4 }}
+{{ include (print .Template.BasePath "/bin/_repair_assignments.tpl") . | indent 4 }}
