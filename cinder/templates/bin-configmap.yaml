@@ -8,17 +8,8 @@ metadata:
     component: cinder
 
 data:
-  cinder-api-start: |
-{{ .Files.Get "bin/cinder-api-start" | indent 4 }}
-  cinder-scheduler-start: |
-{{ .Files.Get "bin/cinder-scheduler-start" | indent 4 }}
-  cinder-volume-start: |
-{{ .Files.Get "bin/cinder-volume-start" | indent 4 }}
   db-migrate: |
 {{ .Files.Get "bin/db-migrate" | indent 4 }}
 
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
-
-
-

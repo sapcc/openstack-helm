@@ -226,7 +226,7 @@ barbican:
 barbican:
   image_version_barbican_m3: DEFINED-IN-REGION-CHART
 cinder:
-  image_version_cinder_api_m3: DEFINED-IN-REGION-CHART
+  image_version_cinder_api: DEFINED-IN-REGION-CHART
   image_version_cinder_scheduler: DEFINED-IN-REGION-CHART
   image_version_cinder_volume: DEFINED-IN-REGION-CHART
 horizon:

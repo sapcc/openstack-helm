@@ -182,7 +182,7 @@ openstack:
         os_password: YourOwnSecret!
 
   cinder:
-    image_version_cinder_api_m3: 'v1'
+    image_version_cinder_api: 'v1'
     image_version_cinder_scheduler: 'v1'
     image_version_cinder_volume: 'v1'
     db_password: YourOwnSecret!

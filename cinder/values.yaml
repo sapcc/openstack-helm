@@ -22,7 +22,7 @@ global:
   #    availability_zone: DEFINED-IN-REGION-CHART
   volumes: []
 
-image_version_cinder_api_m3: 'v1'
+image_version_cinder_api: 'v1'
 image_version_cinder_scheduler: 'v1'
 image_version_cinder_volume: 'v1'
 

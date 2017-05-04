@@ -4,6 +4,7 @@ debug = {{ .Values.debug}}
 log_config_append = /etc/cinder/logging.conf
 
 enable_v1_api=True
+enable_v3_api=true
 volume_name_template = '%s'
 
 glance_api_servers = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
