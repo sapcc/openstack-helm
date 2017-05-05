@@ -221,7 +221,7 @@ nova:
   image_version_nova_scheduler: DEFINED-IN-REGION-CHART
 
 barbican:
-  image_version_glance_api_m3: DEFINED-IN-REGION-CHART
+  image_version_glance_api: DEFINED-IN-REGION-CHART
   image_version_glance_registry: DEFINED-IN-REGION-CHART
 barbican:
   image_version_barbican_m3: DEFINED-IN-REGION-CHART

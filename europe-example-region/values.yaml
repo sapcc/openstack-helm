@@ -165,7 +165,7 @@ openstack:
         os_password: YourOwnSecret!
 
   glance:
-    image_version_glance_api_m3: 'v1'
+    image_version_glance_api: 'v1'
     image_version_glance_registry: 'v1'
     db_password: YourOwnSecret!
     sentry_dsn: 'add your own'

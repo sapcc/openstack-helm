@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: glance-api
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api-m3:{{.Values.image_version_glance_api_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api:{{.Values.image_version_glance_api}}
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
@@ -33,11 +33,9 @@ spec:
               port: {{.Values.global.glance_api_port_internal}}
             initialDelaySeconds: 15
             timeoutSeconds: 5
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/glance-api-start"
+              value: "glance-api"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
@@ -56,26 +54,22 @@ spec:
             - name: api
               containerPort: {{.Values.global.glance_api_port_internal}}
           volumeMounts:
-            - mountPath: /glance-patches
-              name: glance-patches
-            - mountPath: /glance-etc
+            - mountPath: /var/lib/kolla/config_files
               name: glance-etc
             - mountPath: /glance_store
               name: image-store
-            - mountPath: /container.init
-              name: glance-bin
+            - mountPath: /glance-patches
+              name: glance-patches
         - name: glance-registry
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-registry:{{.Values.image_version_glance_registry}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           livenessProbe:
             httpGet:
               path: /healthcheck
               port: 9191
           env:
             - name: COMMAND
-              value: "bash /container.init/glance-registry-start"
+              value: "glance-registry"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
@@ -88,10 +82,8 @@ spec:
             - name: registry
               containerPort: 9191
           volumeMounts:
-            - mountPath: /glance-etc
+            - mountPath: /var/lib/kolla/config_files
               name: glance-etc
-            - mountPath: /container.init
-              name: glance-bin
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -111,7 +103,3 @@ spec:
         - name: glance-etc
           configMap:
             name: glance-etc
-        - name: glance-bin
-          configMap:
-            name: glance-bin
-            defaultMode: 0755
