@@ -138,9 +138,8 @@ postgres:
           - gauge:
               usage: "GAUGE"
               description: "Count of Floating IP wrt status"
-              
       openstack_neutron_ipallocationpools_size:
-        query: "select "last_ip"::inet - "first_ip"::inet as gauge, subnet_id from ipallocationpools;"
+        query: "select \"last_ip\"::inet - \"first_ip\"::inet as gauge, subnet_id from ipallocationpools;"
         metrics:
           - last_ip:
               usage: "LABEL"
@@ -151,7 +150,6 @@ postgres:
           - gauge:
               usage: "GAUGE"
               description: "Difference value of last_ip - first_ip"
-              
       openstack_neutron_ipused_per_subnet:
         query: "select subnet_id, count(*) as gauge, network_id from ipallocations group by ipallocations.subnet_id, ipallocations.network_id;"
         metrics:
