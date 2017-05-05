@@ -8,9 +8,10 @@ storage_availability_zone={{$volume.availability_zone}}
 
 [vmware]
 volume_backend_name = vmware
-volume_driver=cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver
+volume_driver = cinder.volume.drivers.vmware.vmdk.VMwareVcVmdkDriver
 vmware_host_ip = {{$volume.host}}
 vmware_host_username = {{$volume.username | replace "$" "$$"}}
 vmware_host_password = {{$volume.password | replace "$" "$$"}}
-vmware_insecure=True
+vmware_insecure = True
+vmware_storage_profile = cinder-vvol
 {{- end -}}
