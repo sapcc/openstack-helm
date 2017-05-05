@@ -8,12 +8,6 @@ metadata:
     component: manila
 
 data:
-  manila-api-start: |
-{{ .Files.Get "bin/manila-api-start" | indent 4 }}
-  manila-scheduler-start: |
-{{ .Files.Get "bin/manila-scheduler-start" | indent 4 }}
-  manila-share-start: |
-{{ .Files.Get "bin/manila-share-start" | indent 4 }}
   db-migrate: |
 {{ .Files.Get "bin/db-migrate" | indent 4 }}
   common.sh: |

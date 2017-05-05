@@ -29,24 +29,18 @@ spec:
     spec:
       containers:
         - name: manila-share-netapp-{{$share.name}}
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-share-m3:{{.Values.image_version_manila_share_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-share:{{.Values.image_version_manila_share}}
           imagePullPolicy: IfNotPresent
-          command:
-            - bash
-          args:
-            - /container.init/manila-share-start
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
+            - name: COMMAND
+              value: "manila-share --config-file /etc/manila/manila.conf --config-file /etc/manila/backend.conf"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /manila-etc
               name: manila-etc
-            - mountPath: /backend-config
+            - mountPath: /var/lib/kolla/config_files
               name: backend-config
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: manila-etc
           configMap:
@@ -54,9 +48,5 @@ spec:
         - name: backend-config
           configMap:
             name: share-netapp-{{$share.name}}
-        - name: container-init
-          configMap:
-            name: manila-bin
-            defaultMode: 0755
 {{ end }}
 {{- end -}}

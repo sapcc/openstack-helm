@@ -12,13 +12,13 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: manila-migration
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-api-m3:{{.Values.image_version_manila_api_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-api:{{.Values.image_version_manila_api}}
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/db-migrate"
+              value: "/container.init/db-migrate"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE

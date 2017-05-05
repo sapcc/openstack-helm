@@ -28,28 +28,22 @@ spec:
     spec:
       containers:
         - name: manila-scheduler
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler-m3:{{.Values.image_version_manila_scheduler_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler:{{.Values.image_version_manila_scheduler}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/manila-scheduler-start"
+              value: "manila-scheduler --config-file /etc/manila/manila.conf --config-file /etc/manila/storage-availability-zone.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "manila-api,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /manila-etc
               name: manila-etc
-            - mountPath: /manila-scheduler-etc
+            - mountPath: /var/lib/kolla/config_files
               name: manila-scheduler-etc
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: manila-etc
           configMap:
@@ -57,9 +51,5 @@ spec:
         - name: manila-scheduler-etc
           configMap:
             name: manila-storage-availability-zone-{{$az}}
-        - name: container-init
-          configMap:
-            name: manila-bin
-            defaultMode: 0755
 {{ end }}
 {{ end }}
