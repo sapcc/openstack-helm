@@ -42,8 +42,6 @@ spec:
               value: "glance-migration"
             - name: DEPENDENCY_SERVICE
               value: "postgres-glance,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: STATSD_HOST
               value: "localhost"
             - name: STATSD_PORT
@@ -74,8 +72,6 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "glance"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           ports:
