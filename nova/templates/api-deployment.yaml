@@ -25,30 +25,23 @@ spec:
     spec:
       containers:
         - name: nova-api
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api-m3:{{.Values.image_version_nova_api_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/nova-api-start"
+              value: "nova-api"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
               value: "nova-migration"
             - name: DEPENDENCY_SERVICE
               value: "postgres-nova,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: STATSD_HOST
               value: "localhost"
             - name: STATSD_PORT
               value: "9125"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
-
           livenessProbe:
             httpGet:
               path: /
@@ -61,13 +54,8 @@ spec:
             - name: nova-metdata
               containerPort: {{.Values.global.nova_metadata_port_internal}}
           volumeMounts:
-            - mountPath: /development
-              name: development
-            - mountPath: /nova-etc
+            - mountPath: /var/lib/kolla/config_files
               name: nova-etc
-            - mountPath: /container.init
-              name: container-init
-
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -81,10 +69,3 @@ spec:
         - name: nova-etc
           configMap:
             name: nova-etc
-        - name: development
-          persistentVolumeClaim:
-            claimName: development-pvclaim
-        - name: container-init
-          configMap:
-            name: nova-bin
-            defaultMode: 0755

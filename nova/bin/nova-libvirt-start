@@ -5,20 +5,12 @@ set -e
 
 . /container.init/common.sh
 
-function process_config {
-    cp /nova-etc/libvirtd.conf  /etc/libvirt/libvirtd.conf
-    cp /nova-etc/logging.conf  /etc/nova/logging.conf
-    cp /nova-etc/policy.json  /etc/nova/policy.json
-}
-
-
 function start_application {
     # Wait for OVS DB startup
     while [ ! -S /var/run/openvswitch/db.sock ]
     do
       sleep 2
     done
-
 
     if [ ! -e /dev/kvm ]; then
        set +e
@@ -32,15 +24,7 @@ function start_application {
 
     mount -o remount,rw /sys
 
-    if command -v dumb-init >/dev/null 2>&1; then
-        exec  dumb-init /usr/sbin/libvirtd --listen
-    else
-        exec  /usr/sbin/libvirtd --listen
-    fi
-
-
+    exec /usr/sbin/libvirtd --listen
 }
-
-process_config
 
 start_application

@@ -27,25 +27,17 @@ spec:
         - name: nova-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-scheduler:{{.Values.image_version_nova_scheduler}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/nova-scheduler-start"
+              value: "nova-scheduler"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "nova-api,rabbitmq"
           volumeMounts:
-            - mountPath: /nova-etc
+            - mountPath: /var/lib/kolla/config_files
               name: nova-etc
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: nova-etc
           configMap:
             name: nova-etc
-        - name: container-init
-          configMap:
-            name: nova-bin
-            defaultMode: 0755

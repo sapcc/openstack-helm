@@ -20,6 +20,14 @@ data:
     host_password = {{ password | quote }}
     cluster_name = {{ cluster_name | quote }}
     datastore_regex = {{ datastore_regex | quote }}
+  config.json: |
+    {"command": "kubernetes-entrypoint",
+       "config_files":[
+           {"source": "/var/lib/kolla/config_files/hypervisor.conf", "dest": "/etc/nova/hypervisor.conf", "owner": "nova", "perm": "0400"},
+           {"source": "/nova-etc/nova.conf", "dest": "/etc/nova/nova.conf", "owner": "nova", "perm": "0400"},
+           {"source": "/nova-etc/logging.conf", "dest": "/etc/nova/logging.conf", "owner": "nova", "perm": "0400"}
+       ]
+    }
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -73,13 +81,13 @@ spec:
     spec:
       containers:
         - name: nova-compute-{{ name }}
-          image: {{nova_agent_image}}
+          image: {{ nova_agent_image }}
           imagePullPolicy: IfNotPresent
-          command:
-            - /container.init/nova-compute-start
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
+            - name: COMMAND
+              value: nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf
+            - name: NAMESPACE
+              value: {{ namespace }}
             - name: SENTRY_DSN
               value: {{ nova_sentry_dsn }}
             - name: STATSD_HOST
@@ -87,14 +95,12 @@ spec:
             - name: STATSD_PORT
               value: "9125"
           volumeMounts:
-            - mountPath: /hypervisor-config
+            - mountPath: /var/lib/kolla/config_files
               name: hypervisor-config
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /nova-patches
               name: nova-patches
-            - mountPath: /container.init
-              name: nova-container-init
         - name: neutron-dvs-agent
           image: {{ neutron_agent_image }}
           imagePullPolicy: IfNotPresent

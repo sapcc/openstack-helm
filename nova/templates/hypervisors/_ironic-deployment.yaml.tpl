@@ -29,26 +29,22 @@ spec:
     spec:
       containers:
         - name: nova-compute-ironic
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.image_version_nova_compute_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.image_version_nova_compute}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
-          command:
-            - /container.init/nova-compute-start
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
+            - name: COMMAND
+              value: nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /hypervisor-config
+            - mountPath: /var/lib/kolla/config_files
               name: hypervisor-config
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /nova-patches
               name: nova-patches
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: nova-etc
           configMap:
@@ -59,9 +55,5 @@ spec:
         - name: hypervisor-config
           configMap:
             name:  hypervisor-{{$hypervisor.name}}
-        - name: container-init
-          configMap:
-            name: nova-bin
-            defaultMode: 0755
 {{- end }}
 {{- end }}

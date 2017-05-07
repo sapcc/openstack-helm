@@ -1,4 +1,6 @@
 listen_tcp = 1
+listen_tls = 0
+mdns_adv = 0
 auth_tcp = "none"
 ca_file = ""
 log_level = 3

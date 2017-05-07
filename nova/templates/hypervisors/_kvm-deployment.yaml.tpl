@@ -31,15 +31,15 @@ spec:
         kubernetes.io/hostname: {{$hypervisor.node_name}}
       containers:
         - name: nova-compute-minion1
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute-m3:{{.Values.image_version_nova_compute_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.image_version_nova_compute}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
-          command:
-            - /container.init/nova-compute-start
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
+            - name: COMMAND
+              value: nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
@@ -52,23 +52,24 @@ spec:
               readOnly: true
             - mountPath: /var/run
               name: run
-            - mountPath: /hypervisor-config
+            - mountPath: /var/lib/kolla/config_files
               name: hypervisor-config
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /nova-patches
               name: nova-patches
-            - mountPath: /container.init
-              name: nova-container-init
         - name: nova-libvirt
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
-          command:
-            - bash
-          args:
-            - /container.init/nova-libvirt-start
+          env:
+            - name: COMMAND
+              value: /container.init/nova-libvirt-start
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances
@@ -79,6 +80,8 @@ spec:
             - mountPath: /lib/modules
               name: modules
               readOnly: true
+            - mountPath: /var/lib/kolla/config_files
+              name: hypervisor-config
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /container.init
@@ -88,10 +91,13 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
-          command:
-            - bash
-          args:
-            - /container.init/nova-virtlog-start
+          env:
+            - name: COMMAND
+              value: /usr/sbin/virtlogd
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances
@@ -102,6 +108,8 @@ spec:
             - mountPath: /lib/modules
               name: modules
               readOnly: true
+            - mountPath: /var/lib/kolla/config_files
+              name: hypervisor-config
             - mountPath: /nova-etc
               name: nova-etc
             - mountPath: /container.init
@@ -112,8 +120,6 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
             - /container.init/neutron-ovs-agent-start
           volumeMounts:
             - mountPath: /var/run/
@@ -131,8 +137,6 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
             - /container.init/neutron-ovs-start
           volumeMounts:
             - mountPath: /var/run/
@@ -148,8 +152,6 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
             - /container.init/neutron-ovs-db-start
           volumeMounts:
             - mountPath: /var/run/

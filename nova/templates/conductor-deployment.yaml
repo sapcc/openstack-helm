@@ -27,27 +27,17 @@ spec:
         - name: nova-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-conductor:{{.Values.image_version_nova_conductor}}
           imagePullPolicy: IfNotPresent
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/nova-conductor-start"
+              value: "nova-conductor"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "nova-api,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
           volumeMounts:
-            - mountPath: /nova-etc
+            - mountPath: /var/lib/kolla/config_files
               name: nova-etc
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: nova-etc
           configMap:
             name: nova-etc
-        - name: container-init
-          configMap:
-            name: nova-bin
-            defaultMode: 0755
