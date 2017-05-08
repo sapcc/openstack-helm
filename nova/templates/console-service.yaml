@@ -14,5 +14,6 @@ spec:
   ports:
     - name: nonvc-proxy
       port: {{.Values.global.nova_novnc_port_public}}
+      targetPort: {{.Values.global.nova_novnc_port_internal}}
     - name: spicehtml5-proxy
       port: {{.Values.global.nova_spicehtml5_port_public}}
