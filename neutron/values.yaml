@@ -147,6 +147,9 @@ postgres:
           - first_ip:
               usage: "LABEL"
               description: "First IP Address"
+          - subnet_id:
+              usage: "LABEL"
+              description: "SUBNET_ID details"
           - gauge:
               usage: "GAUGE"
               description: "Difference value of last_ip - first_ip"
