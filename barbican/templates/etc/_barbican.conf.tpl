@@ -2,6 +2,8 @@
 # Show debugging output in logs (sets DEBUG log level output)
 debug = {{.Values.debug}}
 
+log_config_append = /etc/barbican/logging.conf
+
 # Address to bind the API server
 bind_host = 0.0.0.0
 

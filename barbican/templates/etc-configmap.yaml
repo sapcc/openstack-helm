@@ -14,3 +14,14 @@ data:
 {{ include (print .Template.BasePath "/etc/_barbican.conf.tpl") . | indent 4 }}
   policy.json: |
 {{ include (print .Template.BasePath "/etc/_policy.json.tpl") . | indent 4 }}
+  logging.conf: |
+{{ include "loggerIni" .Values.logging | indent 4 }}
+  config.json: |
+    {"command": "kubernetes-entrypoint",
+       "config_files":[
+           {"source": "/var/lib/kolla/config_files/barbican-api-paste.ini", "dest": "/etc/barbican/barbican-api-paste.ini", "owner": "barbican", "perm": "0400"},
+           {"source": "/var/lib/kolla/config_files/barbican.conf", "dest": "/etc/barbican/barbican.conf", "owner": "barbican", "perm": "0400"},
+           {"source": "/var/lib/kolla/config_files/policy.json", "dest": "/etc/barbican/policy.json", "owner": "barbican", "perm": "0400"},
+           {"source": "/var/lib/kolla/config_files/logging.conf", "dest": "/etc/barbican/logging.conf", "owner": "barbican", "perm": "0400"}
+       ]
+    }

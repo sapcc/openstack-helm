@@ -27,21 +27,15 @@ spec:
     spec:
       containers:
         - name: barbican-api
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-barbican-m3:{{.Values.image_version_barbican_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-barbican-api:{{.Values.image_version_barbican}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
-          command:
-            - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/barbican-api-start"
+              value: "/barbican/bin/barbican-api"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-barbican,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
           livenessProbe:
             httpGet:
               path: /
@@ -52,13 +46,10 @@ spec:
             - name: barbican-api
               containerPort: {{.Values.global.barbican_api_port_internal}}
           volumeMounts:
-            - mountPath: /barbican-etc
+            - mountPath: /var/lib/kolla/config_files/
               name: barbican-etc
             - mountPath: /barbican-patches
               name: barbican-patches
-            - mountPath: /container.init
-              name: container-init
-
       volumes:
         - name: barbican-etc
           configMap:
@@ -66,7 +57,3 @@ spec:
         - name: barbican-patches
           configMap:
             name: barbican-patches
-        - name: container-init
-          configMap:
-            name: barbican-bin
-            defaultMode: 0755
