@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: designate-poolmanager
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-poolmanager-m3:{{.Values.image_version_designate_poolmanager_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-pool-manager:{{.Values.image_version_designate_pool_manager}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -36,7 +36,7 @@ spec:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/designate-poolmanager-start"
+              value: "/container.init/designate-poolmanager-start"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS

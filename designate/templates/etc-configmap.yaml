@@ -8,6 +8,8 @@ metadata:
     component: designate
 
 data:
+  api-paste.ini: |
+{{ include (print .Template.BasePath "/etc/_api-paste.ini.tpl") . | indent 4 }}
   designate.conf: |
 {{ include (print .Template.BasePath "/etc/_designate.conf.tpl") . | indent 4 }}
   rndc.key: |

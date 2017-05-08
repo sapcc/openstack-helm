@@ -333,10 +333,10 @@ openstack:
     image_version_horizon_m3: 'v1'
     secret_key: YourOwnSecret!
   designate:
-    image_version_designate_api_m3: 'v1'
-    image_version_designate_central_m3: 'v1'
-    image_version_designate_mdns_m3: 'v1'
-    image_version_designate_poolmanager_m3: 'v1'
+    image_version_designate_api: 'v1'
+    image_version_designate_central: 'v1'
+    image_version_designate_mdns: 'v1'
+    image_version_designate_pool_manager: 'v1'
     sentry_dsn: "add your own"
     mariadb:
       root_password: YourOwnSecret!

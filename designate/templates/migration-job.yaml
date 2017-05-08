@@ -12,13 +12,13 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: designate-migration
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-central-m3:{{.Values.image_version_designate_central_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-central:{{.Values.image_version_designate_central}}
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/db-migrate"
+              value: "/container.init/db-migrate"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE

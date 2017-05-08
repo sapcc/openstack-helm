@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: designate-api
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-api-m3:{{.Values.image_version_designate_api_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-api:{{.Values.image_version_designate_api}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -35,15 +35,13 @@ spec:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/designate-api-start"
+              value: "/container.init/designate-api-start"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
               value: "designate-migration"
             - name: DEPENDENCY_SERVICE
               value: "designate-mariadb,rabbitmq"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: STATSD_HOST
               value: "localhost"
             - name: STATSD_PORT

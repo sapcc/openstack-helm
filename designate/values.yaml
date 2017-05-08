@@ -16,10 +16,10 @@ global:
   designate_mdns_external_ip: DEFINED-IN-REGION-CHART
   designate_mdns_akamai_ip: DEFINED-IN-REGION-CHART
 
-image_version_designate_api_m3:  DEFINED-IN-REGION-CHART
-image_version_designate_central_m3:  DEFINED-IN-REGION-CHART
-image_version_designate_mdns_m3:  DEFINED-IN-REGION-CHART
-image_version_designate_poolmanager_m3:  DEFINED-IN-REGION-CHART
+image_version_designate_api:  DEFINED-IN-REGION-CHART
+image_version_designate_central:  DEFINED-IN-REGION-CHART
+image_version_designate_mdns:  DEFINED-IN-REGION-CHART
+image_version_designate_pool_manager:  DEFINED-IN-REGION-CHART
 
 bind_pools:
   - name: default
