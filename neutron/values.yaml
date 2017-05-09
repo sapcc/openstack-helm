@@ -127,7 +127,7 @@ postgres:
               usage: "GAUGE"
               description: "Count of Floating IP wrt status"
       openstack_neutron_SAP_IPallocationpools_size:
-        query: "select "last_ip"::inet - "first_ip"::inet as iprange_value, subnet_id from ipallocationpools WHERE "first_ip" LIKE '10%';"
+        query: "select \"last_ip\"::inet - \"first_ip\"::inet as iprange_value, subnet_id from ipallocationpools WHERE \"first_ip\" LIKE '10%';"
         metrics:
           - last_ip:
               usage: "LABEL"
@@ -166,7 +166,7 @@ postgres:
               usage: "GAUGE"
               description: "Count of Floating IP wrt status"
       openstack_neutron_Internet_IPallocationpools_size:
-        query: "select "last_ip"::inet - "first_ip"::inet as iprange_value, subnet_id from ipallocationpools WHERE "first_ip" LIKE '15%';"
+        query: "select \"last_ip\"::inet - \"first_ip\"::inet as iprange_value, subnet_id from ipallocationpools WHERE \"first_ip\" LIKE '15%';"
         metrics:
           - last_ip:
               usage: "LABEL"
