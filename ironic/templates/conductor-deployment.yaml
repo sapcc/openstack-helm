@@ -35,6 +35,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
           volumeMounts:
             - mountPath: /var/lib/kolla/config_files
               name: ironic-etc
@@ -46,6 +48,8 @@ spec:
           env:
             - name: COMMAND
               value: "ptftpd -v -d /tftpmap.py:handle eth0 /tftpboot"
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
           ports:
             - name: ironic-pxe
               protocol: UDP

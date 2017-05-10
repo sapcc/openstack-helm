@@ -36,6 +36,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-barbican,rabbitmq"
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
           livenessProbe:
             httpGet:
               path: /

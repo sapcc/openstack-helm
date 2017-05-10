@@ -35,6 +35,8 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
           volumeMounts:
             - mountPath: /var/lib/kolla/config_files
               name: ironic-inspector-etc
@@ -49,6 +51,8 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
           ports:
             - name: dhcp
               protocol: UDP
