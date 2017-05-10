@@ -85,7 +85,7 @@ logging:
 postgres:
   name: neutron
   metrics:
-    enabled: true
+    enabled: false
     customMetrics:
       openstack_neutron_networks_count:
         query: "SELECT COUNT(*) AS gauge, status FROM networks GROUP BY networks.status"
