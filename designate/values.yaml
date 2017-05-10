@@ -62,8 +62,6 @@ mariadb:
   initdb_configmap: designate-initdb
   persistence_claim: db-designate-pvclaim
 
-
-
 logging:
     formatters:
         context:
@@ -85,7 +83,7 @@ logging:
             args: "()"
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout, sentry
             level: WARNING
         designate:
             handlers: stdout, sentry
@@ -103,8 +101,5 @@ logging:
             handlers: stdout, sentry
             level: INFO
         sqlalchemy:
-            handlers: stdout, sentry
-            level: WARNING
-        suds:
             handlers: stdout, sentry
             level: WARNING

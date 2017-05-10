@@ -418,7 +418,7 @@ notify = {{ .Values.worker_notify }}
 # SQLAlchemy Pool Manager Cache
 #-----------------------
 [pool_manager_cache:sqlalchemy]
-connection = mysql://root:{{.Values.mariadb.root_password}}@{{include "designate_db_host" .}}/{{.Values.poolmanager.db_name}}
+connection = mysql+pymysql://root:{{.Values.mariadb.root_password}}@{{include "designate_db_host" .}}/{{.Values.poolmanager.db_name}}
 #connection_debug = 100
 #connection_trace = False
 #sqlite_synchronous = True
@@ -459,7 +459,7 @@ connection = mysql://root:{{.Values.mariadb.root_password}}@{{include "designate
 # Database connection string - to configure options for a given implementation
 # like sqlalchemy or other see below
 #connection = sqlite:///$state_path/designate.sqlite
-connection = mysql://root:{{.Values.mariadb.root_password}}@{{include "designate_db_host" .}}/{{.Values.db_name}}
+connection = mysql+pymysql://root:{{.Values.mariadb.root_password}}@{{include "designate_db_host" .}}/{{.Values.db_name}}
 
 #connection_debug = 0
 #connection_trace = False
