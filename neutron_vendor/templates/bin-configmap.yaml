@@ -19,5 +19,3 @@ data:
 {{ include (print .Template.BasePath "/bin/_neutron-f5-ml2-agent-start.tpl") . | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
-
-

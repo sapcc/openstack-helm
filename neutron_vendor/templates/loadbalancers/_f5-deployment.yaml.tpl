@@ -35,10 +35,7 @@ spec:
           securityContext:
             privileged: true
           command:
-            - bash
-          args:
             - /container.init/neutron-f5-agent-start
-
           env:
             - name: DEBUG_CONTAINER
               value: "false"

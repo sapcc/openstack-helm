@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/local/bin/dumb-init bash
 
 set -e
 
@@ -6,8 +6,8 @@ set -e
 
 function process_config {
     patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/f5/bigip/__init__.py /f5-patches/bigip-init.diff
-    patch /usr/local/lib/python2.7/dist-packages/requests/sessions.py /f5-patches/sessions.diff
-
+    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/requests/sessions.py /f5-patches/sessions.diff ||
+        patch /usr/local/lib/python2.7/dist-packages/requests/sessions.py /f5-patches/sessions.diff
 
     cp /neutron-etc/neutron.conf /etc/neutron/neutron.conf
     cp /neutron-etc/logging.conf  /etc/neutron/logging.conf
@@ -18,18 +18,11 @@ function process_config {
     rm /etc/neutron/services/f5/esd/demo.json
 }
 
-
-
 function _start_application {
     mkdir /var/log/neutron
 
-
     exec  python /var/lib/kolla/venv/bin/f5-oslbaasv2-agent --config-file /etc/neutron/f5-oslbaasv2-agent.ini --config-file /etc/neutron/neutron.conf --log-file /var/log/neutron/f5-agent.log
-
 }
 
 process_config
-
 start_application
-
-
