@@ -10,8 +10,6 @@ metadata:
 data:
   dhcp.diff: |
 {{ .Files.Get "patches/dhcp.diff" | indent 4 }}
-  dns-integration.diff: |
-{{ .Files.Get "patches/dns_integration.diff" | indent 4 }}
   loadbalancer-dbv2.diff: |
 {{ .Files.Get "patches/lbaas/loadbalancer_dbv2.diff" | indent 4 }}
   ipam-backend-mixin.diff: |
