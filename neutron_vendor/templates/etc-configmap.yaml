@@ -14,6 +14,8 @@ data:
 {{ include (print .Template.BasePath "/etc/_cisco-device-manager-plugin.ini.tpl") . | indent 4 }}
   cisco-router-plugin.ini: |
 {{ include (print .Template.BasePath "/etc/_cisco-router-plugin.ini.tpl") . | indent 4 }}
+  cisco-ucs-bm-ml2-agent.ini: |
+{{ include (print .Template.BasePath "/etc/_cisco-ucs-bm-ml2-agent.ini.tpl") . | indent 4 }}
   ml2-conf-arista.ini: |
 {{ include (print .Template.BasePath "/etc/_ml2-conf-arista.ini.tpl") . | indent 4 }}
   ml2-conf-asr.ini: |
@@ -22,5 +24,13 @@ data:
 {{ include (print .Template.BasePath "/etc/_ml2-conf-manila.ini.tpl") . | indent 4 }}
   ml2-conf-f5.ini: |
 {{ include (print .Template.BasePath "/etc/_ml2-conf-f5.ini.tpl") . | indent 4 }}
-
-
+  config.json: |
+    {"command": "kubernetes-entrypoint",
+       "config_files":[
+           {"source": "/neutron-etc/neutron.conf", "dest": "/etc/neutron/neutron.conf", "owner": "neutron", "perm": "0400"},
+           {"source": "/neutron-etc/ml2-conf.ini", "dest": "/etc/neutron/plugins/ml2/ml2_conf.ini", "owner": "neutron", "perm": "0400"},
+           {"source": "/neutron-etc/neutron-policy.json", "dest": "/etc/neutron/neutron-policy.json", "owner": "neutron", "perm": "0400"},
+           {"source": "/neutron-etc/logging.conf", "dest": "/etc/neutron/logging.conf", "owner": "neutron", "perm": "0400"},
+           {"source": "/var/lib/kolla/config_files/cisco-ucs-bm-ml2-agent.ini", "dest": "/etc/neutron/plugins/ml2//cisco-ucs-bm-ml2-agent.ini", "owner": "neutron", "perm": "0400"}
+       ]
+    }

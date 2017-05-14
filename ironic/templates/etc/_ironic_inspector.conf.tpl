@@ -2,7 +2,7 @@
 debug = {{.Values.debug}}
 log-config-append = /var/lib/kolla/config_files/logging.conf
 
-enabled_drivers=pxe_ipmitool,agent_ipmitool
+enabled_drivers={{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
 enabled_network_interfaces=noop,flat,neutron
 default_network_interface=neutron
 

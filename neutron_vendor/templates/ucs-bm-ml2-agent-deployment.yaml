@@ -1,0 +1,60 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: neutron-cisco-ml2-ucsm-bm
+  labels:
+    system: openstack
+    type: backend
+    component: neutron
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: neutron-cisco-ml2-ucsm-bm
+  template:
+    metadata:
+      labels:
+        name: neutron-cisco-ml2-ucsm-bm
+      annotations:
+        pod.beta.kubernetes.io/hostname: cisco-ml2-ucsm-bm
+    spec:
+      containers:
+        - name: neutron-cisco-ml2-ucsm-bm-agent
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: COMMAND
+              value: "neutron-cisco-ml2-ucsm-bm-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2//cisco-ucs-bm-ml2-agent.ini"
+            - name: KOLLA_CONFIG_STRATEGY
+              value: COPY_ALWAYS
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+          volumeMounts:
+            - mountPath: /development
+              name: development
+            - mountPath: /neutron-etc
+              name: neutron-etc
+            - mountPath: /var/lib/kolla/config_files
+              name: neutron-etc-vendor
+      volumes:
+        - name: development
+          persistentVolumeClaim:
+            claimName: development-pvclaim
+        - name: neutron-etc
+          configMap:
+            name: neutron-etc
+        - name: neutron-etc-region
+          configMap:
+            name: neutron-etc-region
+        - name: neutron-etc-vendor
+          configMap:
+            name: neutron-etc-vendor
