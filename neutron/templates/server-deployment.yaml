@@ -29,8 +29,6 @@ spec:
         - name: neutron-server
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
           livenessProbe:
             httpGet:
               path: /
@@ -41,7 +39,7 @@ spec:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "bash /container.init/neutron-server-start"
+              value: "/container.init/neutron-server-start"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
