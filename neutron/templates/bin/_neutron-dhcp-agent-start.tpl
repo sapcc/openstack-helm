@@ -5,15 +5,12 @@ set -e
 . /container.init/common.sh
 
 function process_config {
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron/agent/linux/dhcp.py /neutron-patches/dhcp.diff
-
     cp /neutron-etc/neutron.conf  /etc/neutron/neutron.conf
     cp /neutron-etc/logging.conf  /etc/neutron/logging.conf
     cp /neutron-etc/ml2-conf.ini  /etc/neutron/plugins/ml2/ml2_conf.ini
     cp /neutron-etc/dhcp-agent.ini  /etc/neutron/dhcp_agent.ini
     cp /neutron-etc/dnsmasq.conf  /etc/neutron/dnsmasq.conf
 }
-
 
 
 function start_application {
@@ -54,5 +51,3 @@ function start_application {
 process_config
 
 start_application
-
-
