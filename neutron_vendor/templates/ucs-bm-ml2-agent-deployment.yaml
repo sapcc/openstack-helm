@@ -1,3 +1,4 @@
+{{- if or (ne (len (keys .Values.cisco_ucsm_bm)) 1) (ne (index (keys .Values.cisco_ucsm_bm) 0) "example.com") -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -58,3 +59,4 @@ spec:
         - name: neutron-etc-vendor
           configMap:
             name: neutron-etc-vendor
+{{- end -}}
