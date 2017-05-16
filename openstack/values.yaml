@@ -28,6 +28,8 @@ global:
   rabbitmq_default_pass: DEFINED-IN-REGION-CHART
   rabbitmq_admin_pass: DEFINED-IN-REGION-CHART
   rabbitmq_metrics_pass: DEFINED-IN-REGION-CHART
+  rabbit_transient_queues_ttl: 1800
+
 
 
   glance_service_user: glance
