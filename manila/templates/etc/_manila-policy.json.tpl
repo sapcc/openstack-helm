@@ -100,8 +100,8 @@
   "share_network:index": "rule:context_is_viewer",
   "share_network:detail": "rule:context_is_viewer",
   "share_network:show": "rule:context_is_viewer",
-  "share_network:add_security_service": "rule:context_is_admin",
-  "share_network:remove_security_service": "rule:context_is_admin",
+  "share_network:add_security_service": "rule:context_is_sharedfilesystem_admin",
+  "share_network:remove_security_service": "rule:context_is_sharedfilesystem_admin",
   "share_network:get_all_share_networks": "rule:context_is_admin",
 
   "scheduler_stats:pools:index": "rule:context_is_admin",
