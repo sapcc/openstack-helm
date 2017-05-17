@@ -47,7 +47,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: COMMAND
-              value: "ptftpd -v -d /tftpmap.py:handle eth0 /tftpboot"
+              value: "ptftpd -v --ignore-invalid-ack -d /tftpmap.py:handle eth0 /tftpboot"
             - name: KOLLA_CONFIG_STRATEGY
               value: COPY_ALWAYS
           ports:
