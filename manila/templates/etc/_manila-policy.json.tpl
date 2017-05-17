@@ -81,12 +81,12 @@
   "share_types_extra_spec:index": "rule:context_is_admin",
   "share_types_extra_spec:delete": "rule:context_is_admin",
 
-  "security_service:create": "rule:context_is_admin",
-  "security_service:delete": "rule:context_is_admin",
-  "security_service:update": "rule:context_is_admin",
-  "security_service:show": "rule:context_is_admin",
-  "security_service:index": "rule:context_is_admin",
-  "security_service:detail": "rule:context_is_admin",
+  "security_service:create": "rule:context_is_sharedfilesystem_admin",
+  "security_service:delete": "rule:context_is_sharedfilesystem_admin",
+  "security_service:update": "rule:context_is_sharedfilesystem_admin",
+  "security_service:show": "rule:context_is_sharedfilesystem_admin",
+  "security_service:index": "rule:context_is_viewer",
+  "security_service:detail": "rule:context_is_sharedfilesystem_admin",
   "security_service:get_all_security_services": "rule:context_is_admin",
 
   "share_server:index": "rule:context_is_admin",
