@@ -20,14 +20,5 @@ data:
 {{ include "loggerIni" .Values.logging | indent 4 }}
   glance-api-paste.ini: |
 {{ include (print .Template.BasePath "/etc/_glance-api-paste.ini.tpl") . | indent 4 }}
-  config.json: |
-    {"command": "kubernetes-entrypoint",
-       "config_files":[
-           {"source": "/var/lib/kolla/config_files/glance-api.conf", "dest": "/etc/glance/glance-api.conf", "owner": "glance", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/glance-registry.conf", "dest": "/etc/glance/glance-registry.conf", "owner": "glance", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/swift-store.conf", "dest": "/etc/glance/swift-store.conf", "owner": "glance", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/policy.json", "dest": "/etc/glance/policy.json", "owner": "glance", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/glance-api-paste.ini", "dest": "/etc/glance/glance-api-paste.ini", "owner": "glance", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/logging.conf", "dest": "/etc/glance/logging.conf", "owner": "glance", "perm": "0400"}
-       ]
-    }
+  glance-registry-paste.ini: |
+{{ include (print .Template.BasePath "/etc/_glance-registry-paste.ini.tpl") . | indent 4 }}

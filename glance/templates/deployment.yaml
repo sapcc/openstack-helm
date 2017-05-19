@@ -25,6 +25,8 @@ spec:
     spec:
       containers:
         - name: glance-api
+          securityContext:
+            runAsUser: 0
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-glance-api:{{.Values.image_version_glance_api}}
           imagePullPolicy: IfNotPresent
           livenessProbe:
@@ -33,6 +35,8 @@ spec:
               port: {{.Values.global.glance_api_port_internal}}
             initialDelaySeconds: 15
             timeoutSeconds: 5
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "glance-api"
@@ -52,8 +56,28 @@ spec:
             - name: api
               containerPort: {{.Values.global.glance_api_port_internal}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: glance-etc
+            - name: etcglance
+              mountPath: /etc/glance
+            - name: glance-etc
+              mountPath: /etc/glance/glance-api.conf
+              subPath: glance-api.conf
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/swift-store.conf
+              subPath: swift-store.conf
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/glance-api-paste.ini
+              subPath: glance-api-paste.ini
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/logging.conf
+              subPath: logging.conf
+              readOnly: true
             - mountPath: /glance_store
               name: image-store
             - mountPath: /glance-patches
@@ -65,6 +89,8 @@ spec:
             httpGet:
               path: /healthcheck
               port: 9191
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "glance-registry"
@@ -78,8 +104,28 @@ spec:
             - name: registry
               containerPort: 9191
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: glance-etc
+            - name: etcglance
+              mountPath: /etc/glance
+            - name: glance-etc
+              mountPath: /etc/glance/glance-registry.conf
+              subPath: glance-registry.conf
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/swift-store.conf
+              subPath: swift-store.conf
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/glance-registry-paste.ini
+              subPath: glance-registry-paste.ini
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/logging.conf
+              subPath: logging.conf
+              readOnly: true
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -90,6 +136,8 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
+        - name: etcglance
+          emptyDir: {}
         - name: image-store
           persistentVolumeClaim:
             claimName: glance-pvclaim
