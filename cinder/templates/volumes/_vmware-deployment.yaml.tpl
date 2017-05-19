@@ -33,9 +33,9 @@ spec:
         - name: cinder-volume-vmware-{{$volume.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
-            - name: KOLLA_CONFIG_STRATEGY
-              value: "COPY_ALWAYS"
             - name: COMMAND
               value: "cinder-volume --config-file /etc/cinder/cinder.conf --config-file /etc/cinder/volume.conf"
             - name: NAMESPACE
@@ -43,11 +43,27 @@ spec:
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /cinder-etc
-              name: cinder-etc
-            - mountPath: /var/lib/kolla/config_files
-              name: volume-config
+            - name: etccinder
+              mountPath: /etc/cinder
+            - name: cinder-etc
+              mountPath: /etc/cinder/cinder.conf
+              subPath: cinder.conf
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/logging.conf
+              subPath: logging.conf
+              readOnly: true
+            - name: volume-config
+              mountPath: /etc/cinder/volume.conf
+              subPath: volume.conf
+              readOnly: true
       volumes:
+        - name: etccinder
+          emptyDir: {}
         - name: cinder-etc
           configMap:
             name: cinder-etc

@@ -27,9 +27,9 @@ spec:
         - name: cinder-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
             - name: COMMAND
               value: "cinder-api"
             - name: NAMESPACE
@@ -54,8 +54,24 @@ spec:
             - name: cinder-api
               containerPort: {{.Values.global.cinder_api_port_internal}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: cinder-etc
+            - name: etccinder
+              mountPath: /etc/cinder
+            - name: cinder-etc
+              mountPath: /etc/cinder/cinder.conf
+              subPath: cinder.conf
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/logging.conf
+              subPath: logging.conf
+              readOnly: true
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -66,6 +82,8 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
+        - name: etccinder
+          emptyDir: {}
         - name: cinder-etc
           configMap:
             name: cinder-etc

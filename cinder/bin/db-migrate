@@ -4,12 +4,4 @@ set -e
 
 . /container.init/common.sh
 
-
-
-function process_config {
-    cp /cinder-etc/cinder.conf /etc/cinder/cinder.conf
-    cp /cinder-etc/logging.conf /etc/cinder/logging.conf
-}
-
-process_config
 cinder-manage db sync
