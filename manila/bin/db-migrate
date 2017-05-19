@@ -4,10 +4,4 @@ set -e
 
 . /container.init/common.sh
 
-
-function process_config {
-    cp /manila-etc/*.conf  /etc/manila/
-}
-
-process_config
 manila-manage db sync

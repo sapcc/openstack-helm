@@ -30,6 +30,8 @@ spec:
         - name: manila-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler:{{.Values.image_version_manila_scheduler}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "manila-scheduler --config-file /etc/manila/manila.conf --config-file /etc/manila/storage-availability-zone.conf"
@@ -40,11 +42,27 @@ spec:
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /manila-etc
-              name: manila-etc
-            - mountPath: /var/lib/kolla/config_files
-              name: manila-scheduler-etc
+            - name: etcmanila
+              mountPath: /etc/manila
+            - name: manila-etc
+              mountPath: /etc/manila/manila.conf
+              subPath: manila.conf
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/logging.conf
+              subPath: logging.conf
+              readOnly: true
+            - name: manila-scheduler-etc
+              mountPath: /etc/manila/storage-availability-zone.conf
+              subPath: storage-availability-zone.conf
+              readOnly: true
       volumes:
+        - name: etcmanila
+          emptyDir: {}
         - name: manila-etc
           configMap:
             name: manila-etc

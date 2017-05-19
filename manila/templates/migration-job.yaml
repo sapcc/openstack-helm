@@ -15,7 +15,7 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-api:{{.Values.image_version_manila_api}}
           imagePullPolicy: IfNotPresent
           command:
-            - /usr/local/bin/kubernetes-entrypoint
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "/container.init/db-migrate"
@@ -24,11 +24,25 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "postgres-manila"
           volumeMounts:
-            - mountPath: /manila-etc
-              name: manila-etc
+            - name: etcmanila
+              mountPath: /etc/manila
+            - name: manila-etc
+              mountPath: /etc/manila/manila.conf
+              subPath: manila.conf
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/logging.conf
+              subPath: logging.conf
+              readOnly: true
             - mountPath: /container.init
               name: container-init
       volumes:
+        - name: etcmanila
+          emptyDir: {}
         - name: manila-etc
           configMap:
             name: manila-etc

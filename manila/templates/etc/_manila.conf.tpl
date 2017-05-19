@@ -13,7 +13,7 @@ enabled_share_backends = netapp-multi
 # So, set here name of some share-type that will be used by default.
 default_share_type = default
 
-rootwrap_config = /etc/manila/rootwrap.conf
+# rootwrap_config = /etc/manila/rootwrap.conf
 api_paste_config = /etc/manila/api-paste.ini
 
 rpc_backend = rabbit

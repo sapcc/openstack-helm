@@ -27,6 +27,8 @@ spec:
         - name: manila-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-api:{{.Values.image_version_manila_api}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "manila-api --config-file /etc/manila/manila.conf"
@@ -48,9 +50,27 @@ spec:
             - name: manila-api
               containerPort: {{.Values.global.manila_api_port_internal}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: manila-etc
+            - name: etcmanila
+              mountPath: /etc/manila
+            - name: manila-etc
+              mountPath: /etc/manila/manila.conf
+              subPath: manila.conf
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/logging.conf
+              subPath: logging.conf
+              readOnly: true
       volumes:
+        - name: etcmanila
+          emptyDir: {}
         - name: manila-etc
           configMap:
             name: manila-etc

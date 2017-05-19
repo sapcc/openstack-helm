@@ -31,17 +31,35 @@ spec:
         - name: manila-share-netapp-{{$share.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-share:{{.Values.image_version_manila_share}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "manila-share --config-file /etc/manila/manila.conf --config-file /etc/manila/backend.conf"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /manila-etc
-              name: manila-etc
-            - mountPath: /var/lib/kolla/config_files
-              name: backend-config
+            - name: etcmanila
+              mountPath: /etc/manila
+            - name: manila-etc
+              mountPath: /etc/manila/manila.conf
+              subPath: manila.conf
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: manila-etc
+              mountPath: /etc/manila/logging.conf
+              subPath: logging.conf
+              readOnly: true
+            - name: backend-config
+              mountPath: /etc/manila/backend.conf
+              subPath: backend.conf
+              readOnly: true
       volumes:
+        - name: etcmanila
+          emptyDir: {}
         - name: manila-etc
           configMap:
             name: manila-etc
