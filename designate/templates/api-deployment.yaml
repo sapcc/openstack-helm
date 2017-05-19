@@ -29,10 +29,8 @@ spec:
         - name: designate-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-api:{{.Values.image_version_designate_api}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
           command:
-            - /usr/local/bin/kubernetes-entrypoint
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "/container.init/designate-api-start"
