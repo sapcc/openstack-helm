@@ -29,11 +29,7 @@ spec:
         - name: neutron-cisco-asr
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
-          securityContext:
-            privileged: true
           command:
-            - bash
-          args:
             - /container.init/neutron-asr-start
           env:
             - name: DEBUG_CONTAINER
