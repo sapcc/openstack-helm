@@ -57,7 +57,7 @@ spec:
               subPath: logging.conf
               readOnly: true
             - name: neutron-etc-vendor
-              mountPath: /etc/neutron/plugins/ml2//cisco-ucs-bm-ml2-agent.ini
+              mountPath: /etc/neutron/plugins/ml2/cisco-ucs-bm-ml2-agent.ini
               subPath: cisco-ucs-bm-ml2-agent.ini
               readOnly: true
       volumes:
