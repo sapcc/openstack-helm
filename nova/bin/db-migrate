@@ -4,14 +4,6 @@ set -e
 
 . /container.init/common.sh
 
-
-
-function process_config {
-    cp /nova-etc/nova.conf  /etc/nova/nova.conf
-    cp /nova-etc/logging.conf  /etc/nova/logging.conf
-}
-
-process_config
 nova-manage db sync
 nova-manage api_db sync
 #nova-manage db online_data_migrations

@@ -35,9 +35,11 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf
+              value: "nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
@@ -52,10 +54,24 @@ spec:
               readOnly: true
             - mountPath: /var/run
               name: run
-            - mountPath: /var/lib/kolla/config_files
-              name: hypervisor-config
-            - mountPath: /nova-etc
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
               name: nova-etc
+              subPath: nova.conf
+              readOnly: true
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/nova/logging.conf
+              name: nova-etc
+              subPath: logging.conf
+              readOnly: true
+            - mountPath: /etc/nova/hypervisor.conf
+              name: hypervisor-config
+              subPath: hypervisor.conf
+              readOnly: true
             - mountPath: /nova-patches
               name: nova-patches
         - name: nova-libvirt
@@ -63,6 +79,8 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: /container.init/nova-libvirt-start
@@ -80,10 +98,26 @@ spec:
             - mountPath: /lib/modules
               name: modules
               readOnly: true
-            - mountPath: /var/lib/kolla/config_files
-              name: hypervisor-config
-            - mountPath: /nova-etc
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
               name: nova-etc
+              subPath: nova.conf
+              readOnly: true
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/nova/logging.conf
+              name: nova-etc
+              subPath: logging.conf
+              readOnly: true
+            - mountPath: /etc/libvirt
+              name: etclibvirt
+            - mountPath: /etc/libvirt/libvirtd.conf
+              name: hypervisor-config
+              subPath: libvirtd.conf
+              readOnly: true
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-virtlog
@@ -91,6 +125,8 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: /usr/sbin/virtlogd
@@ -108,10 +144,26 @@ spec:
             - mountPath: /lib/modules
               name: modules
               readOnly: true
-            - mountPath: /var/lib/kolla/config_files
-              name: hypervisor-config
-            - mountPath: /nova-etc
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
               name: nova-etc
+              subPath: nova.conf
+              readOnly: true
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/nova/logging.conf
+              name: nova-etc
+              subPath: logging.conf
+              readOnly: true
+            - mountPath: /etc/libvirt
+              name: etclibvirt
+            - mountPath: /etc/libvirt/libvirtd.conf
+              name: hypervisor-config
+              subPath: libvirtd.conf
+              readOnly: true
             - mountPath: /container.init
               name: nova-container-init
         - name: neutron-ovs-agent
@@ -179,6 +231,10 @@ spec:
         - name: hypervisor-config
           configMap:
             name: hypervisor-{{$hypervisor.name}}
+        - name: etclibvirt
+          emptyDir: {}
+        - name: etcnova
+          emptyDir: {}
         - name: nova-etc
           configMap:
             name: nova-etc

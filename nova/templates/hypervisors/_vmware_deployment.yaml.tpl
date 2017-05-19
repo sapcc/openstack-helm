@@ -33,18 +33,34 @@ spec:
         - name: nova-compute-{{$hypervisor.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.image_version_nova_compute}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf
+              value: "nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: hypervisor-config
-            - mountPath: /nova-etc
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
               name: nova-etc
+              subPath: nova.conf
+              readOnly: true
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/nova/logging.conf
+              name: nova-etc
+              subPath: logging.conf
+              readOnly: true
+            - mountPath: /etc/nova/hypervisor.conf
+              name: hypervisor-config
+              subPath: hypervisor.conf
+              readOnly: true
             - mountPath: /nova-patches
               name: nova-patches
         - name: neutron-dvs-agent
@@ -76,6 +92,8 @@ spec:
             - name: metrics
               containerPort: 9102
       volumes:
+        - name: etcnova
+          emptyDir: {}
         - name: nova-etc
           configMap:
             name: nova-etc

@@ -27,6 +27,8 @@ spec:
         - name: nova-consoleauth
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "nova-consoleauth"
@@ -35,11 +37,32 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "nova-api"
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: nova-etc
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+              mountPath: /etc/nova/api_audit_map.conf
+              subPath: api_audit_map.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.conf
+              subPath: logging.conf
+              readOnly: true
         - name: nova-novncproxy
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "nova-novncproxy"
@@ -48,11 +71,32 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "nova-api"
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: nova-etc
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+              mountPath: /etc/nova/api_audit_map.conf
+              subPath: api_audit_map.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.conf
+              subPath: logging.conf
+              readOnly: true
         - name: nova-spicehtml5proxy
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.image_version_nova_spicehtml5proxy}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "nova-spicehtml5proxy"
@@ -61,9 +105,30 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "nova-api"
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: nova-etc
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+              mountPath: /etc/nova/api_audit_map.conf
+              subPath: api_audit_map.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.conf
+              subPath: logging.conf
+              readOnly: true
       volumes:
+        - name: etcnova
+          emptyDir: {}
         - name: nova-etc
           configMap:
             name: nova-etc

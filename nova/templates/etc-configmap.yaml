@@ -18,17 +18,3 @@ data:
 {{ include (print .Template.BasePath "/etc/_api-paste.ini.tpl") . | indent 4 }}
   api_audit_map.conf: |
 {{ include (print .Template.BasePath "/etc/_api_audit_map.conf.tpl") . | indent 4 }}
-  iptables-restore.mock: |
-    #!/bin/bash
-    exit 0
-  config.json: |
-    {"command": "kubernetes-entrypoint",
-       "config_files":[
-           {"source": "/var/lib/kolla/config_files/nova.conf", "dest": "/etc/nova/nova.conf", "owner": "nova", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/policy.json", "dest": "/etc/nova/policy.json", "owner": "nova", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/logging.conf", "dest": "/etc/nova/logging.conf", "owner": "nova", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/api-paste.ini", "dest": "/etc/nova/api-paste.ini", "owner": "nova", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/api_audit_map.conf", "dest": "/etc/nova/api_audit_map.conf", "owner": "nova", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/iptables-restore.mock", "dest": "/var/lib/kolla/venv/bin/iptables-restore", "owner": "nova", "perm": "0500"}
-       ]
-    }

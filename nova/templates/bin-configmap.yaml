@@ -11,5 +11,7 @@ data:
 {{ .Files.Get "bin/nova-libvirt-start" | indent 4 }}
   db-migrate: |
 {{ .Files.Get "bin/db-migrate" | indent 4 }}
+  iptables-restore.mock: |
+{{ .Files.Get "bin/iptables-restore.mock" | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}

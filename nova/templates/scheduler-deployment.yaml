@@ -27,6 +27,8 @@ spec:
         - name: nova-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-scheduler:{{.Values.image_version_nova_scheduler}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "nova-scheduler"
@@ -35,9 +37,30 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "nova-api,rabbitmq"
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: nova-etc
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+              mountPath: /etc/nova/api_audit_map.conf
+              subPath: api_audit_map.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.conf
+              subPath: logging.conf
+              readOnly: true
       volumes:
+        - name: etcnova
+          emptyDir: {}
         - name: nova-etc
           configMap:
             name: nova-etc

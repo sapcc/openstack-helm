@@ -27,6 +27,8 @@ spec:
         - name: nova-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "nova-api"
@@ -54,8 +56,32 @@ spec:
             - name: nova-metdata
               containerPort: {{.Values.global.nova_metadata_port_internal}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
               name: nova-etc
+              subPath: nova.conf
+              readOnly: true
+            - mountPath: /etc/nova/api-paste.ini
+              name: nova-etc
+              subPath: api-paste.ini
+              readOnly: true
+            - mountPath: /etc/nova/api_audit_map.conf
+              name: nova-etc
+              subPath: api_audit_map.conf
+              readOnly: true
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/nova/logging.conf
+              name: nova-etc
+              subPath: logging.conf
+              readOnly: true
+            - mountPath: /var/lib/kolla/venv/bin/iptables-restore
+              name: nova-bin
+              subPath: iptables-restore.mock
+              readOnly: true
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -66,6 +92,13 @@ spec:
             - name: metrics
               containerPort: {{.Values.port_metrics}}
       volumes:
+        - name: etcnova
+          emptyDir: {}
         - name: nova-etc
           configMap:
             name: nova-etc
+        - name: nova-bin
+          configMap:
+            name: nova-bin
+            defaultMode: 0755
+
