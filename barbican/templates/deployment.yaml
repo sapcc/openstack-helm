@@ -8,13 +8,15 @@ metadata:
     type: api
     component: barbican
 spec:
-  replicas: 1
-  revisionHistoryLimit: 5
+  replicas: {{ .Values.replicas.api }}
+  revisionHistoryLimit: {{ .Values.upgrades.revision_history }}
   strategy:
-    type: RollingUpdate
+    type: {{ .Values.upgrades.pod_replacement_strategy }}
+    {{ if eq .Values.upgrades.pod_replacement_strategy "RollingUpdate" }}
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 3
+      maxUnavailable: {{ .Values.upgrades.rolling_update.max_unavailable }}
+      maxSurge: {{ .Values.upgrades.rolling_update.max_surge }}
+    {{ end }}
   selector:
     matchLabels:
       name: barbican-api
@@ -23,12 +25,14 @@ spec:
       labels:
         name: barbican-api
       annotations:
-        chart-version: {{.Chart.Version}}
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: barbican-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-barbican-api:{{.Values.image_version_barbican}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
               value: "/barbican/bin/barbican-api"
@@ -36,8 +40,6 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-barbican,rabbitmq"
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
           livenessProbe:
             httpGet:
               path: /
@@ -48,11 +50,30 @@ spec:
             - name: barbican-api
               containerPort: {{.Values.global.barbican_api_port_internal}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files/
-              name: barbican-etc
+            - name: etcbarbican
+              mountPath: /etc/barbican
+            - name: barbican-etc
+              mountPath: /etc/barbican/barbican.conf
+              subPath: barbican.conf
+              readOnly: true
+            - name: barbican-etc
+              mountPath: /etc/barbican/barbican-api-paste.ini
+              subPath: barbican-api-paste.ini
+              readOnly: true
+            - name: barbican-etc
+              mountPath: /etc/barbican/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: barbican-etc
+              mountPath: /etc/barbican/logging.conf
+              subPath: logging.conf
+              readOnly: true
             - mountPath: /barbican-patches
               name: barbican-patches
+              readOnly: true
       volumes:
+        - name: etcbarbican
+          emptyDir: {}
         - name: barbican-etc
           configMap:
             name: barbican-etc
