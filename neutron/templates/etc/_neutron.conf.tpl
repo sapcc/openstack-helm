@@ -15,14 +15,10 @@ interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
 
 allow_overlapping_ips = true
 core_plugin = ml2
-#service_plugins = router
-#service_plugins=networking_cisco.plugins.cisco.service_plugins.cisco_device_manager_plugin.CiscoDeviceManagerPlugin,networking_cisco.plugins.cisco.service_plugins.cisco_router_plugin.CiscoRouterPlugin
 
-#service_plugins=lbaas,networking_cisco.plugins.cisco.service_plugins.cisco_device_manager_plugin.CiscoDeviceManagerPlugin,networking_cisco.plugins.cisco.service_plugins.cisco_router_plugin.CiscoRouterPlugin
+service_plugins={{.Values.service_plugins}}
 
-service_plugins=neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2,networking_cisco.plugins.cisco.service_plugins.cisco_device_manager_plugin.CiscoDeviceManagerPlugin,networking_cisco.plugins.cisco.service_plugins.cisco_router_plugin.CiscoRouterPlugin
-
-default_router_type = ASR1k_router
+default_router_type = {{.Values.default_router_type}}
 
 dhcp_agent_notification = true
 network_auto_schedule = True
