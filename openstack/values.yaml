@@ -200,9 +200,6 @@ global:
   arc_api_endpoint_protocol_public: https
   arc_api_port_public: '443'
 
-  billing_api_endpoint_protocol_public: https
-  billing_api_port_public: '64000'
-
   webcli_api_endpoint_protocol_public: https
   webcli_api_port_public: '443'
 
