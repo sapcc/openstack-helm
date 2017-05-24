@@ -37,6 +37,8 @@ spec:
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
+            - mountPath: /development
+              name: development
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /neutron-etc-vendor
@@ -59,4 +61,7 @@ spec:
           configMap:
             name: neutron-bin-vendor
             defaultMode: 0755
+        - name: development
+          persistentVolumeClaim:
+            claimName: development-pvclaim
 
