@@ -14,4 +14,6 @@ data:
 {{ include (print .Template.BasePath "/etc/_keystone-policyv3.json.tpl") . | indent 4 }}
   wsgi-keystone.conf: |
 {{ include (print .Template.BasePath "/etc/_wsgi-keystone.conf.tpl") . | indent 4 }}
+  paste.ini: |
+{{ include (print .Template.BasePath "/etc/_paste.ini.tpl") . | indent 4 }}
 
