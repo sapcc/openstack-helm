@@ -37,7 +37,7 @@ image_version_neutron_vswitchd: DEFINED-IN-REGION-CHART
 
 service_plugins: neutron_lbaas.services.loadbalancer.plugin.LoadBalancerPluginv2,networking_cisco.plugins.cisco.service_plugins.cisco_device_manager_plugin.CiscoDeviceManagerPlugin,networking_cisco.plugins.cisco.service_plugins.cisco_router_plugin.CiscoRouterPlugin
 default_router_type: ASR1k_router
-
+router_scheduler_driver: neutron.scheduler.l3_agent_scheduler.LeastRoutersScheduler
 
 
 logging:

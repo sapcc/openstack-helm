@@ -19,6 +19,8 @@ core_plugin = ml2
 service_plugins={{.Values.service_plugins}}
 
 default_router_type = {{.Values.default_router_type}}
+router_scheduler_driver = {{.Values.router_scheduler_driver}}
+
 
 dhcp_agent_notification = true
 network_auto_schedule = True
