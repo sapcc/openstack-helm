@@ -89,34 +89,31 @@ spec:
             - name: STATSD_PORT
               value: "9125"
           volumeMounts:
-            - name: etcnova
-              mountPath: /etc/nova
-            - name: nova-etc
-              mountPath: /etc/nova/nova.conf
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
+              name: nova-etc
               subPath: nova.conf
               readOnly: true
-            - name: nova-etc
-              mountPath: /etc/nova/policy.json
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
               subPath: policy.json
               readOnly: true
-            - name: nova-etc
-              mountPath: /etc/nova/logging.conf
+            - mountPath: /etc/nova/logging.conf
+              name: nova-etc
               subPath: logging.conf
               readOnly: true
             - mountPath: /etc/nova/hypervisor.conf
               name: hypervisor-config
               subPath: hypervisor.conf
               readOnly: true
-            - mountPath: /nova-patches
-              name: nova-patches
         - name: neutron-dvs-agent
           image: {{ neutron_agent_image }}
           imagePullPolicy: IfNotPresent
           command:
-            - /container.init/neutron-dvs-agent-start
+            - dumb-init
+          args: ["neutron-dvs-agent", "--config-file", "/etc/neutron/neutron.conf", "--config-file", "/etc/neutron/plugins/ml2/ml2-conf.ini", "--config-file", "/etc/neutron/plugins/ml2/ml2-vmware.ini"]
           env:
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: SENTRY_DSN
               value: {{ neutron_sentry_dsn }}
             - name: STATSD_HOST
@@ -124,12 +121,24 @@ spec:
             - name: STATSD_PORT
               value: "9125"
           volumeMounts:
-            - mountPath: /neutron-etc
+            - mountPath: /etc/neutron
+              name: etcneutron
+            - mountPath: /etc/neutron/neutron.conf
               name: neutron-etc
-            - mountPath: /ml2-conf-vmware
+              subPath: neutron.conf
+              readOnly: true
+            - mountPath: /etc/neutron/logging.conf
+              name: neutron-etc
+              subPath: logging.conf
+              readOnly: true
+            - mountPath: /etc/neutron/plugins/ml2/ml2-conf.ini
+              name: neutron-etc
+              subPath: ml2-conf.ini
+              readOnly: true
+            - mountPath: /etc/neutron/plugins/ml2/ml2-vmware.ini
               name: ml2-conf-vmware
-            - mountPath: /container.init
-              name: neutron-container-init
+              subPath: ml2-vmware.ini
+              readOnly: true
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -145,9 +154,6 @@ spec:
         - name: nova-etc
           configMap:
             name: nova-etc
-        - name: nova-patches
-          configMap:
-            name: nova-patches
         - name: hypervisor-config
           configMap:
             name: hypervisor-{{ name }}
@@ -155,6 +161,8 @@ spec:
           configMap:
             name: nova-bin
             defaultMode: 0755
+        - name: etcneutron
+          emptyDir: {}
         - name: neutron-etc
           configMap:
             name: neutron-etc

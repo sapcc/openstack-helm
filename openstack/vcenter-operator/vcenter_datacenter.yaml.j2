@@ -57,9 +57,9 @@ spec:
             - name: COMMAND
               value: "cinder-volume --config-file /etc/cinder/cinder.conf --config-file /etc/cinder/volume.conf"
             - name: NAMESPACE
-              value: {{ .Release.Namespace }}
+              value: {{ namespace }}
             - name: SENTRY_DSN
-              value: {{.Values.sentry_dsn | quote}}
+              value: {{ cinder_sentry_dsn }}
           volumeMounts:
             - name: etccinder
               mountPath: /etc/cinder
@@ -80,6 +80,8 @@ spec:
               subPath: volume.conf
               readOnly: true
       volumes:
+        - name: etccinder
+          emptyDir: {}
         - name: cinder-etc
           configMap:
             name: cinder-etc
