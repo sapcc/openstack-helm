@@ -7,15 +7,6 @@ metadata:
     type: configuration
     component: cinder
 data:
-  config.json: |
-    {"command": "kubernetes-entrypoint",
-       "config_files":[
-           {"source": "/cinder-etc/cinder.conf", "dest": "/etc/cinder/cinder.conf", "owner": "cinder", "perm": "0400"},
-           {"source": "/cinder-etc/policy.json", "dest": "/etc/cinder/policy.json", "owner": "cinder", "perm": "0400"},
-           {"source": "/cinder-etc/logging.conf", "dest": "/etc/cinder/logging.conf", "owner": "cinder", "perm": "0400"},
-           {"source": "/var/lib/kolla/config_files/volume.conf", "dest": "/etc/cinder/volume.conf", "owner": "cinder", "perm": "0400"}
-       ]
-    }
   volume.conf: |
     [DEFAULT]
     enabled_backends = vmware
@@ -60,18 +51,34 @@ spec:
         - name: cinder-volume-vmware-{{ name }}
           image: {{ cinder_agent_image }}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
-            - name: KOLLA_CONFIG_STRATEGY
-              value: "COPY_ALWAYS"
             - name: COMMAND
               value: "cinder-volume --config-file /etc/cinder/cinder.conf --config-file /etc/cinder/volume.conf"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
-              value: {{ cinder_sentry_dsn }}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
-            - mountPath: /cinder-etc
-              name: cinder-etc
-            - mountPath: /var/lib/kolla/config_files
-              name: volume-config
+            - name: etccinder
+              mountPath: /etc/cinder
+            - name: cinder-etc
+              mountPath: /etc/cinder/cinder.conf
+              subPath: cinder.conf
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/logging.conf
+              subPath: logging.conf
+              readOnly: true
+            - name: volume-config
+              mountPath: /etc/cinder/volume.conf
+              subPath: volume.conf
+              readOnly: true
       volumes:
         - name: cinder-etc
           configMap:
