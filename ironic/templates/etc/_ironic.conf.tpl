@@ -1,6 +1,6 @@
 [DEFAULT]
 debug = {{.Values.debug}}
-log-config-append = /var/lib/kolla/config_files/logging.conf
+log-config-append = /etc/ironic/logging.conf
 
 #admin_token =
 enabled_drivers={{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
@@ -17,6 +17,14 @@ dhcp_provider=neutron
 
 [pxe]
 tftp_server = {{.Values.global.ironic_tftp_ip}}
+pxe_append_params = ipa-debug=1
+tftp_root=/tftpboot
+
+
+[deploy]
+# We expose this directory over http and tftp
+http_root=/tftpboot
+http_url=http://{{.Values.global.ironic_tftp_ip}}:8080
 
 [api]
 host_ip = 0.0.0.0

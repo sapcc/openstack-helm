@@ -9,12 +9,6 @@ metadata:
     component: ironic
 
 data:
-  # Do not copy the config to /etc/ironic-inspector, as it will overwrite the rootwrap.conf stored in the image
-  # Mode Read-execute, because we create a directory, and it takes the same permissions as the file
-  config.json: |
-    {"command": "kubernetes-entrypoint"}
   ironic.conf: |
 {{ include (print .Template.BasePath "/etc/_ironic_inspector.conf.tpl") . | indent 4 }}
-  logging.conf: |
-{{ include "loggerIni" .Values.logging | indent 4 }}
 {{ end -}}

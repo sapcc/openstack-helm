@@ -28,38 +28,62 @@ spec:
         - name: ironic-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "ironic-conductor --config-file /var/lib/kolla/config_files/ironic.conf"
+              value: "ironic-conductor --config-file /etc/ironic/ironic.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
+            - mountPath: /etc/ironic
+              name: etcironic
+            - mountPath: /etc/ironic/ironic.conf
               name: ironic-etc
+              subPath: ironic.conf
+              readOnly: true
+            - mountPath: /etc/ironic/policy.json
+              name: ironic-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/ironic/rootwrap.conf
+              name: ironic-etc
+              subPath: rootwrap.conf
+              readOnly: true
+            - mountPath: /etc/ironic/logging.conf
+              name: ironic-etc
+              subPath: logging.conf
+              readOnly: true
             - mountPath: /tftpboot
               name: ironic-tftp
         - name: ironic-pxe
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
           imagePullPolicy: IfNotPresent
-          env:
-            - name: COMMAND
-              value: "ptftpd -v --ignore-invalid-ack -d /tftpmap.py:handle eth0 /tftpboot"
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
+          command: ["ptftpd", "-v", "-d", "/tftpmap.py:handle", "eth0", "/tftpboot"]
           ports:
             - name: ironic-pxe
               protocol: UDP
               containerPort: {{.Values.global.ironic_pxe_port_public}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
-              name: ironic-etc
+            - mountPath: /tftpboot
+              name: ironic-tftp
+        - name: ironic-ipxe
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
+          imagePullPolicy: IfNotPresent
+          workingDir: /tftpboot
+          command: ["python", "-m", "SimpleHTTPServer", "{{.Values.conductor.deploy.port}}"]
+          ports:
+            - name: ironic-ipxe
+              protocol: TCP
+              containerPort: {{.Values.conductor.deploy.port}}
+          volumeMounts:
             - mountPath: /tftpboot
               name: ironic-tftp
       volumes:
+        - name: etcironic
+          emptyDir: {}
         - name: ironic-etc
           configMap:
             name: ironic-etc

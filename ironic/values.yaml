@@ -33,6 +33,11 @@ inspector:
     options:
       router: DEFINE_IN_REGION_CHART
 
+conductor:
+  deploy:
+    protocol: 'http'
+    port: 8088
+
 tftp_ip:
 
 port_metrics: '9102'

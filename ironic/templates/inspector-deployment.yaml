@@ -28,31 +28,45 @@ spec:
         - name: ironic-inspector
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "ironic-inspector --config-file /var/lib/kolla/config_files/ironic.conf"
+              value: "ironic-inspector --config-file /etc/ironic/ironic.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
+            - mountPath: /etc/ironic
+              name: etcironic
+            - mountPath: /etc/ironic/ironic.conf
               name: ironic-inspector-etc
-            - mountPath: /ironic-patches
-              name: ironic-patches
+              subPath: ironic.conf
+              readOnly: true
+            - mountPath: /etc/ironic/policy.json
+              name: ironic-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/ironic/rootwrap.conf
+              name: ironic-etc
+              subPath: rootwrap.conf
+              readOnly: true
+            - mountPath: /etc/ironic/logging.conf
+              name: ironic-etc
+              subPath: logging.conf
+              readOnly: true
 {{- if .Values.image_version_staticdhcpd}}
         - name: dhcp
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-staticdhcpd:{{.Values.image_version_staticdhcpd}}
           imagePullPolicy: IfNotPresent
+          command:
+            - staticDHCPd
           env:
             - name: POD_IP
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
           ports:
             - name: dhcp
               protocol: UDP
@@ -61,16 +75,14 @@ spec:
               protocol: UDP
               containerPort: {{.Values.inspector.dhcp.proxy_port}}
           volumeMounts:
-            - name: dhcp-config
-              mountPath: /var/lib/kolla/config_files
+            - mountPath: /conf
+              name: dhcp-config
 {{- end }}
       volumes:
+        - name: etcironic
+          emptyDir: {}
         - name: ironic-inspector-etc
           configMap:
-            name: ironic-inspector-etc
-        - name: ironic-patches
-          configMap:
-            name: ironic-patches
 {{- if .Values.image_version_staticdhcpd }}
         - name: dhcp-config
           configMap:

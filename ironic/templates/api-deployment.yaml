@@ -28,15 +28,15 @@ spec:
         - name: ironic-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_api}}
           imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "ironic-api --config-file /var/lib/kolla/config_files/ironic.conf"
+              value: "ironic-api"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-ironic,rabbitmq"
-            - name: KOLLA_CONFIG_STRATEGY
-              value: COPY_ALWAYS
           livenessProbe:
             httpGet:
               path: /
@@ -47,17 +47,29 @@ spec:
             - name: ironic-api
               containerPort: {{.Values.global.ironic_api_port_internal}}
           volumeMounts:
-            - mountPath: /var/lib/kolla/config_files
+            - mountPath: /etc/ironic
+              name: etcironic
+            - mountPath: /etc/ironic/ironic.conf
               name: ironic-etc
-            - mountPath: /ironic-patches
-              name: ironic-patches
+              subPath: ironic.conf
+              readOnly: true
+            - mountPath: /etc/ironic/policy.json
+              name: ironic-etc
+              subPath: policy.json
+              readOnly: true
+            - mountPath: /etc/ironic/rootwrap.conf
+              name: ironic-etc
+              subPath: rootwrap.conf
+              readOnly: true
+            - mountPath: /etc/ironic/logging.conf
+              name: ironic-etc
+              subPath: logging.conf
+              readOnly: true
       volumes:
+        - name: etcironic
+          emptyDir: {}
         - name: ironic-etc
           configMap:
             name: ironic-etc
-            defaultMode: 0444
-        - name: ironic-patches
-          configMap:
-            name: ironic-patches
             defaultMode: 0444
 {{ end -}}
