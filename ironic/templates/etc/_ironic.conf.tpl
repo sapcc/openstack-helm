@@ -20,6 +20,12 @@ tftp_server = {{.Values.global.ironic_tftp_ip}}
 pxe_append_params = ipa-debug=1
 tftp_root=/tftpboot
 
+ipxe_enabled=True
+pxe_bootfile_name=undionly.kpxe
+uefi_pxe_bootfile_name=ipxe.efi
+pxe_config_template=$pybasedir/drivers/modules/ipxe_config.template
+uefi_pxe_config_template=$pybasedir/drivers/modules/ipxe_config.template
+
 
 [deploy]
 # We expose this directory over http and tftp

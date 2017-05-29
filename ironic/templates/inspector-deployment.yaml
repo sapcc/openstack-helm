@@ -81,12 +81,18 @@ spec:
       volumes:
         - name: etcironic
           emptyDir: {}
+        - name: ironic-etc
+          configMap:
+            name: ironic-etc
+            defaultMode: 0444
         - name: ironic-inspector-etc
           configMap:
+            name: ironic-inspector-etc
+            defaultMode: 0444
 {{- if .Values.image_version_staticdhcpd }}
         - name: dhcp-config
           configMap:
             name: ironic-inspector-dhcp
-            defaultMode: 0400
+            defaultMode: 0444
 {{ end -}}
 {{ end -}}
