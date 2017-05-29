@@ -49,6 +49,10 @@ spec:
               name: nova-etc
               subPath: nova.conf
               readOnly: true
+            - mountPath: /etc/nova/api-paste.ini
+              name: nova-etc
+              subPath: api-paste.ini
+              readOnly: true
             - mountPath: /etc/nova/policy.json
               name: nova-etc
               subPath: policy.json

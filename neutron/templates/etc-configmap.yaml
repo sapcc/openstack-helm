@@ -8,6 +8,8 @@ metadata:
     component: neutron
 
 data:
+  api-paste.ini: |
+{{ include (print .Template.BasePath "/etc/_api-paste.ini.tpl") . | indent 4 }}
   dhcp-agent.ini: |
 {{ include (print .Template.BasePath "/etc/_dhcp-agent.ini.tpl") . | indent 4 }}
   dnsmasq.conf: |
