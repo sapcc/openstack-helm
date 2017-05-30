@@ -15,6 +15,10 @@ data:
 {{ include (print .Template.BasePath "/etc/_policy.json.tpl") . | indent 4 }}
   rootwrap.conf: |
 {{ include (print .Template.BasePath "/etc/_rootwrap.conf.tpl") . | indent 4 }}
+  pxe_config.template: |
+{{ include (print .Template.BasePath "/etc/_pxe_config.template.tpl") . | indent 4 }}
+  ipxe_config.template: |
+{{ include (print .Template.BasePath "/etc/_ipxe_config.template.tpl") . | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}
 {{ end -}}

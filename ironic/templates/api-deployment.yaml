@@ -57,6 +57,10 @@ spec:
               name: ironic-etc
               subPath: policy.json
               readOnly: true
+            - mountPath: /etc/ironic/pxe_config.template
+              name: ironic-etc
+              subPath: pxe_config.template
+              readOnly: true
             - mountPath: /etc/ironic/rootwrap.conf
               name: ironic-etc
               subPath: rootwrap.conf
