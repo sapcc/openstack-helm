@@ -1,3 +1,5 @@
+default deploy
+
 label deploy
 kernel http://{{.Values.global.ironic_tftp_ip}}:{{.Values.conductor.deploy.port}}/{{"{{"}} pxe_options.deployment_aki_path {{"}}"}}
 append initrd=http://{{.Values.global.ironic_tftp_ip}}:{{.Values.conductor.deploy.port}}/{{"{{"}} pxe_options.deployment_ari_path {{"}}"}} selinux=0 troubleshoot=0 text {{"{{"}} pxe_options.pxe_append_params|default("", true) {{"}}"}} ipa-api-url={{"{{"}} pxe_options['ipa-api-url'] {{"}}"}} coreos.configdrive=0
