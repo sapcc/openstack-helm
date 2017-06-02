@@ -83,9 +83,18 @@ the hypervisors and neutron agents to their dedicated network nodes. We do this
 by labeling the nodes:
 
 ```
+kubectl label master0 species=master
 kubectl label network0 species=network
 kubectl label minion1  species=hypervisor
 ```
+
+also every node gets one of these labels as per usage:
+
+```
+kubectl label master0 zone=farm
+kubectl label network0 zone=petting-zoo
+```
+
 
 Then add selectors to the pods:
 
