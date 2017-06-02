@@ -18,3 +18,7 @@ spec:
       port: {{.Values.global.rabbitmq_port_public}}
     - name: rabbitmq-mgmt
       port: {{.Values.global.rabbitmq_port_management}}
+    {{- if .Values.global.rabbitmq_external_ip }}
+  externalIPs:
+    - {{.Values.global.rabbitmq_external_ip}}
+    {{- end }}
