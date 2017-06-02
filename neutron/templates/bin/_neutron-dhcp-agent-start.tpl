@@ -13,7 +13,7 @@ function process_config {
 }
 
 
-function start_application {
+function _start_application {
     mkdir /var/log/neutron
 
     echo "$MY_IP $(hostname)" >> etc/hosts

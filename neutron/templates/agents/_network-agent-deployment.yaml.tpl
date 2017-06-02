@@ -40,6 +40,8 @@ spec:
           env:
             - name: SENTRY_DSN
               value: {{$context.Values.sentry_dsn | quote}}
+            - name: DEBUG_CONTAINER
+              value: "false"
           volumeMounts:
             - mountPath: /var/run
               name: run
