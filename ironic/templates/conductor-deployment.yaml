@@ -25,6 +25,7 @@ spec:
         name: ironic-conductor
     spec:
       containers:
+{{- if not .Values.disable_conductor }}
         - name: ironic-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
@@ -62,6 +63,7 @@ spec:
               readOnly: true
             - mountPath: /tftpboot
               name: ironic-tftp
+{{- end }}
         - name: ironic-pxe
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
           imagePullPolicy: IfNotPresent
