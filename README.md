@@ -95,6 +95,13 @@ kubectl label master0 zone=farm
 kubectl label network0 zone=petting-zoo
 ```
 
+and a failure-domain as per datacenter:
+
+```
+kubectl label master0 failure-domain.beta.kubernetes.io/zone=eu-de-1a
+kubectl label master1 failure-domain.beta.kubernetes.io/zone=eu-de-1b
+```
+
 
 Then add selectors to the pods:
 
