@@ -20,3 +20,7 @@ spec:
     - name: public
       port: {{.Values.port_public}}
       targetPort: postgres
+    {{- if .Values.external_ip }}
+  externalIPs:
+    - {{.Values.external_ip }}
+    {{- end }}
