@@ -65,7 +65,7 @@ spec:
               - "{{.Values.port_private}}"
               - -U
               - postgres
-            initialDelaySeconds: 20
+            initialDelaySeconds: 60
             timeoutSeconds: 5
           env:
             - name: PGDATA
