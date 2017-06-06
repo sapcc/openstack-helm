@@ -15,7 +15,6 @@ netapp_transport_type=https
 netapp_login={{$share.username}}
 netapp_password={{$share.password}}
 netapp_mtu={{$share.mtu}}
-netapp_cifs_ou={{$share.cifs_ou}}
 
 netapp_root_volume_aggregate={{$share.root_volume_aggregate}}
 netapp_aggregate_name_search_pattern={{$share.aggregate_search_pattern}}
