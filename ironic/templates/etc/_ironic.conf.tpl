@@ -59,9 +59,11 @@ insecure = True
 [glance]
 glance_host = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
 auth_strategy=keystone
+
+swift_store_multiple_containers_seed=128
 swift_temp_url_key={{ .Values.swift_tempurl }}
 swift_temp_url_duration=1200
-swift_endpoint_url={{.Values.global.swift_endpoint_protocol}}://{{include "swift_endpoint_host" .}}:{{ .Values.global.swift_api_port_public }}
+swift_endpoint_url={{.Values.global.swift_endpoint_protocol}}://{{include "swift_endpoint_host" .}}:{{ .Values.global.swift_api_port_public }} # No terminal slash, it will break the url signing scheme
 swift_api_version=v1
 swift_account={{ .Values.swift_account }}
 
