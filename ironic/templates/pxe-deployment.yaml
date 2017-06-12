@@ -39,14 +39,14 @@ spec:
         - name: ironic-ipxe
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
-          workingDir: /tftpboot
+          workingDir: /srv
           command: ["python", "-m", "SimpleHTTPServer", "{{.Values.conductor.deploy.port}}"]
           ports:
             - name: ironic-ipxe
               protocol: TCP
               containerPort: {{.Values.conductor.deploy.port}}
           volumeMounts:
-            - mountPath: /tftpboot
+            - mountPath: /srv/tftpboot
               name: ironic-tftp
       volumes:
         - name: ironic-tftp
