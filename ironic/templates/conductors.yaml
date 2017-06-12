@@ -1,0 +1,6 @@
+{{- range $i, $conductor := .Values.conductor.hosts }}
+{{ if ne $i 0 }}---{{ end }}
+{{ tuple $ $conductor | include "ironic_conductor_deployment" }}
+---
+{{ tuple $ $conductor | include "ironic_conductor_configmap" }}
+{{- end }}

@@ -11,9 +11,9 @@ metadata:
 spec:
   type: NodePort
   selector:
-    name: ironic-conductor
+    name: ironic-pxe
   ports:
-    - name: ironic-pxe
+    - name: ironic-tftp
       protocol: UDP
       port: {{.Values.global.ironic_tftp_port_public}}
     - name: ironic-ipxe

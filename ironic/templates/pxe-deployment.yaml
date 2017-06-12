@@ -1,0 +1,55 @@
+{{- if .Values.image_version_ironic_conductor -}}
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: ironic-pxe
+  labels:
+    system: openstack
+    type: backend
+    component: ironic
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 3
+  selector:
+    matchLabels:
+      name: ironic-pxe
+  template:
+    metadata:
+      labels:
+        name: ironic-pxe
+    spec:
+      containers:
+        - name: ironic-tftp
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
+          imagePullPolicy: IfNotPresent
+          command: ["ptftpd", "-v", "-d", "/tftpmap.py:handle", "eth0", "/tftpboot"]
+          ports:
+            - name: ironic-tftp
+              protocol: UDP
+              containerPort: {{.Values.global.ironic_pxe_port_public}}
+          volumeMounts:
+            - mountPath: /tftpboot
+              name: ironic-tftp
+        - name: ironic-ipxe
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
+          imagePullPolicy: IfNotPresent
+          workingDir: /tftpboot
+          command: ["python", "-m", "SimpleHTTPServer", "{{.Values.conductor.deploy.port}}"]
+          ports:
+            - name: ironic-ipxe
+              protocol: TCP
+              containerPort: {{.Values.conductor.deploy.port}}
+          volumeMounts:
+            - mountPath: /tftpboot
+              name: ironic-tftp
+      volumes:
+        - name: ironic-tftp
+          persistentVolumeClaim:
+            claimName: ironic-tftp-pvclaim
+{{ end -}}

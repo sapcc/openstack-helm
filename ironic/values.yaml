@@ -34,6 +34,7 @@ inspector:
       router: DEFINE_IN_REGION_CHART
 
 conductor:
+  hosts: []
   deploy:
     protocol: 'http'
     port: 8088

@@ -1,6 +1,6 @@
 [DEFAULT]
 debug = {{.Values.debug}}
-log-config-append = /var/lib/kolla/config_files/logging.conf
+log-config-append = /etc/ironic/logging.conf
 
 enabled_drivers={{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
 enabled_network_interfaces=noop,flat,neutron
@@ -35,9 +35,6 @@ processing_hooks=$default_processing_hooks,local_link_connection
 
 [discovery]
 enroll_node_driver=agent_ipmitool
-{{- if .Values.inspector.driver_defaults }}
-driver_defaults={{ .Values.inspector.driver_defaults | replace "$" "$$" | quote }}
-{{- end }}
 
 [database]
 connection = postgresql://{{.Values.inspector_db_user}}:{{.Values.inspector_db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.inspector_db_name}}

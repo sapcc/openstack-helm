@@ -2,8 +2,6 @@
 debug = {{.Values.debug}}
 log-config-append = /etc/ironic/logging.conf
 
-#admin_token =
-enabled_drivers={{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
 network_provider=neutron_plugin
 
 enabled_network_interfaces=noop,flat,neutron
@@ -15,31 +13,8 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 [dhcp]
 dhcp_provider=neutron
 
-[pxe]
-tftp_server = {{.Values.global.ironic_tftp_ip}}
-pxe_append_params = ipa-debug=1
-tftp_root=/tftpboot
-
-ipxe_enabled=False
-pxe_bootfile_name=lpxelinux.0
-pxe_config_template=/etc/ironic/pxe_config.template
-
-uefi_pxe_bootfile_name=ipxe.efi
-uefi_pxe_config_template=$pybasedir/drivers/modules/ipxe_config.template
-
-
-[deploy]
-# We expose this directory over http and tftp
-http_root=/tftpboot
-http_url=http://{{.Values.global.ironic_tftp_ip}}:8080
-
 [api]
 host_ip = 0.0.0.0
-
-[conductor]
-api_url = {{.Values.global.ironic_api_endpoint_protocol_public}}://{{include "ironic_api_endpoint_host_public" .}}:{{ .Values.global.ironic_api_port_public }}
-clean_nodes = false
-automated_clean=false
 
 [database]
 connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
@@ -60,10 +35,11 @@ insecure = True
 glance_host = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
 auth_strategy=keystone
 
-swift_store_multiple_containers_seed=128
+swift_store_multiple_containers_seed=32
 swift_temp_url_key={{ .Values.swift_tempurl }}
 swift_temp_url_duration=1200
-swift_endpoint_url={{.Values.global.swift_endpoint_protocol}}://{{include "swift_endpoint_host" .}}:{{ .Values.global.swift_api_port_public }} # No terminal slash, it will break the url signing scheme
+# No terminal slash, it will break the url signing scheme
+swift_endpoint_url={{.Values.global.swift_endpoint_protocol}}://{{include "swift_endpoint_host" .}}:{{ .Values.global.swift_api_port_public }}
 swift_api_version=v1
 swift_account={{ .Values.swift_account }}
 

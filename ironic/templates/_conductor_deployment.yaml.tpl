@@ -1,9 +1,10 @@
-{{- if .Values.image_version_ironic_conductor -}}
-kind: Deployment
+{{- define "ironic_conductor_deployment" }}
+    {{- $conductor := index . 1 }}
+    {{- with index . 0 }}
 apiVersion: extensions/v1beta1
-
+kind: Deployment
 metadata:
-  name: ironic-conductor
+  name: ironic-conductor-{{$conductor.name}}
   labels:
     system: openstack
     type: backend
@@ -18,14 +19,15 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-      name: ironic-conductor
+      name: ironic-conductor-{{$conductor.name}}
   template:
     metadata:
       labels:
-        name: ironic-conductor
+        name: ironic-conductor-{{$conductor.name}}
+      annotations:
+        pod.beta.kubernetes.io/hostname: ironic-conductor-{{$conductor.name}}
     spec:
       containers:
-{{- if not .Values.disable_conductor }}
         - name: ironic-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
@@ -33,7 +35,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "ironic-conductor --config-file /etc/ironic/ironic.conf"
+              value: "ironic-conductor --config-file /etc/ironic/ironic.conf --config-file /etc/ironic/ironic-conductor.conf"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
@@ -49,10 +51,6 @@ spec:
               name: ironic-etc
               subPath: policy.json
               readOnly: true
-            - mountPath: /etc/ironic/pxe_config.template
-              name: ironic-etc
-              subPath: pxe_config.template
-              readOnly: true
             - mountPath: /etc/ironic/rootwrap.conf
               name: ironic-etc
               subPath: rootwrap.conf
@@ -61,31 +59,15 @@ spec:
               name: ironic-etc
               subPath: logging.conf
               readOnly: true
+            - mountPath: /etc/ironic/ironic-conductor.conf
+              name: ironic-conductor-etc
+              subPath: ironic-conductor.conf
+              readOnly: true
+            - mountPath: /etc/ironic/pxe_config.template
+              name: ironic-conductor-etc
+              subPath: pxe_config.template
+              readOnly: true
             - mountPath: /tftpboot
-              name: ironic-tftp
-{{- end }}
-        - name: ironic-pxe
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
-          imagePullPolicy: IfNotPresent
-          command: ["ptftpd", "-v", "-d", "/tftpmap.py:handle", "eth0", "/tftpboot"]
-          ports:
-            - name: ironic-pxe
-              protocol: UDP
-              containerPort: {{.Values.global.ironic_pxe_port_public}}
-          volumeMounts:
-            - mountPath: /tftpboot
-              name: ironic-tftp
-        - name: ironic-ipxe
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
-          imagePullPolicy: IfNotPresent
-          workingDir: /httproot
-          command: ["python", "-m", "SimpleHTTPServer", "{{.Values.conductor.deploy.port}}"]
-          ports:
-            - name: ironic-ipxe
-              protocol: TCP
-              containerPort: {{.Values.conductor.deploy.port}}
-          volumeMounts:
-            - mountPath: /httproot/tftpboot
               name: ironic-tftp
       volumes:
         - name: etcironic
@@ -93,7 +75,11 @@ spec:
         - name: ironic-etc
           configMap:
             name: ironic-etc
+        - name: ironic-conductor-etc
+          configMap:
+            name: ironic-conductor-{{$conductor.name}}-etc
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
-{{ end -}}
+    {{- end }}
+{{- end }}
