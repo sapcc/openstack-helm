@@ -8,6 +8,8 @@
   "context_is_volume_admin": "rule:context_is_admin or rule:admin",
   "context_is_editor": "rule:context_is_volume_admin or rule:member",
   "context_is_viewer":  "rule:context_is_editor or rule:viewer",
+  "view_all": "role:member or role:volume_viewer or role:volume_admin or role:cloud_volume_admin",
+  "edit_all": "role:member or role:volume_admin or role:cloud_volume_admin",
   "default": "rule:context_is_admin",
 
   "volume:create": "rule:context_is_editor",
@@ -78,9 +80,9 @@
   "volume_extension:capabilities": "rule:context_is_admin",
 
   "volume:create_transfer": "rule:context_is_editor",
-  "volume:accept_transfer": "rule:context_is_editor",
+  "volume:accept_transfer": "rule:edit_all",
   "volume:delete_transfer": "rule:context_is_editor",
-  "volume:get_all_transfers": "rule:context_is_viewer",
+  "volume:get_all_transfers": "rule:view_all",
 
   "volume_extension:replication:promote": "rule:context_is_admin",
   "volume_extension:replication:reenable": "rule:context_is_admin",
