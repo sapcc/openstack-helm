@@ -37,19 +37,29 @@ spec:
             - mountPath: /tftpboot
               name: ironic-tftp
         - name: ironic-ipxe
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
+          image: {{.Values.image_version_nginx | default "nginx:stable-alpine"}}
           imagePullPolicy: IfNotPresent
-          workingDir: /srv
-          command: ["python", "-m", "SimpleHTTPServer", "{{.Values.conductor.deploy.port}}"]
           ports:
             - name: ironic-ipxe
               protocol: TCP
-              containerPort: {{.Values.conductor.deploy.port}}
+              containerPort: 80
           volumeMounts:
             - mountPath: /srv/tftpboot
               name: ironic-tftp
+            - mountPath: /etc/nginx/conf.d
+              name: ironic-pxe
+          livenessProbe:
+            httpGet:
+              path: /tftpboot
+              port: ironic-ipxe
+            initialDelaySeconds: 5
+            periodSeconds: 3
       volumes:
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
+        - name: ironic-pxe
+          configMap:
+            name: ironic-pxe
+            defaultMode: 0444
 {{ end -}}

@@ -16,9 +16,11 @@ spec:
     - name: ironic-tftp
       protocol: UDP
       port: {{.Values.global.ironic_tftp_port_public}}
+      targetPort: ironic-tftp
     - name: ironic-ipxe
       protocol: TCP
       port: {{.Values.conductor.deploy.port}}
+      targetPort: ironic-ipxe
   externalIPs:
     - {{.Values.global.ironic_tftp_ip}}
   sessionAffinity: "ClientIP"
