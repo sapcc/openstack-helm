@@ -33,6 +33,8 @@ arista_switches:
     user: DEFINED-IN-REGION-CHART
     password: DEFINED-IN-REGION-CHART
 
+asr_enable_full_sync: False
+
 cisco_ucsm_bm:
   example.com:
     user: DEFINED-IN-REGION-CHART

@@ -13,3 +13,5 @@ device_connection_timeout = 30
 # (IntOpt) The time in seconds until a backlogged hosting device is
 # presumed dead or booted to an error state.
 hosting_device_dead_timeout = 299
+
+enable_full_sync={{.Values.asr_enable_full_sync}}
