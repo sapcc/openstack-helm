@@ -22,6 +22,9 @@ spec:
     metadata:
       labels:
         name: nova-scheduler
+      annotations:
+        checksum/nova-etc: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        checksum/nova-bin: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: nova-scheduler
