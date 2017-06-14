@@ -15,7 +15,7 @@
     "compute:create": "rule:context_is_editor",
     "compute:create:attach_network": "rule:context_is_editor",
     "compute:create:attach_volume": "rule:context_is_editor",
-    "compute:create:forced_host": "rule:context_is_admin",
+    "compute:create:forced_host": "rule:context_is_compute_admin",
 
     "compute:get": "rule:context_is_viewer",
     "compute:get_all": "rule:context_is_viewer",
