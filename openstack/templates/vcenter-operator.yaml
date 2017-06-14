@@ -1,4 +1,4 @@
-{{- if .Values.vcenter_operator_image_version }}
+{{- if .Values.vcenter_operator.image_version }}
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -13,15 +13,17 @@ data:
   nova_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.nova.image_version_nova_compute}}
   nova_sentry_dsn: {{.Values.nova.sentry_dsn }}
   password: {{ .Values.global.master_password }}
-  username: {{ .Values.vcenter_operator_username }}
-{{- if .Values.vcenter_operator_dns_ip }}
-  dns_ip: {{ .Values.vcenter_operator_dns_ip | quote }}
+  username: {{ .Values.vcenter_operator.username }}
+{{- if .Values.vcenter_operator.dns_ip }}
+  dns_ip: {{ .Values.vcenter_operator.dns_ip | quote }}
 {{- end }}
-{{- if .Values.vcenter_operator_dns_port }}
-  dns_port: {{ .Values.vcenter_operator_dns_port | quote }}
+{{- if .Values.vcenter_operator.dns_ip }}
+  dns_port: {{ .Values.vcenter_operator.dns_port | quote }}
 {{- end }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
-
+{{- if .Values.vcenter_operator.tsig_key }}
+  tsig_key: {{ .Values.vcenter_operator.tsig_key | quote }}
+{{- end }}
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -54,7 +56,7 @@ spec:
             - dumb-init
           args:
             - vcenter-operator
-          image: "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{.Values.vcenter_operator_image_version}}"
+          image: "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{.Values.vcenter_operator.image_version}}"
           volumeMounts:
             - name: config
               mountPath: /var/lib/kolla/config_files
