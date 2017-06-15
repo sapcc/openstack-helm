@@ -260,7 +260,7 @@
     "os_compute_api:servers:create": "rule:context_is_editor",
     "os_compute_api:servers:create:attach_network": "rule:context_is_editor",
     "os_compute_api:servers:create:attach_volume": "rule:context_is_editor",
-    "os_compute_api:servers:create:forced_host": "rule:context_is_admin",
+    "os_compute_api:servers:create:forced_host": "rule:context_is_compute_admin",
     "os_compute_api:servers:delete": "rule:context_is_editor",
     "os_compute_api:servers:update": "rule:context_is_editor",
     "os_compute_api:servers:detail": "rule:context_is_viewer",
