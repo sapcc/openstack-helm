@@ -83,9 +83,6 @@ postgres:
        openstack_shares_snapshots:
          query: "SELECT COUNT(snapshot_id) AS count_gauge, status FROM share_snapshot_instances GROUP BY status"
         metrics:
-          - snapshot_id:
-              usage: "LABEL"
-              description: "SnapShot ID"
           - status:
               usage: "LABEL"
               description: "Snapshot Status"
