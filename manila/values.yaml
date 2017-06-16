@@ -81,23 +81,18 @@ postgres:
               usage: "GAUGE"
               description: "Size of shares"
        openstack_shares_snapshots:
-         query: "SELECT project_id, share_id, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM share_snapshots GROUP BY project_id, share_id"
+         query: "SELECT COUNT(snapshot_id) AS count_gauge, status FROM share_snapshot_instances GROUP BY status"
         metrics:
-          - project_id:
+          - snapshot_id:
               usage: "LABEL"
-              description: "Project ID"
+              description: "SnapShot ID"
+          - status:
+              usage: "LABEL"
+              description: "Snapshot Status"
           - count_gauge:
               usage: "GAUGE"
               description: "Number of share networks"
-          - share_id:
-              usage: "LABEL"
-              description: "Share Snapshot ID"
-          - count_gauge:
-              usage: "GAUGE"
-              description: "Number of Snaphot shares"
-          - size_gauge:
-              usage: "GAUGE"
-              description: "Size of shares"
+
               
 logging:
     formatters:
