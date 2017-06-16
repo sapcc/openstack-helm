@@ -91,7 +91,7 @@ postgres:
               description: "Snapshot Status"
           - count_gauge:
               usage: "GAUGE"
-              description: "Number of share networks"
+              description: "Number of share snapshots"
 
               
 logging:
