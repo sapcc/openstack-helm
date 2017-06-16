@@ -80,7 +80,17 @@ postgres:
           - size_gauge:
               usage: "GAUGE"
               description: "Size of shares"
+       openstack_shares_snapshots:
+         query: "SELECT COUNT(snapshot_id) AS count_gauge, status FROM share_snapshot_instances GROUP BY status"
+        metrics:
+          - status:
+              usage: "LABEL"
+              description: "Snapshot Status"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of share snapshots"
 
+              
 logging:
     formatters:
         context:
