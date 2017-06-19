@@ -135,8 +135,8 @@ openstack:
         interval_incr: 3 days
         os_password: YourOwnSecret!
   nova:
-    image_version_nova_api_m3: 'v1'
-    image_version_nova_compute_m3: 'v1'
+    image_version_nova_api: 'v1'
+    image_version_nova_compute: 'v1'
     image_version_nova_libvirt: 'v1'
     image_version_nova_conductor: 'v1'
     image_version_nova_consoleauth: 'v1'

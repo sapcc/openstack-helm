@@ -216,8 +216,8 @@ vcenter_operator:
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
 nova:
-  image_version_nova_api_m3: DEFINED-IN-REGION-CHART
-  image_version_nova_compute_m3: DEFINED-IN-REGION-CHART
+  image_version_nova_api: DEFINED-IN-REGION-CHART
+  image_version_nova_compute: DEFINED-IN-REGION-CHART
   image_version_nova_libvirt: DEFINED-IN-REGION-CHART
   image_version_nova_conductor: DEFINED-IN-REGION-CHART
   image_version_nova_consoleauth: DEFINED-IN-REGION-CHART
