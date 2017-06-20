@@ -10,6 +10,12 @@ default_network_interface=neutron
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
+{{ if .Values.image_version_ironic_inspector -}}
+[inspector]
+enabled=True
+service_url=https://{{include "ironic_inspector_endpoint_host_public" .}}
+{{- end }}
+
 [dhcp]
 dhcp_provider=neutron
 
