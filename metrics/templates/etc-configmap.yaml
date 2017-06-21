@@ -1,0 +1,19 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metrics-etc-{{.Values.name}}
+  labels:
+    system: openstack
+    type: configuration
+    component: database
+
+data:
+  postgresql.conf: |
+{{ include (print .Template.BasePath "/etc/_postgresql.conf.tpl") . | indent 4 }}
+  pg-hba.conf: |
+{{ include (print .Template.BasePath "/etc/_pg_hba.conf.tpl") . | indent 4 }}
+{{- if and  .Values.metrics.enabled .Values.metrics.customMetrics }}
+  custom-metrics.yaml: |
+{{ toYaml .Values.metrics.customMetrics | indent 4}}
+{{- end }}
