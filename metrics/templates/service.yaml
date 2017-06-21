@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: metrics-{{.Values.name}}
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: database
+    component: {{.Values.name}}
+{{- if .Values.metrics.enabled }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+{{- end }}
+spec:
+  selector:
+    name: metrics-{{.Values.name}}
+  ports: 
+    - name: public
+      port: {{.Values.port_public}}
+      targetPort: postgres
+    {{- if .Values.external_ip }}
+  externalIPs:
+    - {{.Values.external_ip }}
+    {{- end }}
