@@ -1,7 +1,7 @@
 {{- define "pxe_config_template" }}
 {{- $conductor := index . 1 }}
 {{- with index . 0 }}
-{{- $prefix := or (and (ne "pxelinux.0" ($conductor.pxe_bootfile_name | default .Values.conductor.pxe_bootfile_name | default "pxelinux.0")) (printf "http://%v:%v" .Values.global.ironic_tftp_ip .Values.conductor.deploy.port)) "" }}
+{{- $prefix := or (and (eq "lpxelinux.0" ($conductor.pxe_bootfile_name | default .Values.conductor.pxe_bootfile_name | default "pxelinux.0")) (printf "http://%v:%v" .Values.global.ironic_tftp_ip .Values.conductor.deploy.port)) "" }}
 default deploy
 
 label deploy
