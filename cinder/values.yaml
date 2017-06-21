@@ -123,16 +123,13 @@ logging:
             level: WARNING
         cinder:
             handlers: stdout, sentry
-            level: INFO
+            level: DEBUG
         taskflow:
             handlers: stdout, sentry
-            level: INFO
-        cinder.flow_utils:
-            handlers: stdout, sentry
-            level: INFO
+            level: DEBUG
         oslo_vmware:
             handlers: stdout, sentry
-            level: DEBUG
+            level: WARNING
         amqp:
             handlers: stdout, sentry
             level: WARNING
