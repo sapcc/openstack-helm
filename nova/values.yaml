@@ -58,11 +58,8 @@ postgres:
     enabled: true
     customMetrics:
       openstack_compute_nodes:
-        query: "SELECT compute_nodes.host, aggregate_metadata.value AS availability_zone, compute_nodes.hypervisor_type, compute_nodes.free_disk_gb AS free_disk_gb_gauge, compute_nodes.local_gb AS local_gb_gauge, compute_nodes.free_ram_mb AS free_ram_mb_gauge, compute_nodes.memory_mb AS memory_mb_gauge, compute_nodes.vcpus_used AS vcpus_used_gauge, compute_nodes.vcpus AS vcpus_gauge, compute_nodes.running_vms AS running_vms_gauge from compute_nodes join aggregate_hosts on compute_nodes.host=aggregate_hosts.host join aggregate_metadata on aggregate_hosts.aggregate_id=aggregate_metadata.aggregate_id WHERE compute_nodes.deleted = 0"
+        query: "SELECT host, hypervisor_type, free_disk_gb AS free_disk_gb_gauge, local_gb AS local_gb_gauge, free_ram_mb AS free_ram_mb_gauge, memory_mb AS memory_mb_gauge, vcpus_used AS vcpus_used_gauge, vcpus AS vcpus_gauge, running_vms AS running_vms_gauge FROM compute_nodes WHERE deleted = 0"
         metrics:
-          - availability_zone:
-              usage: "LABEL"
-              description: "Availability Zone details from aggregate_metadata table"
           - host:
               usage: "LABEL"
               description: "Name of the host"
