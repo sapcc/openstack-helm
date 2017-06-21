@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: metrics-mariadb
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: database
+    component: {{.Values.name}}
+{{- if .Values.metrics.enabled }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{.Values.port_metrics}}"
+{{- end }}
+spec:
+  selector:
+    name: metrics-mariadb
+  ports: 
+    - name: public
+      port: {{.Values.port_public}}
+      targetPort: mariadb
+    {{- if .Values.external_ip }}
+  externalIPs:
+    - {{.Values.external_ip }}
+    {{- end }}
