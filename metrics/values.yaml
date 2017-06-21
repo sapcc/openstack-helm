@@ -1,0 +1,42 @@
+# Default values for global.postgres_
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+global:
+  image_namespace: REQUIRED
+  image_repository: REQUIRED
+
+name: DEFINED-IN-COMPONENT-CHART
+user: postgres
+password: DEFINED-IN-REGION-CHART
+port_public: '5432'
+port_private: '5432'
+port_metrics: '9187'
+hba_cidr: 0.0.0.0/0
+
+image_version_postgres: '9.4'
+
+persistence:
+  enabled: true
+
+backup:
+  enabled: false
+  interval_full: 1 hours
+#  interval_incr: NOT-USED-CURRENT
+  image_version: v0.5.7
+  os_password: DEFINED-IN-REGION-SECRETS
+  os_username: db_backup
+  os_user_domain: Default
+  os_project_name: master
+  os_project_domain: ccadmin
+
+metrics:
+  enabled: true
+  image: wrouesnel/postgres_exporter
+  imageTag: v0.1.1
+  imagePullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
