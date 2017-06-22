@@ -15,7 +15,11 @@ global:
       external_physical_mappings: DEFINED-IN-REGION-CHART
       physical_network: DEFINED-IN-REGION-CHART
 
+
+
 debug: "True"
+
+port_metrics: '9102'
 
 image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
 

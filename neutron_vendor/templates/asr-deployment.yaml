@@ -7,6 +7,7 @@ metadata:
     system: openstack
     type: backend
     component: neutron
+
 spec:
   replicas: 1
   revisionHistoryLimit: 5
@@ -24,6 +25,8 @@ spec:
         name: neutron-cisco-asr
       annotations:
         pod.beta.kubernetes.io/hostname:  asr-pet
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "{{.Values.port_metrics}}"
     spec:
       containers:
         - name: neutron-cisco-asr
@@ -36,6 +39,8 @@ spec:
               value: "false"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+            - name: METRICS_PORT
+              value: "{{.Values.port_metrics}}"
           volumeMounts:
             - mountPath: /development
               name: development
@@ -47,6 +52,10 @@ spec:
               name: cisco-patches
             - mountPath: /container.init
               name: container-init
+          ports:
+            - containerPort: {{.Values.port_metrics}}
+              name: metrics
+              protocol: TCP
       volumes:
         - name: neutron-etc
           configMap:
