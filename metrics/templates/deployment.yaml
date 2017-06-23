@@ -3,7 +3,7 @@ apiVersion: extensions/v1beta1
 
 metadata:
   name: metrics-{{.Values.name}}
-  namespace:  {{.Release.Namespace}}
+  namespace: {{.Release.Namespace}}
   labels:
     system: openstack
     type: database
@@ -12,132 +12,30 @@ spec:
   replicas: 1
   revisionHistoryLimit: 5
   strategy:
-    type: Recreate
+   type: Recreate
   selector:
-    matchLabels:
-      name: metrics-{{.Values.name}}
+   matchLabels:
+    name: metrics-{{.Values.name}}
   template:
-    metadata:
-      labels:
-        name: metrics-{{.Values.name}}
-    spec:
-      hostPID: false
-      volumes:
-        - name: metrics-persistent-storage
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: db-{{.Values.name}}-pvclaim
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
-        - name: db-init
-          configMap:
-            name: db-init-{{.Values.name}}
-        - name: db-maintain
-          configMap:
-            name: db-maintain-{{.Values.name}}
-        - name: metrics-etc
-          configMap:
-            name: metrics-etc-{{.Values.name}}
-        - name: container-init
-          configMap:
-            name: metrics-bin-{{.Values.name}}
-            defaultMode: 0755
-{{- if and  .Values.metrics.enabled .Values.metrics.customMetrics }}
-        - name: custom-metrics
-          configMap:
-            name: metrics-etc-{{.Values.name}}
-            items:
-            - key: custom-metrics.yaml
-              path: custom-metrics.yaml
-{{- end }}
-      containers:
-        - name: metrics
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/metrics:{{.Values.image_version_metrics}}
-          imagePullPolicy: IfNotPresent
-          livenessProbe:
-            exec:
-              command:
-              - pg_isready
-              - -h
-              - localhost
-              - -p
-              - "{{.Values.port_private}}"
-              - -U
-              - metrics
-            initialDelaySeconds: 60
-            timeoutSeconds: 5
-          env:
-            - name: PGDATA
-              value: /metrics-data/data/
-            - name: METRICS_USER
-              value: {{.Values.user}}
-            - name: METRICS_PASSWORD
-              value: {{.Values.password}}
-
-          ports:
-            - name: metrics
-              containerPort: {{.Values.port_private}}
-          volumeMounts:
-            - name: metrics-persistent-storage
-              mountPath: /metrics-data
-            - name: db-init
-              mountPath: /docker-entrypoint-initdb.d
-            - name: db-maintain
-              mountPath: /docker-entrypoint-maintaindb.d
-            - name: metrics-etc
-              mountPath: /metrics-conf
-            - name: container-init
-              mountPath: /container-init
-{{- if .Values.backup.enabled }}
-        - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{ .Values.backup.image_version }}
-          imagePullPolicy: IfNotPresent
-          name: backup
-          env:
-            - name: MY_POD_NAME
-              value: metrics-backup-{{.Values.name}}
-            - name: MY_POD_NAMESPACE
-              value: {{.Release.Namespace}}
-            - name: OS_AUTH_URL
-              value: {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{.Values.global.keystone_api_port_internal}}/v3
-            - name: OS_AUTH_VERSION
-              value: "3"
-            - name: OS_IDENTITY_API_VERSION
-              value: "3"
-            - name: OS_USERNAME
-              value: {{ .Values.backup.os_username }}
-            - name: OS_USER_DOMAIN_NAME
-              value: {{ .Values.backup.os_user_domain }}
-            - name: OS_PROJECT_NAME
-              value: {{ .Values.backup.os_project_name }}
-            - name: OS_PROJECT_DOMAIN_NAME
-              value: {{ .Values.backup.os_project_domain }}
-            - name: OS_REGION_NAME
-              value: {{ .Values.global.region }}
-            - name: OS_PASSWORD
-              value: {{ .Values.backup.os_password | quote }}
-            - name: BACKUP_PGSQL_FULL
-              value: {{ .Values.backup.interval_full | quote }}
-#            - name: BACKUP_PGSQL_INCR
-#              value: {{ .Values.backup.interval_incr | quote }}
-{{- end }}
-{{- if .Values.metrics.enabled }}
-        - name: metrics
-          image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
-          imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
-          env:
-            - name: METRICS_PASSWORD
-              value: {{.Values.password}}
-            - name: DATA_SOURCE_NAME
-              value: "metrics://{{.Values.user}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
-          ports:
-            - name: metrics
-              containerPort: {{.Values.port_metrics}}
-          {{- if .Values.metrics.customMetrics }}
-          args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
-          volumeMounts:
-            - name: custom-metrics
-              mountPath: /conf
-              readOnly: true
-          {{- end }}
-{{- end }}
+   metadata:
+    labels:
+     name: metrics-{{.Values.name}}
+   spec:
+    containers:
+      - name: metrics
+        image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
+        env:
+          - name: POSTGRES_PASSWORD
+            value: {{.Values.password}}
+          - name: DATA_SOURCE_NAME
+            value: "postgresql://{{.Values.user}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
+        ports:
+          - name: metrics
+            containerPort: {{.Values.port_metrics}}
+        {{- if .Values.metrics.customMetrics }}
+           args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
+        volumeMounts:
+          - name: custom-metrics
+            mountPath: /conf
+            readOnly: true
