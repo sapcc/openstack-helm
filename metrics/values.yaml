@@ -20,17 +20,6 @@ image_version_postgres: '9.4'
 persistence:
   enabled: true
 
-backup:
-  enabled: false
-  interval_full: 1 hours
-#  interval_incr: NOT-USED-CURRENT
-  image_version: v0.5.7
-  os_password: DEFINED-IN-REGION-SECRETS
-  os_username: db_backup
-  os_user_domain: Default
-  os_project_name: master
-  os_project_domain: ccadmin
-
 metrics:
   enabled: true
   image: wrouesnel/postgres_exporter
