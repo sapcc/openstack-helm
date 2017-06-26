@@ -21,6 +21,8 @@ spec:
         name: neutron-agents-{{$agent.name}}
       annotations:
         scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"network"}]'
+        checksum/neutron-bin: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+        checksum/neutron-etc: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
     spec:
       hostNetwork: true
       hostPID: true
