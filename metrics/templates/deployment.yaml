@@ -1,0 +1,39 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+
+metadata:
+  name: metrics-{{.Values.name}}
+  namespace: {{.Release.Namespace}}
+  labels:
+    system: openstack
+    type: database
+    component: {{.Values.name}}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  strategy:
+   type: Recreate
+  selector:
+   matchLabels:
+    name: metrics-{{.Values.name}}
+  template:
+   metadata:
+    labels:
+     name: metrics-{{.Values.name}}
+   spec:
+    containers:
+      - name: metrics
+        image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
+        env:
+          - name: DATA_SOURCE_NAME
+            value: "postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "nova_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}"
+        ports:
+          - name: metrics
+            containerPort: {{.Values.port_metrics}}
+        {{- if .Values.metrics.customMetrics }}
+           args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
+        volumeMounts:
+          - name: custom-metrics
+            mountPath: /conf
+            readOnly: true
