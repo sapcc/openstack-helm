@@ -1,41 +1,58 @@
-kind: Deployment
-apiVersion: extensions/v1beta1
+## postgres image repository
+image: "postgres"
+## postgres image version
+## ref: https://hub.docker.com/r/library/postgres/tags/
+##
+imageTag: "9.5.4"
 
-metadata:
-  name: metrics-{{.Values.name}}
-  namespace: {{.Release.Namespace}}
-  labels:
-    system: openstack
-    type: database
-    component: {{.Values.name}}
-spec:
-  replicas: 1
-  revisionHistoryLimit: 5
-  strategy:
-   type: Recreate
-  selector:
-   matchLabels:
-    name: metrics-{{.Values.name}}
-  template:
-   metadata:
-    labels:
-     name: metrics-{{.Values.name}}
-   spec:
-    containers:
-      - name: metrics
-        image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
-        imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
-        env:
-          - name: POSTGRES_PASSWORD
-            value: {{.Values.password}}
-          - name: DATA_SOURCE_NAME
-            value: "postgresql://{{.Values.user}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
-        ports:
-          - name: metrics
-            containerPort: {{.Values.port_metrics}}
-        {{- if .Values.metrics.customMetrics }}
-           args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
-        volumeMounts:
-          - name: custom-metrics
-            mountPath: /conf
-            readOnly: true
+## Specify a imagePullPolicy
+## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
+## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+##
+# imagePullPolicy:
+
+## Create a database user
+## Default: postgres
+# postgresUser:
+## Default: random 10 character string
+# postgresPassword:
+
+## Create a database
+## Default: the postgres user
+# postgresDatabase:
+
+## Persist data to a persitent volume
+persistence:
+  enabled: true
+  accessMode: ReadWriteMany
+  size: 10Gi
+  # Re-use existing (unmanged) PVC
+  # existingClaim: claimName
+
+metrics:
+  enabled: false
+  image: wrouesnel/postgres_exporter
+  imageTag: v0.1.1
+  imagePullPolicy: IfNotPresent
+  customMetrics:
+    pg_database:
+      query: "SELECT d.datname AS datname, CASE WHEN pg_catalog.has_database_privilege(d.datname, 'CONNECT') THEN pg_catalog.pg_database_size(d.datname) ELSE 0 END AS size_bytes FROM pg_catalog.pg_database d where datname not in ('template0', 'template1', 'postgres')"
+      metrics:
+        - datname:
+            usage: "LABEL"
+            description: "Name of the database"
+        - size_bytes:
+            usage: "GAUGE"
+            description: "Size of the database in bytes"
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+
+## Configure resource requests and limits
+## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+##
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 100m
