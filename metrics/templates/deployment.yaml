@@ -26,10 +26,8 @@ spec:
         image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
         imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
         env:
-          - name: POSTGRES_PASSWORD
-            value: {{.Values.password}}
           - name: DATA_SOURCE_NAME
-            value: "postgresql://{{.Values.user}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
+            value: "postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "nova_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}"
         ports:
           - name: metrics
             containerPort: {{.Values.port_metrics}}
