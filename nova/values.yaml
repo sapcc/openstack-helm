@@ -52,7 +52,7 @@ cross_az_attach: 'False'
 scheduler:
   default_filters: AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter
 
-metrics:
+pg_metrics:
   name: nova
   db_name: nova
   db_user: nova

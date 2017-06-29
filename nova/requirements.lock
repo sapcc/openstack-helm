@@ -16,9 +16,9 @@ dependencies:
 - condition: ""
   enabled: false
   import-values: null
-  name: metrics
+  name: pg_metrics
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.0
-digest: sha256:86790fc4a52503a287116f0cb550d8bb7d2bf66c7da71f920f206906f69892a8
-generated: 2017-06-28T13:49:44.467336076+02:00
+digest: sha256:d6dabdcfdb9c61f1b711a69b16e5b96b128e972efe869e77e010a50d339ffdb8
+generated: 2017-06-29T18:27:07.771939894+02:00
