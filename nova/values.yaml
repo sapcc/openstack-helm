@@ -52,6 +52,25 @@ cross_az_attach: 'False'
 scheduler:
   default_filters: AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter
 
+metrics:
+  name: nova
+  db_name: nova
+  db_user: nova
+  db_password: DEFINED-IN-REGION-CHART
+  customMetrics:
+    openstack_compute_instances:
+      query: "SELECT project_id, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, project_id"
+      metrics:
+        - project_id:
+            usage: "LABEL"
+            description: "Project ID"
+        - vm_state:
+            usage: "LABEL"
+            description: "State of the VM"
+        - gauge:
+            usage: "GAUGE"
+            description: "VM Count"
+
 postgres:
   name: nova
   metrics:

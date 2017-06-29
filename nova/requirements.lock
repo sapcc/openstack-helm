@@ -13,5 +13,12 @@ dependencies:
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
-digest: sha256:845405b8182a459a158e8ad3b259976a564e2c1e2233d45f0e11b1ed2ef629a4
-generated: 2017-05-03T14:06:24.418838958+02:00
+- condition: ""
+  enabled: false
+  import-values: null
+  name: metrics
+  repository: http://localhost:8879/charts
+  tags: null
+  version: 0.1.0
+digest: sha256:86790fc4a52503a287116f0cb550d8bb7d2bf66c7da71f920f206906f69892a8
+generated: 2017-06-28T13:49:44.467336076+02:00

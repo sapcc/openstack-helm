@@ -6,7 +6,7 @@ metadata:
   namespace: {{.Release.Namespace}}
   labels:
     system: openstack
-    type: database
+    type: metrics
     component: {{.Values.name}}
 spec:
   replicas: 1
@@ -20,19 +20,30 @@ spec:
    metadata:
     labels:
      name: metrics-{{.Values.name}}
+    annotations:
+      chart-version: {{.Chart.Version}}
+      checksum/etc-configmap.conf: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "{{ .Values.port_metrics }}"
    spec:
+    volumes:
+      - name: custom-metrics
+        configMap:
+          name: metrics-etc-{{.Values.name}}
+          items:
+          - key: custom-metrics.yaml
+            path: custom-metrics.yaml
     containers:
       - name: metrics
-        image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
-        imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.imagePullPolicy | quote }}
         env:
           - name: DATA_SOURCE_NAME
-            value: "postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "nova_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}"
+            value: "postgresql://{{ .Values.db_user }}:{{ .Values.db_password }}@{{ include (print $.Values.name "_db_host") . }}:{{ .Values.global.postgres_port_public }}/{{ .Values.db_name }}?sslmode=disable"
         ports:
           - name: metrics
-            containerPort: {{.Values.port_metrics}}
-        {{- if .Values.metrics.customMetrics }}
-           args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
+            containerPort: {{ .Values.port_metrics }}
+        args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
         volumeMounts:
           - name: custom-metrics
             mountPath: /conf
