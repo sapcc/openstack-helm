@@ -36,7 +36,7 @@ manila: build-manila
 
 memcached: build-memcached
 
-nova: utils postgres
+nova: utils postgres metrics
 nova: build-nova
 
 neutron: utils postgres
@@ -46,6 +46,7 @@ neutron_vendor: utils
 neutron_vendor: build-neutron_vendor
 
 #dependencies
+metrics: build-metrics
 mariadb: build-mariadb
 postgres: build-postgres
 rabbitmq: build-rabbitmq
@@ -58,7 +59,7 @@ build-%:
 lint: lint-barbican lint-cinder lint-designate lint-europe-example-region
 lint: lint-glance lint-horizon lint-ironic lint-keystone lint-mariadb
 lint: lint-memcached lint-neutron lint-nova lint-openstack lint-postgres
-lint: lint-neutron_vendor lint-rabbitmq lint-utils
+lint: lint-neutron_vendor lint-rabbitmq lint-utils lint-metrics
 lint-%:
 	helm lint $*
 
