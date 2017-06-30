@@ -23,6 +23,8 @@ db_user: keystone
 db_password: DEFINED-IN-REGION-CHART
 admin_token: DEFINED-IN-REGION-CHART
 
+# token_expiration: 3600
+
 bootstrap_user: admin
 bootstrap_password: DEFINED-IN-REGION-CHART
 
