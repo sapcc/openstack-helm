@@ -63,9 +63,9 @@ mariadb:
   persistence_claim: db-designate-pvclaim
 
 mariadb-metrics:
-  name: nova
-  db_name: nova
-  db_user: nova
+  name: designate
+  db_name: designate
+  db_user: designate
   db_password: DEFINED-IN-REGION-CHART
   customMetrics:
       openstack_designate_zones_count:
