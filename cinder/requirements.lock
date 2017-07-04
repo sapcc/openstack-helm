@@ -9,6 +9,13 @@ dependencies:
 - condition: ""
   enabled: false
   import-values: null
+  name: postgres
+  repository: http://localhost:8879/charts
+  tags: null
+  version: 0.1.0
+- condition: ""
+  enabled: false
+  import-values: null
   name: pg_metrics
   repository: http://localhost:8879/charts
   tags: null

@@ -41,6 +41,47 @@ port_metrics: '9102'
 
 sentry_dsn: DEFINE-IN-REGION-CHART
 
+pg_metrics:
+  name: nova
+  db_name: nova
+  db_user: nova
+  db_password: DEFINED-IN-REGION-CHART
+  customMetrics:
+      openstack_share_servers:
+        query: "SELECT host, share_network_id, status, COUNT(*) AS count_gauge FROM share_servers GROUP BY host, share_network_id, status"
+        metrics:
+          - host:
+              usage: "LABEL"
+              description: "Project ID"
+          - share_network_id:
+              usage: "LABEL"
+              description: "Share Network ID"
+          - status:
+              usage: "LABEL"
+              description: "Status of the Server"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of share networks"
+      openstack_shares:
+        query: "SELECT project_id, share_type_id, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM shares WHERE deleted='False' GROUP BY project_id, share_type_id"
+        metrics:
+          - project_id:
+              usage: "LABEL"
+              description: "Project ID"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of share networks"
+          - share_type_id:
+              usage: "LABEL"
+              description: "Type of the share"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of shares"
+          - size_gauge:
+              usage: "GAUGE"
+              description: "Size of shares"
+
+
 postgres:
   name: manila
 
