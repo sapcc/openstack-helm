@@ -42,9 +42,9 @@ port_metrics: '9102'
 sentry_dsn: DEFINE-IN-REGION-CHART
 
 pg_metrics:
-  name: nova
-  db_name: nova
-  db_user: nova
+  name: manila
+  db_name: manila
+  db_user: manila
   db_password: DEFINED-IN-REGION-CHART
   customMetrics:
       openstack_share_servers:
