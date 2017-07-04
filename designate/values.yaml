@@ -62,6 +62,40 @@ mariadb:
   initdb_configmap: designate-initdb
   persistence_claim: db-designate-pvclaim
 
+mariadb-metrics
+  name: nova
+  db_name: nova
+  db_user: nova
+  db_password: DEFINED-IN-REGION-CHART
+  customMetrics:
+      openstack_designate_zones_count:
+        query: "select count(name) AS guage, status from zones group by zones.status"
+        metrics:
+          - name:
+              usage: "LABEL"
+              description: "Zone Name"
+          - status:
+              usage: "LABEL"
+              description: "Zone status"
+          - guage:
+              usage: "GUAGE"
+              description: " Zone Count"
+      openstack_designate_records_count:
+        query: "select count(id) AS gauge, zone_id, status from records group by records.status"
+        metrics:
+           - id:
+              usage: "LABEL"
+              description: "Record ID"
+           - zone_id:
+              usage: "LABEL"
+              description: "Zone id"
+          - status:
+              usage: "LABEL"
+              description: "Record status"
+          - guage:
+              usage: "GUAGE"
+              description: " Zone Count"      
+          
 logging:
     formatters:
         context:
