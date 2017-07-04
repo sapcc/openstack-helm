@@ -25,8 +25,6 @@ db_password: DEFINED-IN-REGION-CHART
 
 port_metrics: '9102'
 
-
-
 sentry_dsn: DEFINE-IN-REGION-CHART
 
 image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
@@ -92,9 +90,9 @@ logging:
 
 
 pg_metrics:
-  name: nova
-  db_name: nova
-  db_user: nova
+  name: neutron
+  db_name: neutron
+  db_user: neutron
   db_password: DEFINED-IN-REGION-CHART
       customMetrics:
       openstack_neutron_networks_count:
