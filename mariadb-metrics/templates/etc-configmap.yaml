@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metrics-etc-{{.Values.name}}
+  labels:
+    system: openstack
+    type: configuration
+    component: metrics
+
+data:
+  custom-metrics.yaml: |
+{{ toYaml .Values.customMetrics | indent 4}}
