@@ -62,7 +62,7 @@ mariadb:
   initdb_configmap: designate-initdb
   persistence_claim: db-designate-pvclaim
 
-mariadb-metrics
+mariadb-metrics:
   name: nova
   db_name: nova
   db_user: nova
