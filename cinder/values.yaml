@@ -42,60 +42,60 @@ pg_metrics:
   db_user: cinder
   db_password: DEFINED-IN-REGION-CHART
   customMetrics:
-      openstack_volumes:
-        query: "SELECT host, availability_zone, volume_type_id, project_id, status, attach_status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM volumes GROUP BY host, availability_zone, volume_type_id, project_id, status, attach_status"
-        metrics:
-          - host:
-              usage: "LABEL"
-              description: "Name of the host"
-          - availability_zone:
-              usage: "LABEL"
-              description: "Availability Zone of the Volume"
-          - volume_type_id:
-              usage: "LABEL"
-              description: "Type of the volume"
-          - project_id:
-              usage: "LABEL"
-              description: "ID of the Project"
-          - status:
-              usage: "LABEL"
-              description: "Status of the volume"
-          - attach_status:
-              usage: "LABEL"
-              description: "Status of the attachment"
-          - count_gauge:
-              usage: "GAUGE"
-              description: "Number of volumes"
-          - size_gauge:
-              usage: "GAUGE"
-              description: "Size of volumes"
-      openstack_snapshots:
-        query: "SELECT project_id, status, COUNT(*) AS count_gauge, SUM(volume_size) size_gauge FROM snapshots GROUP BY  project_id, status"
-        metrics:
-          - host:
-              usage: "LABEL"
-              description: "Name of the host"
-          - availability_zone:
-              usage: "LABEL"
-              description: "Availability Zone of the Volume"
-          - volume_type_id:
-              usage: "LABEL"
-              description: "Type of the volume"
-          - project_id:
-              usage: "LABEL"
-              description: "ID of the Project"
-          - status:
-              usage: "LABEL"
-              description: "Status of the volume"
-          - attach_status:
-              usage: "LABEL"
-              description: "Status of the attachment"
-          - count_gauge:
-              usage: "GAUGE"
-              description: "Number of volumes"
-          - size_gauge:
-              usage: "GAUGE"
-              description: "Size of volumes"
+    openstack_volumes:
+      query: "SELECT host, availability_zone, volume_type_id, project_id, status, attach_status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM volumes GROUP BY host, availability_zone, volume_type_id, project_id, status, attach_status"
+      metrics:
+        - host:
+            usage: "LABEL"
+            description: "Name of the host"
+        - availability_zone:
+            usage: "LABEL"
+            description: "Availability Zone of the Volume"
+        - volume_type_id:
+            usage: "LABEL"
+            description: "Type of the volume"
+        - project_id:
+            usage: "LABEL"
+            description: "ID of the Project"
+        - status:
+            usage: "LABEL"
+            description: "Status of the volume"
+        - attach_status:
+            usage: "LABEL"
+            description: "Status of the attachment"
+        - count_gauge:
+            usage: "GAUGE"
+            description: "Number of volumes"
+        - size_gauge:
+            usage: "GAUGE"
+            description: "Size of volumes"
+    openstack_snapshots:
+      query: "SELECT project_id, status, COUNT(*) AS count_gauge, SUM(volume_size) size_gauge FROM snapshots GROUP BY  project_id, status"
+      metrics:
+        - host:
+            usage: "LABEL"
+            description: "Name of the host"
+        - availability_zone:
+            usage: "LABEL"
+            description: "Availability Zone of the Volume"
+        - volume_type_id:
+            usage: "LABEL"
+            description: "Type of the volume"
+        - project_id:
+            usage: "LABEL"
+            description: "ID of the Project"
+        - status:
+            usage: "LABEL"
+            description: "Status of the volume"
+        - attach_status:
+            usage: "LABEL"
+            description: "Status of the attachment"
+        - count_gauge:
+            usage: "GAUGE"
+            description: "Number of volumes"
+        - size_gauge:
+            usage: "GAUGE"
+            description: "Size of volumes"
 
 
 postgres:
