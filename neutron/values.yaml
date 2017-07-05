@@ -94,7 +94,7 @@ pg_metrics:
   db_name: neutron
   db_user: neutron
   db_password: DEFINED-IN-REGION-CHART
-      customMetrics:
+  customMetrics:
       openstack_neutron_networks_count:
         query: "SELECT COUNT(*) AS gauge, status FROM networks GROUP BY networks.status"
         metrics:
