@@ -30,7 +30,7 @@ spec:
           ports:
             - name: memcache
               containerPort: {{.Values.global.memcached_port_public}}
-          command: ["memcached", "-m", "1024"]
+          command: ["memcached", "-m", "16384"]
         - name: metrics
           image: prom/memcached-exporter:master
           imagePullPolicy: IfNotPresent
