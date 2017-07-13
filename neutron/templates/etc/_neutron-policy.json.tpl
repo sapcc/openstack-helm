@@ -117,6 +117,7 @@
     "create_router:ha": "rule:context_is_admin",
     "get_router": "rule:context_is_viewer",
     "get_router:distributed": "rule:context_is_admin",
+    "update_router": "rule:context_is_network_admin",
     "update_router:external_gateway_info:enable_snat": "rule:context_is_admin",
     "update_router:distributed": "rule:context_is_admin",
     "update_router:ha": "rule:context_is_admin",
@@ -134,11 +135,13 @@
 
     "create_security_group": "rule:context_is_editor",
     "get_security_group": "rule:context_is_viewer",
+    "get_security_groups": "rule:context_is_viewer",
     "update_security_group": "rule:context_is_editor",
     "delete_security_group": "rule:context_is_editor",
 
     "create_security_group_rule": "rule:context_is_editor",
     "get_security_group_rule": "rule:context_is_viewer",
+    "get_security_group_rules": "rule:context_is_viewer",
     "update_security_group_rule": "rule:context_is_editor",
     "delete_security_group_rule": "rule:context_is_editor",
 
