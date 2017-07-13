@@ -13,12 +13,5 @@ dependencies:
   repository: http://localhost:8879/charts
   tags: null
   version: 0.1.1
-- condition: ""
-  enabled: false
-  import-values: null
-  name: pg_metrics
-  repository: http://localhost:8879/charts
-  tags: null
-  version: 0.1.0
 digest: sha256:d6dabdcfdb9c61f1b711a69b16e5b96b128e972efe869e77e010a50d339ffdb8
 generated: 2017-06-29T18:27:07.771939894+02:00
