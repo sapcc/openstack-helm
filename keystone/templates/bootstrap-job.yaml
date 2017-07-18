@@ -12,7 +12,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: keystone-bootstrap
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone-m3:{{.Values.image_version_keystone_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone:{{.Values.image_version_keystone}}
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint
