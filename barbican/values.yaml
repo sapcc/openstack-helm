@@ -20,7 +20,7 @@ postgres:
   name: barbican
 
 replicas:
-    api: 1
+    api: 2
 upgrades:
     revision_history: 5
     pod_replacement_strategy: RollingUpdate
