@@ -8,36 +8,58 @@ dependencies:
   - name: keystone
     repository: http://localhost:8879/charts
     version: 0.1.0
+    tags:
+        - keystone
   - name: glance
     repository: http://localhost:8879/charts
     version: 0.1.1
+    tags:
+        - glance
   - name: ironic
     repository: http://localhost:8879/charts
     version: 0.1.0
+    tags:
+        - ironic
   - name: nova
     repository: http://localhost:8879/charts
     version: 0.1.1
+    tags:
+        - nova
   - name: barbican
     repository: http://localhost:8879/charts
     version: 0.1.0
+    tags:
+        - barbican
   - name: cinder
     repository: http://localhost:8879/charts
     version: 0.1.1
+    tags:
+        - cinder
   - name: manila
     repository: http://localhost:8879/charts
     version: 0.1.0
+    tags:
+        - manila
   - name: horizon
     repository: http://localhost:8879/charts
     version: 0.1.0
+    tags:
+        - horizon
   - name: neutron
     repository: http://localhost:8879/charts
     version: 0.1.1
+    tags:
+        - neutron
   - name: neutron_vendor
     repository: http://localhost:8879/charts
     version: 0.1.0
+    tags:
+        - neutron
   - name: designate
     repository: http://localhost:8879/charts
     version: 0.1.1
+    tags:
+        - designate
   - name: healthchecks
     repository: http://localhost:8879/charts
     version: 0.1.0
