@@ -20,6 +20,7 @@ data:
     host_password = {{ password | quote }}
     cluster_name = {{ cluster_name | quote }}
     datastore_regex = {{ datastore_regex | quote }}
+    use_linked_clone = False
 ---
 apiVersion: v1
 kind: ConfigMap

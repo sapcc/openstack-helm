@@ -17,5 +17,6 @@ host_username = {{$hypervisor.username | replace "$" "$$" }}
 host_password = {{$hypervisor.password | replace "$" "$$" }}
 cluster_name = {{$hypervisor.cluster_name | quote }}
 datastore_regex = {{$hypervisor.datastore_regex | quote }}
+use_linked_clone = {{$hypervisor.use_linked_clone | default "false" }}
 {{- end }}
 {{- end }}
