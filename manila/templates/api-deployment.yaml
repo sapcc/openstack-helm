@@ -8,7 +8,7 @@ metadata:
     type: api
     component: manila
 spec:
-  replicas: 1
+  replicas: 2
   revisionHistoryLimit: 5
   strategy:
     type: RollingUpdate

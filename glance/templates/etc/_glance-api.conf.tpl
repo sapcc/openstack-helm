@@ -40,7 +40,7 @@ max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size 
 
 # If set, use this value for max_overflow with SQLAlchemy. (integer
 # value)
-max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 0 }}
 
 # The value for the socket option TCP_KEEPIDLE.  This is the time in
 # seconds that the connection must be idle before TCP starts sending
