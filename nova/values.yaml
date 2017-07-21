@@ -18,6 +18,18 @@ global:
   hypervisors_kvm: []
   hypervisors_ironic: []
 
+pod:
+  replicas:
+    api: 1
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 5
+        pod_replacement_strategy: RollingUpdate
+        rolling_update:
+           max_unavailable: 0
+           max_surge: 1
+
 debug: "True"
 
 db_name: nova

@@ -11,6 +11,18 @@ global:
   keystone_api_port_internal: '5000'
   keystone_api_port_public: '443'
 
+pod:
+  replicas:
+    api: 2
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 5
+        pod_replacement_strategy: RollingUpdate
+        rolling_update:
+           max_unavailable: 0
+           max_surge: 1
+
 debug: "False"
 
 image_version_keystone: DEFINED-IN-REGION-CHART
