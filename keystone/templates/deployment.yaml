@@ -8,6 +8,7 @@ metadata:
     type: api
     component: keystone
 spec:
+  minReadySeconds: 5
   replicas: {{ .Values.pod.replicas.api }}
   revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
