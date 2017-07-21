@@ -9,6 +9,18 @@ global:
   image_namespace: DEFINED-IN-REGION-CHART
   barbican_api_port_internal: '9292'
 
+pod:
+  replicas:
+    api: 1
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 5
+        pod_replacement_strategy: RollingUpdate
+        rolling_update:
+           max_unavailable: 0
+           max_surge: 1
+
 image_version_barbican: DEFINED-IN-REGION-CHART
 debug: "True"
 
@@ -18,15 +30,6 @@ db_password: DEFINED-IN-REGION-CHART
 
 postgres:
   name: barbican
-
-replicas:
-    api: 1
-upgrades:
-    revision_history: 5
-    pod_replacement_strategy: RollingUpdate
-    rolling_update:
-        max_unavailable: 0
-        max_surge: 1
 
 logging:
     formatters:
