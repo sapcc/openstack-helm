@@ -20,10 +20,10 @@ data:
 {{- if .Values.vcenter_operator.dns_ip }}
   dns_port: {{ .Values.vcenter_operator.dns_port | quote }}
 {{- end }}
-{{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 {{- if .Values.vcenter_operator.tsig_key }}
   tsig_key: {{ .Values.vcenter_operator.tsig_key | quote }}
 {{- end }}
+{{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1
@@ -48,6 +48,8 @@ spec:
     metadata:
       labels:
         name: vcenter-operator
+      annotations:
+        checksum/templates: {{ (.Files.Glob "vcenter-operator/*").AsConfig | sha256sum }}
     spec:
       restartPolicy: Always
       containers:
