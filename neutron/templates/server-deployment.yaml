@@ -25,6 +25,7 @@ spec:
       labels:
         name: neutron-server
       annotations:
+        checksum/neutron-bin: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
         checksum/neutron-etc: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
     spec:
       containers:
