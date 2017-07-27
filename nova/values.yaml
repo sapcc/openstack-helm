@@ -20,7 +20,10 @@ global:
 
 pod:
   replicas:
-    api: 1
+    api: 2
+    console: 1
+    conductor: 1
+    scheduler: 1
   lifecycle:
     upgrades:
       deployments:

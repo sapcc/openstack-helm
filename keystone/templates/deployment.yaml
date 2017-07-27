@@ -21,15 +21,18 @@ spec:
   selector:
     matchLabels:
       name: keystone
-
   template:
     metadata:
       labels:
         name: keystone
+{{ tuple . "keystone" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
-        chart-version: {{.Chart.Version}}
-        checksum/etc-configmap.conf: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        checksum/bin-configmap.conf: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
+        scheduler.alpha.kubernetes.io/affinity: >
+            {{ tuple . "keystone" "api" | include "kubernetes_pod_anti_affinity" }}
+{{- end }}
     spec:
       containers:
         - name: keystone

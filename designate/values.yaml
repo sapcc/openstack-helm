@@ -18,7 +18,12 @@ global:
 
 pod:
   replicas:
-    api: 1
+    api: 2
+    central: 1
+    mdns: 1
+    poolmanager: 1
+    producer: 1
+    worker: 1
   lifecycle:
     upgrades:
       deployments:

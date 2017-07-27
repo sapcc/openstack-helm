@@ -11,7 +11,7 @@ image_version_horizon_m3: REQUIRED
 
 pod:
   replicas:
-    api: 1
+    api: 2
   lifecycle:
     upgrades:
       deployments:

@@ -11,7 +11,7 @@ global:
 
 pod:
   replicas:
-    api: 1
+    api: 2
   lifecycle:
     upgrades:
       deployments:

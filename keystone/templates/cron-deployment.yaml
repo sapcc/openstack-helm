@@ -21,8 +21,8 @@ spec:
         app: keystone-cron
       annotations:
         chart-version: {{.Chart.Version}}
-        checksum/etc-configmap.conf: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        checksum/bin-configmap.conf: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: cron

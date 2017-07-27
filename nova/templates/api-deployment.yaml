@@ -24,9 +24,14 @@ spec:
     metadata:
       labels:
         name: nova-api
+{{ tuple . "nova" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
-        checksum/nova-etc: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        checksum/nova-bin: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
+        scheduler.alpha.kubernetes.io/affinity: >
+            {{ tuple . "nova" "api" | include "kubernetes_pod_anti_affinity" }}
+{{- end }}
     spec:
       containers:
         - name: nova-api

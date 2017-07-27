@@ -11,12 +11,14 @@ metadata:
     component: cinder
 spec:
   replicas: 1
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
-    type: RollingUpdate
+    type: {{ .Values.pod.lifecycle.upgrades.deployments.pod_replacement_strategy }}
+    {{ if eq .Values.pod.lifecycle.upgrades.deployments.pod_replacement_strategy "RollingUpdate" }}
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 3
+      maxUnavailable: {{ .Values.pod.lifecycle.upgrades.deployments.rolling_update.max_unavailable }}
+      maxSurge: {{ .Values.pod.lifecycle.upgrades.deployments.rolling_update.max_surge }}
+    {{ end }}
   selector:
     matchLabels:
         name: cinder-volume-netapp-{{$volume.name}}
@@ -26,8 +28,8 @@ spec:
         name: cinder-volume-netapp-{{$volume.name}}
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-netapp-{{$volume.name}}
-        checksum/cinder-etc: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        checksum/volume-config: {{ tuple $ $volume | include "volume_netapp_configmap" | sha256sum }}
+        configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-volume-hash: {{ tuple $ $volume | include "volume_netapp_configmap" | sha256sum }}
     spec:
       containers:
         - name: cinder-volume-netapp-{{$volume.name}}

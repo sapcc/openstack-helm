@@ -24,8 +24,14 @@ spec:
     metadata:
       labels:
         app: designate-api
+{{ tuple . "designate" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
-        chart-version: {{.Chart.Version}}
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
+        scheduler.alpha.kubernetes.io/affinity: >
+            {{ tuple . "designate" "api" | include "kubernetes_pod_anti_affinity" }}
+{{- end }}
     spec:
       containers:
         - name: designate-api
