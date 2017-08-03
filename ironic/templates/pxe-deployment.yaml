@@ -25,6 +25,9 @@ spec:
     metadata:
       labels:
         name: ironic-pxe
+{{ tuple . "ironic" "pxe" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
+      annotations:
+        configmap-pxe-hash: {{ include (print $.Template.BasePath "/pxe-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: ironic-tftp
