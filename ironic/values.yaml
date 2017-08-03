@@ -63,6 +63,12 @@ network_cleaning_uuid: DEFINE_IN_REGION_CHART
 swift_account: DEFINE_IN_REGION_CHART
 swift_tempurl: DEFINE_IN_REGION_CHART
 
+pg_metrics:
+  name: ironic
+  db_name: ironic
+  db_user: ironic
+  db_password: DEFINED-IN-REGION-CHART
+
 postgres:
   name: ironic
 

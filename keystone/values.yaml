@@ -50,6 +50,12 @@ fernet_secrets:
   - DEFINED-IN-REGION-CHART
   - DEFINED-IN-REGION-CHART
 
+pg_metrics:
+  name: keystone
+  db_name: keystone
+  db_user: keystone
+  db_password: DEFINED-IN-REGION-CHART
+
 postgres:
   name: keystone
 

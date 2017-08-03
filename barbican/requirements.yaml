@@ -5,3 +5,6 @@ dependencies:
   - name: postgres
     repository: http://localhost:8879/charts
     version: 0.1.0
+  - name: pg_metrics
+    repository: http://localhost:8879/charts
+    version: 0.1.0

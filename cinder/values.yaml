@@ -49,6 +49,11 @@ port_metrics: '9102'
 
 sentry_dsn: DEFINE-IN-REGION-CHART
 
+pg_metrics:
+  name: cinder
+  db_name: cinder
+  db_user: cinder
+  db_password: DEFINED-IN-REGION-CHART
 
 postgres:
   name: cinder
