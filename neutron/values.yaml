@@ -143,34 +143,7 @@ pg_metrics:
             description: "Floating IP Status per Network"
         - gauge:
             usage: "GAUGE"
-            description: "Count of Floating IP wrt status"
-    openstack_neutron_SAP_IPallocationpools_size:
-      query: "SELECT \"last_ip\"::inet - \"first_ip\"::inet as iprange_value, subnet_id FROM ipallocationpools WHERE \"first_ip\" LIKE '10%'"
-      metrics:
-        - last_ip:
-            usage: "LABEL"
-            description: "Last IP Address"
-        - first_ip:
-            usage: "LABEL"
-            description: "First IP Address"
-        - subnet_id:
-            usage: "LABEL"
-            description: "SUBNET_ID details"
-        - gauge:
-            usage: "GAUGE"
-            description: "Difference value of last_ip - first_ip"
-    openstack_neutron_SAP_IPused_per_subnet:
-      query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '10%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
-      metrics:
-        - subnet_id:
-            usage: "LABEL"
-            description: "SUBNET_ID details"
-        - network_id:
-            usage: "LABEL"
-            description: "network_id details"
-        - gauge:
-            usage: "GAUGE"
-            description: "ip's used per subnet"
+            description: "Count of Floating IP by status"
     openstack_neutron_Internet_IP_status:
       query: "SELECT floating_network_id, COUNT(*) AS gauge, status FROM floatingips WHERE floating_ip_address LIKE '15%' GROUP BY floatingips.floating_network_id, floatingips.status"
       metrics:
@@ -182,34 +155,61 @@ pg_metrics:
             description: "Floating IP Status per Network"
         - gauge:
             usage: "GAUGE"
-            description: "Count of Floating IP wrt status"
-    openstack_neutron_Internet_IPallocationpools_size:
-      query: "SELECT \"last_ip\"::inet - \"first_ip\"::inet as iprange_value, subnet_id FROM ipallocationpools WHERE \"first_ip\" LIKE '15%'"
-      metrics:
-        - last_ip:
-            usage: "LABEL"
-            description: "Last IP Address"
-        - first_ip:
-            usage: "LABEL"
-            description: "First IP Address"
-        - subnet_id:
-            usage: "LABEL"
-            description: "SUBNET_ID details"
-        - gauge:
-            usage: "GAUGE"
-            description: "Difference value of last_ip - first_ip"
-    openstack_neutron_Internet_IPused_per_subnet:
-      query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '15%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
-      metrics:
-        - subnet_id:
-            usage: "LABEL"
-            description: "SUBNET_ID details"
-        - network_id:
-            usage: "LABEL"
-            description: "network_id details"
-        - gauge:
-            usage: "GAUGE"
-            description: "ip's used per subnet"
+            description: "Count of Floating IP by status"
+    # openstack_neutron_SAP_IPallocationpools_size:
+    #   query: "SELECT \"last_ip\"::inet - \"first_ip\"::inet as iprange_value, subnet_id FROM ipallocationpools WHERE \"first_ip\" LIKE '10%'"
+    #   metrics:
+    #     - last_ip:
+    #         usage: "LABEL"
+    #         description: "Last IP Address"
+    #     - first_ip:
+    #         usage: "LABEL"
+    #         description: "First IP Address"
+    #     - subnet_id:
+    #         usage: "LABEL"
+    #         description: "SUBNET_ID details"
+    #     - gauge:
+    #         usage: "GAUGE"
+    #         description: "Difference value of last_ip - first_ip"
+    # openstack_neutron_Internet_IPallocationpools_size:
+    #   query: "SELECT \"last_ip\"::inet - \"first_ip\"::inet as iprange_value, subnet_id FROM ipallocationpools WHERE \"first_ip\" LIKE '15%'"
+    #   metrics:
+    #     - last_ip:
+    #         usage: "LABEL"
+    #         description: "Last IP Address"
+    #     - first_ip:
+    #         usage: "LABEL"
+    #         description: "First IP Address"
+    #     - subnet_id:
+    #         usage: "LABEL"
+    #         description: "SUBNET_ID details"
+    #     - gauge:
+    #         usage: "GAUGE"
+    #         description: "Difference value of last_ip - first_ip"
+    # openstack_neutron_SAP_IPused_per_subnet:
+    #   query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '10%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
+    #   metrics:
+    #     - subnet_id:
+    #         usage: "LABEL"
+    #         description: "SUBNET_ID details"
+    #     - network_id:
+    #         usage: "LABEL"
+    #         description: "network_id details"
+    #     - gauge:
+    #         usage: "GAUGE"
+    #         description: "SAP IPs used per subnet"
+    # openstack_neutron_Internet_IPused_per_subnet:
+    #   query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '15%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
+    #   metrics:
+    #     - subnet_id:
+    #         usage: "LABEL"
+    #         description: "SUBNET_ID details"
+    #     - network_id:
+    #         usage: "LABEL"
+    #         description: "network_id details"
+    #     - gauge:
+    #         usage: "GAUGE"
+    #         description: "Internet IPs used per subnet"
 
 postgres:
   name: neutron
