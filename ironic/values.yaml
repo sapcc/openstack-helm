@@ -27,6 +27,7 @@ image_version_ironic_api:
 image_version_ironic_conductor:
 image_version_ironic_inspector:
 image_version_ironic_pxe:
+swift_multi_tenant: True
 
 debug: "True"
 db_name: ironic
