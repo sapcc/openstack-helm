@@ -176,29 +176,21 @@ plugging_driver=networking_asr.plugins.cisco.device_manager.plugging_drivers.hpb
 #     manager and any corresponding VM must be deleted in Nova.
 
 # Example:
-[cisco_hosting_device:3]
+{{- range $i, $hosting_device := .Values.asr_hosting_devices -}}
+[cisco_hosting_device:{{$hosting_device.id}}]
 template_id=3
-credentials_id={{.Values.asr_hosting_device_3_credential}}
-name={{.Values.asr_hosting_device_3_name}}
-description=Main ASR1k serving region 1
-device_id={{.Values.asr_hosting_device_3_id}}
+credentials_id={{$hosting_device.credential}}
+name={{$hosting_device.name}}
+description=Hosting device {{$hosting_device.name}}
+device_id={{$hosting_device.sn}}
 admin_state_up=True
-management_ip_address={{.Values.asr_hosting_device_3_ip}}
+management_ip_address={{$hosting_device.ip}}
 protocol_port=22
 tenant_bound=
 auto_delete=True
 
-[cisco_hosting_device:4]
-template_id=3
-credentials_id={{.Values.asr_hosting_device_4_credential}}
-name={{.Values.asr_hosting_device_4_name}}
-description=Main ASR1k serving region 1
-device_id={{.Values.asr_hosting_device_4_id}}
-admin_state_up=True
-management_ip_address={{.Values.asr_hosting_device_4_ip}}
-protocol_port=22
-tenant_bound=
-auto_delete=True
+
+{{ end }}
 
 [plugging_drivers]
 # Cisco plugging driver configurations.
