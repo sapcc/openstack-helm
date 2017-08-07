@@ -78,8 +78,6 @@ spec:
               name: neutron-etc-region
             - mountPath: /neutron-patches
               name: neutron-patches
-            - mountPath: /cisco-patches
-              name: cisco-patches
             - mountPath: /container.init
               name: container-init
         - name: statsd
@@ -104,9 +102,6 @@ spec:
         - name: neutron-patches
           configMap:
             name: neutron-patches
-        - name: cisco-patches
-          configMap:
-            name: cisco-patches
         - name: development
           persistentVolumeClaim:
             claimName: development-pvclaim
