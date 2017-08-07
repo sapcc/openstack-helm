@@ -123,63 +123,39 @@ postgres:
   metrics:
     enabled: true
     customMetrics:
-    openstack_manila_share_servers:
-      query: "SELECT host, share_network_id, status, COUNT(*) AS count_gauge FROM share_servers GROUP BY host, share_network_id, status"
-      metrics:
-        - host:
-            usage: "LABEL"
-            description: "Project ID"
-        - share_network_id:
-            usage: "LABEL"
-            description: "Share Network ID"
-        - status:
-            usage: "LABEL"
-            description: "Status of the Server"
-        - count_gauge:
-            usage: "GAUGE"
-            description: "Number of share networks"
-    openstack_manila_shares:
-      query: "SELECT shares.project_id, shares.share_type_id, shares.id, share_instances.status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM shares INNER JOIN share_instances ON shares.id=share_instances.share_id GROUP BY shares.id, shares.project_id, shares.share_type_id, share_instances.status"
-      metrics:
-        - project_id:
-            usage: "LABEL"
-            description: "Project ID
-        - share_type_id:
-            usage: "LABEL"
-            description: "Type of the share"
-        - id:
-            usage: "LABEL"
-            description: "Share ID"
-        - status:
-            usage: "LABEL"
-            description: "Share status"
-        - count_gauge:
-            usage: "GAUGE"
-            description: "Number of shares"
-        - size_gauge:
-            usage: "GAUGE"
-            description: "Size of shares"
-    openstack_manila_snapshot:
-      query: "SELECT share_snapshots.project_id, share_snapshots.share_id, share_snapshots.id, share_snapshot_instances.status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM share_snapshots INNER JOIN share_snapshot_instances ON share_snapshots.id=share_snapshot_instances.id GROUP BY share_snapshots.id, share_snapshots.project_id, share_snapshots.share_id, share_snapshot_instances.status"
-      metrics:
-        - project_id:
-            usage: "LABEL"
-            description: "Project ID
-        - share_id:
-            usage: "LABEL"
-            description: "Type of the share"
-        - id:
-            usage: "LABEL"
-            description: "Share ID"
-        - status:
-            usage: "LABEL"
-            description: "Share status"
-        - count_gauge:
-            usage: "GAUGE"
-            description: "Number of shares"
-        - size_gauge:
-            usage: "GAUGE"
-            description: "Size of shares"
+      openstack_share_servers:
+        query: "SELECT host, share_network_id, status, COUNT(*) AS count_gauge FROM share_servers GROUP BY host, share_network_id, status"
+        metrics:
+          - host:
+              usage: "LABEL"
+              description: "Project ID"
+          - share_network_id:
+              usage: "LABEL"
+              description: "Share Network ID"
+          - status:
+              usage: "LABEL"
+              description: "Status of the Server"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of share networks"
+      openstack_shares:
+        query: "SELECT project_id, share_type_id, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM shares WHERE deleted='False' GROUP BY project_id, share_type_id"
+        metrics:
+          - project_id:
+              usage: "LABEL"
+              description: "Project ID"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of share networks"
+          - share_type_id:
+              usage: "LABEL"
+              description: "Type of the share"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of shares"
+          - size_gauge:
+              usage: "GAUGE"
+              description: "Size of shares"
 
 logging:
     formatters:
