@@ -9,7 +9,7 @@ openstack: build-openstack
 
 healthchecks: build-healthchecks
 
-barbican: utils postgres
+barbican: utils postgres pg_metrics
 barbican: build-barbican
 
 cinder: utils postgres
