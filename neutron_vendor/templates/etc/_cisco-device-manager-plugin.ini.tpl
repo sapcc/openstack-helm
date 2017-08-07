@@ -211,13 +211,13 @@ auto_delete=True
 #         of UUIDs.
 
 # Example:
-[HwVLANTrunkingPlugDriver:3]
-internal_net_interface_1={{.Values.asr_hosting_device_3_intf_internal}}
-external_net_interface_1={{.Values.asr_hosting_device_3_intf_external}}
 
-[HwVLANTrunkingPlugDriver:4]
-internal_net_interface_1={{.Values.asr_hosting_device_4_intf_internal}}
-external_net_interface_1={{.Values.asr_hosting_device_4_intf_external}}
+{{- range $i, $hosting_device := .Values.asr_hosting_devices -}}
+
+[HwVLANTrunkingPlugDriver:{{$hosting_device.id}}]
+internal_net_interface_1={{$hosting_device.intf_internal}}
+external_net_interface_1={{$hosting_device.intf_external}}
+{{ end }}
 
 # [HwVLANTrunkingPlugDriver:4]
 # internal_net_interface_1=*:GigabitEthernet1
