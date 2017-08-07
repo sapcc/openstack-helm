@@ -36,7 +36,7 @@ manila: build-manila
 
 memcached: build-memcached
 
-nova: utils postgres pg_metrics
+nova: utils postgres
 nova: build-nova
 
 neutron: utils postgres
@@ -48,7 +48,7 @@ neutron_vendor: build-neutron_vendor
 #dependencies
 pg_metrics: build-pg_metrics
 mariadb: build-mariadb
-postgres: build-postgres
+postgres: build-postgres pg_metrics
 rabbitmq: build-rabbitmq
 utils: build-utils
 
