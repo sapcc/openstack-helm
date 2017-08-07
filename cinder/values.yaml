@@ -114,6 +114,24 @@ postgres:
           - size_gauge:
               usage: "GAUGE"
               description: "Size of volumes"
+      openstack_stuck_volumes:
+        query: "SELECT host, availability_zone, status, COUNT(*) AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM volumes WHERE NOT deleted AND status IN ('attaching', 'deleting', 'detaching') AND updated_at < now() - interval '15 minutes' GROUP BY host, availability_zone, volume_type_id, status"
+        metrics:
+          - host:
+              usage: "LABEL"
+              description: "Name of the host"
+          - availability_zone:
+              usage: "LABEL"
+              description: "Availability Zone of the Volume"
+          - status:
+              usage: "LABEL"
+              description: "Status of the volume"
+          - count_gauge:
+              usage: "GAUGE"
+              description: "Number of volumes"
+          - max_duration_gauge:
+              usage: "GAUGE"
+              description: ""
 
 
 logging:
