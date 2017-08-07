@@ -61,9 +61,6 @@ spec:
         - name: neutron-etc-vendor
           configMap:
             name: neutron-etc-vendor
-        - name: cisco-patches
-          configMap:
-            name: cisco-patches
         - name: container-init
           configMap:
             name: neutron-bin-vendor
