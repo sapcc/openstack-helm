@@ -96,7 +96,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Size of shares"
     openstack_manila_snapshot:
-      query: "SELECT share_snapshots.project_id, share_snapshots.share_id, share_snapshots.id, share_snapshot_instances.status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM share_snapshots INNER JOIN share_snapshot_instances ON share_snapshots.id=share_snapshot_instances.id GROUP BY share_snapshots.id, share_snapshots.project_id, share_snapshots.share_id, share_snapshot_instances.status"
+      query: "SELECT share_snapshots.project_id, share_snapshots.share_id, share_snapshots.id, share_snapshot_instances.status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM share_snapshots INNER JOIN share_snapshot_instances ON share_snapshots.id=share_snapshot_instances.snapshot_id GROUP BY share_snapshots.id, share_snapshots.project_id, share_snapshots.share_id, share_snapshot_instances.status"
       metrics:
         - project_id:
             usage: "LABEL"
