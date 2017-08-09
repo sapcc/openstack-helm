@@ -192,30 +192,30 @@ pg_metrics:
     #     - gauge:
     #         usage: "GAUGE"
     #         description: "Difference value of last_ip - first_ip"
-    openstack_neutron_SAP_IPused_per_subnet:
-      query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '10%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
-      metrics:
-        - subnet_id:
-            usage: "LABEL"
-            description: "SUBNET_ID details"
-        - network_id:
-            usage: "LABEL"
-            description: "network_id details"
-        - ipused:
-            usage: "GAUGE"
-            description: "SAP IPs used per subnet"
-    openstack_neutron_Internet_IPused_per_subnet:
-      query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '15%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
-      metrics:
-        - subnet_id:
-            usage: "LABEL"
-            description: "SUBNET_ID details"
-        - network_id:
-            usage: "LABEL"
-            description: "network_id details"
-        - ipused:
-            usage: "GAUGE"
-            description: "Internet IPs used per subnet"
+    #  openstack_neutron_SAP_IPused_per_subnet:
+    #    query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '10%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
+    #     metrics:
+    #    - subnet_id:
+    #        usage: "LABEL"
+    #        description: "SUBNET_ID details"
+    #    - network_id:
+    #        usage: "LABEL"
+    #        description: "network_id details"
+    #    - ipused:
+    #        usage: "GAUGE"
+    #        description: "SAP IPs used per subnet"
+    #  openstack_neutron_Internet_IPused_per_subnet:
+    #  query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '15%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
+    #  metrics:
+    #    - subnet_id:
+    #        usage: "LABEL"
+    #        description: "SUBNET_ID details"
+    #    - network_id:
+    #        usage: "LABEL"
+    #        description: "network_id details"
+    #    - ipused:
+    #        usage: "GAUGE"
+    #        description: "Internet IPs used per subnet"
 
 postgres:
   name: neutron
