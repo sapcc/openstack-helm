@@ -175,8 +175,8 @@ plugging_driver=networking_asr.plugins.cisco.device_manager.plugging_drivers.hpb
 #     False, the hosting device must be manually unregistered in the device
 #     manager and any corresponding VM must be deleted in Nova.
 
-# Example:
-{{- range $i, $hosting_device := .Values.asr_hosting_devices -}}
+
+{{ range $i, $hosting_device := .Values.asr_hosting_devices}}
 [cisco_hosting_device:{{$hosting_device.id}}]
 template_id=3
 credentials_id={{$hosting_device.credential}}
@@ -210,9 +210,8 @@ auto_delete=True
 # (2),(3) <network_uuid_spec> can be '*' or a UUID, or a comma separated list
 #         of UUIDs.
 
-# Example:
 
-{{- range $i, $hosting_device := .Values.asr_hosting_devices -}}
+{{range $i, $hosting_device := .Values.asr_hosting_devices}}
 
 [HwVLANTrunkingPlugDriver:{{$hosting_device.id}}]
 internal_net_interface_1={{$hosting_device.intf_internal}}
