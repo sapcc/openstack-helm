@@ -133,27 +133,33 @@ pg_metrics:
             usage: "GAUGE"
             description: "lbaas Count"
     openstack_neutron_SAP_IP_status:
-      query: "SELECT floating_network_id, COUNT(*) AS gauge, status FROM floatingips WHERE floating_ip_address LIKE '10%' GROUP BY floatingips.floating_network_id, floatingips.status"
+      query: "SELECT floatingips.floating_network_id, networks.name AS network_name, floatingips.status, COUNT(*) AS count_gauge FROM floatingips INNER JOIN networks ON floatingips.tenant_id=networks.tenant_id WHERE floating_ip_address LIKE '10%' GROUP BY floatingips.floating_network_id, floatingips.status, networks.name"
       metrics:
         - floating_network_id:
             usage: "LABEL"
             description: "Floating Network ID"
+        - network_name:
+            usage: "LABEL"
+            description: "Network Name"
         - status:
             usage: "LABEL"
             description: "Floating IP Status per Network"
-        - gauge:
+        - count_gauge:
             usage: "GAUGE"
             description: "Count of Floating IP by status"
     openstack_neutron_Internet_IP_status:
-      query: "SELECT floating_network_id, COUNT(*) AS gauge, status FROM floatingips WHERE floating_ip_address LIKE '15%' GROUP BY floatingips.floating_network_id, floatingips.status"
-      metrics:
+      query: "SELECT floatingips.floating_network_id, networks.name AS network_name, floatingips.status, COUNT(*) AS count_gauge FROM floatingips INNER JOIN networks ON floatingips.tenant_id=networks.tenant_id WHERE floating_ip_address LIKE '15%' GROUP BY floatingips.floating_network_id, floatingips.status, networks.name"
+       metrics:
         - floating_network_id:
             usage: "LABEL"
             description: "Floating Network ID"
+        - network_name:
+            usage: "LABEL"
+            description: "Network Name"
         - status:
             usage: "LABEL"
             description: "Floating IP Status per Network"
-        - gauge:
+        - count_gauge:
             usage: "GAUGE"
             description: "Count of Floating IP by status"
     # openstack_neutron_SAP_IPallocationpools_size:
@@ -186,30 +192,30 @@ pg_metrics:
     #     - gauge:
     #         usage: "GAUGE"
     #         description: "Difference value of last_ip - first_ip"
-    # openstack_neutron_SAP_IPused_per_subnet:
-    #   query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '10%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
-    #   metrics:
-    #     - subnet_id:
-    #         usage: "LABEL"
-    #         description: "SUBNET_ID details"
-    #     - network_id:
-    #         usage: "LABEL"
-    #         description: "network_id details"
-    #     - gauge:
-    #         usage: "GAUGE"
-    #         description: "SAP IPs used per subnet"
-    # openstack_neutron_Internet_IPused_per_subnet:
-    #   query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '15%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
-    #   metrics:
-    #     - subnet_id:
-    #         usage: "LABEL"
-    #         description: "SUBNET_ID details"
-    #     - network_id:
-    #         usage: "LABEL"
-    #         description: "network_id details"
-    #     - gauge:
-    #         usage: "GAUGE"
-    #         description: "Internet IPs used per subnet"
+    openstack_neutron_SAP_IPused_per_subnet:
+      query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '10%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
+      metrics:
+        - subnet_id:
+            usage: "LABEL"
+            description: "SUBNET_ID details"
+        - network_id:
+            usage: "LABEL"
+            description: "network_id details"
+        - ipused:
+            usage: "GAUGE"
+            description: "SAP IPs used per subnet"
+    openstack_neutron_Internet_IPused_per_subnet:
+      query: "SELECT subnet_id, count(*) as ipused, network_id FROM ipallocations WHERE ip_address LIKE '15%' GROUP BY ipallocations.subnet_id, ipallocations.network_id"
+      metrics:
+        - subnet_id:
+            usage: "LABEL"
+            description: "SUBNET_ID details"
+        - network_id:
+            usage: "LABEL"
+            description: "network_id details"
+        - ipused:
+            usage: "GAUGE"
+            description: "Internet IPs used per subnet"
 
 postgres:
   name: neutron
