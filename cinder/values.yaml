@@ -22,6 +22,10 @@ global:
   #    availability_zone: DEFINED-IN-REGION-CHART
   volumes: []
 
+image_version_cinder_api: 'v1'
+image_version_cinder_scheduler: 'v1'
+image_version_cinder_volume: 'v1'
+
 pod:
   replicas:
     api: 2
@@ -35,9 +39,10 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
-image_version_cinder_api: 'v1'
-image_version_cinder_scheduler: 'v1'
-image_version_cinder_volume: 'v1'
+jobs:
+  db_purge:
+    cron: # "0 8 * * * 1"
+    max_age_in_days: 0
 
 debug: "True"
 

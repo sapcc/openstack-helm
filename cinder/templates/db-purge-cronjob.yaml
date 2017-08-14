@@ -1,0 +1,55 @@
+{{- if and .Values.jobs.db_purge.cron}}
+apiVersion: batch/v2alpha1
+kind: ScheduledJob
+metadata:
+  name: cinder-db-purge
+spec:
+  schedule: {{.Values.jobs.db_purge.cron | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+{{ tuple . "cinder" "db-purge" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 12 }}
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: cinder-manage
+            image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
+            imagePullPolicy: IfNotPresent
+            command:
+            - kubernetes-entrypoint
+            env:
+            - name: COMMAND
+              value: "cinder-manage db purge {{ .Values.jobs.db_purge.max_age_in_days }}"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "cinder-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-cinder,rabbitmq"
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
+            volumeMounts:
+            - name: etccinder
+              mountPath: /etc/cinder
+            - name: cinder-etc
+              mountPath: /etc/cinder/cinder.conf
+              subPath: cinder.conf
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/logging.conf
+              subPath: logging.conf
+              readOnly: true
+          volumes:
+          - name: etccinder
+            emptyDir: {}
+          - name: cinder-etc
+            configMap:
+              name: cinder-etc
+{{- end }}
