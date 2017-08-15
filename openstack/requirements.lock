@@ -1,115 +1,45 @@
 dependencies:
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: memcached
+- name: memcached
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: rabbitmq
+- name: rabbitmq
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: keystone
+- name: keystone
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: glance
+- name: glance
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.1
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: ironic
+- name: ironic
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: nova
+- name: nova
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.1
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: barbican
+- name: barbican
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: cinder
+- name: cinder
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.1
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: manila
+- name: manila
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: horizon
+- name: horizon
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: neutron
+- name: neutron
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.1
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: neutron_vendor
+- name: neutron_vendor
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: designate
+- name: designate
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.1
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: healthchecks
+- name: healthchecks
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-digest: sha256:70316cd72770c02965a449a24db9c58bc22a12f2e820c192758036d37350190e
-generated: 2017-08-07T13:55:02.299448201+05:30
+digest: sha256:2290033ca83900548c6e1d0eb4115d980738c6826590cbc8108d019d0280581c
+generated: 2017-08-15T12:11:06.798023219+02:00

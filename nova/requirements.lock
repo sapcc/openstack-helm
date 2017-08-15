@@ -1,27 +1,12 @@
 dependencies:
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: postgres
+- name: postgres
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: utils
+- name: utils
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.1
-- alias: ""
-  condition: ""
-  enabled: false
-  import-values: null
-  name: pg_metrics
+- name: pg_metrics
   repository: http://localhost:8879/charts
-  tags: null
   version: 0.1.0
-digest: sha256:13fde2b46d825090ca09d7bf04cbf9d8e4c8e92cf93a2da68e2dd2595a4b8906
-generated: 2017-08-07T13:54:59.838843604+05:30
+digest: sha256:f03479c332eaf3e20dc03bb2d7d6f00ff3365200233ffb6ad623ef958f19c65c
+generated: 2017-08-15T12:11:03.10262347+02:00
