@@ -187,5 +187,5 @@ logging:
             handlers: stdout, sentry
             level: WARNING
         suds:
-            handlers: stdout, sentry
-            level: WARNING
+            handlers: "null"
+            level: ERROR

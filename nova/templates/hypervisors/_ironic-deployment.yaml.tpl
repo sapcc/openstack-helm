@@ -11,7 +11,7 @@ metadata:
     component: nova
 spec:
   replicas: 1
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,13 +19,16 @@ spec:
       maxSurge: 3
   selector:
     matchLabels:
-        name: nova-compute-ironic
+      name: nova-compute-ironic
   template:
     metadata:
       labels:
         name: nova-compute-ironic
+{{ tuple . "nova" "compute-ironic" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         pod.beta.kubernetes.io/hostname: nova-compute-ironic
+        configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-ironic-etc-hash: {{ tuple . $hypervisor | include "ironic_configmap" | sha256sum }}
     spec:
       containers:
         - name: nova-compute-ironic
@@ -40,6 +43,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+{{- if or $hypervisor.python_warnings .Values.python_warnings }}
+            - name: PYTHONWARNINGS
+              value: {{ or $hypervisor.python_warnings .Values.python_warnings | quote }}
+{{- end }}
           volumeMounts:
             - mountPath: /etc/nova
               name: etcnova

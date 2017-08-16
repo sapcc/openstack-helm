@@ -46,6 +46,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "nova-api,rabbitmq"
+{{- if .Values.python_warnings}}
+            - name: PYTHONWARNINGS
+              value: {{ .Values.python_warnings | quote }}
+{{- end }}
           volumeMounts:
             - name: etcnova
               mountPath: /etc/nova

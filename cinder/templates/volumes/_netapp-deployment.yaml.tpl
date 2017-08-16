@@ -26,10 +26,11 @@ spec:
     metadata:
       labels:
         name: cinder-volume-netapp-{{$volume.name}}
+{{ tuple . "cinder" (print "volume-netapp-" $volume.name) | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-netapp-{{$volume.name}}
         configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        configmap-volume-hash: {{ tuple $ $volume | include "volume_netapp_configmap" | sha256sum }}
+        configmap-volume-hash: {{ tuple . $volume | include "volume_netapp_configmap" | sha256sum }}
     spec:
       containers:
         - name: cinder-volume-netapp-{{$volume.name}}
@@ -44,6 +45,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+{{- if or $volume.python_warnings .Values.python_warnings }}
+            - name: PYTHONWARNINGS
+              value: {{ or $volume.python_warnings .Values.python_warnings }}
+{{- end }}
           volumeMounts:
             - name: etccinder
               mountPath: /etc/cinder

@@ -58,14 +58,16 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 3
+      maxUnavailable: 1
+      maxSurge: 1
   selector:
     matchLabels:
         name: nova-compute-{{ name }}
   template:
     metadata:
       labels:
+        application: nova
+        component: compute-{{ name }}
         name: nova-compute-{{ name }}
       annotations:
         pod.beta.kubernetes.io/hostname: nova-compute-{{ name }}
@@ -89,6 +91,8 @@ spec:
               value: "localhost"
             - name: STATSD_PORT
               value: "9125"
+            - name: PYTHONWARNINGS
+              value: "ignore:Unverified HTTPS request"
           volumeMounts:
             - mountPath: /etc/nova
               name: etcnova
@@ -120,6 +124,8 @@ spec:
               value: "localhost"
             - name: STATSD_PORT
               value: "9125"
+            - name: PYTHONWARNINGS
+              value: "ignore:Unverified HTTPS request"
           volumeMounts:
             - mountPath: /etc/neutron
               name: etcneutron

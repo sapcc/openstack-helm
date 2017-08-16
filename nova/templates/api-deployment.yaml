@@ -54,6 +54,10 @@ spec:
               value: "9125"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+{{- if .Values.python_warnings}}
+            - name: PYTHONWARNINGS
+              value: {{ .Values.python_warnings | quote }}
+{{- end }}
           livenessProbe:
             httpGet:
               path: /

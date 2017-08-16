@@ -11,7 +11,7 @@ metadata:
     component: nova
 spec:
   replicas: 1
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
     type: Recreate
   selector:
@@ -21,8 +21,11 @@ spec:
     metadata:
       labels:
         name: nova-compute-{{$hypervisor.name}}
+{{ tuple . "nova" (print "compute-" $hypervisor.name) | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"hypervisor"}]'
+        configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-ironic-etc-hash: {{ tuple . $hypervisor | include "kvm_configmap" | sha256sum }}
     spec:
       hostNetwork: true
       hostPID: true
@@ -44,6 +47,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+{{- if or $hypervisor.python_warnings .Values.python_warnings }}
+            - name: PYTHONWARNINGS
+              value: {{ or $hypervisor.python_warnings .Values.python_warnings | quote }}
+{{- end }}
           volumeMounts:
             - mountPath: /var/lib/nova/instances
               name: instances

@@ -11,23 +11,23 @@ metadata:
     component: nova
 spec:
   replicas: 1
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 3
+    type: Recreate
   selector:
     matchLabels:
-        name: nova-compute-{{$hypervisor.name}}
+      name: nova-compute-{{$hypervisor.name}}
   template:
     metadata:
       labels:
         name: nova-compute-{{$hypervisor.name}}
+{{ tuple . "nova" (print "compute-" $hypervisor.name) | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         pod.beta.kubernetes.io/hostname: nova-compute-{{$hypervisor.name}}
         prometheus.io/scrape: "true"
         prometheus.io/port: "9102"
+        configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-ironic-etc-hash: {{ tuple . $hypervisor | include "vmware_configmap" | sha256sum }}
     spec:
       containers:
         - name: nova-compute-{{$hypervisor.name}}
@@ -42,6 +42,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+{{- if or $hypervisor.python_warnings .Values.python_warnings }}
+            - name: PYTHONWARNINGS
+              value: {{ or $hypervisor.python_warnings .Values.python_warnings | quote }}
+{{- end }}
           volumeMounts:
             - mountPath: /etc/nova
               name: etcnova
@@ -79,6 +83,10 @@ spec:
               value: "localhost"
             - name: STATSD_PORT
               value: "9125"
+{{- if or $hypervisor.python_warnings .Values.python_warnings}}
+            - name: PYTHONWARNINGS
+              value: {{ or $hypervisor.python_warnings .Values.python_warnings | quote }}
+{{- end }}
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc
