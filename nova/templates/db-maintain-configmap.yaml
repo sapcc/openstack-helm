@@ -6,7 +6,6 @@ metadata:
     system: openstack
     type: configuration
     component: database
-
 data:
   db-maintain.sh: |
     #!/usr/bin/env bash

@@ -1,6 +1,10 @@
-{{- if and .Values.jobs.db_purge.cron}}
+{{- if .Values.jobs.db_purge.cron}}
 apiVersion: batch/v2alpha1
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
 kind: ScheduledJob
+{{- else }}
+kind: CronJob
+{{- end }}
 metadata:
   name: cinder-db-purge
 spec:

@@ -1,0 +1,59 @@
+{{- if .Values.jobs.purge_deleted_instances.cron }}
+apiVersion: batch/v2alpha1
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
+kind: ScheduledJob
+{{- else }}
+kind: CronJob
+{{- end }}
+metadata:
+  name: nova-db-purge-deleted-instances
+spec:
+  schedule: {{.Values.jobs.purge_deleted_instances.cron | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+{{ tuple . "nova" "nova-db-purge-deleted-instances" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 12 }}
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: nova-manage
+            image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
+            imagePullPolicy: IfNotPresent
+            command:
+            - kubernetes-entrypoint
+            env:
+            - name: COMMAND
+              value: "nova-manage db purge_deleted_instances --older-than {{ .Values.jobs.purge_deleted_instances.older_than}}"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "nova-migration"
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-nova,rabbitmq"
+            - name: SENTRY_DSN
+              value: {{.Values.sentry_dsn | quote}}
+            volumeMounts:
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.conf
+              subPath: logging.conf
+              readOnly: true
+          volumes:
+          - name: etcnova
+            emptyDir: {}
+          - name: nova-etc
+            configMap:
+              name: nova-etc
+{{- end }}

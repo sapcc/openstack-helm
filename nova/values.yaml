@@ -33,6 +33,12 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
+jobs:
+  purge_deleted_instances:
+    cron: # "0 * * * *"
+    older_than: 5
+    max_number: 100
+
 debug: "True"
 
 db_name: nova

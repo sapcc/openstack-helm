@@ -6,7 +6,6 @@ metadata:
     system: openstack
     type: configuration
     component: nova
-
 data:
   nova.conf: |
 {{ include (print .Template.BasePath "/etc/_nova.conf.tpl") . | indent 4 }}

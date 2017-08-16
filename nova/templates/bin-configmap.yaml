@@ -6,6 +6,7 @@ metadata:
     system: openstack
     type: configuration
     component: nova
+
 data:
   nova-libvirt-start: |
 {{ .Files.Get "bin/nova-libvirt-start" | indent 4 }}
