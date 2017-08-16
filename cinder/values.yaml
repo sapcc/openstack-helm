@@ -42,7 +42,7 @@ pod:
 jobs:
   db_purge:
     cron: # "0 8 * * * 1"
-    max_age_in_days: 0
+    max_rows: 0
 
 debug: "True"
 
