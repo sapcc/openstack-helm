@@ -26,8 +26,6 @@ spec:
           volumeMounts:
             - mountPath: /f5-patches
               name: f5-patches
-            - mountPath: /cisco-patches
-              name: cisco-patches
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /container.init
@@ -43,6 +41,3 @@ spec:
         - name: f5-patches
           configMap:
             name: f5-patches
-        - name: cisco-patches
-          configMap:
-            name: cisco-patches
