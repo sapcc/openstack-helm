@@ -32,6 +32,8 @@ pod:
         rolling_update:
            max_unavailable: 0
            max_surge: 1
+  debug:
+    api: false
 
 jobs:
   purge_deleted_instances:

@@ -8,7 +8,7 @@ metadata:
     type: api
     component: nova
 spec:
-  replicas: {{ .Values.pod.replicas.api }}
+  replicas: {{ if not .Values.pod.debug.api }}{{ .Values.pod.replicas.api }}{{ else }} 1 {{ end }}
   revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
     type: {{ .Values.pod.lifecycle.upgrades.deployments.pod_replacement_strategy }}
@@ -33,6 +33,10 @@ spec:
             {{ tuple . "nova" "api" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+{{- if .Values.pod.debug.api }}
+      securityContext:
+        runAsUser: 0
+{{- end }}
       containers:
         - name: nova-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
@@ -41,7 +45,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "nova-api"
+              value: "{{ if not .Values.pod.debug.api }}nova-api{{ else }}sleep inf{{ end }}"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
@@ -54,16 +58,18 @@ spec:
               value: "9125"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
-{{- if .Values.python_warnings}}
+{{- if .Values.python_warnings }}
             - name: PYTHONWARNINGS
               value: {{ .Values.python_warnings | quote }}
 {{- end }}
+{{- if not .Values.pod.debug.api }}
           livenessProbe:
             httpGet:
               path: /
               port: {{.Values.global.nova_api_port_internal}}
             initialDelaySeconds: 15
             timeoutSeconds: 5
+{{- end }}
           ports:
             - name: nova-api
               containerPort: {{.Values.global.nova_api_port_internal}}
