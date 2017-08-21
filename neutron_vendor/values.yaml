@@ -16,8 +16,15 @@ global:
       physical_network: DEFINED-IN-REGION-CHART
 
 
-
 debug: "True"
+
+pod:
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 5
+  debug:
+    cisco_ml2_ucsm_bm: false
 
 port_metrics: '9102'
 

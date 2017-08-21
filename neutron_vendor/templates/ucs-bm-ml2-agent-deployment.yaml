@@ -10,12 +10,12 @@ metadata:
     component: neutron
 spec:
   replicas: 1
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 3
+      maxUnavailable: 1
+      maxSurge: 0
   selector:
     matchLabels:
       name: neutron-cisco-ml2-ucsm-bm
@@ -36,7 +36,11 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
+{{- if not .Values.pod.debug.cisco_ml2_ucsm_bm }}
               value: "neutron-cisco-ml2-ucsm-bm-agent --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2//cisco-ucs-bm-ml2-agent.ini"
+{{- else }}
+              value: "sleep inf"
+{{- end }}
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
             - name: NAMESPACE
@@ -47,19 +51,19 @@ spec:
             - name: neutron-etc
               mountPath: /etc/neutron/neutron.conf
               subPath: neutron.conf
-              readOnly: true
+              readOnly: {{ not .Values.pod.debug.cisco_ml2_ucsm_bm }}
             - name: neutron-etc
               mountPath: /etc/neutron/plugins/ml2/ml2_conf.ini
               subPath: ml2-conf.ini
-              readOnly: true
+              readOnly: {{ not .Values.pod.debug.cisco_ml2_ucsm_bm }}
             - name: neutron-etc
               mountPath: /etc/neutron/logging.conf
               subPath: logging.conf
-              readOnly: true
+              readOnly: {{ not .Values.pod.debug.cisco_ml2_ucsm_bm }}
             - name: neutron-etc-vendor
               mountPath: /etc/neutron/plugins/ml2/cisco-ucs-bm-ml2-agent.ini
               subPath: cisco-ucs-bm-ml2-agent.ini
-              readOnly: true
+              readOnly: {{ not .Values.pod.debug.cisco_ml2_ucsm_bm }}
       volumes:
         - name: etcneutron
           emptyDir: {}
