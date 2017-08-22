@@ -36,6 +36,10 @@ spec:
           env:
             - name: COMMAND
               value: "manila-share --config-file /etc/manila/manila.conf --config-file /etc/manila/backend.conf"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-manila,rabbitmq"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
