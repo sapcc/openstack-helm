@@ -61,7 +61,7 @@ pg_metrics:
   db_password: DEFINED-IN-REGION-CHART
   customMetrics:
     openstack_stuck_volumes:
-        query: "SELECT host, availability_zone, status, COUNT(*) AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM volumes WHERE NOT deleted AND status IN ('attaching', 'deleting', 'detaching') AND updated_at < now() - interval '15 minutes' GROUP BY host, availability_zone, volume_type_id, status"
+        query: "SELECT host, project_id, availability_zone, status, COUNT(*) AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM volumes WHERE NOT deleted AND status IN ('attaching', 'deleting', 'detaching') AND updated_at < now() - interval '15 minutes' GROUP BY host, availability_zone, volume_type_id, status, project_id"
         metrics:
         - host:
             usage: "LABEL"
@@ -69,6 +69,9 @@ pg_metrics:
         - availability_zone:
             usage: "LABEL"
             description: "Availability Zone of the Volume"
+        - project_id:
+            usage: "LABEL"
+            description: "Project ID"
         - status:
             usage: "LABEL"
             description: "Status of the volume"
