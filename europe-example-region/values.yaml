@@ -214,7 +214,6 @@ openstack:
       nova:
         shares_netapp:
           - name: share1
-            vserver: vs1
             host: netapp.example.com
             username: admin
             password: YourOwnSecret!

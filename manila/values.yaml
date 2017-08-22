@@ -33,7 +33,6 @@ image_version_manila_share_m3: DEFINED-IN-REGION-CHART
 #   nova1:
 #     shares_netapp:
 #      - name: DEFINED-IN-REGION-CHART
-#        vserver: DEFINED-IN-REGION-CHART
 #        host: DEFINED-IN-REGION-CHART
 #        username: DEFINED-IN-REGION-CHART
 #        password: DEFINED-IN-REGION-CHART
