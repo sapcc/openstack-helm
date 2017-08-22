@@ -93,8 +93,8 @@ logging:
             handlers: stdout, sentry
             level: WARNING
         suds:
-            handlers: stdout, sentry
-            level: INFO
+            handlers: "null"
+            level: ERROR
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO
