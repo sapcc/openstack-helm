@@ -15,7 +15,7 @@ backup:
   enabled: false
   interval_full: 1 days
   interval_incr: 1 hours
-  image_version: v0.5.7
+  image_version: v0.5.12
   os_password: DEFINED-IN-REGION-SECRETS
   os_username: db_backup
   os_user_domain: Default
