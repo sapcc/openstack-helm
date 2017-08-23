@@ -23,9 +23,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-{{.Values.name}}-backup-metrics
+  name: mariadb-{{.Values.name}}-backup-metrics
   labels:
-    app: postgres-{{.Values.name}}
+    app: mariadb-{{.Values.name}}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -39,5 +39,5 @@ spec:
       port: 9188
       protocol: TCP
   selector:
-    name: postgres-{{.Values.name}}
+    name: mariadb-{{.Values.name}}
 {{- end }}
