@@ -47,5 +47,5 @@ spec:
       port: 9188
       protocol: TCP
   selector:
-    app: postgres-{{.Values.name}}
+    name: postgres-{{.Values.name}}
 {{- end }}
