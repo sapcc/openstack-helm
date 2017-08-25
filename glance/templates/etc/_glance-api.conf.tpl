@@ -107,10 +107,12 @@ swift_store_region={{.Values.global.region}}
 swift_store_auth_insecure = True
 swift_store_create_container_on_put = True
 swift_store_multi_tenant = {{.Values.swift_multi_tenant}}
+{{- if .Values.swift_store_large_object_size }}
+swift_store_large_object_size = {{.Values.swift_store_large_object_size}}
+{{- end }}
 
 default_swift_reference = swift-global
 swift_store_config_file=/etc/glance/swift-store.conf
-
 swift_store_use_trusts=True
 
 [oslo_messaging_notifications]
