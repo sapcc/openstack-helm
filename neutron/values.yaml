@@ -20,7 +20,7 @@ pod:
   replicas:
     api: 2
   debug:
-    api: true
+    api: false
   lifecycle:
     upgrades:
       deployments:
