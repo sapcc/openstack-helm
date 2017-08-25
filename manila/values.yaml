@@ -177,7 +177,7 @@ logging:
             args: "()"
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout, sentry
             level: WARNING
         manila:
             handlers: stdout, sentry
