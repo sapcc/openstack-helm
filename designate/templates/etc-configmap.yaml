@@ -14,6 +14,8 @@ data:
 {{ include (print .Template.BasePath "/etc/_designate.conf.tpl") . | indent 4 }}
   rndc.key: |
 {{ include (print .Template.BasePath "/etc/_rndc.key.tpl") . | indent 4 }}
+  rndc_sap_internet.key: |
+{{ include (print .Template.BasePath "/etc/_rndc_sap_internet.key.tpl") . | indent 4 }}
   pools.yaml: |
 {{ include (print .Template.BasePath "/etc/_pools.yaml.tpl") . | indent 4 }}
   policy.json: |

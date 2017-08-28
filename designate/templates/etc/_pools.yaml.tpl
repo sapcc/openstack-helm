@@ -68,8 +68,8 @@
         host: {{$srv.ip}}
         port: 53
         rndc_host: {{$srv.ip}}
-        rndc_port: 953
-        rndc_key_file: /etc/designate/rndc.key
+        rndc_port: 1953
+        rndc_key_file: /etc/designate/rndc_sap_internet.key
     {{- end}}
 {{- end }}
 {{- range $pool := .Values.akamai_pools }}
