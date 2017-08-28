@@ -217,7 +217,7 @@ logging:
             args: "()"
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout, sentry
             level: WARNING
         cinder:
             handlers: stdout, sentry
@@ -225,18 +225,6 @@ logging:
         taskflow:
             handlers: stdout, sentry
             level: DEBUG
-        oslo_vmware:
-            handlers: stdout, sentry
-            level: WARNING
-        amqp:
-            handlers: stdout, sentry
-            level: WARNING
-        amqplib:
-            handlers: stdout, sentry
-            level: WARNING
-        boto:
-            handlers: stdout, sentry
-            level: WARNING
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO

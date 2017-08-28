@@ -74,24 +74,12 @@ logging:
             args: "()"
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout, sentry
             level: WARNING
         neutron:
             handlers: stdout, sentry
             level: WARNING
         neutron_lbaas:
-            handlers: stdout, sentry
-            level: WARNING
-        amqp:
-            handlers: stdout, sentry
-            level: WARNING
-        amqplib:
-            handlers: stdout, sentry
-            level: WARNING
-        sqlalchemy:
-            handlers: stdout, sentry
-            level: WARNING
-        boto:
             handlers: stdout, sentry
             level: WARNING
         suds:

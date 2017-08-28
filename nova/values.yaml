@@ -199,29 +199,14 @@ logging:
             args: "()"
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout, sentry
             level: WARNING
         nova:
             handlers: stdout, sentry
             level: DEBUG
-        oslo_vmware:
-            handlers: stdout, sentry
-            level: INFO
-        amqp:
-            handlers: stdout, sentry
-            level: WARNING
-        amqplib:
-            handlers: stdout, sentry
-            level: WARNING
-        boto:
-            handlers: stdout, sentry
-            level: WARNING
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO
-        sqlalchemy:
-            handlers: stdout, sentry
-            level: WARNING
         suds:
             handlers: "null"
             level: ERROR

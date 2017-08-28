@@ -90,20 +90,11 @@ logging:
             formatter: default
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout
             level: WARNING
         ironic:
             handlers: stdout
             level: DEBUG
-        amqp:
-            handlers: stdout
-            level: WARNING
-        amqplib:
-            handlers: stdout
-            level: WARNING
         eventlet.wsgi.server:
             handlers: stdout
             level: INFO
-        sqlalchemy:
-            handlers: stdout
-            level: WARNING
