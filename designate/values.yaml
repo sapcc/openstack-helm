@@ -68,7 +68,7 @@ bind_pools:
 #        port: DEFINED-IN-REGION-CHART
 
 rndc_key: DEFINED-IN-REGION-CHART
-rndc_sap_internet_key: DEFINED-IN-REGION-CHART
+rndc_sap_internet_key:
 
 poolmanager:
   db_name:  designate_poolmanager
