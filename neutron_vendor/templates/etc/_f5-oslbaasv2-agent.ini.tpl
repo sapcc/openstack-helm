@@ -433,7 +433,10 @@ f5_snat_mode = True
 # This setting will be forced to 0 (zero) if
 # f5_global_routed_mode = True.
 #
-f5_snat_addresses_per_subnet = 1
+# SAP specific enhancement setting to -1 creates a LB specific SNAT pool
+# using LB IP
+
+f5_snat_addresses_per_subnet = {{ $context.Values.f5_snat_per_subnet }}
 #
 # This setting will cause all networks with
 # the router:external attribute set to True
