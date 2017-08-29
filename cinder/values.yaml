@@ -138,8 +138,6 @@ pg_metrics:
 
 postgres:
   name: cinder
-  metrics:
-    enabled: true
 
 logging:
     formatters:
