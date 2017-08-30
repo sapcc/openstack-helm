@@ -13,11 +13,11 @@ spec:
   type: ClusterIP
   selector:
     app: {{.Values.name}}-mariadb
-  ports: 
+  ports:
     - name: {{.Values.name}}-mariadb
       port: {{.Values.port_public}}
 
-{{- if .Values.metrics.enabled }}
+{{- if and .Values.backup.enabled .Values.backup.metrics }}
 ---
 
 apiVersion: v1
