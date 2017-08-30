@@ -13,6 +13,31 @@ spec:
   type: ClusterIP
   selector:
     app: {{.Values.name}}-mariadb
-  ports: 
+  ports:
     - name: {{.Values.name}}-mariadb
       port: {{.Values.port_public}}
+
+{{- if and .Values.backup.enabled .Values.backup.metrics }}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-{{.Values.name}}-backup-metrics
+  labels:
+    app: mariadb-{{.Values.name}}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9188"
+spec:
+  clusterIP: None
+  ports:
+    - name: backup-metrics
+      port: 9188
+      protocol: TCP
+  selector:
+    name: mariadb-{{.Values.name}}
+{{- end }}
