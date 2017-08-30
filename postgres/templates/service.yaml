@@ -16,7 +16,7 @@ metadata:
 spec:
   selector:
     name: postgres-{{.Values.name}}
-  ports: 
+  ports:
     - name: public
       port: {{.Values.port_public}}
       targetPort: postgres
@@ -25,7 +25,7 @@ spec:
     - {{.Values.external_ip }}
     {{- end }}
 
-{{- if .Values.metrics.enabled }}
+{{- if and .Values.backup.enabled .Values.backup.metrics }}
 ---
 
 apiVersion: v1
