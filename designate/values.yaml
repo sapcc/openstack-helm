@@ -33,6 +33,10 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
+
+rabbitmq_notification_user: DEFINED-IN-REGION-CHART
+rabbitmq_notification_pass: DEFINED-IN-REGION-CHART
+
 image_version_designate_api:  DEFINED-IN-REGION-CHART
 image_version_designate_central:  DEFINED-IN-REGION-CHART
 image_version_designate_mdns:  DEFINED-IN-REGION-CHART

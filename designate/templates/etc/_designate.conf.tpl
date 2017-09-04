@@ -55,6 +55,10 @@ wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.glo
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
+[oslo_messaging_notifications]
+driver = messaging
+transport_url = rabbit://{{ .Values.rabbitmq_notification_user }}:{{ .Values.rabbitmq_notification_pass }}@notification-{{include "rabbitmq_host" .}}:5672/
+
 {{include "oslo_messaging_rabbit" .}}
 
 ########################
