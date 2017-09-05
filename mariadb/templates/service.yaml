@@ -39,5 +39,5 @@ spec:
       port: 9188
       protocol: TCP
   selector:
-    name: {{.Values.name}}-mariadb
+    app: {{.Values.name}}-mariadb
 {{- end }}
