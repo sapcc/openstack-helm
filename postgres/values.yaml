@@ -12,10 +12,9 @@ user: postgres
 password: DEFINED-IN-REGION-CHART
 port_public: '5432'
 port_private: '5432'
-port_metrics: '9187'
 hba_cidr: 0.0.0.0/0
 
-image_version_postgres: '9.4'
+image_version_postgres: '9.4.14'
 
 persistence:
   enabled: true
@@ -31,13 +30,3 @@ backup:
   os_user_domain: Default
   os_project_name: master
   os_project_domain: ccadmin
-
-metrics:
-  enabled: true
-  image: wrouesnel/postgres_exporter
-  imageTag: v0.1.1
-  imagePullPolicy: IfNotPresent
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 100m

@@ -43,14 +43,6 @@ spec:
           configMap:
             name: postgres-bin-{{.Values.name}}
             defaultMode: 0755
-{{- if and  .Values.metrics.enabled .Values.metrics.customMetrics }}
-        - name: custom-metrics
-          configMap:
-            name: postgres-etc-{{.Values.name}}
-            items:
-            - key: custom-metrics.yaml
-              path: custom-metrics.yaml
-{{- end }}
       containers:
         - name: postgres
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/postgres:{{.Values.image_version_postgres}}
@@ -120,24 +112,4 @@ spec:
               value: {{ .Values.backup.interval_full | quote }}
 #            - name: BACKUP_PGSQL_INCR
 #              value: {{ .Values.backup.interval_incr | quote }}
-{{- end }}
-{{- if .Values.metrics.enabled }}
-        - name: metrics
-          image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
-          imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
-          env:
-            - name: POSTGRES_PASSWORD
-              value: {{.Values.password}}
-            - name: DATA_SOURCE_NAME
-              value: "postgresql://{{.Values.user}}@localhost:{{.Values.port_private}}/{{.Values.name}}?sslmode=disable"
-          ports:
-            - name: metrics
-              containerPort: {{.Values.port_metrics}}
-          {{- if .Values.metrics.customMetrics }}
-          args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
-          volumeMounts:
-            - name: custom-metrics
-              mountPath: /conf
-              readOnly: true
-          {{- end }}
 {{- end }}
