@@ -209,5 +209,3 @@ pg_metrics:
 
 postgres:
   name: neutron
-  metrics:
-    enabled: false
