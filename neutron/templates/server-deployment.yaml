@@ -48,8 +48,6 @@ spec:
           env:
             - name: COMMAND
               value: "/container.init/neutron-server-start"
-            - name: DEBUG_CONTAINER
-              value: "false"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
