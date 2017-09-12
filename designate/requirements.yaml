@@ -2,6 +2,9 @@ dependencies:
   - name: utils
     repository: http://localhost:8879/charts
     version: 0.1.1
-  - name: mariadb 
+  - name: mariadb
     repository: http://localhost:8879/charts
     version: 0.1.1
+  - name: mysql_metrics
+    repository: http://localhost:8879/charts
+    version: 0.1.0

@@ -84,6 +84,33 @@ mariadb:
   initdb_configmap: designate-initdb
   persistence_claim: db-designate-pvclaim
 
+mysql_metrics:
+  name: designate
+  db_name: designate
+  db_user: root
+  db_password: DEFINED-IN-REGION-CHART
+  customMetrics:
+    - name: openstack_designate_zones
+      help: "zones grouped by status and project"
+      labels:
+        - "name"
+        - "status"
+        - "tenant_id"
+      values:
+        - "count_gauge"
+      query:  |
+              SELECT
+                name,
+                status,
+                tenant_id,
+                COUNT(*)
+              FROM zones
+              AS count_gauge
+              GROUP BY
+                name,
+                status,
+                tenant_id
+
 logging:
     formatters:
         context:

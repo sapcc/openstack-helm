@@ -15,7 +15,7 @@ barbican: build-barbican
 cinder: utils postgres
 cinder: build-cinder
 
-designate: utils mariadb
+designate: utils mariadb mysql_metrics
 designate: build-designate
 
 
@@ -47,6 +47,7 @@ neutron_vendor: build-neutron_vendor
 
 #dependencies
 pg_metrics: build-pg_metrics
+mysql_metrics: build-mysql_metrics
 mariadb: build-mariadb
 postgres: build-postgres pg_metrics
 rabbitmq: build-rabbitmq
@@ -60,6 +61,7 @@ lint: lint-barbican lint-cinder lint-designate lint-europe-example-region
 lint: lint-glance lint-horizon lint-ironic lint-keystone lint-mariadb
 lint: lint-memcached lint-neutron lint-nova lint-openstack lint-postgres
 lint: lint-neutron_vendor lint-rabbitmq lint-utils lint-pg_metrics
+lint: lint-mysql_metrics
 lint-%:
 	helm lint $*
 

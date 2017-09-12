@@ -5,5 +5,8 @@ dependencies:
 - name: mariadb
   repository: http://localhost:8879/charts
   version: 0.1.1
-digest: sha256:4569e704e2466a0a3225ad0983f7b5c9abec1704ee1f8eeedf25ff872391854d
-generated: 2017-08-15T12:10:51.75119828+02:00
+- name: mysql_metrics
+  repository: http://localhost:8879/charts
+  version: 0.1.0
+digest: sha256:a038a62d7ae4dfa2c082852f513a944397f17785519c38aa02269fe98076190c
+generated: 2017-09-11T16:33:14.582641426+02:00

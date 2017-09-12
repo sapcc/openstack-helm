@@ -18,6 +18,8 @@ spec:
     metadata:
       labels:
         app: {{.Values.name}}-mariadb
+      annotations:
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
 
     spec:
       containers:
@@ -37,6 +39,9 @@ spec:
             readOnly: false
           - name: initdb
             mountPath: /docker-entrypoint-initdb.d
+          - name: mariadb-etc
+            mountPath: /etc/mysql/my.cnf
+            subPath: my.cnf
 {{- if .Values.backup.enabled }}
           - name: db-socket
             mountPath: /var/run/mysqld
@@ -80,6 +85,9 @@ spec:
           name: db-socket
 {{- end }}
       volumes:
+        - name: mariadb-etc
+          configMap:
+            name: mariadb-etc-{{.Values.name}}
 {{- if .Values.persistence_claim }}
         - name: mariadb-persistent-storage
           persistentVolumeClaim:
