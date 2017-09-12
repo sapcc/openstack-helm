@@ -8,7 +8,7 @@ metadata:
     type: api
     component: neutron
 spec:
-  replicas: {{ if not .Values.pod.debug.api }}{{ .Values.pod.replicas.api }}{{ else }}1{{ end }}
+  replicas: {{ .Values.pod.replicas.api }}
   revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
   strategy:
     type: {{ .Values.pod.lifecycle.upgrades.deployments.pod_replacement_strategy }}
@@ -37,23 +37,19 @@ spec:
         - name: neutron-server
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
           imagePullPolicy: IfNotPresent
-{{- if not .Values.pod.debug.api }}
           livenessProbe:
             httpGet:
               path: /
               port: {{.Values.global.neutron_api_port_internal}}
             initialDelaySeconds: 120
             timeoutSeconds: 5
-{{- end }}
           command:
             - /usr/local/bin/kubernetes-entrypoint
           env:
             - name: COMMAND
-{{- if not .Values.pod.debug.api }}
               value: "/container.init/neutron-server-start"
-{{- else }}
-              value: "sleep inf"
-{{- end }}
+            - name: DEBUG_CONTAINER
+              value: "false"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_JOBS
@@ -74,25 +70,18 @@ spec:
             - name: neutron-api
               containerPort: {{.Values.global.neutron_api_port_internal}}
           volumeMounts:
-{{- if .Values.pod.debug.api }}
             - mountPath: /development
               name: development
-{{- end }}
             - mountPath: /neutron-etc
               name: neutron-etc
-              readOnly: {{ not .Values.pod.debug.api }}
             - mountPath: /neutron-etc-vendor
               name: neutron-etc-vendor
-              readOnly: {{ not .Values.pod.debug.api }}
             - mountPath: /neutron-etc-region
               name: neutron-etc-region
-              readOnly: {{ not .Values.pod.debug.api }}
             - mountPath: /neutron-patches
               name: neutron-patches
-              readOnly: {{ not .Values.pod.debug.api }}
             - mountPath: /container.init
               name: container-init
-              readOnly: {{ not .Values.pod.debug.api }}
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
@@ -115,11 +104,9 @@ spec:
         - name: neutron-patches
           configMap:
             name: neutron-patches
-{{- if .Values.pod.debug.api }}
         - name: development
           persistentVolumeClaim:
             claimName: development-pvclaim
-{{- end }}
         - name: container-init
           configMap:
             name: neutron-bin
