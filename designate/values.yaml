@@ -93,19 +93,18 @@ mysql_metrics:
     - name: openstack_designate_zones
       help: "zones grouped by status and project"
       labels:
-        - "name"
+        - "zone_name"
         - "status"
-        - "tenant_id"
+        - "project_id"
       values:
         - "count_gauge"
       query:  |
               SELECT
-                name,
+                name AS zone_name,
                 status,
-                tenant_id,
-                COUNT(*)
+                tenant_id AS project_id,
+                COUNT(*) AS count_gauge
               FROM zones
-              AS count_gauge
               GROUP BY
                 name,
                 status,
