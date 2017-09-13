@@ -113,7 +113,6 @@ mysql_metrics:
     - name: openstack_designate_records
       help: "records count grouped by status"
       labels:
-        - "id"
         - "status"
         - "zone_id"
       values:
