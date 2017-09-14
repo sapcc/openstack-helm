@@ -41,6 +41,8 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 10
         env:
+          - name: LOGLEVEL
+            value: {{ .Values.loglevel }}
           - name: CONFIG
             value: /conf/config.yml
         ports:

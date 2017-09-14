@@ -5,6 +5,7 @@ db_password: DEFINED-IN-COMPONENT-CHART
 name: designate
 
 port_metrics: '9237'
+loglevel: info
 image: justwatch/sql_exporter
 imageTag: 0.2.0
 imagePullPolicy: IfNotPresent
