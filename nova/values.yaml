@@ -129,6 +129,27 @@ pg_metrics:
         - gauge:
             usage: "GAUGE"
             description: "VM Count"
+    openstack_compute_stuck_instances:
+      query: "SELECT host, project_id, availability_zone, vm_state, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM instances WHERE vm_state IN ('scheduling','pausing','unpausing','suspending','resuming','rescuing','unrescuing','rebuilding','migrating','deleting','restoring','shelving','unshelving','building','deleting','stopping','starting','spawning','rebooting') AND deleted=0 GROUP BY host, project_id, availability_zone, vm_state"
+      metrics:
+        - project_id:
+            usage: "LABEL"
+            description: "Project ID"
+        - vm_state:
+            usage: "LABEL"
+            description: "State of the VM"
+        - host:
+            usage: "LABEL"
+            description: "Host Name"
+        - availability_zone:
+            usage: "LABEL"
+            description: "AZ Name"
+        - count_gauge:
+            usage: "GAUGE"
+            description: "VM Count"
+        - max_duration_gauge:
+            usage: "GAUGE"
+            description: "Maximum duration of state"
 
 postgres:
   name: nova
