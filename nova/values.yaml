@@ -115,7 +115,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Number of VMs running"
     openstack_compute_instances:
-      query: "SELECT project_id, host, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, project_id"
+      query: "SELECT project_id, host, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, host, project_id"
       metrics:
         - project_id:
             usage: "LABEL"
