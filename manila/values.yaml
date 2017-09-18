@@ -127,6 +127,12 @@ pg_metrics:
         - host:
             usage: "LABEL"
             description: "Project ID"
+        - count_gauge:
+            usage: "GAUGE"
+            description: "Number of shares"
+        - max_duration_gauge:
+            usage: "GAUGE"
+            description: "Maximum duration of state"
 postgres:
   name: manila
 
