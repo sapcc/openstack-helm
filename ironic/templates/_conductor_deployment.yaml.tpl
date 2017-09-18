@@ -36,19 +36,19 @@ spec:
         - name: ironic-conductor
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-conductor:{{.Values.image_version_ironic_conductor}}
           imagePullPolicy: IfNotPresent
-{{- if $conductor.debug }}
+        {{- if $conductor.debug }}
           securityContext:
             runAsUser: 0
-{{- end }}
+        {{- end }}
           command:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-{{- if not $conductor.debug }}
+        {{- if not $conductor.debug }}
               value: "ironic-conductor --config-file /etc/ironic/ironic.conf --config-file /etc/ironic/ironic-conductor.conf"
-{{- else }}
+        {{- else }}
               value: "sleep inf"
-{{- end }}
+        {{- end }}
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
@@ -82,6 +82,10 @@ spec:
               readOnly: {{ not $conductor.debug }}
             - mountPath: /tftpboot
               name: ironic-tftp
+        {{- if $conductor.debug }}
+            - mountPath: /development
+              name: development
+        {{- end }}
       volumes:
         - name: etcironic
           emptyDir: {}
@@ -94,5 +98,10 @@ spec:
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
+        {{- if $conductor.debug }}
+        - name: development
+          persistentVolumeClaim:
+            claimName: development-pvclaim
+        {{- end }}
     {{- end }}
 {{- end }}
