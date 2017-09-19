@@ -115,7 +115,24 @@ pg_metrics:
         - size_gauge:
             usage: "GAUGE"
             description: "Size of shares"
-
+    openstack_manila_shares_stuck:
+      query: "SELECT share_id, status, host, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge from share_instances where deleted='False' and status in ('deleting','creating') GROUP BY share_id, status, host"
+      metrics:
+        - share_id:
+            usage: "LABEL"
+            description: "SHARE ID"
+        - status:
+            usage: "LABEL"
+            description: "Share status"
+        - host:
+            usage: "LABEL"
+            description: "Share Backend"
+        - count_gauge:
+            usage: "GAUGE"
+            description: "Number of shares"
+        - max_duration_gauge:
+            usage: "GAUGE"
+            description: "Maximum duration of state"
 postgres:
   name: manila
 
