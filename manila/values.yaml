@@ -120,13 +120,13 @@ pg_metrics:
       metrics:
         - share_id:
             usage: "LABEL"
-            description: "Type of the share"
+            description: "SHARE ID"
         - status:
             usage: "LABEL"
             description: "Share status"
         - host:
             usage: "LABEL"
-            description: "Project ID"
+            description: "Share Backend"
         - count_gauge:
             usage: "GAUGE"
             description: "Number of shares"
