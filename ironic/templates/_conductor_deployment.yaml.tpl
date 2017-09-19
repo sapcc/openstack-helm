@@ -7,7 +7,7 @@ metadata:
   name: ironic-conductor-{{$conductor.name}}
   labels:
     system: openstack
-    type: backend
+    type: conductor
     component: ironic
 spec:
   replicas: 1
@@ -83,12 +83,40 @@ spec:
               readOnly: {{ not $conductor.debug }}
             - mountPath: /tftpboot
               name: ironic-tftp
+            - mountPath: /shellinabox
+              name: shellinabox
         {{- if $conductor.debug }}
             - mountPath: /development
               name: development
         {{- end }}
+        - name: console
+          image: {{.Values.image_version_nginx | default "nginx:stable-alpine"}}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: ironic-console
+              protocol: TCP
+              containerPort: 80
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d
+              name: ironic-console
+            - mountPath: /shellinabox
+              name: shellinabox
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: ironic-console
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: ironic-console
+            initialDelaySeconds: 5
+            periodSeconds: 3
       volumes:
         - name: etcironic
+          emptyDir: {}
+        - name: shellinabox
           emptyDir: {}
         - name: ironic-etc
           configMap:
@@ -96,9 +124,14 @@ spec:
         - name: ironic-conductor-etc
           configMap:
             name: ironic-conductor-{{$conductor.name}}-etc
+        - name: ironic-console
+          configMap:
+            name: ironic-console
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
+        - name: shellinabox
+          emptyDir: {}
         {{- if $conductor.debug }}
         - name: development
           persistentVolumeClaim:

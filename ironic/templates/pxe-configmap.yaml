@@ -4,7 +4,7 @@ metadata:
   name: ironic-pxe
   labels:
     system: openstack
-    type: patches
+    type: config
     component: ironic
 data:
   default.conf: |

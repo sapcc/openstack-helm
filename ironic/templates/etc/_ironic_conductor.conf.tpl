@@ -11,6 +11,11 @@ api_url={{ .Values.global.ironic_api_endpoint_protocol_public}}://{{include "iro
 clean_nodes={{ $conductor.clean_nodes | default "False" }}
 automated_clean={{ $conductor.automated_clean | default "False" }}
 
+[console]
+terminal_pid_dir=/shellinabox
+terminal_url_scheme=https://{{ include "ironic_console_endpoint_host_public" . }}/{{$conductor.name}}/%(uuid)s
+socket_permission=0666
+
 [deploy]
 # We expose this directory over http and tftp
 http_root=/tftpboot

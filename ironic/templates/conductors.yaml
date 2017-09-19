@@ -3,4 +3,6 @@
 {{ tuple $ $conductor | include "ironic_conductor_deployment" }}
 ---
 {{ tuple $ $conductor | include "ironic_conductor_configmap" }}
+---
+{{ tuple $ $conductor | include "ironic_conductor_console_service" }}
 {{- end }}
