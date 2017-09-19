@@ -41,6 +41,7 @@ spec:
             runAsUser: 0
         {{- end }}
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
