@@ -15,6 +15,7 @@ automated_clean={{ $conductor.automated_clean | default "False" }}
 terminal_pid_dir=/shellinabox
 terminal_url_scheme=https://{{ include "ironic_console_endpoint_host_public" . }}/{{$conductor.name}}/%(uuid)s
 socket_permission=0666
+ssh_command_pattern=sshpass -f %(pw_file)s ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oKexAlgorithms=+diffie-hellman-group1-sha1 -l %(username)s %(address)s
 
 [deploy]
 # We expose this directory over http and tftp
