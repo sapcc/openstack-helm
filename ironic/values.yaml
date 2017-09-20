@@ -54,6 +54,9 @@ conductor:
     protocol: 'http'
     port: 8088
 
+console:
+  secret:
+
 tftp_ip:
 
 port_metrics: '9102'
