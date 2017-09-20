@@ -36,11 +36,10 @@ global_physnet_mtu = {{.Values.global.default_mtu}}
 advertise_mtu = True
 
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
-rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
+rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 5 }}
+rpc_state_report_workers = {{ .Values.rpc_state_workers | default .Values.global.rpc_state_workers | default 5 }}
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
-max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
-max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
 api_workers = {{ .Values.api_workers | default .Values.global.api_workers | default 8 }}
 
@@ -81,6 +80,10 @@ root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
 
 [database]
 connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "neutron_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
+max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
+max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+
+
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
