@@ -6,14 +6,15 @@ metadata:
   namespace: {{ .Values.global.admin_namespace }}
 data:
   namespace: monsoon3
-  cinder_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.cinder.image_version_cinder_volume}}
-  cinder_sentry_dsn: {{.Values.cinder.sentry_dsn }}
-  neutron_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.neutron.image_version_neutron_server_m3}}
-  neutron_sentry_dsn: {{.Values.neutron.sentry_dsn }}
-  nova_agent_image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.nova.image_version_nova_compute}}
-  nova_sentry_dsn: {{.Values.nova.sentry_dsn }}
-  password: {{ .Values.global.master_password }}
-  username: {{ .Values.vcenter_operator.username }}
+  cinder_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/ubuntu-source-cinder-volume:{{ .Values.cinder.image_version_cinder_volume }}
+  cinder_sentry_dsn: {{ .Values.cinder.sentry_dsn | quote }}
+  neutron_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/ubuntu-source-neutron-server-m3:{{ .Values.neutron.image_version_neutron_server_m3 }}
+  neutron_sentry_dsn: {{ .Values.neutron.sentry_dsn | quote  }}
+  nova_agent_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-nova-compute:{{ .Values.nova.image_version_nova_compute }}
+  nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
+  password: {{ .Values.global.master_password | quote }}
+  username: {{ .Values.vcenter_operator.username | quote }}
+  pbm_enabled: {{ .Values.vcenter_operator.pbm_enabled | quote }}
 {{- if .Values.vcenter_operator.dns_ip }}
   dns_ip: {{ .Values.vcenter_operator.dns_ip | quote }}
 {{- end }}
@@ -58,7 +59,7 @@ spec:
             - dumb-init
           args:
             - vcenter-operator
-          image: "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{.Values.vcenter_operator.image_version}}"
+          image: "{{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{ .Values.vcenter_operator.image_version}}"
           volumeMounts:
             - name: config
               mountPath: /var/lib/kolla/config_files
@@ -66,4 +67,4 @@ spec:
         - name: config
           configMap:
             name: vcenter-operator
-{{ end -}}
+{{- end }}

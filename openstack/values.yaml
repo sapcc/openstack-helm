@@ -224,6 +224,7 @@ vcenter_operator:
     dns_port:
     tsig_key:
     username:
+    pbm_enabled: false
 
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
