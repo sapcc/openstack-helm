@@ -9,9 +9,10 @@ global:
   nova_api_port_internal: '8774'
   nova_api_port_public: '443'
   nova_metadata_port_internal: '8775'
-  nova_novnc_port_public: '443'
+  nova_console_port_public: '443'
   nova_novnc_port_internal: '6080'
-  nova_spicehtml5_port_public: '6082'
+  nova_spicehtml5_port_internal: '6082'
+  nova_serial_port_internal: '6083'
 
   hypervisors: []
   hypervisors_vmware: []

@@ -33,6 +33,12 @@ spec:
             {{ tuple . "nova" "console" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+      volumes:
+      - name: etcnova
+        emptyDir: {}
+      - name: nova-etc
+        configMap:
+          name: nova-etc
       containers:
         - name: nova-consoleauth
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth}}
@@ -84,6 +90,9 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "nova-api"
+          ports:
+            - name: novnc
+              containerPort: {{ .Values.global.nova_novnc_port_internal }}
           volumeMounts:
             - name: etcnova
               mountPath: /etc/nova
@@ -116,8 +125,9 @@ spec:
               value: "nova-spicehtml5proxy"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
-            - name: DEPENDENCY_SERVICE
-              value: "nova-api"
+          ports:
+            - name: spicehtml5
+              containerPort: 6082
           volumeMounts:
             - name: etcnova
               mountPath: /etc/nova
@@ -140,9 +150,39 @@ spec:
               mountPath: /etc/nova/logging.conf
               subPath: logging.conf
               readOnly: true
-      volumes:
-        - name: etcnova
-          emptyDir: {}
-        - name: nova-etc
-          configMap:
-            name: nova-etc
+        - name: nova-serialproxy
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "nova-serialproxy"
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+          ports:
+            - name: serial
+              containerPort: 6083
+          volumeMounts:
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/api-paste.ini
+              subPath: api-paste.ini
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/api_audit_map.conf
+              subPath: api_audit_map.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/policy.json
+              subPath: policy.json
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.conf
+              subPath: logging.conf
+              readOnly: true

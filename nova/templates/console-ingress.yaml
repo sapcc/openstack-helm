@@ -7,6 +7,8 @@ metadata:
     system: openstack
     type: backend
     component: nova
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   tls:
      - secretName: tls-{{include "nova_console_endpoint_host_public" . | replace "." "-" }}
@@ -15,7 +17,15 @@ spec:
     - host: {{include "nova_console_endpoint_host_public" .}}
       http:
         paths:
-        - path: /
+        - path: /novnc
           backend:
             serviceName: nova-console
-            servicePort: {{.Values.global.nova_novnc_port_public}}
+            servicePort: novnc
+        - path: /spicehtml5
+          backend:
+            serviceName: nova-console
+            servicePort: spicehtml5
+        - path: /serial
+          backend:
+            serviceName: nova-console
+            servicePort: serial

@@ -62,18 +62,20 @@ until_refresh = {{ .Values.usage_until_refresh | default 0 }}
 workers=8
 
 [spice]
-enabled = False
-html5proxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{.Values.global.nova_spicehtml5_port_public}}/spice_auto.html
-html5proxy_port = {{.Values.global.nova_spicehtml5_port_public}}
+enabled = True
+html5proxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{.Values.global.nova_console_port_public}}/spicehtml5/spice_auto.html
 
 [vnc]
 enabled = True
 vncserver_listen = $my_ip
 vncserver_proxyclient_address = $my_ip
-novncproxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_novnc_port_public }}/vnc_auto.html
-novncproxy_host= 0.0.0.0
+novncproxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_console_port_public }}/novnc/vnc_auto.html?path=/novnc/websockify
+novncproxy_host = 0.0.0.0
 novncproxy_port = {{ .Values.global.nova_novnc_port_internal}}
 
+[serial_console]
+enabled = True
+base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_console_port_public }}/serial
 
 {{include "oslo_messaging_rabbit" .}}
 

@@ -12,8 +12,12 @@ spec:
     name: nova-console
 
   ports:
-    - name: nonvc-proxy
-      port: {{.Values.global.nova_novnc_port_public}}
+    - name: novnc
+      port: {{.Values.global.nova_novnc_port_internal}}
       targetPort: {{.Values.global.nova_novnc_port_internal}}
-    - name: spicehtml5-proxy
-      port: {{.Values.global.nova_spicehtml5_port_public}}
+    - name: spicehtml5
+      port: {{.Values.global.nova_spicehtml5_port_internal}}
+      targetPort: {{.Values.global.nova_spicehtml5_port_internal}}
+    - name: serial
+      port: {{.Values.global.nova_serial_port_internal}}
+      targetPort: {{.Values.global.nova_serial_port_internal}}
