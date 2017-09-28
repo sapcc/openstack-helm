@@ -54,6 +54,7 @@ spec:
           image: {{ cinder_agent_image }}
           imagePullPolicy: IfNotPresent
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND

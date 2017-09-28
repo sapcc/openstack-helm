@@ -44,6 +44,7 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth}}
           imagePullPolicy: IfNotPresent
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
@@ -82,6 +83,7 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
           imagePullPolicy: IfNotPresent
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
@@ -119,6 +121,7 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.image_version_nova_spicehtml5proxy}}
           imagePullPolicy: IfNotPresent
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
@@ -154,6 +157,7 @@ spec:
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
           imagePullPolicy: IfNotPresent
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND

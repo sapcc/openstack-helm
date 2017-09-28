@@ -85,6 +85,7 @@ spec:
           image: {{ nova_agent_image }}
           imagePullPolicy: IfNotPresent
           command:
+            - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
