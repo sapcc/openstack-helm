@@ -51,6 +51,7 @@ bind_pools:
         ip:  DEFINED-IN-REGION-CHART
       - hostname: DEFINED-IN-REGION-CHART
         ip:  DEFINED-IN-REGION-CHART
+    rndc_port: 953
     options:
       tsig_key_name: DEFINED-IN-REGION-CHART
       tsig_key_secret: DEFINED-IN-REGION-CHART
