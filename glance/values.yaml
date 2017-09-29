@@ -8,6 +8,9 @@ global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
   hypervisors: []
+  osprofiler: {}
+
+osprofiler: {}
 
 pod:
   replicas:

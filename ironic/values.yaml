@@ -8,6 +8,10 @@ global:
   image_repository: REQUIRED
   ironic_api_port_internal: '6385'
   ironic_tftp_port_public: '69'
+  osprofiler: {}
+
+osprofiler:
+    enabled: false
 
 pod:
   replicas:

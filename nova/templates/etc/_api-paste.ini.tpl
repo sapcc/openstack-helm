@@ -38,19 +38,19 @@ use = call:nova.api.openstack.urlmap:urlmap_factory
 # NOTE: this is deprecated in favor of openstack_compute_api_v21_legacy_v2_compatible
 [composite:openstack_compute_api_legacy_v2]
 use = call:nova.api.auth:pipeline_factory
-noauth2 = cors healthcheck compute_req_id statsd faultwrap sizelimit noauth2 legacy_ratelimit sentry osapi_compute_app_legacy_v2
-keystone = cors healthcheck compute_req_id statsd faultwrap sizelimit authtoken keystonecontext legacy_ratelimit sentry osapi_compute_app_legacy_v2
-keystone_nolimit = cors healthcheck  compute_req_id statsd faultwrap sizelimit authtoken keystonecontext sentry osapi_compute_app_legacy_v2
+noauth2 = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 legacy_ratelimit sentry osapi_compute_app_legacy_v2
+keystone = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext legacy_ratelimit sentry osapi_compute_app_legacy_v2
+keystone_nolimit = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext sentry osapi_compute_app_legacy_v2
 
 [composite:openstack_compute_api_v21]
 use = call:nova.api.auth:pipeline_factory_v21
-noauth2 = cors healthcheck compute_req_id statsd faultwrap sizelimit noauth2 sentry osapi_compute_app_v21
-keystone = cors healthcheck compute_req_id statsd faultwrap sizelimit authtoken keystonecontext sentry osapi_compute_app_v21
+noauth2 = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 sentry osapi_compute_app_v21
+keystone = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext sentry osapi_compute_app_v21
 
 [composite:openstack_compute_api_v21_legacy_v2_compatible]
 use = call:nova.api.auth:pipeline_factory_v21
-noauth2 = cors healthcheck compute_req_id statsd faultwrap sizelimit noauth2 legacy_v2_compatible sentry osapi_compute_app_v21
-keystone = cors healthcheck compute_req_id statsd faultwrap sizelimit authtoken keystonecontext legacy_v2_compatible sentry osapi_compute_app_v21
+noauth2 = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 legacy_v2_compatible sentry osapi_compute_app_v21
+keystone = cors healthcheck compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext legacy_v2_compatible sentry osapi_compute_app_v21
 
 [filter:request_id]
 paste.filter_factory = oslo_middleware:RequestId.factory
@@ -65,6 +65,9 @@ paste.filter_factory = nova.api.openstack:FaultWrapper.factory
 paste.filter_factory = oslo_middleware:Healthcheck.factory
 backends = disable_by_file
 disable_by_file_path = /etc/nova/healthcheck_disable
+
+[filter:osprofiler]
+paste.filter_factory = osprofiler.web:WsgiMiddleware.factory
 
 [filter:http_proxy_to_wsgi]
 paste.filter_factory = oslo_middleware:HTTPProxyToWSGI.factory

@@ -1,38 +1,38 @@
 # Use this pipeline for no auth or image caching - DEFAULT
 [pipeline:glance-api]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler unauthenticated-context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} unauthenticated-context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} rootapp
 
 # Use this pipeline for image caching and no auth
 [pipeline:glance-api-caching]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler unauthenticated-context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} unauthenticated-context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache rootapp
 
 # Use this pipeline for caching w/ management interface but no auth
 [pipeline:glance-api-cachemanagement]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler unauthenticated-context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache cachemanage rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} unauthenticated-context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache cachemanage rootapp
 
 # Use this pipeline for keystone auth
 [pipeline:glance-api-keystone]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler authtoken context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} authtoken context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} rootapp
 
 # Use this pipeline for keystone auth with image caching
 [pipeline:glance-api-keystone+caching]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler authtoken context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} authtoken context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache rootapp
 
 # Use this pipeline for keystone auth with caching and cache management
 [pipeline:glance-api-keystone+cachemanagement]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler authtoken context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache cachemanage rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} authtoken context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache cachemanage rootapp
 
 # Use this pipeline for authZ only. This means that the registry will treat a
 # user as authenticated without making requests to keystone to reauthenticate
 # the user.
 [pipeline:glance-api-trusted-auth]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} rootapp
 
 # Use this pipeline for authZ only. This means that the registry will treat a
 # user as authenticated without making requests to keystone to reauthenticate
 # the user and uses cache management
 [pipeline:glance-api-trusted-auth+cachemanagement]
-pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} osprofiler context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache cachemanage rootapp
+pipeline = cors healthcheck http_proxy_to_wsgi versionnegotiation {{ if .Values.ops_middleware_enabled }}statsd{{- end }} {{- include "osprofiler_pipe" . }} context {{ if .Values.ops_middleware_enabled }}sentry{{- end }} cache cachemanage rootapp
 
 [pipeline:apiversions]
 pipeline = http_proxy_to_wsgi apiversionsapp
@@ -84,8 +84,6 @@ paste.filter_factory = glance.api.middleware.gzip:GzipMiddleware.factory
 
 [filter:osprofiler]
 paste.filter_factory = osprofiler.web:WsgiMiddleware.factory
-hmac_keys = SECRET_KEY  #DEPRECATED
-enabled = yes  #DEPRECATED
 
 [filter:cors]
 paste.filter_factory =  oslo_middleware.cors:filter_factory

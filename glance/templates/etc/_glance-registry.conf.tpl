@@ -33,3 +33,5 @@ flavor = keystone
 
 [oslo_messaging_notifications]
 driver = noop
+
+{{- include "osprofiler" . }}

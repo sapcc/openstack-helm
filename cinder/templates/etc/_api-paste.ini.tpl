@@ -12,20 +12,20 @@ use = call:cinder.api:root_app_factory
 [composite:openstack_volume_api_v1]
 use = call:cinder.api.middleware.auth:pipeline_factory
 noauth = cors http_proxy_to_wsgi request_id faultwrap sizelimit osprofiler noauth apiv1
-keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler authtoken keystonecontext apiv1
-keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler authtoken keystonecontext apiv1
+keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv1
+keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv1
 
 [composite:openstack_volume_api_v2]
 use = call:cinder.api.middleware.auth:pipeline_factory
-noauth = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler noauth apiv2
-keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler authtoken keystonecontext apiv2
-keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler authtoken keystonecontext apiv2
+noauth = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} noauth apiv2
+keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv2
+keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv2
 
 [composite:openstack_volume_api_v3]
 use = call:cinder.api.middleware.auth:pipeline_factory
-noauth = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler noauth apiv3
-keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler authtoken keystonecontext apiv3
-keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit osprofiler authtoken keystonecontext apiv3
+noauth = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} noauth apiv3
+keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv3
+keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv3
 
 [filter:request_id]
 paste.filter_factory = oslo_middleware.request_id:RequestId.factory

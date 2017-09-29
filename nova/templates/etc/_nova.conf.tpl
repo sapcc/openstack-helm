@@ -58,6 +58,8 @@ max_age = {{ .Values.usage_max_age | default 0 }}
 # count of reservations until usage is refreshed
 until_refresh = {{ .Values.usage_until_refresh | default 0 }}
 
+{{- include "osprofiler" . }}
+
 [conductor]
 workers=8
 

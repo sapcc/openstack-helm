@@ -21,6 +21,9 @@ global:
   #    vserver: DEFINED-IN-REGION-CHART
   #    availability_zone: DEFINED-IN-REGION-CHART
   volumes: []
+  osprofiler: {}
+
+osprofiler: {}
 
 image_version_cinder_api: 'v1'
 image_version_cinder_scheduler: 'v1'

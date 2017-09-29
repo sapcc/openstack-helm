@@ -60,3 +60,5 @@ provisioning_network_uuid={{ .Values.network_management_uuid }}
 
 [oslo_middleware]
 enable_proxy_headers_parsing = True
+
+{{- include "osprofiler" . }}

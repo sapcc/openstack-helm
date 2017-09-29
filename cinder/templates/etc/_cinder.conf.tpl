@@ -41,6 +41,8 @@ use_default_quota_class=false
 [database]
 connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "cinder_db_host" .}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
 
+{{- include "osprofiler" . }}
+
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
