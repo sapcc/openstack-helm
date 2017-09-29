@@ -11,7 +11,7 @@ use = call:cinder.api:root_app_factory
 
 [composite:openstack_volume_api_v1]
 use = call:cinder.api.middleware.auth:pipeline_factory
-noauth = cors http_proxy_to_wsgi request_id faultwrap sizelimit osprofiler noauth apiv1
+noauth = cors http_proxy_to_wsgi request_id faultwrap sizelimit {{- include "osprofiler_pipe" . }} noauth apiv1
 keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv1
 keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext apiv1
 

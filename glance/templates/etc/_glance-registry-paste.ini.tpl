@@ -1,16 +1,16 @@
 # Use this pipeline for no auth - DEFAULT
 [pipeline:glance-registry]
-pipeline = healthcheck osprofiler unauthenticated-context registryapp
+pipeline = healthcheck {{- include "osprofiler_pipe" . }} unauthenticated-context registryapp
 
 # Use this pipeline for keystone auth
 [pipeline:glance-registry-keystone]
-pipeline = healthcheck osprofiler authtoken context registryapp
+pipeline = healthcheck {{- include "osprofiler_pipe" . }} authtoken context registryapp
 
 # Use this pipeline for authZ only. This means that the registry will treat a
 # user as authenticated without making requests to keystone to reauthenticate
 # the user.
 [pipeline:glance-registry-trusted-auth]
-pipeline = healthcheck osprofiler context registryapp
+pipeline = healthcheck {{- include "osprofiler_pipe" . }} context registryapp
 
 [app:registryapp]
 paste.app_factory = glance.registry.api:API.factory

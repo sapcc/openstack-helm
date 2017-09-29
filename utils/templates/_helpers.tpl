@@ -23,7 +23,7 @@ qualname={{ $item }}
     {{- $options := merge .Values.osprofiler .Values.global.osprofiler }}
     {{- if $options.enabled }}
 
-[osprofiler]
+[profiler]
         {{- range $key, $value := $options }}
 {{ $key }} = {{ $value }}
         {{- end }}
