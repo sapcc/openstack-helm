@@ -20,8 +20,7 @@ global:
   hypervisors_ironic: []
   osprofiler: {}
 
-osprofiler:
-  enable: false
+osprofiler: {}
 
 pod:
   replicas:

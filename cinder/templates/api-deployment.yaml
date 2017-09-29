@@ -60,6 +60,12 @@ spec:
               port: {{.Values.global.cinder_api_port_internal}}
             initialDelaySeconds: 15
             timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: {{.Values.global.cinder_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
           ports:
             - name: cinder-api
               containerPort: {{.Values.global.cinder_api_port_internal}}

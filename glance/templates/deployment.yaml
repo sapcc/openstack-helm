@@ -41,6 +41,12 @@ spec:
           imagePullPolicy: IfNotPresent
           livenessProbe:
             httpGet:
+              path: /
+              port: {{.Values.global.glance_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
               path: /healthcheck
               port: {{.Values.global.glance_api_port_internal}}
             initialDelaySeconds: 15

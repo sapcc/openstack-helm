@@ -70,6 +70,12 @@ spec:
               port: {{.Values.global.nova_api_port_internal}}
             initialDelaySeconds: 15
             timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: {{.Values.global.nova_api_port_internal}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 5
 {{- end }}
           ports:
             - name: nova-api
