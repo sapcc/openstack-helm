@@ -5,6 +5,9 @@
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
+    subdomains: {{$pool.attributes.subdomain}}
+    mail: {{$pool.attributes.mail}}
+    mail_description: {{$pool.attributes.mail_description}}
   {{- end }}
   ns_records:
     {{- range $idx, $srv := $pool.nameservers}}
@@ -42,8 +45,11 @@
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
+    subdomains: {{$pool.attributes.subdomain}}
+    mail: {{$pool.attributes.mail}}
+    mail_description: {{$pool.attributes.mail_description}}
   ns_records:
-    {{- range $idx, $srv := $pool.nameservers}}
+    {{- range $idx, $srv := $pool.ns_records}}
     - hostname: {{ $srv.hostname }}
       priority: {{ add1 $idx }}
     {{- end}}
@@ -78,6 +84,9 @@
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
+    subdomains: {{$pool.attributes.subdomain}}
+    mail: {{$pool.attributes.mail}}
+    mail_description: {{$pool.attributes.mail_description}}
   ns_records:
     {{- range $idx, $srv := $pool.nameservers}}
     - hostname: {{ $srv.hostname }}
