@@ -5,7 +5,7 @@
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
-    subdomains: {{$pool.attributes.subdomain}}
+    subdomains: {{$pool.attributes.subdomains}}
     mail: {{$pool.attributes.mail}}
     mail_description: {{$pool.attributes.mail_description}}
   {{- end }}
@@ -45,7 +45,7 @@
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
-    subdomains: {{$pool.attributes.subdomain}}
+    subdomains: {{$pool.attributes.subdomains}}
     mail: {{$pool.attributes.mail}}
     mail_description: {{$pool.attributes.mail_description}}
   ns_records:
@@ -84,7 +84,7 @@
   attributes:
     external: {{$pool.attributes.external}}
     label: {{$pool.attributes.label}}
-    subdomains: {{$pool.attributes.subdomain}}
+    subdomains: {{$pool.attributes.subdomains}}
     mail: {{$pool.attributes.mail}}
     mail_description: {{$pool.attributes.mail_description}}
   ns_records:
