@@ -113,3 +113,5 @@ quota_rbac_policy = 0
 quota_security_group = 1
 # need 4 secgrouprule quota for "default" secgroup
 quota_security_group_rule = 4
+
+{{- include "osprofiler" . }}

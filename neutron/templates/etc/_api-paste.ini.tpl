@@ -5,8 +5,8 @@ use = egg:Paste#urlmap
 
 [composite:neutronapi_v2_0]
 use = call:neutron.auth:pipeline_factory
-noauth = cors healthcheck http_proxy_to_wsgi request_id statsd catch_errors sentry extensions neutronapiapp_v2_0
-keystone = cors healthcheck http_proxy_to_wsgi request_id statsd catch_errors sentry authtoken keystonecontext extensions neutronapiapp_v2_0
+noauth = cors healthcheck {{- include "osprofiler_pipe" . }} http_proxy_to_wsgi request_id statsd catch_errors sentry extensions neutronapiapp_v2_0
+keystone = cors healthcheck {{- include "osprofiler_pipe" . }} http_proxy_to_wsgi request_id statsd catch_errors sentry authtoken keystonecontext extensions neutronapiapp_v2_0
 
 [filter:healthcheck]
 paste.filter_factory = oslo_middleware:Healthcheck.factory
@@ -51,3 +51,6 @@ use = egg:ops-middleware#statsd
 [filter:sentry]
 use = egg:ops-middleware#sentry
 level = ERROR
+
+[filter:osprofiler]
+paste.filter_factory = osprofiler.web:WsgiMiddleware.factory
