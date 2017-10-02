@@ -15,6 +15,18 @@
     "lbaas_fastl4": "",
     "lbaas_ctcp": "tcp",
     "lbaas_http": "http_xforward"
+  },
+  "dev_x": {
+    "lbaas_http": "http_xforward"
+  },
+  "dev_one": {
+    "lbaas_one_connect": "cc_oneconnect"
+  },
+  "dev_compress": {
+    "lbaas_http_compression": "cc_httpcompression"
+  },
+  "dev_nofastl4": {
+    "lbaas_fastl4": ""
   }
 
 }
