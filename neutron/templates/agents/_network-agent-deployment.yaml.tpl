@@ -47,8 +47,6 @@ spec:
               name: run
             - mountPath: /neutron-etc
               name: neutron-etc
-            - mountPath: /neutron-patches
-              name: neutron-patches
             - mountPath: /container.init
               name: container-init
         - name: neutron-metadata-agent
@@ -163,9 +161,6 @@ spec:
         - name: neutron-etc
           configMap:
             name: neutron-etc
-        - name: neutron-patches
-          configMap:
-            name: neutron-patches
         - name: container-init
           configMap:
             name: neutron-bin

@@ -24,8 +24,6 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "postgres-neutron"
           volumeMounts:
-            - mountPath: /f5-patches
-              name: f5-patches
             - mountPath: /neutron-etc
               name: neutron-etc
             - mountPath: /container.init
@@ -38,6 +36,3 @@ spec:
           configMap:
             name: neutron-bin
             defaultMode: 0755
-        - name: f5-patches
-          configMap:
-            name: f5-patches

@@ -7,9 +7,6 @@ set -e
 
 
 function process_config {
-    #TODO Fix or understand upstream
-    patch /var/lib/kolla/venv/local/lib/python2.7/site-packages/neutron_lbaas/db/loadbalancer/loadbalancer_dbv2.py /neutron-patches/loadbalancer-dbv2.diff
-
     cp /neutron-etc/neutron.conf  /etc/neutron/neutron.conf
     cp /neutron-etc/api-paste.ini  /etc/neutron/api-paste.ini
     cp /neutron-etc/logging.conf  /etc/neutron/logging.conf
