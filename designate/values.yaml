@@ -52,6 +52,7 @@ bind_pools:
       - hostname: DEFINED-IN-REGION-CHART
         ip:  DEFINED-IN-REGION-CHART
     rndc_port: 953
+    rndc_key_file: /etc/designate/rndc.key
     options:
       tsig_key_name: DEFINED-IN-REGION-CHART
       tsig_key_secret: DEFINED-IN-REGION-CHART
@@ -72,8 +73,10 @@ bind_pools:
 #      - host: DEFINED-IN-REGION-CHART
 #        port: DEFINED-IN-REGION-CHART
 
-rndc_key: DEFINED-IN-REGION-CHART
-rndc_sap_internet_key:
+rndc_keys:
+- name: DEFINED-IN-REGION-CHART
+  algorithm: DEFINED-IN-REGION-CHART
+  secret: DEFINED-IN-REGION-CHART 
 
 poolmanager:
   db_name:  designate_poolmanager

@@ -34,7 +34,7 @@
         port: 53
         rndc_host: {{ $srv.ip }}
         rndc_port: {{ $pool.rndc_port }}
-        rndc_key_file: /etc/designate/rndc.key
+        rndc_key_file: {{ $pool.rndc_key_file }}
     {{- end}}
 {{- end }}
 {{- range $pool := .Values.akamai_pools }}
@@ -54,11 +54,13 @@
     - host: {{ $srv.ip }}
       port: 53
     {{- end}}
+  {{- if $pool.also_notifies}}
   also_notifies:
     {{- range $i, $notify := $pool.also_notifies}}
     - host: {{ $notify.host }}
       port: {{ $notify.port }}
     {{- end}}
+  {{- end}}
   targets:
     - type: akamai
       description: Akamai API
