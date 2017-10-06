@@ -16,7 +16,7 @@ data:
   {{ $rndc.name }}.key: |
     key "{{ $rndc.name }}" {
       algorithm "{{ $rndc.algorithm }}";
-      secret "{{ $rndc.secret }}{";
+      secret "{{ $rndc.secret }}";
     };
 {{- end}}
   pools.yaml: |
