@@ -74,7 +74,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Number of share networks"
     openstack_manila_shares:
-      query: "SELECT shares.project_id, shares.share_type_id, shares.id, share_instances.status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM shares INNER JOIN share_instances ON shares.id=share_instances.share_id GROUP BY shares.id, shares.project_id, shares.share_type_id, share_instances.status"
+      query: "SELECT coalesce(shares.share_type_id, 'N/A') AS share_type_id, shares.project_id, shares.id, share_instances.status, COUNT(*) AS count_gauge, SUM(size) size_gauge FROM shares INNER JOIN share_instances ON shares.id=share_instances.share_id GROUP BY shares.id, shares.project_id, shares.share_type_id, share_instances.status"
       metrics:
         - project_id:
             usage: "LABEL"

@@ -86,7 +86,7 @@ pg_metrics:
   db_password: DEFINED-IN-REGION-CHART
   customMetrics:
     openstack_compute_nodes:
-      query: "SELECT compute_nodes.host, aggregate_metadata.value AS availability_zone, compute_nodes.hypervisor_type, compute_nodes.free_disk_gb AS free_disk_gb_gauge, compute_nodes.local_gb AS local_gb_gauge, compute_nodes.local_gb_used AS local_gb_used_gauge, compute_nodes.free_ram_mb AS free_ram_mb_gauge, compute_nodes.memory_mb AS memory_mb_gauge, compute_nodes.memory_mb_used AS memory_mb_used_gauge, compute_nodes.vcpus_used AS vcpus_used_gauge, compute_nodes.vcpus AS vcpus_gauge, compute_nodes.running_vms AS running_vms_gauge from compute_nodes join aggregate_hosts on compute_nodes.host=aggregate_hosts.host join aggregate_metadata on aggregate_hosts.aggregate_id=aggregate_metadata.aggregate_id WHERE compute_nodes.deleted = 0"      
+      query: "SELECT compute_nodes.host, aggregate_metadata.value AS availability_zone, compute_nodes.hypervisor_type, compute_nodes.free_disk_gb AS free_disk_gb_gauge, compute_nodes.local_gb AS local_gb_gauge, compute_nodes.local_gb_used AS local_gb_used_gauge, compute_nodes.free_ram_mb AS free_ram_mb_gauge, compute_nodes.memory_mb AS memory_mb_gauge, compute_nodes.memory_mb_used AS memory_mb_used_gauge, compute_nodes.vcpus_used AS vcpus_used_gauge, compute_nodes.vcpus AS vcpus_gauge, compute_nodes.running_vms AS running_vms_gauge from compute_nodes join aggregate_hosts on compute_nodes.host=aggregate_hosts.host join aggregate_metadata on aggregate_hosts.aggregate_id=aggregate_metadata.aggregate_id WHERE compute_nodes.deleted = 0"
       metrics:
         - availability_zone:
             usage: "LABEL"
@@ -105,7 +105,7 @@ pg_metrics:
             description: "Total local disk size in GB"
         - local_gb_used_gauge:
             usage: "GAUGE"
-            description: "Total used local disk size in GB"   
+            description: "Total used local disk size in GB"
         - free_ram_mb_gauge:
             usage: "GAUGE"
             description: "Free RAM in MiB"
@@ -114,7 +114,7 @@ pg_metrics:
             description: "Total RAM in MiB"
         - memory_mb_used_gauge:
             usage: "GAUGE"
-            description: "Total Used RAM in MiB"            
+            description: "Total Used RAM in MiB"
         - vcpus_used_gauge:
             usage: "GAUGE"
             description: "vCPUs used"
@@ -125,7 +125,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Number of VMs running"
     openstack_compute_instances:
-      query: "SELECT project_id, host, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, host, project_id"
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, COUNT(*) AS gauge, vm_state FROM instances GROUP BY vm_state, host, project_id"
       metrics:
         - project_id:
             usage: "LABEL"
@@ -140,7 +140,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "VM Count"
     openstack_compute_stuck_instances:
-      query: "SELECT host, project_id, availability_zone, vm_state, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM instances WHERE vm_state IN ('scheduling','pausing','unpausing','suspending','resuming','rescuing','unrescuing','rebuilding','migrating','deleting','restoring','shelving','unshelving','building','deleting','stopping','starting','spawning','rebooting') AND deleted=0 GROUP BY host, project_id, availability_zone, vm_state"
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, availability_zone, vm_state, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM instances WHERE vm_state IN ('scheduling','pausing','unpausing','suspending','resuming','rescuing','unrescuing','rebuilding','migrating','deleting','restoring','shelving','unshelving','building','deleting','stopping','starting','spawning','rebooting') AND deleted=0 GROUP BY host, project_id, availability_zone, vm_state"
       metrics:
         - project_id:
             usage: "LABEL"
@@ -163,7 +163,7 @@ pg_metrics:
 
 postgres:
   name: nova
-  
+
 logging:
     formatters:
         context:
