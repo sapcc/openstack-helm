@@ -112,7 +112,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Size of volumes"
     openstack_snapshots:
-      query: "select snapshots.status, snapshots.project_id, volumes.host, COUNT(*) AS count_gauge, SUM(volume_size) size_gauge from snapshots join volumes on snapshots.volume_id=volumes.id GROUP BY snapshots.display_name, snapshots.status, snapshots.project_id, snapshots.volume_id, volumes.host"
+      query: "select snapshots.status, snapshots.project_id, volumes.host, COUNT(*) AS count_gauge, SUM(volume_size) size_gauge from snapshots join volumes on snapshots.volume_id=volumes.id GROUP BY snapshots.status, snapshots.project_id, volumes.host"
       metrics:
         - project_id:
             usage: "LABEL"
@@ -122,13 +122,13 @@ pg_metrics:
             description: "Name of the host"          
         - status:
             usage: "LABEL"
-            description: "Status of the volume"
+            description: "Status of the Snapshot"
         - count_gauge:
             usage: "GAUGE"
-            description: "Number of volumes"
+            description: "Number of Snapshots"
         - size_gauge:
             usage: "GAUGE"
-            description: "Size of volumes"
+            description: "Size of Snapshots"
 
 postgres:
   name: cinder
