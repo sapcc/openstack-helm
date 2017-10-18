@@ -112,7 +112,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Size of volumes"
     openstack_snapshots:
-      query: "select snapshots.display_name, snapshots.status, snapshots.project_id, snapshots.volume_id, volumes.host, COUNT(*) AS count_gauge, SUM(volume_size) size_gauge from snapshots join volumes on snapshots.project_id=volumes.project_id GROUP BY snapshots.display_name, snapshots.status, snapshots.project_id, snapshots.volume_id, volumes.host"
+      query: "select snapshots.display_name, snapshots.status, snapshots.project_id, snapshots.volume_id, volumes.host, COUNT(*) AS count_gauge, SUM(volume_size) size_gauge from snapshots join volumes on snapshots.volume_id=volumes.id GROUP BY snapshots.display_name, snapshots.status, snapshots.project_id, snapshots.volume_id, volumes.host"
       metrics:
         - project_id:
             usage: "LABEL"
