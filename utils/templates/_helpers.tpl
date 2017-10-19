@@ -11,6 +11,7 @@ keys={{ include "joinKey" $value | trimAll "," }}
 [{{ $top_level_key | trimSuffix "s" }}_{{ $item | replace "." "_" }}]
 {{- if and (eq $top_level_key "loggers") (ne $item "root")}}
 qualname={{ $item }}
+propagate=0
 {{- end}}
 {{- range $key, $value := $values }}
 {{ $key }}={{ $value }}
