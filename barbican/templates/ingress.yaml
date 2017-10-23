@@ -8,6 +8,10 @@ metadata:
     system: openstack
     type: api
     component: barbican
+  {{- if .Values.vice_president }}
+  annotations:
+    vice-president: "true"
+  {{- end }}
 spec:
   tls:
      - secretName: tls-{{ include "barbican_api_endpoint_host_public" . | replace "." "-" }}
