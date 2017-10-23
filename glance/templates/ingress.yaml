@@ -9,6 +9,9 @@ metadata:
     component: glance
   annotations:
      ingress.kubernetes.io/proxy-request-buffering: "off"
+     {{- if .Values.vice_president }}
+     vice-president: "true"
+     {{- end }}
 spec:
   tls:
     - secretName: tls-{{ include "glance_api_endpoint_host_public" . | replace "." "-" }}
