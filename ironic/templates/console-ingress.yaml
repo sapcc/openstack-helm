@@ -7,6 +7,10 @@ metadata:
     system: openstack
     type: api
     component: ironic
+  {{- if .Values.vice_president }}
+  annotations:
+    vice-president: "true"
+  {{- end }}
 spec:
   tls:
      - secretName: tls-{{ include "ironic_console_endpoint_host_public" . | replace "." "-" }}

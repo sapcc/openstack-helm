@@ -8,6 +8,10 @@ metadata:
     system: openstack
     type: inspector
     component: ironic
+  {{- if .Values.vice_president }}
+  annotations:
+    vice-president: "true"
+  {{- end }}
 spec:
   tls:
     - secretName: tls-{{ include "ironic_inspector_endpoint_host_public" . | replace "." "-" }}
