@@ -9,6 +9,9 @@ metadata:
     component: nova
   annotations:
     ingress.kubernetes.io/rewrite-target: /
+    {{- if .Values.vice_president }}
+    vice-president: "true"
+    {{- end }}
 spec:
   tls:
      - secretName: tls-{{include "nova_console_endpoint_host_public" . | replace "." "-" }}
