@@ -6,9 +6,4 @@ metadata:
     system: openstack
     type: configuration
     component: database
-
 data:
-  pgbouncer-start: |
-{{ .Files.Get "bin/pgbouncer-start" | indent 4 }}
-  common.sh: |
-{{ include "common.sh" .| indent 4 }}

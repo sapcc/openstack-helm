@@ -1,0 +1,66 @@
+{{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: {{.Values.name}}-pgbouncer
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    component: {{.Values.name}}
+spec:
+  replicas: {{ .Values.pod.replicas.pgbouncer }}
+  revisionHistoryLimit: {{ .Values.pod.lifecycle.upgrades.deployments.revision_history }}
+  strategy:
+    type: {{ .Values.pod.lifecycle.upgrades.deployments.pod_replacement_strategy }}
+    {{- if eq .Values.pod.lifecycle.upgrades.deployments.pod_replacement_strategy "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.pod.lifecycle.upgrades.deployments.rolling_update.max_unavailable }}
+      maxSurge: {{ .Values.pod.lifecycle.upgrades.deployments.rolling_update.max_surge }}
+    {{- end }}
+  selector:
+   matchLabels:
+    name: {{.Values.name}}-pgbouncer
+  template:
+    metadata:
+      labels:
+        name: {{.Values.name}}-pgbouncer
+{{ tuple . .Values.name "pgbouncer" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
+      annotations:
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
+        scheduler.alpha.kubernetes.io/affinity: >
+            {{ tuple . .Values.name "pgbouncer" | include "kubernetes_pod_anti_affinity" }}
+{{- end }}
+    spec:
+      terminationGracePeriodSeconds: 150
+      containers:
+        - name: pgbouncer
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/pgbouncer-k8s:{{.Values.pgbouncer.image_version | .Values.global.pgbouncer.image_version | default "latest" }}
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: LABEL_SELECTOR
+              value: "name=postgres-{{.Values.name}}"
+            - name: LISTEN_PORT
+              value: "6543"
+            - name: MAX_CLIENT_CONN
+              value: "{{.Values.pgbouncer.max_client_conn | .Values.global.pgbouncer.max_client_conn | default 16384 }}"
+            - name: MIN_POOL_SIZE
+              value: "{{.Values.pgbouncer.min_pool_size | .Values.global.pgbouncer.min_pool_size | default 1 }}"
+            - name: DEFAULT_POOL_SIZE
+              value: "{{.Values.pgbouncer.default_pool_size | .Values.global.pgbouncer.default_pool_size | default 4 }}"
+            - name: RESERVE_POOL_SIZE
+              value: "{{.Values.pgbouncer.reserve_pool_size | .Values.global.pgbouncer.reserve_pool_size | default 1024 }}"
+          readinessProbe:
+            tcpSocket:
+              port: pgbouncer
+            initialDelaySeconds: 1
+            periodSeconds: 1
+          livenessProbe:
+            tcpSocket:
+              port: pgbouncer
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            failureThreshold: 3
+          ports:
+            - name: pgbouncer
+              containerPort: 6543
+{{- end }}

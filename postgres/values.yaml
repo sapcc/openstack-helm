@@ -6,6 +6,9 @@
 global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
+  pgbouncer:
+    enabled: false
+    image_version: null
 
 name: DEFINED-IN-COMPONENT-CHART
 user: postgres
@@ -16,6 +19,18 @@ hba_cidr: 0.0.0.0/0
 auth_method: password
 
 image_version_postgres: '9.4.14'
+
+pod:
+  replicas:
+    pgbouncer: 3
+  lifecycle:
+    upgrades:
+      deployments:
+        revision_history: 5
+        pod_replacement_strategy: "RollingUpdate"
+        rolling_update:
+          max_unavailable: 1
+          max_surge: 1
 
 persistence:
   enabled: true
@@ -31,3 +46,7 @@ backup:
   os_user_domain: Default
   os_project_name: master
   os_project_domain: ccadmin
+
+pgbouncer:
+  enabled: false
+  image_version: null
