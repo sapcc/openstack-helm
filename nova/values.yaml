@@ -125,7 +125,7 @@ pg_metrics:
             usage: "GAUGE"
             description: "Number of VMs running"
     openstack_compute_instances:
-      query: "SELECT coalesce(instances.host,'N/A') AS host, instances.project_id, COUNT(*) AS gauge, instances.vm_state, coalesce(instance_types.name,'N/A') AS flavor_name FROM instances JOIN instance_types ON instances.instance_type_id=instance_types.id GROUP BY instances.vm_state, instances.host, instances.project_id, instance_types.name"
+      query: "SELECT coalesce(instances.host,'N/A') AS host, instances.project_id, COUNT(*) AS gauge, instances.vm_state, coalesce(instance_types.name,'N/A') AS flavor_name FROM instances JOIN instance_types ON instances.instance_type_id=instance_types.id WHERE instances.deleted = 0 GROUP BY instances.vm_state, instances.host, instances.project_id, instance_types.name"
       metrics:
         - project_id:
             usage: "LABEL"
