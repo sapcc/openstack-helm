@@ -12,6 +12,8 @@ data:
 {{ include (print $.Template.BasePath "/etc/_api-paste.ini.tpl") . | indent 4 }}
   cinder.conf: |
 {{ include (print $.Template.BasePath "/etc/_cinder.conf.tpl") . | indent 4 }}
+  rootwrap.conf: |
+{{ include (print .Template.BasePath "/etc/_rootwrap.conf.tpl") . | indent 4 }}
   policy.json: |
 {{ include (print $.Template.BasePath "/etc/_cinder-policy.json.tpl") . | indent 4 }}
   logging.conf: |

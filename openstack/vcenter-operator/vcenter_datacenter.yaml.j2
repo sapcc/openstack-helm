@@ -77,6 +77,10 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: cinder-etc
+              mountPath: /etc/cinder/rootwrap.conf
+              subPath: rootwrap.conf
+              readOnly: true
+            - name: cinder-etc
               mountPath: /etc/cinder/logging.conf
               subPath: logging.conf
               readOnly: true
