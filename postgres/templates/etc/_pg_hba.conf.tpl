@@ -15,4 +15,4 @@ host    all             all             ::1/128                 trust
 #host    replication     postgres        127.0.0.1/32            trust
 #host    replication     postgres        ::1/128                 trust
 
-host all all {{.Values.hba_cidr}} password
+host all all {{ .Values.hba_cidr }} {{ .Values.auth_method }}
