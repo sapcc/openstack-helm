@@ -17,10 +17,10 @@ state_path = /var/lib/designate
 log_config_append = /etc/designate/logging.conf
 
 # Driver used for issuing notifications
-notification_driver = messaging
+#notification_driver = messagingv2
 
 # Notification Topics
-notification_topics = notifications
+#notification_topics = notifications
 
 # Use "sudo designate-rootwrap /etc/designate/rootwrap.conf" to use the real
 # root filter facility.
@@ -56,8 +56,8 @@ max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size 
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
 
 [oslo_messaging_notifications]
-driver = messaging
-transport_url = rabbit://{{ .Values.rabbitmq_notification_user }}:{{ .Values.rabbitmq_notification_pass }}@notification-{{include "rabbitmq_host" .}}:5672/
+#driver = messagingv2
+#transport_url = rabbit://{{ .Values.rabbitmq_notification_user }}:{{ .Values.rabbitmq_notification_pass }}@notification-{{include "rabbitmq_host" .}}:5672/
 
 {{include "oslo_messaging_rabbit" .}}
 
