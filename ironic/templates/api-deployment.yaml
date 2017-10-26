@@ -53,7 +53,7 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 5
           ports:
-            - name: ironic-api
+            - name: ironic-api{{- tuple .Values.api.override | include "debuggable_port" }}
               containerPort: {{.Values.global.ironic_api_port_internal}}
           volumeMounts:
             - mountPath: /etc/ironic
@@ -78,6 +78,7 @@ spec:
               name: ironic-etc
               subPath: logging.conf
               readOnly: true
+{{- tuple . .Values.api.override "ironic-api" | include "debug_port_container" | indent 8 }}
       volumes:
         - name: etcironic
           emptyDir: {}
@@ -85,4 +86,5 @@ spec:
           configMap:
             name: ironic-etc
             defaultMode: 0444
+{{- tuple . .Values.api.override "ironic-api" .Values.global.ironic_api_port_internal | include "debug_port_volumes_and_configmap" }}
 {{ end -}}

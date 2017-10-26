@@ -9,6 +9,8 @@ global:
   ironic_api_port_internal: '6385'
   ironic_tftp_port_public: '69'
   osprofiler: {}
+  fernet_router:
+    image_version: 'latest'
 
 osprofiler:
     enabled: false
@@ -41,6 +43,9 @@ db_password:
 inspector_db_name: ironic_inspector
 inspector_db_user: ironic_inspector
 inspector_db_password:
+
+api:
+  override: {}
 
 inspector:
   port_internal: '5050'
