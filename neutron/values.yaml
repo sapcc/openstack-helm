@@ -90,7 +90,7 @@ logging:
             handlers: stdout, sentry
             level: INFO
 
-pgmetrics:
+pg_metrics:
   name: neutron
   db_name: neutron
   db_user: neutron
