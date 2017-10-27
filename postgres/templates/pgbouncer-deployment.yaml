@@ -52,14 +52,15 @@ spec:
           readinessProbe:
             tcpSocket:
               port: pgbouncer
-            initialDelaySeconds: 1
-            periodSeconds: 1
+            initialDelaySeconds: 3
+            periodSeconds: 2
+            failureThreshold: 3
           livenessProbe:
             tcpSocket:
               port: pgbouncer
-            initialDelaySeconds: 1
-            periodSeconds: 1
-            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 2
+            failureThreshold: 7
           ports:
             - name: pgbouncer
               containerPort: 6543
