@@ -49,18 +49,12 @@ spec:
               value: "{{.Values.pgbouncer.default_pool_size | .Values.global.pgbouncer.default_pool_size | default 4 }}"
             - name: RESERVE_POOL_SIZE
               value: "{{.Values.pgbouncer.reserve_pool_size | .Values.global.pgbouncer.reserve_pool_size | default 1024 }}"
-          readinessProbe:
-            tcpSocket:
-              port: pgbouncer
-            initialDelaySeconds: 3
-            periodSeconds: 2
-            failureThreshold: 3
           livenessProbe:
             tcpSocket:
               port: pgbouncer
-            initialDelaySeconds: 3
-            periodSeconds: 2
-            failureThreshold: 7
+            initialDelaySeconds: 1
+            periodSeconds: 5
+            failureThreshold: 3
           ports:
             - name: pgbouncer
               containerPort: 6543
