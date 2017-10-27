@@ -1,6 +1,5 @@
 kind: Service
 apiVersion: v1
-{{- $pgbouncer := or .Values.pgbouncer.enabled .Values.global.pgbouncer_enabled }}
 metadata:
   name: postgres-{{.Values.name}}
   namespace:  {{.Release.Namespace}}
@@ -10,7 +9,7 @@ metadata:
     component: {{.Values.name}}
 spec:
   selector:
-{{- if $pgbouncer }}
+{{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
     name: {{.Values.name}}-pgbouncer
 {{- else }}
     name: postgres-{{.Values.name}}
@@ -18,7 +17,7 @@ spec:
   ports:
     - name: public
       port: {{.Values.port_public}}
-      targetPort: {{ if $pgbouncer }}pgbouncer{{ else }}postgres{{ end }}
+      targetPort: {{ if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}pgbouncer{{ else }}postgres{{ end }}
     {{- if .Values.external_ip }}
   externalIPs:
     - {{.Values.external_ip }}
