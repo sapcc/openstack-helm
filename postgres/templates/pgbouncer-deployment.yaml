@@ -42,16 +42,19 @@ spec:
             - name: LISTEN_PORT
               value: "6543"
             - name: MAX_CLIENT_CONN
-              value: "{{.Values.pgbouncer.max_client_conn | .Values.global.pgbouncer.max_client_conn | default 16384 }}"
+              value: "{{.Values.pgbouncer.max_client_conn | default .Values.global.pgbouncer.max_client_conn | default 16384 }}"
             - name: MIN_POOL_SIZE
-              value: "{{.Values.pgbouncer.min_pool_size | .Values.global.pgbouncer.min_pool_size | default 1 }}"
+              value: "{{.Values.pgbouncer.min_pool_size | default .Values.global.pgbouncer.min_pool_size | default 1 }}"
             - name: DEFAULT_POOL_SIZE
-              value: "{{.Values.pgbouncer.default_pool_size | .Values.global.pgbouncer.default_pool_size | default 4 }}"
+              value: "{{.Values.pgbouncer.default_pool_size | default .Values.global.pgbouncer.default_pool_size | default 4 }}"
             - name: RESERVE_POOL_SIZE
-              value: "{{.Values.pgbouncer.reserve_pool_size | .Values.global.pgbouncer.reserve_pool_size | default 1024 }}"
+              value: "{{.Values.pgbouncer.reserve_pool_size | default .Values.global.pgbouncer.reserve_pool_size | default 1024 }}"
+            - name: STATS_PASS
+              value: "{{.Values.pgbouncer.stats_pass | default .Values.global.pgbouncer.stats_pass | default (derivePassword 1 "long" "password" "stats_user" (print "postgres-" .Values.name "." .Release.Namespace ".svc.kubernetes." .Values.global.region "." .Values.global.tld)) }}"
           livenessProbe:
-            tcpSocket:
-              port: pgbouncer
+            exec:
+              command:
+              - pgbouncer-k8s-liveness
             initialDelaySeconds: 1
             periodSeconds: 5
             failureThreshold: 3
