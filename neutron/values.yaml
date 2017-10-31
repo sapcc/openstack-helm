@@ -213,7 +213,7 @@ pg_metrics:
         - security_group_id:
             usage: "LABEL"
             description: "security group id details"
-      - count:
+        - count:
             usage: "GAUGE"
             description: "Estimate on number of filter rules"              
 
