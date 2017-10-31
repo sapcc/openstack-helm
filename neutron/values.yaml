@@ -208,14 +208,14 @@ pg_metrics:
             usage: "GAUGE"
             description: "Internet IPs used per subnet"
     openstack_neutron_monitor_sec_grp:
-     query: "select securitygroupportbindings.security_group_id, count(*) as count from securitygroupportbindings join securitygrouprules on securitygroupportbindings.security_group_id = securitygrouprules.security_group_id group by securitygroupportbindings.security_group_id order by count desc limit 10"
+     query: "select securitygroupportbindings.security_group_id AS security_group_id, count(*) as count from securitygroupportbindings join securitygrouprules on securitygroupportbindings.security_group_id = securitygrouprules.security_group_id group by securitygroupportbindings.security_group_id order by count desc limit 10"
      metrics:
         - security_group_id:
             usage: "LABEL"
             description: "security group id details"
       - count:
             usage: "GAUGE"
-            description: "Count of Sec Grp ID"              
+            description: "Estimate on number of filter rules"              
 
 postgres:
   name: neutron
