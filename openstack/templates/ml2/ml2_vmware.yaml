@@ -1,0 +1,8 @@
+{{- if not .Values.vcenter_operator.image_version }}
+    {{- range $i, $hypervisor := .Values.global.hypervisors_vmware }}
+        {{- if gt $i 0 }}
+---
+        {{- end }}
+        {{- include "ml2_vmware_configmap" $hypervisor }}
+    {{- end }}
+{{- end }}
