@@ -77,13 +77,7 @@ enable_proxy_headers_parsing = true
 [agent]
 root_helper = sudo neutron-rootwrap /etc/neutron/rootwrap.conf
 
-
-[database]
-connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "neutron_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
-max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
-max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
-
-
+{{- include "ini_sections.database" . }}
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}

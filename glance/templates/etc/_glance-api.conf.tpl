@@ -47,10 +47,7 @@ max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | d
 # keepalive probes. (integer value)
 tcp_keepidle = {{ .Values.tcp_keepidle | default .Values.global.tcp_keepidle | default 600 }}
 
-[database]
-# The SQLAlchemy connection string to use to connect to the database.
-# (string value)
-connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "glance_db_host" .}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
+{{- include "ini_sections.database" . }}
 
 [keystone_authtoken]
 # Complete public Identity API endpoint. (string value)

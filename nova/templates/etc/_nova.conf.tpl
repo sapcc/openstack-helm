@@ -108,12 +108,10 @@ project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 
 [api_database]
-connection = postgresql://{{.Values.api_db_user}}:{{.Values.api_db_password}}@{{include "nova_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.api_db_name}}
+connection = {{ tuple . .Values.api_db_name | include "db_url" }}
+{{- include "ini_sections.database_options" . }}
 
-
-[database]
-connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "nova_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
-
+{{- include "ini_sections.database" . }}
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}

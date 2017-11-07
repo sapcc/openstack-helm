@@ -37,7 +37,8 @@ processing_hooks=$default_processing_hooks,local_link_connection
 enroll_node_driver=agent_ipmitool
 
 [database]
-connection = postgresql://{{.Values.inspector_db_user}}:{{.Values.inspector_db_password}}@{{include "ironic_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.inspector_db_name}}
+connection = {{ tuple . .Values.inspector_db_name | include "db_url" }}
+{{- include "ini_sections.database_options" . }}
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}

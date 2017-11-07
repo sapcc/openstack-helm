@@ -29,8 +29,7 @@ expiration = {{ default 28800 .Values.token_expiration }}
 key_repository = /fernet-keys
 max_active_keys = 3
 
-[database]
-connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "keystone_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
+{{- include "ini_sections.database" . }}
 
 [identity]
 default_domain_id = default

@@ -76,8 +76,7 @@ insecure = True
 [oslo_concurrency]
 lock_path = /var/lib/manila/tmp
 
-[database]
-connection = postgresql://{{.Values.db_user}}:{{.Values.db_password}}@{{include "manila_db_host" .}}:{{.Values.global.postgres_port_public}}/{{.Values.db_name}}
+{{- include "ini_sections.database" . }}
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}

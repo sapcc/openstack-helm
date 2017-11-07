@@ -11,6 +11,19 @@
 {{define "horizon_endpoint_host"}}horizon-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
 
+{{define "db_url" }}
+    {{- if kindIs "map" . -}}
+postgresql://{{.Values.db_user}}:{{.Values.db_password}}@postgres-{{.Chart.Name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
+    {{- else }}
+        {{- $envAll := index . 0 }}
+        {{- $name := index . 1 }}
+        {{- with $envAll -}}
+postgresql://{{$name}}:{{.Values.db_password}}@postgres-{{.Chart.Name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}:{{.Values.postgres.port_public}}/{{$name}}
+        {{- end }}
+    {{- end -}}
+?connect_timeout=10&keepalives_idle=5&keepalives_interval=5&keepalives_count=10
+{{- end}}
+
 
 {{define "keystone_db_host"}}postgres-keystone.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "keystone_api_endpoint_host_admin"}}keystone.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
