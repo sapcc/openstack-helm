@@ -41,6 +41,8 @@ spec:
               value: "name=postgres-{{.Values.name}}"
             - name: LISTEN_PORT
               value: "6543"
+            - name: LISTEN_BACKLOG
+              value: "{{.Values.pgbouncer.listen_backlog | default .Values.global.pgbouncer.listen_backlog | default 256 }}"
             - name: MAX_CLIENT_CONN
               value: "{{.Values.pgbouncer.max_client_conn | default .Values.global.pgbouncer.max_client_conn | default 16384 }}"
             - name: MIN_POOL_SIZE
