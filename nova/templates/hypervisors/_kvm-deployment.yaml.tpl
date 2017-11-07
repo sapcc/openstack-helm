@@ -23,7 +23,9 @@ spec:
         name: nova-compute-{{$hypervisor.name}}
 {{ tuple . "nova" (print "compute-" $hypervisor.name) | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
+        {{- if le .Capabilities.KubeVersion.Minor "6" }}
         scheduler.alpha.kubernetes.io/tolerations: '[{"key":"species","value":"hypervisor"}]'
+        {{- end }}
         configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
         configmap-ironic-etc-hash: {{ tuple . $hypervisor | include "kvm_configmap" | sha256sum }}
     spec:
@@ -32,6 +34,13 @@ spec:
       hostIPC: true
       nodeSelector:
         kubernetes.io/hostname: {{$hypervisor.node_name}}
+      {{- if ge .Capabilities.KubeVersion.Minor "7" }}
+      tolerations:
+      - key: "species"
+        operator: "Equal"
+        value: "hypervisor"
+        effect: "NoSchedule"
+      {{- end }}
       containers:
         - name: nova-compute-minion1
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.image_version_nova_compute}}
