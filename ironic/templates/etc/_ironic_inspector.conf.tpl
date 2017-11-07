@@ -37,7 +37,7 @@ processing_hooks=$default_processing_hooks,local_link_connection
 enroll_node_driver=agent_ipmitool
 
 [database]
-connection = {{ tuple . .Values.inspector_db_name | include "db_url" }}
+connection = {{ tuple . .Values.inspector_db_name .Values.inspector_db_user .Values.inspector_db_password | include "db_url" }}
 {{- include "ini_sections.database_options" . }}
 
 [keystone_authtoken]

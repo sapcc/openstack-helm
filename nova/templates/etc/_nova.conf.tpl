@@ -108,7 +108,7 @@ project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 
 [api_database]
-connection = {{ tuple . .Values.api_db_name | include "db_url" }}
+connection = {{ tuple . .Values.api_db_name .Values.api_db_user .Values.api_db_password | include "db_url" }}
 {{- include "ini_sections.database_options" . }}
 
 {{- include "ini_sections.database" . }}

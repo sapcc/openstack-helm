@@ -17,8 +17,10 @@ postgresql://{{.Values.db_user}}:{{.Values.db_password}}@postgres-{{.Chart.Name}
     {{- else }}
         {{- $envAll := index . 0 }}
         {{- $name := index . 1 }}
+        {{- $user := index . 2 }}
+        {{- $password := index . 3 }}
         {{- with $envAll -}}
-postgresql://{{$name}}:{{.Values.db_password}}@postgres-{{.Chart.Name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}:{{.Values.postgres.port_public}}/{{$name}}
+postgresql://{{$user}}:{{$password}}@postgres-{{.Chart.Name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}:{{.Values.postgres.port_public}}/{{$name}}
         {{- end }}
     {{- end -}}
 ?connect_timeout=10&keepalives_idle=5&keepalives_interval=5&keepalives_count=10
