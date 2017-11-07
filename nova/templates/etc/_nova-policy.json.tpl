@@ -432,7 +432,7 @@
     "os_compute_api:os-quota-sets:defaults": "rule:context_is_viewer",
     "os_compute_api:os-quota-sets:update": "rule:context_is_admin",
     "os_compute_api:os-quota-sets:delete": "rule:context_is_admin",
-    "os_compute_api:os-quota-sets:detail": "rule:context_is_admin",
+    "os_compute_api:os-quota-sets:detail": "rule:context_is_viewer",
     "os_compute_api:os-quota-class-sets:update": "rule:context_is_admin",
     "os_compute_api:os-quota-class-sets:show": "rule:context_is_admin or quota_class:%(quota_class)s",
     "os_compute_api:os-quota-class-sets:discoverable": "@",
