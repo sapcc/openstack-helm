@@ -57,9 +57,9 @@ spec:
             exec:
               command:
               - pgbouncer-k8s-liveness
-            initialDelaySeconds: 1
-            periodSeconds: 5
-            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 1
+            failureThreshold: 5
           ports:
             - name: pgbouncer
               containerPort: 6543
