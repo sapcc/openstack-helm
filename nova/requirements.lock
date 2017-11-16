@@ -2,11 +2,14 @@ dependencies:
 - name: postgres
   repository: http://localhost:8879/charts
   version: 0.1.0
+- name: rabbitmq-notifications
+  repository: http://localhost:8879/charts
+  version: 0.0.1
 - name: utils
   repository: http://localhost:8879/charts
   version: 0.1.1
 - name: pg_metrics
   repository: http://localhost:8879/charts
   version: 0.1.0
-digest: sha256:f03479c332eaf3e20dc03bb2d7d6f00ff3365200233ffb6ad623ef958f19c65c
-generated: 2017-08-15T12:11:03.10262347+02:00
+digest: sha256:c66b8398d516fe9eec2aa02d47f407211dad31e9a6d8919089ff8847acfa6a38
+generated: 2017-11-16T14:35:36.452483132+01:00

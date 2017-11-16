@@ -53,6 +53,7 @@ spec:
               value: "nova-migration"
             - name: DEPENDENCY_SERVICE
               value: "postgres-nova,rabbitmq"
+#              value: "postgres-nova,rabbitmq,nova-rabbitmq-notifications"
             - name: STATSD_HOST
               value: "localhost"
             - name: STATSD_PORT

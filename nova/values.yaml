@@ -167,6 +167,9 @@ pg_metrics:
 postgres:
   name: nova
 
+rabbitmq-notifications:
+  name: nova
+
 logging:
     formatters:
         context:
