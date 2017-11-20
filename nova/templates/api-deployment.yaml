@@ -94,9 +94,9 @@ spec:
               name: nova-etc
               subPath: api-paste.ini
               readOnly: true
-            - mountPath: /etc/nova/api_audit_map.conf
+            - mountPath: /etc/nova/nova_audit_map.yaml
               name: nova-etc
-              subPath: api_audit_map.conf
+              subPath: nova_audit_map.yaml
               readOnly: true
             - mountPath: /etc/nova/policy.json
               name: nova-etc

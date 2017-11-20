@@ -155,5 +155,9 @@ api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{includ
 
 # this is for the cadf audit messaging
 [audit_middleware_notifications]
-driver = messaging
-transport_url = rabbit://{{ .Values.rabbitmq_user | default .Values.global.rabbitmq_default_user }}:{{ .Values.rabbitmq_pass | default .Values.global.rabbitmq_default_pass }}@{{include "rabbitmq_host" .}}:5672/
+# topics = notifications
+driver = messagingv2
+{{- with index .Values "rabbitmq-notifications" -}}
+transport_url = rabbit://{{ .users.default.user }}:{{ .users.default.password }}@nova-rabbitmq-notifications:{{ .port }}/
+{{- end -}}
+# mem_queue_size = 10000  # buffer these many messages in memory while rabbit is down / lagging
