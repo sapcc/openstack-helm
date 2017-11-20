@@ -26,6 +26,8 @@ spec:
         name: manila-share-netapp-{{$share.name}}
       annotations:
         pod.beta.kubernetes.io/hostname: manila-share-netapp-{{$share.name}}
+        configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+        configmap-netapp-hash: {{ tuple . $share | include "share_netapp_configmap" | sha256sum }}
     spec:
       containers:
         - name: manila-share-netapp-{{$share.name}}
