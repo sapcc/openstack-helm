@@ -168,6 +168,7 @@ postgres:
   name: nova
 
 rabbitmq-notifications:
+  enabled: false
   name: nova
 
 logging:

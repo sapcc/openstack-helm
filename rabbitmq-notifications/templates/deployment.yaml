@@ -1,3 +1,4 @@
+{{- if .Values.enabled }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -106,3 +107,4 @@ spec:
         - name: container-init
           configMap:
             name: {{ template "fullname" . }}-bin
+{{ end }}

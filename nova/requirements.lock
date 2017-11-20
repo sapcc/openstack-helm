@@ -12,4 +12,4 @@ dependencies:
   repository: http://localhost:8879/charts
   version: 0.1.0
 digest: sha256:c66b8398d516fe9eec2aa02d47f407211dad31e9a6d8919089ff8847acfa6a38
-generated: 2017-11-16T14:35:36.452483132+01:00
+generated: 2017-11-20T14:48:07.255817385+01:00

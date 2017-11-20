@@ -24,7 +24,7 @@ users:
 #    password: secret
 
 persistence:
-  enabled: true 
+  enabled: true
   accessMode: ReadWriteMany
   size: 1Gi
   # Re-use existing (unmanged) PVC
