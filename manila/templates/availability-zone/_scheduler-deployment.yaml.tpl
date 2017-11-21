@@ -25,6 +25,8 @@ spec:
     metadata:
       labels:
         name: manila-scheduler-{{$az}}
+      annotations:
+        configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
     spec:
       containers:
         - name: manila-scheduler

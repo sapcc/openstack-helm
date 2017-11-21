@@ -19,6 +19,7 @@
   "volume:terminate_connection": "rule:context_is_editor",
   "volume:detach": "rule:context_is_editor",
   "volume:begin_detaching": "rule:context_is_editor",
+  "volume:roll_detaching": "rule:context_is_editor",
   "volume:attach": "rule:context_is_editor",
 
   "volume:delete": "rule:context_is_editor",
