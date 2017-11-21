@@ -62,6 +62,7 @@ spec:
               mountPath: /etc/nova/api-paste.ini
               subPath: api-paste.ini
               readOnly: true
+            - name: nova-etc
               mountPath: /etc/nova/nova_audit_map.yaml
               subPath: nova_audit_map.yaml
               readOnly: true
