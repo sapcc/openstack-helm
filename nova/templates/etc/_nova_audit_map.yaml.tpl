@@ -1,6 +1,6 @@
 service_type: 'compute'
 service_name: 'nova'
-prefix: '/compute/v2.1'
+prefix: '/v2/{project_id}'
 
 resources:
     # NOTE: proxy-kind API are ignored
