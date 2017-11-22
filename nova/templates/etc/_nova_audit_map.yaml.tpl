@@ -72,6 +72,7 @@ resources:
     servers:
         custom_actions:
             # server actions
+            addFloatingIp: update/add/floating-ip
             addSecurityGroup: update/add/security-group
             changePassword: update/set/admin-password
             confirmResize: update/confirm-resize
@@ -90,6 +91,7 @@ resources:
             reboot: update/reboot
             rebuild: update/rebuild
             remote-consoles: create/console
+            removeFloatingIp: update/remove/floating-ip
             removeSecurityGroup: update/remove/security-group
             rescue: update/rescue
             resetNetwork: update/reset/network
