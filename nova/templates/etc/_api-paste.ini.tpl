@@ -35,16 +35,16 @@ use = call:nova.api.openstack.urlmap:urlmap_factory
 /v2: openstack_compute_api_v21_legacy_v2_compatible
 /v2.1: openstack_compute_api_v21
 
+{{- define "audit_pipe" -}}
+{{- if index .Values "rabbitmq-notifications" "enabled" -}}audit{{- end -}}
+{{- end }}
+
 # NOTE: this is deprecated in favor of openstack_compute_api_v21_legacy_v2_compatible
 [composite:openstack_compute_api_legacy_v2]
 use = call:nova.api.auth:pipeline_factory
 noauth2 = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 legacy_ratelimit sentry osapi_compute_app_legacy_v2
-keystone = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext legacy_ratelimit sentry osapi_compute_app_legacy_v2
-keystone_nolimit = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext sentry osapi_compute_app_legacy_v2
-
-{{- define "audit_pipe" -}}
-{{- if index .Values "rabbitmq-notifications" "enabled" -}}audit{{- end -}}
-{{- end }}
+keystone = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext legacy_ratelimit sentry {{ include "audit_pipe" . }} osapi_compute_app_legacy_v2
+keystone_nolimit = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext sentry {{ include "audit_pipe" . }} osapi_compute_app_legacy_v2
 
 [composite:openstack_compute_api_v21]
 use = call:nova.api.auth:pipeline_factory_v21
