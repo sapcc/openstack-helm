@@ -33,14 +33,7 @@ rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
-
-# Maximum number of SQL connections to keep open in a pool. (integer
-# value)
-max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
-
-# If set, use this value for max_overflow with SQLAlchemy. (integer
-# value)
-max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+{{ include "ini_sections.database_options" . }}
 
 # The value for the socket option TCP_KEEPIDLE.  This is the time in
 # seconds that the connection must be idle before TCP starts sending
