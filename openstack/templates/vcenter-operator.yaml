@@ -12,6 +12,7 @@ data:
   neutron_sentry_dsn: {{ .Values.neutron.sentry_dsn | quote  }}
   nova_agent_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-nova-compute:{{ .Values.nova.image_version_nova_compute }}
   nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
+  nova_service_password: {{ .Values.global.nova_service_password | quote }}
   password: {{ .Values.global.master_password | quote }}
   username: {{ .Values.vcenter_operator.username | quote }}
   pbm_enabled: {{ .Values.vcenter_operator.pbm_enabled | quote }}
