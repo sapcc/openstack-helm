@@ -18,6 +18,7 @@ linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 # https://github.com/sapcc/nova/commit/fd9508038351d027dcbf94282ba83caed5864a97
 allow_resize_to_same_host = true
 
+enable_new_services={{ .Values.enable_new_services | default .Release.IsInstall }}
 enabled_apis=osapi_compute,metadata
 
 osapi_compute_workers=8
