@@ -11,5 +11,5 @@ dependencies:
 - name: rabbitmq-notifications
   repository: http://localhost:8879/charts
   version: 0.0.1
-digest: sha256:489ee8fdc65409627fd57fe77cb16ff60d69b5d3745648fab8bffcc026526eae
-generated: 2017-11-23T15:28:12.131277175+01:00
+digest: sha256:a23c0375342a9eb5fd9989b07f37019ba1a003001b83e3745190b2d56b0ae8fc
+generated: 2017-11-23T16:30:12.603896373+01:00
