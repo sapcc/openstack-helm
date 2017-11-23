@@ -167,8 +167,10 @@ pg_metrics:
 postgres:
   name: nova
 
-rabbitmq-notifications:
+audit:
   enabled: false
+
+rabbitmq-notifications:
   name: nova
 
 logging:

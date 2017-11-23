@@ -163,4 +163,4 @@ driver = messagingv2
 transport_url = rabbit://{{ .users.default.user }}:{{ .users.default.password }}@nova-rabbitmq-notifications:{{ .ports.public }}/
 {{- end }}
 # mem_queue_size = 10000  # buffer these many messages in memory while rabbit is down / lagging
-{{ end }}
+{{- end }}

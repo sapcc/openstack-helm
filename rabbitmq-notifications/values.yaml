@@ -12,8 +12,8 @@ imageTag: 3-management
 # imagePullPolicy:
 
 ports:
-  public: '5672'
-  management: '15672'
+  management: 15672
+  public: 5672
 
 users:
   default:
