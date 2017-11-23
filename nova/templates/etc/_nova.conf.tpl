@@ -18,6 +18,7 @@ linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 # https://github.com/sapcc/nova/commit/fd9508038351d027dcbf94282ba83caed5864a97
 allow_resize_to_same_host = true
 
+enable_new_services={{ .Values.enable_new_services | default .Release.IsInstall }}
 enabled_apis=osapi_compute,metadata
 
 osapi_compute_workers=8
@@ -32,8 +33,7 @@ rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
-max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
-max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+{{- include "ini_sections.database_options" . }}
 
 # Scheduling
 scheduler_driver_task_period = {{ .Values.scheduler.driver_task_period | default 60 }}

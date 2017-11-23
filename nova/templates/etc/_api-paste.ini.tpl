@@ -125,4 +125,4 @@ level = ERROR
 [filter:audit]
 paste.filter_factory = auditmiddleware:filter_factory
 audit_map_file = /etc/nova/nova_audit_map.yaml
-ignore_req_list = GET  # opt out of entire request methods
+ignore_req_list = GET
