@@ -36,7 +36,7 @@ use = call:nova.api.openstack.urlmap:urlmap_factory
 /v2.1: openstack_compute_api_v21
 
 {{- define "audit_pipe" -}}
-{{- if .Values.audit.enabled -}}audit{{- end -}}
+{{- if .Values.audit.enabled -}} audit{{- end -}}
 {{- end }}
 
 # NOTE: this is deprecated in favor of openstack_compute_api_v21_legacy_v2_compatible
