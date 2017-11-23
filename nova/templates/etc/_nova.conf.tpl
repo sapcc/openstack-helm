@@ -154,7 +154,7 @@ admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include 
 admin_tenant_name={{.Values.global.keystone_service_project}}
 api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1
 
-{{ if .enabled -}}
+{{ if .Values.enabled -}}
 # this is for the cadf audit messaging
 [audit_middleware_notifications]
 # topics = notifications
