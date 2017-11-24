@@ -16,5 +16,7 @@ data:
 {{ include "loggerIni" .Values.logging | indent 4 }}
   api-paste.ini: |
 {{ include (print .Template.BasePath "/etc/_api-paste.ini.tpl") . | indent 4 }}
+{{- if .Values.audit.enabled }}
   nova_audit_map.yaml: |
 {{ include (print .Template.BasePath "/etc/_nova_audit_map.yaml.tpl") . | indent 4 }}
+{{- end }}
