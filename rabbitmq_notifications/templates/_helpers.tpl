@@ -3,7 +3,7 @@
 Expand the name of the chart.
 */}}
 {{- define "name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | replace "_" "-" | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
@@ -12,5 +12,5 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 */}}
 {{- define "fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s" .Values.name $name | trunc 63 | trimSuffix "-" -}}
+{{- printf "%s-%s" .Values.name $name | trunc 63 | replace "_" "-" | trimSuffix "-" -}}
 {{- end -}}

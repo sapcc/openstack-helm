@@ -22,3 +22,22 @@ max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | d
 connection = {{ include "db_url" . }}
 {{- include "ini_sections.database_options" . }}
 {{- end }}
+
+
+{{- define "ini_sections.audit_middleware_notifications"}}
+    {{- if .Values.audit }}
+        {{- if .Values.audit.enabled }}
+            {{- if .Values.rabbitmq_notifications }}
+                {{- if and .Values.rabbitmq_notifications.ports .Values.rabbitmq_notifications.users }}
+
+# this is for the cadf audit messaging
+[audit_middleware_notifications]
+# topics = notifications
+driver = messagingv2
+transport_url = rabbit://{{ .Values.rabbitmq_notifications.users.default.user }}:{{ .Values.rabbitmq_notifications.users.default.password }}@nova-rabbitmq-notifications:{{ .Values.rabbitmq_notifications.ports.public }}/
+mem_queue_size = {{ .Values.audit.mem_queue_size }}
+                {{- end }}
+            {{- end }}
+        {{- end }}
+    {{- end }}
+{{- end }}

@@ -154,13 +154,4 @@ admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include 
 admin_tenant_name={{.Values.global.keystone_service_project}}
 api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1
 
-{{ if .Values.audit.enabled -}}
-# this is for the cadf audit messaging
-[audit_middleware_notifications]
-# topics = notifications
-driver = messagingv2
-{{- with index .Values "rabbitmq-notifications" }}
-transport_url = rabbit://{{ .users.default.user }}:{{ .users.default.password }}@nova-rabbitmq-notifications:{{ .ports.public }}/
-{{- end }}
-mem_queue_size = {{ .Values.audit.mem_queue_size }}
-{{- end }}
+{{- include "ini_sections.audit_middleware_notifications" . }}
