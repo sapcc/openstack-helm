@@ -8,3 +8,7 @@ dependencies:
   - name: pg_metrics
     repository: http://localhost:8879/charts
     version: 0.1.0
+  - name: rabbitmq-notifications
+    repository: http://localhost:8879/charts
+    condition: openstack.nova.audit.enabled
+    version: 0.0.1

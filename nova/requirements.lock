@@ -8,5 +8,8 @@ dependencies:
 - name: pg_metrics
   repository: http://localhost:8879/charts
   version: 0.1.0
-digest: sha256:f03479c332eaf3e20dc03bb2d7d6f00ff3365200233ffb6ad623ef958f19c65c
-generated: 2017-08-15T12:11:03.10262347+02:00
+- name: rabbitmq-notifications
+  repository: http://localhost:8879/charts
+  version: 0.0.1
+digest: sha256:a23c0375342a9eb5fd9989b07f37019ba1a003001b83e3745190b2d56b0ae8fc
+generated: 2017-11-23T16:30:12.603896373+01:00

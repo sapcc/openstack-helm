@@ -1,0 +1,108 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+    component: rabbitmq
+  annotations:
+    checksum/container.init: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: {{ .Values.upgrades.revisionHistory }}
+  strategy:
+    type: {{ .Values.upgrades.podReplacementStrategy }}
+    {{ if eq .Values.upgrades.podReplacementStrategy "RollingUpdate" }}
+    rollingUpdate:
+      maxUnavailable: {{ .Values.upgrades.rollingUpdate.maxUnavailable }}
+      maxSurge: {{ .Values.upgrades.rollingUpdate.maxSurge }}
+    {{ end }}
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: rabbitmq
+        image: "{{ .Values.image }}:{{.Values.imageTag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.imagePullPolicy | quote }}
+        command:
+          - bash
+        args:
+          - /container.init/rabbitmq-start
+        livenessProbe:
+          exec:
+            command:
+            - rabbitmqctl
+            - status
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - rabbitmqctl
+            - status
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        {{- if .Values.resources.enabled }}
+        resources:
+          limits:
+            cpu: {{ .Values.resources.limits.cpu | quote }}
+            memory: {{ .Values.resources.limits.memory | quote }}
+          requests:
+            cpu: {{ .Values.resources.requests.cpu | quote }}
+            memory: {{ .Values.resources.requests.memory | quote }}
+        {{- end }}
+        ports:
+          - name: public
+            containerPort: {{ default "5672" .Values.ports.public }}
+          - name: management
+            containerPort: {{ default "15672" .Values.ports.management }}
+        volumeMounts:
+          - name: rabbitmq-persistent-storage
+            mountPath: /var/lib/rabbitmq
+          - mountPath: /container.init
+            name: container-init
+{{- if .Values.metrics.enabled }}
+      - name: metrics
+        image: "{{ .Values.metrics.image }}:{{.Values.metrics.imageTag }}"
+        imagePullPolicy: {{ default "IfNotPresent" .Values.metrics.imagePullPolicy | quote }}
+        env:
+          - name: PUBLISH_PORT
+            value: {{ default "9150" .Values.metrics.port | quote }}
+          - name: RABBIT_USER
+            value: {{ .Values.metrics.user | quote }}
+          - name: RABBIT_PASSWORD
+            value: {{ .Values.metrics.password | quote }}
+          - name: RABBIT_URL
+            value: "http://127.0.0.1:{{.Values.ports.management}}"
+        {{- if .Values.metrics.resources.enabled }}
+        resources:
+          limits:
+            cpu: {{ .Values.metrics.resources.limits.cpu | quote }}
+            memory: {{ .Values.metrics.resources.limits.memory | quote }}
+          requests:
+            cpu: {{ .Values.metrics.resources.requests.cpu | quote }}
+            memory: {{ .Values.metrics.resources.requests.memory | quote }}
+        {{- end }}
+        ports:
+          - name: metrics
+            containerPort: {{ default "9150" .Values.metrics.port }}
+{{- end }}
+      volumes:
+        - name: rabbitmq-persistent-storage
+        {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+        - name: container-init
+          configMap:
+            name: {{ template "fullname" . }}-bin

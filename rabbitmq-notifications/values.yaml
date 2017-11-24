@@ -1,0 +1,65 @@
+# Default values for rabbitmq.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+image: rabbitmq
+imageTag: 3-management
+## Specify a imagePullPolicy
+## 'Always' if imageTag is 'latest', else set to 'IfNotPresent'
+## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+##
+# imagePullPolicy:
+
+ports:
+  management: 15672
+  public: 5672
+
+users:
+  default:
+    user: rabbitmq
+    # password: DEFINED-IN-REGIONS
+  admin:
+    user: admin
+    # password: DEFINED-IN-REGIONS
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteMany
+  size: 1Gi
+  # Re-use existing (unmanged) PVC
+  # existingClaim: claimName
+
+resources:
+  enabled: false
+  limits:
+    memory: 128Mi
+    cpu: 500m
+  requests:
+    memory: 128Mi
+    cpu: 500m
+
+metrics:
+  enabled: false
+  image: kbudde/rabbitmq-exporter
+  imageTag: 0.16.0
+  user: monitoring
+#  password: secret
+  port: '9150'
+  resources:
+    enabled: false
+    limits:
+      memory: 128Mi
+      cpu: 500m
+    requests:
+      memory: 128Mi
+      cpu: 500m
+
+replicas: 1
+
+upgrades:
+  revisionHistory: 3
+  podReplacementStrategy: Recreate
+#  rollingUpdate:
+#    maxUnavailable: 1
+#    maxSurge: 3
