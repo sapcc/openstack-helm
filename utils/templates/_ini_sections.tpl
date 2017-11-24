@@ -8,8 +8,13 @@ rabbit_transient_queues_ttl={{ .Values.rabbit_transient_queues_ttl | default .Va
 {{- end }}
 
 {{- define "ini_sections.database_options" }}
+    {{- if or .Values.postgres.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
+max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 10 }}
+max_overflow = -1
+    {{- else }}
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+    {{- end }}
 {{- end }}
 
 {{- define "ini_sections.database" }}

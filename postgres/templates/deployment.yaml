@@ -20,6 +20,10 @@ spec:
     metadata:
       labels:
         name: postgres-{{.Values.name}}
+      annotations:
+{{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
+{{- end }}
     spec:
       hostPID: false
       volumes:

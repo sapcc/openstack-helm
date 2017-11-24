@@ -22,6 +22,9 @@ global:
 
   default_availability_zone: nova
 
+  pgbouncer:
+    enabled: false
+
   default_mtu: '9000'
 
   # TODO change to chart setting
@@ -41,8 +44,6 @@ global:
   rabbitmq_admin_pass: DEFINED-IN-REGION-CHART
   rabbitmq_metrics_pass: DEFINED-IN-REGION-CHART
   rabbit_transient_queues_ttl: 1800
-
-
 
   glance_service_user: glance
   glance_service_password: DEFINED-IN-REGION-CHART
@@ -80,7 +81,6 @@ global:
   keystone_api_port_admin_ext: '443'
   keystone_api_port_internal: '5000'
   keystone_api_port_public: '443'
-
 
 
    #This is for backward compatibility in Monasca scripts and will be removed

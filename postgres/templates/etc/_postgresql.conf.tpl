@@ -61,7 +61,11 @@ listen_addresses = '*'		# what IP address(es) to listen on;
                     # defaults to 'localhost'; use '*' for all
                     # (change requires restart)
 #port = 5432				# (change requires restart)
-max_connections = 400			# (change requires restart)
+{{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled  }}
+max_connections = {{.Values.max_connections | default 50 }}			# (change requires restart)
+{{- else }}
+max_connections = {{.Values.max_connections | default 400 }}			# (change requires restart)
+{{- end }}
 # Note:  Increasing max_connections costs ~400 bytes of shared memory per
 # connection slot, plus lock space (see max_locks_per_transaction).
 #superuser_reserved_connections = 3	# (change requires restart)
