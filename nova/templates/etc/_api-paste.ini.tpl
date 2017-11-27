@@ -122,7 +122,7 @@ use = egg:ops-middleware#statsd
 use = egg:ops-middleware#sentry
 level = ERROR
 
-{{- if .Values.audit.enabled }}
+{{ if .Values.audit.enabled }}
 [filter:audit]
 paste.filter_factory = auditmiddleware:filter_factory
 audit_map_file = /etc/nova/nova_audit_map.yaml
