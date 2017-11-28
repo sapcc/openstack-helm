@@ -200,10 +200,16 @@ logging:
             level: WARNING
         nova:
             handlers: stdout, sentry
-            level: DEBUG
+            level: INFO
+        nova.scheduler.host_manager: # You might get problems with unicodedecode errors if you decrease that
+            handlers: stdout, sentry
+            level: INFO
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO
         suds:
+            handlers: "null"
+            level: ERROR
+        oslo_vmware.common.loopingcall:
             handlers: "null"
             level: ERROR
