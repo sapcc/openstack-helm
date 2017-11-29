@@ -163,6 +163,15 @@ pg_metrics:
         - max_duration_gauge:
             usage: "GAUGE"
             description: "Maximum duration of state"
+    openstack_compute_marked_deleted_instances:
+      query: "SELECT COUNT(*) AS instance_count FROM instances WHERE instances.deleted!=0"
+      metrics:
+        - instance_count:
+            usage: "LABEL"
+            description: "Instance ID"
+        - gauge:
+            usage: "GAUGE"
+            description: "VM Count"
 
 postgres:
   name: nova

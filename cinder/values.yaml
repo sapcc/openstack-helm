@@ -129,7 +129,15 @@ pg_metrics:
         - size_gauge:
             usage: "GAUGE"
             description: "Size of Snapshots"
-
+    openstack_volumes_marked_deleted:
+      query: "SELECT COUNT(*) AS volume_count FROM volumes WHERE deleted=true"
+      metrics:
+        - volume_count:
+            usage: "LABEL"
+            description: "Instance ID"
+        - gauge:
+            usage: "GAUGE"
+            description: "VM Count"
 postgres:
   name: cinder
 
