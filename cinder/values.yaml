@@ -134,7 +134,7 @@ pg_metrics:
       metrics:
         - volume_count:
             usage: "LABEL"
-            description: "Instance ID"
+            description: "Number of marked as deleted Volumes"
         - gauge:
             usage: "GAUGE"
             description: "VM Count"
