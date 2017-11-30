@@ -26,7 +26,7 @@ users:
 persistence:
   enabled: true
   accessMode: ReadWriteMany
-  size: 1Gi
+  size: 10Gi
   # Re-use existing (unmanged) PVC
   # existingClaim: claimName
 
@@ -40,12 +40,12 @@ resources:
     cpu: 500m
 
 metrics:
-  enabled: false
+  enabled: true
   image: kbudde/rabbitmq-exporter
   imageTag: 0.16.0
   user: monitoring
   # password: DEFINED-IN-REGIONS
-  port: '9150'
+  port: 9150
   resources:
     enabled: false
     limits:
