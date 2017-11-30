@@ -63,6 +63,12 @@ conductor:
     protocol: 'http'
     port: 8088
 
+agent:
+  deploy_logs:
+    collect: "on_failure"
+    storage_backend: "local"
+    swift_days_to_expire: 30
+
 console:
   secret:
 

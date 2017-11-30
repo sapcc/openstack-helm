@@ -1,13 +1,12 @@
 [DEFAULT]
-debug = {{.Values.debug}}
 log-config-append = /etc/ironic/logging.conf
 
-enabled_drivers={{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
-enabled_network_interfaces=noop,flat,neutron
-default_network_interface=neutron
+enabled_drivers = {{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
+enabled_network_interfaces = noop,flat,neutron
+default_network_interface = neutron
 
 [ironic]
-os_region= {{.Values.global.region}}
+os_region = {{.Values.global.region}}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
 username = {{ .Values.global.ironic_service_user }}
@@ -20,21 +19,21 @@ project_domain_name = {{.Values.global.keystone_service_domain}}
 host_ip = 0.0.0.0
 
 [firewall]
-manage_firewall=False
+manage_firewall = False
 
 [processing]
-always_store_ramdisk_logs=true
-ramdisk_logs_dir=/var/log/kolla/ironic/
-add_ports=all
-keep_ports=all
-ipmi_address_fields=ilo_address
-log_bmc_address=true
-node_not_found_hook=enroll
-default_processing_hooks=ramdisk_error,root_disk_selection,scheduler,validate_interfaces,capabilities,pci_devices,extra_hardware
-processing_hooks=$default_processing_hooks,local_link_connection
+always_store_ramdisk_logs = true
+ramdisk_logs_dir = /var/log/kolla/ironic/
+add_ports = all
+keep_ports = all
+ipmi_address_fields = ilo_address
+log_bmc_address = true
+node_not_found_hook = enroll
+default_processing_hooks = ramdisk_error,root_disk_selection,scheduler,validate_interfaces,capabilities,pci_devices,extra_hardware
+processing_hooks = $default_processing_hooks,local_link_connection
 
 [discovery]
-enroll_node_driver=agent_ipmitool
+enroll_node_driver = agent_ipmitool
 
 [database]
 connection = {{ tuple . .Values.inspector_db_name .Values.inspector_db_user .Values.inspector_db_password | include "db_url" }}

@@ -8,6 +8,15 @@ default_network_interface = neutron
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
+[agent]
+deploy_logs_collect = {{ .Values.agent.deploy_logs.collect }}
+deploy_logs_storage_backend = {{ .Values.agent.deploy_logs.storage_backend }}
+deploy_logs_swift_days_to_expire = {{ .Values.agent.deploy_logs.swift_days_to_expire }}
+{{- if eq .Values.agent.deploy_logs.storage_backend "swift" }}
+deploy_logs_swift_project_name = {{ .Values.agent.deploy_logs.swift_project_name | required "Need a project name" }}
+deploy_logs_swift_project_domain_name = {{ .Values.agent.deploy_logs.swift_project_domain_name | required "Need a domain name for the project" }}
+deploy_logs_swift_container = {{ .Values.agent.deploy_logs.swift_container | default "ironic_deploy_logs_container" }}
+{{- end }}
 
 {{- if .Values.image_version_ironic_inspector }}
 
