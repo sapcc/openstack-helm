@@ -42,19 +42,25 @@ insecure = True
 [glance]
 auth_section = keystone_authtoken
 glance_host = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
-
-{{- if .Values.swift_multi_tenant }}
-swift_store_multiple_containers_seed=32
-{{- end }}
-swift_temp_url_key={{ .Values.swift_tempurl }}
 swift_temp_url_duration=1200
 # No terminal slash, it will break the url signing scheme
 swift_endpoint_url={{.Values.global.swift_endpoint_protocol}}://{{include "swift_endpoint_host" .}}:{{ .Values.global.swift_api_port_public }}
 swift_api_version=v1
+{{- if .Values.swift_store_multi_tenant }}
+swift_store_multi_tenant = True
+{{- else}}
+    {{- if .Values.swift_multi_tenant }}
+swift_store_multiple_containers_seed=32
+    {{- end }}
+swift_temp_url_key={{ .Values.swift_tempurl }}
 swift_account={{ .Values.swift_account }}
+{{- end }}
 
 [swift]
 auth_section = keystone_authtoken
+{{- if .Values.swift_set_temp_url_key }}
+swift_set_temp_url_key = True
+{{- end }}
 
 [neutron]
 auth_section = keystone_authtoken
