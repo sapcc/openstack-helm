@@ -12,8 +12,8 @@ imageTag: 3-management
 # imagePullPolicy:
 
 ports:
-  management: 15672
   public: 5672
+  management: 15672
 
 users:
   default:
@@ -44,7 +44,7 @@ metrics:
   image: kbudde/rabbitmq-exporter
   imageTag: 0.16.0
   user: monitoring
-#  password: secret
+  # password: DEFINED-IN-REGIONS
   port: '9150'
   resources:
     enabled: false
