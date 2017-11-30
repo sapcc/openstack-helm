@@ -64,7 +64,7 @@ pg_metrics:
   db_password: DEFINED-IN-REGION-CHART
   customMetrics:
     openstack_stuck_volumes:
-      query: "SELECT host, project_id, availability_zone, status, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM volumes WHERE NOT deleted AND status IN ('attaching', 'deleting', 'detaching') GROUP BY host, availability_zone, volume_type_id, status, project_id"
+      query: "SELECT host, project_id, availability_zone, status, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM volumes WHERE status IN ('attaching', 'deleting', 'detaching') GROUP BY host, availability_zone, volume_type_id, status, project_id"
       metrics:
         - host:
             usage: "LABEL"
@@ -129,15 +129,6 @@ pg_metrics:
         - size_gauge:
             usage: "GAUGE"
             description: "Size of Snapshots"
-    openstack_volumes_marked_deleted:
-      query: "SELECT COUNT(*) AS volume_count FROM volumes WHERE deleted=true"
-      metrics:
-        - volume_count:
-            usage: "LABEL"
-            description: "Number of marked as deleted Volumes"
-        - gauge:
-            usage: "GAUGE"
-            description: "VM Count"
 postgres:
   name: cinder
 
