@@ -76,6 +76,14 @@ spec:
           imagePullPolicy: IfNotPresent
           command:
             - /container.init/neutron-dvs-agent-start
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 5
+            exec:
+              command:
+              - bash
+              - -c
+              - "[ -f /tmp/neutron-dvs-agent.alive ] && [ $((`date +%s` - `date -r /tmp/neutron-dvs-agent.alive +%s`)) -lt 300 ]"
           env:
             - name: DEBUG_CONTAINER
               value: "false"
