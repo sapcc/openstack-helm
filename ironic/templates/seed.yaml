@@ -81,11 +81,9 @@ spec:
       - project: service
         role: cloud_compute_admin
 
-  - name: monsoon3
-    description: "Converged Cloud Ironic base"
+  - name: ccadmin
     projects:
-    - name: ironic
-      description: 'Ironic'
+    - name: master
       flavors:
       - "1000"
       - "1010"
