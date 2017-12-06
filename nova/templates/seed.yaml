@@ -1,0 +1,261 @@
+apiVersion: "openstack.stable.sap.cc/v1"
+kind: "OpenstackSeed"
+metadata:
+  name: nova-seed
+spec:
+  requires:
+  - monsoon3/domain-default-seed
+  - monsoon3/domain-ccadmin-seed
+  - monsoon3/domain-monsoon3-seed
+
+  roles:
+  - compute_admin
+  - compute_viewer
+  - cloud_compute_admin
+  - cloud_network_admin
+
+  services:
+  - name: nova
+    type: compute
+    description: Openstack Compute
+ # uncomment once moved to helm-charts
+ #    endpoints:
+ #    - interface: admin
+ #      region: {{ .Values.global.region }}
+ #      url: https://{{include "nova_api_endpoint_host_public" .}}/v2/%(tenant_id)s
+ #    - interface: internal
+ #      region: {{ .Values.global.region }}
+ #      url: http://nova-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:8774/v2/%(tenant_id)s
+ #    - interface: public
+ #      region: {{ .Values.global.region }}
+ #      url: http://nova-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:8774/v2/%(tenant_id)s
+
+  flavors:
+  - name: "m1.tiny"
+    id: "10"
+    vcpus: 1
+    ram: 508
+    disk: 1
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "4"
+  - name: "m1.small"
+    id: "20"
+    vcpus: 2
+    ram: 2032
+    disk: 16
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.xsmall"
+    id: "22"
+    vcpus: 2
+    ram: 4080
+    disk: 32
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.medium"
+    id: "30"
+    vcpus: 4
+    ram: 4080
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.xmedium"
+    id: "32"
+    vcpus: 2
+    ram: 8176
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.large"
+    id: "40"
+    vcpus: 4
+    ram: 8176
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.xlarge"
+    id: "50"
+    vcpus: 4
+    ram: 16368
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.xlarge_cpu"
+    id: "52"
+    vcpus: 16
+    ram: 16368
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.2xlarge"
+    id: "60"
+    vcpus: 8
+    ram: 32752
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.4xlarge"
+    id: "70"
+    vcpus: 16
+    ram: 65520
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m1.10xlarge"
+    id: "80"
+    vcpus: 40
+    ram: 163824
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "x1.memory"
+    id: "90"
+    vcpus: 8
+    ram: 131056
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "x1.2xmemory"
+    id: "99"
+    vcpus: 16
+    ram: 262128
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "x1.4xmemory"
+    id: "150"
+    vcpus: 32
+    ram: 524272
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m2.large"
+    id: "100"
+    vcpus: 4
+    ram: 65520
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m2.xlarge"
+    id: "110"
+    vcpus: 8
+    ram: 16368
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m2.2xlarge"
+    id: "120"
+    vcpus: 8
+    ram: 24560
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m2.2xlarge_cpu"
+    id: "122"
+    vcpus: 24
+    ram: 24560
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m2.3xlarge"
+    id: "130"
+    vcpus: 8
+    ram: 49136
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+  - name: "m2.4xlarge"
+    id: "140"
+    vcpus: 8
+    ram: 65520
+    disk: 64
+    is_public: true
+    extra_specs:
+      "vmware:hv_enabled": "True"
+      "hw_video:ram_max_mb": "16"
+
+  domains:
+  - name: Default
+    users:
+    - name: admin
+      roles:
+      - domain: Default
+        role: cloud_compute_admin
+      - project: admin
+        role: cloud_compute_admin
+    - name: nova
+      description: Nova Service
+      #password: {{ .Values.global.nova_service_password }}
+      roles:
+      - project: service
+        role: service
+      - project: service
+        role: admin
+      - project: service
+        role: cloud_network_admin
+      - project: service
+        role: cloud_compute_admin
+    groups:
+    - name: administrators
+      roles:
+      - domain: Default
+        role: cloud_compute_admin
+      - project: admin
+        role: cloud_compute_admin
+
+  - name: ccadmin
+    projects:
+    - name: cloud_admin
+      roles:
+      - user: admin@Default
+        role: cloud_compute_admin
+    groups:
+    - name: CCADMIN_CLOUD_ADMINS
+      roles:
+      - project: cloud_admin
+        role: cloud_compute_admin
+
+  - name: monsoon3
+    groups:
+    - name: MONSOON3_DOMAIN_ADMINS
+      roles:
+      - project: cc-demo
+        role: compute_admin
