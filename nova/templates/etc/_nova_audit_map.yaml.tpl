@@ -1,6 +1,7 @@
 service_type: 'compute'
 service_name: 'nova'
-prefix: '/v2[0-9\.]*(/[0-9a-f\-]+)?'
+# this works for DevStack only
+prefix: '/compute/v2.1'
 
 resources:
     # NOTE: proxy-kind API are ignored
@@ -72,7 +73,7 @@ resources:
     servers:
         custom_actions:
             # server actions
-            addFloatingIp: update/add/floating-ip
+            addFloatingIp: update/add/floatingip
             addSecurityGroup: update/add/security-group
             changePassword: update/set/admin-password
             confirmResize: update/confirm-resize
@@ -91,7 +92,7 @@ resources:
             reboot: update/reboot
             rebuild: update/rebuild
             remote-consoles: create/console
-            removeFloatingIp: update/remove/floating-ip
+            removeFloatingIp: update/remove/floatingip
             removeSecurityGroup: update/remove/security-group
             rescue: update/rescue
             resetNetwork: update/reset/network
