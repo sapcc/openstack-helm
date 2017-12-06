@@ -5,7 +5,7 @@ metadata:
 spec:
   requires:
     - monsoon3/domain-default-seed
-    - monsoon3/domain-monsoon3-seed
+    - monsoon3/domain-ccadmin-seed
 
   roles:
     - cloud_compute_admin
