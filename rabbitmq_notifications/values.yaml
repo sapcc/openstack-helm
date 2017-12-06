@@ -18,10 +18,10 @@ ports:
 users:
   default:
     user: rabbitmq
-    # password: DEFINED-IN-REGIONS
+    password: DEFINED-IN-REGIONS
   admin:
     user: admin
-    # password: DEFINED-IN-REGIONS
+    password: DEFINED-IN-REGIONS
 
 persistence:
   enabled: true
@@ -44,7 +44,7 @@ metrics:
   image: kbudde/rabbitmq-exporter
   imageTag: 0.16.0
   user: monitoring
-  # password: DEFINED-IN-REGIONS
+  password: DEFINED-IN-REGIONS
   port: 9150
   resources:
     enabled: false
