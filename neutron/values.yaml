@@ -16,6 +16,8 @@ global:
     - name: DEFINED-IN-REGION-CHART
       node: DEFINED-IN-REGION-CHART
   osprofiler: {}
+  pgbouncer:
+    enabled: false
 
 osprofiler: {}
 
@@ -215,7 +217,7 @@ pg_metrics:
             description: "security group id details"
         - count:
             usage: "GAUGE"
-            description: "Estimate on number of filter rules"              
+            description: "Estimate on number of filter rules"
 
 postgres:
   name: neutron

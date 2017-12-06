@@ -9,6 +9,8 @@ global:
   manila_api_port_admin: '8786'
   manila_api_port_internal: '8786'
   manila_api_port_public: '443'
+  pgbouncer:
+    enabled: false
 
 debug: "True"
 

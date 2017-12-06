@@ -10,6 +10,8 @@ global:
   keystone_api_port_admin_ext: '443'
   keystone_api_port_internal: '5000'
   keystone_api_port_public: '443'
+  pgbouncer:
+    enabled: false
 
 pod:
   replicas:

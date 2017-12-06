@@ -19,6 +19,8 @@ global:
   hypervisors_kvm: []
   hypervisors_ironic: []
   osprofiler: {}
+  pgbouncer:
+    enabled: false
 
 osprofiler: {}
 

@@ -9,6 +9,8 @@ global:
   image_repository: REQUIRED
   hypervisors: []
   osprofiler: {}
+  pgbouncer:
+    enabled: false
 
 osprofiler: {}
 

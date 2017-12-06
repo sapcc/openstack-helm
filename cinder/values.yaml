@@ -22,6 +22,8 @@ global:
   #    availability_zone: DEFINED-IN-REGION-CHART
   volumes: []
   osprofiler: {}
+  pgbouncer:
+    enabled: false
 
 osprofiler: {}
 
@@ -119,7 +121,7 @@ pg_metrics:
             description: "ID of the Project"
         - host:
             usage: "LABEL"
-            description: "Name of the host"          
+            description: "Name of the host"
         - status:
             usage: "LABEL"
             description: "Status of the Snapshot"
