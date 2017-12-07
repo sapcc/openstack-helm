@@ -220,9 +220,6 @@ global:
   cfm_service_password: DEFINED-IN-REGION-CHART
 
 vcenter_operator:
-    dns_ip:
-    dns_port:
-    tsig_key:
     username:
     pbm_enabled: false
 

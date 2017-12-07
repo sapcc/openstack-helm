@@ -14,16 +14,8 @@ data:
   nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
   nova_service_password: {{ .Values.global.nova_service_password | quote }}
   password: {{ .Values.global.master_password | quote }}
-  username: {{ .Values.vcenter_operator.username | quote }}
-  pbm_enabled: {{ .Values.vcenter_operator.pbm_enabled | quote }}
-{{- if .Values.vcenter_operator.dns_ip }}
-  dns_ip: {{ .Values.vcenter_operator.dns_ip | quote }}
-{{- end }}
-{{- if .Values.vcenter_operator.dns_ip }}
-  dns_port: {{ .Values.vcenter_operator.dns_port | quote }}
-{{- end }}
-{{- if .Values.vcenter_operator.tsig_key }}
-  tsig_key: {{ .Values.vcenter_operator.tsig_key | quote }}
+{{ range $key, $value := .Values.vcenter_operator }}
+  {{$key}}: {{ $value | quote }}
 {{- end }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 ---
