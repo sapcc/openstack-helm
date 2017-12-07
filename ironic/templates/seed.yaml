@@ -105,11 +105,24 @@ spec:
       - project: service
         role: service
       - project: service
-        role: admin
-      - project: service
         role: cloud_network_admin
       - project: service
         role: cloud_compute_admin
+      - project: service
+        role: cloud_baremetal_admin
+  - name: ccadmin
+    projects:
+    - name: master
+      roles:
+      - user: image-build@Default
+        role: cloud_baremetal_admin
+    groups:
+    - name: CCADMIN_CLOUD_ADMINS
+      roles:
+      - project: master
+        role: cloud_baremetal_admin
+      - project: cloud_admin
+        role: cloud_baremetal_admin
 
   - name: ccadmin
     projects:
