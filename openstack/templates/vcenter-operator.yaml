@@ -20,6 +20,32 @@ data:
   {{$key}}: {{ toJson $value }}
 {{- end }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
+{{- if .Values.vcenter_exporter.enabled }}
+  vcenter_exporter_enabled: True
+  vcenter_exporter_image: {{ .Values.vcenter_exporter.image_version | quote  }}
+  vcenter_exporter_docker_repo: {{ .Values.vcenter_exporter.docker_repo | quote }}
+  vcenter_exporter_ignore_ssl: {{ .Values.vcenter_exporter.ignore_ssl | quote }}
+  vcenter_exporter_listen_port: {{ .Values.vcenter_exporter.listen_port | quote }}
+  vcenter_exporter_interval: {{ .Values.vcenter_exporter.interval | quote }}
+{{- if .Values.vcenter_exporter.shorter_names_regex }}
+  vcenter_exporter_shorter_names_regex: {{ .Values.vcenter_exporter.shorter_names_regex | quote}}
+{{- end }}
+{{- if .Values.vcenter_exporter.host_match_regex }}
+  vcenter_host_match_regex: True
+{{- end}}
+
+{{- if .Values.cluster_exporter_types }}
+  vcenter_exporter_cluster_exporter_types: {{- range $i, $exporter_type := .Values.cluster_exporter_types }}
+    - name: {{$exporter_type.name | quote }}
+      collector: {{$exporter_type.collector | quote }}
+{{- end }}
+{{- end }}
+{{- if .Values.datacenter_exporter_types }}
+  vcenter_exporter_datacenter_exporter_types: {{- range $i, $exporter_type := .Values.datacenter_exporter_types }}
+    - name: {{$exporter_vcentertype.name | quote }}
+      collector {{$exporter_type.collector | quote }}
+{{- end }}
+{{- end }}
 ---
 kind: Deployment
 apiVersion: extensions/v1beta1

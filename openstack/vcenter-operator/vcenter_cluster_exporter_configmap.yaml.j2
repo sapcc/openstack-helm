@@ -1,0 +1,57 @@
+{{% if vcenter_exporter_enabled is defined and vcenter_exporter_enabled == True %}}
+{{% for exporter_type in vcenter_exporter_cluster_exporter_types %}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+  namespace: monsoon3
+  labels:
+    system: openstack
+    service: metrics
+    component: configuration
+data:
+  config-{{name}}{{ exporter_type['name'] }}'.yaml: |
+    main:
+      availability_zone: '{{ availability_zone }}'
+      listen_port: '{{ vcenter_exporter_listen_port }}'
+      host: '{{ host }}'
+      user: '{{ username}}'
+      password: '{{ password }}'
+      port: 443
+      ignore_ssl: {{ vcenter_exporter_ignore_ssl }}
+      interval: {{vcenter_exporter_interval}}
+      log: 'INFO'
+      {{% if vcneter_exporter_shorter_names_regex is defined %}}
+      shorter_names_regex: '{{vcenter_exporter_shorter_names_regex}}'
+      {{% endif %}}
+      {{% if vcenter_exporter_host_match_regex is defined %}}
+      host_match_regex: '{{ name }}'
+      {{% endif %}}
+      ignore_match_regex: '(^c_blackbox_|^datapath_|^canary_).*'
+      vm_metrics:
+      - 'cpu.latency.average'
+      - 'cpu.usage.average'
+      - 'cpu.usagemhz.average'
+      - 'cpu.wait.summation'
+      - 'disk.usage.average'
+      - 'disk.numberRead.summation'
+      - 'disk.numberWrite.summation'
+      - 'mem.usage.average'
+      - 'net.usage.average'
+      - 'net.bytesRx.average'
+      - 'net.bytesTx.average'
+      - 'net.droppedRx.summation'
+      - 'net.droppedTx.summation'
+      - 'net.errorsRx.summation'
+      - 'net.errorsTx.summation'
+      - 'net.packetsRx.summation'
+      - 'net.packetsTx.summation'
+      - 'virtualDisk.read.average'
+      - 'virtualDisk.write.average'
+      - 'virtualDisk.readIOI.latest'
+      - 'virtualDisk.writeIOI.latest'
+      - 'virtualDisk.totalReadLatency.average'
+      - 'virtualDisk.totalWriteLatency.average'
+{{% endfor %}}
+{{% endif %}}
