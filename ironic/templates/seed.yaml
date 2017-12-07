@@ -8,6 +8,9 @@ spec:
     - monsoon3/domain-ccadmin-seed
 
   roles:
+    - cloud_baremetal_admin
+    - baremetal_admin
+    - baremetal_viewer
     - cloud_compute_admin
     - cloud_network_admin
 
