@@ -1,7 +1,6 @@
 service_type: 'compute'
 service_name: 'nova'
-# this works for DevStack only
-prefix: '/compute/v2.1'
+prefix: '/v2[0-9\.]*/[0-9a-f\-]'
 
 resources:
     # NOTE: proxy-kind API are ignored
