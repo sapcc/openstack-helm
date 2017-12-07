@@ -30,36 +30,36 @@ spec:
   flavors:
     - name: "zh1mlx1.large"
       id: "1000"
-      vcpus: 120
-      ram: 1048576
-      disk: 837
+      vcpus: "120"
+      ram: "1048576"
+      disk: "837"
       is_public: false
       description: HANA Baremetal 2 socket
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
     - name: "zh2mlx1.xlarge"
       id: "1010"
-      vcpus: 88
-      ram: 2097152
-      disk: 400
+      vcpus: "88"
+      ram: "2097152"
+      disk: "400"
       is_public: false
       description: HANA Baremetal 4 socket
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
     - name: "zh2mlx1.2xlarge"
       id: "1020"
-      vcpus: 172
-      ram: 4194304
-      disk: 400
+      vcpus: "172"
+      ram: "4194304"
+      disk: "400"
       is_public: false
       description: HANA Baremetal 8 socket
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
     - name: "zh2mlx1.3xlarge"
       id: "1030"
-      vcpus: 172
-      ram: 6291456
-      disk: 400
+      vcpus: "172"
+      ram: "6291456"
+      disk: "400"
       is_public: false
       description: HANA Baremetal 8 socket
       extra_specs:

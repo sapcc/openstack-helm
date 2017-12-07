@@ -33,180 +33,180 @@ spec:
   flavors:
   - name: "m1.tiny"
     id: "10"
-    vcpus: 1
-    ram: 508
-    disk: 1
+    vcpus: "1"
+    ram: "508"
+    disk: "1"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "4"
   - name: "m1.small"
     id: "20"
-    vcpus: 2
-    ram: 2032
-    disk: 16
+    vcpus: "2"
+    ram: "2032"
+    disk: "16"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.xsmall"
     id: "22"
-    vcpus: 2
-    ram: 4080
-    disk: 32
+    vcpus: "2"
+    ram: "4080"
+    disk: "32"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.medium"
     id: "30"
-    vcpus: 4
-    ram: 4080
-    disk: 64
+    vcpus: "4"
+    ram: "4080"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.xmedium"
     id: "32"
-    vcpus: 2
-    ram: 8176
-    disk: 64
+    vcpus: "2"
+    ram: "8176"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.large"
     id: "40"
-    vcpus: 4
-    ram: 8176
-    disk: 64
+    vcpus: "4"
+    ram: "8176"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.xlarge"
     id: "50"
-    vcpus: 4
-    ram: 16368
-    disk: 64
+    vcpus: "4"
+    ram: "16368"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.xlarge_cpu"
     id: "52"
-    vcpus: 16
-    ram: 16368
-    disk: 64
+    vcpus: "16"
+    ram: "16368"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.2xlarge"
     id: "60"
-    vcpus: 8
-    ram: 32752
-    disk: 64
+    vcpus: "8"
+    ram: "32752"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.4xlarge"
     id: "70"
-    vcpus: 16
-    ram: 65520
-    disk: 64
+    vcpus: "16"
+    ram: "65520"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m1.10xlarge"
     id: "80"
-    vcpus: 40
-    ram: 163824
-    disk: 64
+    vcpus: "40"
+    ram: "163824"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "x1.memory"
     id: "90"
-    vcpus: 8
-    ram: 131056
-    disk: 64
+    vcpus: "8"
+    ram: "131056"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "x1.2xmemory"
     id: "99"
-    vcpus: 16
-    ram: 262128
-    disk: 64
+    vcpus: "16"
+    ram: "262128"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "x1.4xmemory"
     id: "150"
-    vcpus: 32
-    ram: 524272
-    disk: 64
+    vcpus: "32"
+    ram: "524272"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m2.large"
     id: "100"
-    vcpus: 4
-    ram: 65520
-    disk: 64
+    vcpus: "4"
+    ram: "65520"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m2.xlarge"
     id: "110"
-    vcpus: 8
-    ram: 16368
-    disk: 64
+    vcpus: "8"
+    ram: "16368"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m2.2xlarge"
     id: "120"
-    vcpus: 8
-    ram: 24560
-    disk: 64
+    vcpus: "8"
+    ram: "24560"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m2.2xlarge_cpu"
     id: "122"
-    vcpus: 24
-    ram: 24560
-    disk: 64
+    vcpus: "24"
+    ram: "24560"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m2.3xlarge"
     id: "130"
-    vcpus: 8
-    ram: 49136
-    disk: 64
+    vcpus: "8"
+    ram: "49136"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
       "hw_video:ram_max_mb": "16"
   - name: "m2.4xlarge"
     id: "140"
-    vcpus: 8
-    ram: 65520
-    disk: 64
+    vcpus: "8"
+    ram: "65520"
+    disk: "64"
     is_public: true
     extra_specs:
       "vmware:hv_enabled": "True"
