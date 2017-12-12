@@ -54,6 +54,17 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
+        {{- if not $conductor.debug }}
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - -c
+                - eval $(cat /etc/ironic/ironic.conf | grep -A9 '\[keystone_authtoken\]' | grep '='  | while read LINE; do var="${LINE% =*}" ; val="${LINE#*= }" ; echo export OS_${var^^}=${val}  ; done); OS_IDENTITY_API_VERSION=3 openstack baremetal driver list | grep `hostname` >/dev/null
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+        {{- end }}
           volumeMounts:
             - mountPath: /etc/ironic
               name: etcironic
