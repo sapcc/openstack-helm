@@ -4,14 +4,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   namespace: monsoon3
   labels:
     system: openstack
     service: metrics
     component: configuration
 data:
-  config-{{name}}{{ exporter_type['name'] }}'.yaml: |
+  config-{{ name }}-{{ exporter_type['name'] }}'.yaml: |
     main:
       availability_zone: '{{ availability_zone }}'
       listen_port: '{{ vcenter_exporter_listen_port }}'

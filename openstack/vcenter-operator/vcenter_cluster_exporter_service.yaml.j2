@@ -4,20 +4,21 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   namespace: maia
   labels:
     system: openstack
     service: metrics
-    component: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
-  annotations: {{% exportertype['collector'] == "maia" %}
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+{{% if exportertype['collector'] is defined %}}{{% if exportertype['collector'] == "maia" %}
+  annotations:
     maia.io/scrape: "true"
     maia.io/port: "{{$.Values.vcenter_exporter.listen_port}}" {{ else if eq $exportertype.collector "prometheus" }}
     prometheus.io/scrape: "true"
-    prometheus.io/port: "{{ vcenter_exporter_listen_port }}" {{% endif %}}
+    prometheus.io/port: "{{ vcenter_exporter_listen_port }}" {{% endif %}}{{% endif %}}
 spec:
   selector:
-    component: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   ports:
     - name: metrics
       port: {{ vcenter_exporter_listen_port }}

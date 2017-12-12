@@ -4,7 +4,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   namespace: monsoon3
   labels:
     system: openstack
@@ -20,14 +20,14 @@ spec:
   template:
     metadata:
       labels:
-        component: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+        component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
     spec:
       nodeSelector:
         zone: farm
       volumes:
         - name: maia-etc
           configMap:
-            name: vcenter-exporter-{{ name }}{{ exporter_type['name'] }}
+            name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
       containers:
         - name: vcenter-exporter
           # remove the "string:" prefix which is used to prevent helm's --set option from reformatting plain numbers into floats in scientific notation
@@ -38,7 +38,7 @@ spec:
           args:
             - /vcenter-exporter/vcenter-exporter.py
             - -c
-            - /maia-etc/config-{{ name }}{{ exporter_type['name'] }}.yaml
+            - /maia-etc/config-{{ name }}-{{ exporter_type['name'] }}.yaml
             - -t
             - {{ exporter_type['name'] }}
           volumeMounts:
