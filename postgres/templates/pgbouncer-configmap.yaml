@@ -1,0 +1,32 @@
+{{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{.Values.name}}-pgbouncer
+  namespace:  {{.Release.Namespace}}
+  labels:
+    system: openstack
+    component: {{.Values.name}}
+data:
+    stats_users: "stats_user"
+    admin_users: "admin_user"
+    autodb_idle_timeout: "{{ .Values.pgbouncer.autodb_idle_timeout | default .Values.global.pgbouncer.autodb_idle_timeout | default 3600 }}"
+    max_client_conn: "{{ .Values.pgbouncer.max_client_conn | default .Values.global.pgbouncer.max_client_conn | default 16384 }}"
+    reserve_pool_size: "{{ .Values.pgbouncer.reserve_pool_size | default .Values.global.pgbouncer.reserve_pool_size | default 4 }}"
+    min_pool_size: "{{ .Values.pgbouncer.min_pool_size | default .Values.global.pgbouncer.min_pool_size | default 1 }}"
+    default_pool_size: "{{ .Values.pgbouncer.default_pool_size | default .Values.global.pgbouncer.default_pool_size | default 4 }}"
+    server_check_delay: "{{ .Values.pgbouncer.server_check_delay | default .Values.global.pgbouncer.server_check_delay | default 30 }}"
+    unix_socket_dir: "{{ .Values.pgbouncer.unix_socket_dir | default .Values.global.pgbouncer.unix_socket_dir | default "/tmp" }}"
+    listen_addr: "0.0.0.0"
+    listen_port: "{{ .Values.pgbouncer.listen_port | default .Values.global.pgbouncer.listen_port | default 6543 }}"
+    listen_backlog: "{{ .Values.pgbouncer.listen_backlog | default .Values.global.pgbouncer.listen_backlog | default 256 }}"
+    auth_type: "md5"
+    tcp_keepalive: "1"
+    tcp_keepcnt: "10"
+    tcp_keepidle: "5"
+    tcp_keepintvl: "5"
+    ignore_startup_parameters: "extra_float_digits"
+    log_connections: "0"
+    log_disconnections: "0"
+    pool_mode: "transaction"
+{{- end }}
