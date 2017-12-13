@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {% if vcenter_exporter['enabled'] == "true" %}
+=======
+{% if vcenter_exporter['enabled'] is defined and vcenter_exporter['enabled'] == True %}
+>>>>>>> adjusted and validated jinja templates
 {% for exporter_type in vcenter_exporter['datacenter_exporter_types'] %}
 ---
 apiVersion: v1
