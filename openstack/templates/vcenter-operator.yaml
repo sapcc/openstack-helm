@@ -14,9 +14,7 @@ data:
   nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
   nova_service_password: {{ .Values.global.nova_service_password | quote }}
   password: {{ .Values.global.master_password | quote }}
-{{ range $key, $value := .Values.vcenter_operator }}
-  {{$key}}: {{ $value | quote }}
-{{- end }}
+{{ toYaml .Values.vcenter_operator | indent 2 }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 ---
 kind: Deployment
