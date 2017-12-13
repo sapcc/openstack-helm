@@ -13,14 +13,14 @@ metadata:
 {% if exporter_type['collector'] is defined %}{% if exporter_type['collector'] == "maia" %}
   annotations:
     maia.io/scrape: "true"
-    maia.io/port: "{{ listen_port }}" {% elif exporter_type['collector'] == "prometheus" %}
+    maia.io/port: "{{ vcenter_exporter['listen_port'] }}" {% elif exporter_type['collector'] == "prometheus" %}
     prometheus.io/scrape: "true"
-    prometheus.io/port: "{{ listen_port }}" {% endif %}{% endif %}
+    prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}{% endif %}
 spec:
   selector:
     component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   ports:
     - name: metrics
-      port: {{ listen_port }}
+      port: {{ vcenter_exporter['listen_port'] }}
 {% endfor %}
 {% endif %}

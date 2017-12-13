@@ -31,7 +31,7 @@ spec:
       containers:
         - name: vcenter-exporter
           # remove the "string:" prefix which is used to prevent helm's --set option from reformatting plain numbers into floats in scientific notation
-          image: {{ docker_repo}}/vcenter-exporter:{{ image_version | replace ("string:", "") }}
+          image: {{ vcenter_exporter['docker_repo']}}/vcenter-exporter:{{ vcenter_exporter['image_version'] | replace ("string:", "") }}
           imagePullPolicy: IfNotPresent
           command:
             - python
@@ -46,6 +46,6 @@ spec:
               name: maia-etc
           ports:
             - name: metrics
-              containerPort: {{ listen_port }}
+              containerPort: {{ vcenter_exporter['listen_port'] }}
 {% endfor %}
 {% endif %}

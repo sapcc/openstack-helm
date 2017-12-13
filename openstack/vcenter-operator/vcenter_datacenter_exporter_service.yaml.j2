@@ -21,6 +21,6 @@ spec:
     component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   ports:
     - name: metrics
-      port: {{ listen_port }}
+      port: {{ vcenter_exporter['listen_port'] }}
 {% endfor %}
 {% endif %}
