@@ -14,6 +14,7 @@ data:
   config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
       availability_zone: '{{ availability_zone }}'
+<<<<<<< HEAD
       listen_port: "{{ vcenter_exporter['listen_port'] }}"
       host: '{{ host }}'
       user: '{{ username}}'
@@ -25,6 +26,18 @@ data:
       log: 'INFO'
       {% if vcenter_exporter['shorter_names_regex'] is defined %}
       shorter_names_regex: "{{ vcenter_exporter['shorter_names_regex'] }}"
+=======
+      listen_port: '{{ vcenter_exporter['listen_port'] }}'
+      host: '{{ host }}'
+      user: '{{ username}}'
+      password: '{{ password }}'
+      port: 443
+      ignore_ssl: {{ vcenter_exporter['ignore_ssl'] }}
+      interval: {{vcenter_exporter['interval']}}
+      log: 'INFO'
+      {% if vcenter_exporter['shorter_names_regex'] is defined %}
+      shorter_names_regex: '{{ vcenter_exporter['shorter_names_regex'] }}'
+>>>>>>> adjusted and validated jinja templates
       {% endif %}
       {% if vcenter_exporter['host_match_regex'] is defined %}
       host_match_regex: '{{ name }}'
