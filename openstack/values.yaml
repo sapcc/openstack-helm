@@ -221,7 +221,7 @@ global:
 
 vcenter_operator:
     username:
-    pbm_enabled: false
+    pbm_enabled: "false"
 
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
