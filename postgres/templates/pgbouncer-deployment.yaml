@@ -34,7 +34,7 @@ spec:
       terminationGracePeriodSeconds: 150
       containers:
         - name: pgbouncer
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/pgbouncer-k8s:{{.Values.pgbouncer.image_version | .Values.global.pgbouncer.image_version | default "latest" }}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/pgbouncer-k8s:{{.Values.pgbouncer.image_version | default .Values.global.pgbouncer.image_version | default "latest" }}
           imagePullPolicy: IfNotPresent
           env:
             - name: LABEL_SELECTOR
