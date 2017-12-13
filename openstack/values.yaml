@@ -233,6 +233,13 @@ vcenter_operator:
     vcenter_nanny_interval: 720
     # really delete entities after how many iterations
     vcenter_nanny_iterations: 14
+    vcenter_exporter:
+      enabled: DEFINED-IN-REGION-CHART
+      image_version: DEFINED-IN-REGION-CHART
+      listen_port: 9102
+      interval: 120
+      name_shortening_regex: DEFINED-IN-REGION-CHART
+      docker_repo: DEFINED-IN-REGION-CHART
 
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
