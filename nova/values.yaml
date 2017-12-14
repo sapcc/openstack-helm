@@ -40,12 +40,7 @@ pod:
            max_surge: 1
   debug:
     api: false
-
-jobs:
-  purge_deleted_instances:
-    cron: # "0 * * * *"
-    older_than: 5
-    max_number: 100
+    nanny: false
 
 debug: "True"
 
@@ -215,3 +210,20 @@ logging:
         oslo_vmware.common.loopingcall:
             handlers: "null"
             level: ERROR
+
+# nova nanny
+image_version_nova_nanny: DEFINED-IN-REGION-CHART
+nanny:
+  enabled: False
+  # run the nanny every n minutes
+  interval: 15
+quota_sync:
+  enabled: False
+db_purge:
+  enabled: False
+  # purge instance entries older than n days
+  older_than: 7
+  # purge at max n entries in one run
+  max_number: 50
+  # dry run mode, i.e. just pretend to purge the entries
+  dry_run: true

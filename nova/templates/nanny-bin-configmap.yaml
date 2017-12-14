@@ -1,0 +1,20 @@
+{{- if .Values.nanny.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nova-nanny-bin
+  namespace: monsoon3
+  labels:
+    system: openstack
+    service: nova-nanny
+    component: nova-nanny
+
+data:
+  nova-nanny-start: |
+{{ include "nova-nanny/templates/bin/_nova-nanny-start.tpl" . | indent 4 }}
+  nova-db-purge: |
+{{ include "nova-nanny/templates/bin/_nova-db-purge.tpl" . | indent 4 }}
+  nova-quota-sync: |
+{{ include "nova-nanny/templates/bin/_nova-quota-sync.tpl" . | indent 4 }}
+{{- end }}
