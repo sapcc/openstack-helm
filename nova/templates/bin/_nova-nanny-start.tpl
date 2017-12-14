@@ -15,11 +15,11 @@ function start_application {
   while true; do
 {{- if .Values.quota_sync.enabled }}
     echo "INFO: sync nova quotas"
-    python /nova-db-purge-bin/nova-quota-sync --all --auto_sync
+    python /nova-nanny-bin/nova-quota-sync --all --auto_sync
 {{- end }}
 {{- if .Values.db_purge.enabled }}
     echo "INFO: purge old deleted instances from the nova db"
-    . /nova-db-purge-bin/nova-db-purge
+    . /nova-nanny-bin/nova-db-purge
     echo "INFO: waiting {{ .Values.nanny.interval }} minutes before starting the next loop run"
 {{- end }}
     sleep $(( 60 * {{ .Values.nanny.interval }} ))

@@ -12,9 +12,9 @@ metadata:
 
 data:
   nova-nanny-start: |
-{{ include "nova-nanny/templates/bin/_nova-nanny-start.tpl" . | indent 4 }}
+{{ include (print $.Template.BasePath "/bin/_nova-nanny-start.tpl") . | indent 4 }}
   nova-db-purge: |
-{{ include "nova-nanny/templates/bin/_nova-db-purge.tpl" . | indent 4 }}
+{{ include (print $.Template.BasePath "/bin/_nova-db-purge.tpl") . | indent 4 }}
   nova-quota-sync: |
-{{ include "nova-nanny/templates/bin/_nova-quota-sync.tpl" . | indent 4 }}
+{{ include (print $.Template.BasePath "/bin/_nova-quota-sync.tpl") . | indent 4 }}
 {{- end }}

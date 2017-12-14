@@ -175,7 +175,7 @@ image_version_cinder_api: DEFINED-IN-REGION-CHART
 nanny:
   enabled: False
   # run the nanny every n minutes
-  interval: 30
+  interval: 60
 quota_sync:
   enabled: False
 db_purge:

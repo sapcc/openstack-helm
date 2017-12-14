@@ -12,9 +12,9 @@ metadata:
 
 data:
   cinder-nanny-start: |
-{{ include "cinder-nanny/templates/bin/_cinder-nanny-start.tpl" . | indent 4 }}
+{{ include (print $.Template.BasePath "/bin/_cinder-nanny-start.tpl") . | indent 4 }}
   cinder-db-purge: |
-{{ include "cinder-nanny/templates/bin/_cinder-db-purge.tpl" . | indent 4 }}
+{{ include (print $.Template.BasePath "/bin/_cinder-db-purge.tpl") . | indent 4 }}
   cinder-quota-sync: |
-{{ include "cinder-nanny/templates/bin/_cinder-quota-sync.tpl" . | indent 4 }}
+{{ include (print $.Template.BasePath "/bin/_cinder-quota-sync.tpl") . | indent 4 }}
 {{- end }}

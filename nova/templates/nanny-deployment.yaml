@@ -20,10 +20,10 @@ spec:
       labels:
         component: nova-nanny
       annotations:
-        checksum/openstack-nova-templates-nova-nanny-bin-configmap.yaml: {{ include "openstack/nova/templates/nova-nanny-bin-configmap.yaml" . | sha256sum }}
-        checksum/openstack-nova-templates-bin-nova-nanny-start.tpl: {{ include "openstack/nova/templates/bin/_nova-nanny-start.tpl" . | sha256sum }}
-        checksum/openstack-nova-templates-bin-nova-db-purge.tpl: {{ include "openstack/nova/templates/bin/_nova-db-purge.tpl" . | sha256sum }}
-        checksum/openstack-nova-templates-bin-nova-quota-sync.tpl: {{ include "openstack/nova/templates/bin/_nova-quoota-sync.tpl" . | sha256sum }}
+        checksum/openstack-nova-templates-nova-nanny-bin-configmap.yaml: {{ include (print $.Template.BasePath "/nanny-bin-configmap.yaml") . | sha256sum }}
+        checksum/openstack-nova-templates-bin-nova-nanny-start.tpl: {{ include (print $.Template.BasePath "/bin/_nova-nanny-start.tpl") . | sha256sum }}
+        checksum/openstack-nova-templates-bin-nova-db-purge.tpl: {{ include (print $.Template.BasePath "/bin/_nova-db-purge.tpl") . | sha256sum }}
+        checksum/openstack-nova-templates-bin-nova-quota-sync.tpl: {{ include (print $.Template.BasePath "/bin/_nova-quota-sync.tpl") . | sha256sum }}
     spec:
       nodeSelector:
         zone: farm

@@ -15,14 +15,14 @@ function start_application {
   while true; do
 {{- if .Values.quota_sync.enabled }}
     echo "INFO: sync cinder quotas"
-    for i in `python /cinder-db-purge-bin/cinder-quota-sync --config /etc/cinder/cinder.conf --list_projects`; do
+    for i in `python /cinder-nanny-bin/cinder-quota-sync --config /etc/cinder/cinder.conf --list_projects`; do
       echo project: $i
-      python /cinder-db-purge-bin/cinder-quota-sync --config /etc/cinder/cinder.conf --sync --project_id $i
+      python /cinder-nanny-bin/cinder-quota-sync --config /etc/cinder/cinder.conf --sync --project_id $i
     done
 {{- end }}
 {{- if .Values.db_purge.enabled }}
     echo "INFO: purge old deleted entities from the cinder db"
-    . /cinder-db-purge-bin/cinder-db-purge
+    . /cinder-nanny-bin/cinder-db-purge
 {{- end }}
     echo "INFO: waiting {{ .Values.nanny.interval }} minutes before starting the next loop run"
     sleep $(( 60 * {{ .Values.nanny.interval }} ))
