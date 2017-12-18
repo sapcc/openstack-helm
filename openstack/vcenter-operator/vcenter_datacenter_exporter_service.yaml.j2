@@ -10,7 +10,7 @@ metadata:
     system: openstack
     service: metrics
     component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
-  annotations: {%if exporter_type['collector'] == "maia" %}
+  annotations: {% if exporter_type['collector'] == "maia" %}
     maia.io/scrape: "true"
     maia.io/port: "{{ vcenter_exporter['listen_port']}}" {% elif exporter_type['collector'] == "prometheus" %}
     prometheus.io/scrape: "true"
