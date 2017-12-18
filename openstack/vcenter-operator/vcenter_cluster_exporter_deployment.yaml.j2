@@ -1,5 +1,5 @@
-{% if vcenter_exporter['enabled'] is defined and vcenter_exporter['enabled'] == True %}
-{% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
+{% if enabled is defined and enabled == True %}
+{% for exporter_type in cluster_exporter_types %}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -31,7 +31,7 @@ spec:
       containers:
         - name: vcenter-exporter
           # remove the "string:" prefix which is used to prevent helm's --set option from reformatting plain numbers into floats in scientific notation
-          image: {{ vcenter_exporter['docker_repo']}}/vcenter-exporter:{{ vcenter_exporter['image_version'] | replace ("string:", "") }}
+          image: {{ docker_repo}}/vcenter-exporter:{{ image_version | replace ("string:", "") }}
           imagePullPolicy: IfNotPresent
           command:
             - python
@@ -46,6 +46,6 @@ spec:
               name: maia-etc
           ports:
             - name: metrics
-              containerPort: {{ vcenter_exporter['listen_port'] }}
+              containerPort: {{ listen_port }}
 {% endfor %}
 {% endif %}
