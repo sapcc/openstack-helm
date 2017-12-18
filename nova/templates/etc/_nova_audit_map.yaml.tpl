@@ -1,6 +1,6 @@
 service_type: 'compute'
 service_name: 'nova'
-prefix: '/v2[0-9\.]*(/[0-9a-f\-]+)?'
+prefix: '/v2[0-9\.]*(?:/[0-9a-f\-]+)?'
 
 resources:
     # NOTE: proxy-kind API are ignored
