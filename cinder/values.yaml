@@ -43,11 +43,8 @@ pod:
         rolling_update:
            max_unavailable: 0
            max_surge: 1
-
-jobs:
-  db_purge:
-    cron: # "0 8 * * * 1"
-    max_rows: 0
+  debug:
+    nanny: false
 
 debug: "True"
 
@@ -172,3 +169,16 @@ logging:
         suds:
             handlers: "null"
             level: ERROR
+
+# cinder nanny
+image_version_cinder_api: DEFINED-IN-REGION-CHART
+nanny:
+  enabled: False
+  # run the nanny every n minutes
+  interval: 60
+quota_sync:
+  enabled: False
+db_purge:
+  enabled: False
+  # purge deleted cinder entities older than n days
+  older_than: 7

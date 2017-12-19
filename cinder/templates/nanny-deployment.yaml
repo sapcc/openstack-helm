@@ -1,0 +1,58 @@
+{{- if .Values.nanny.enabled }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: cinder-nanny
+  namespace: monsoon3
+  labels:
+    system: openstack
+    service: cinder-nanny
+
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: cinder-nanny
+      annotations:
+        checksum/openstack-cinder-templates-nanny-bin-configmap.yaml: {{ include (print $.Template.BasePath "/nanny-bin-configmap.yaml") . | sha256sum }}
+        checksum/openstack-cinder-templates-bin-cinder-nanny-start.tpl: {{ include (print $.Template.BasePath "/bin/_cinder-nanny-start.tpl") . | sha256sum }}
+        checksum/openstack-cinder-templates-bin-cinder-db-purge.tpl: {{ include (print $.Template.BasePath "/bin/_cinder-db-purge.tpl") . | sha256sum }}
+        checksum/openstack-cinder-templates-bin-cinder-quota-sync.tpl: {{ include (print $.Template.BasePath "/bin/_cinder-quota-sync.tpl") . | sha256sum }}
+    spec:
+      nodeSelector:
+        zone: farm
+      volumes:
+        - name: cinder-nanny-bin
+          configMap:
+            name: cinder-nanny-bin
+        - name: cinder-etc
+          configMap:
+            name: cinder-etc
+      containers:
+        - name: cinder-nanny
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - dumb-init
+            - kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "{{ if not .Values.pod.debug.nanny }}/bin/bash /cinder-nanny-bin/cinder-nanny-start{{ else }}sleep inf{{ end }}"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-cinder,cinder-api"
+          volumeMounts:
+            - mountPath: /cinder-nanny-bin
+              name: cinder-nanny-bin
+            - mountPath: /cinder-etc
+              name: cinder-etc
+{{- end }}
