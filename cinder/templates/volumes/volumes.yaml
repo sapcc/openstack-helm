@@ -1,35 +1,22 @@
-{{- range $i, $volume := .Values.global.hypervisors_vmware -}}
-{{ if not $volume.disable_cinder }}
-{{ tuple $ $volume |include "volume_vmware" }}
+{{- range $i, $volume := .Values.global.volumes_netapp }}
+{{- tuple $ $volume | include "volume_netapp" }}
 ---
-{{ tuple $ $volume |include "volume_vmware_configmap" }}
-{{ if lt $i (sub (len $.Values.global.hypervisors_vmware) 1) }}
+{{- tuple $ $volume | include "volume_netapp_configmap" }}
+{{- if lt $i (sub (len $.Values.global.volumes_netapp) 1) }}
 ---
-{{end}}
-{{end}}
-{{- end -}}
-{{ if and (ge (len .Values.global.volumes_netapp) 1)  (ge (len .Values.global.hypervisors_vmware) 1) }}
----
-{{end}}
-{{- range $i, $volume := .Values.global.volumes_netapp -}}
-{{ tuple $ $volume |include "volume_netapp" }}
----
-{{ tuple $ $volume |include "volume_netapp_configmap" }}
-{{ if lt $i (sub (len $.Values.global.volumes_netapp) 1) }}
----
-{{end}}
-{{- end -}}
+{{- end }}
+{{- end }}
 
-{{ if .Values.global.volumes }}
-{{ if ge (len .Values.global.volumes) 1 }}
+{{- if .Values.global.volumes }}
+{{- if ge (len .Values.global.volumes) 1 }}
 ---
-{{range $i, $volume := .Values.global.volumes -}}
-{{ tuple $ $volume |include "volume_deployment" }}
+{{- range $i, $volume := .Values.global.volumes }}
+{{- tuple $ $volume | include "volume_deployment" }}
 ---
-{{ tuple $ $volume |include "volume_configmap" }}
+{{ tuple $ $volume | include "volume_configmap" }}
 {{ if lt $i (sub (len $.Values.global.volumes) 1) }}
 ---
-{{end}}
-{{- end -}}
-{{- end -}}
-{{end}}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}

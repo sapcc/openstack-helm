@@ -15,7 +15,6 @@ global:
   nova_serial_port_internal: '6083'
 
   hypervisors: []
-  hypervisors_vmware: []
   hypervisors_kvm: []
   hypervisors_ironic: []
   osprofiler: {}
