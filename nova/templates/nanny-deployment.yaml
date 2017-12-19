@@ -36,7 +36,7 @@ spec:
             name: nova-etc
       containers:
         - name: nova-nanny
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_nanny}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init

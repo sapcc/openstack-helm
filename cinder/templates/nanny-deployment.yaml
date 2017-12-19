@@ -36,7 +36,7 @@ spec:
             name: cinder-etc
       containers:
         - name: cinder-nanny
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_nanny}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init
