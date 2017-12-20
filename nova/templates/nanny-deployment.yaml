@@ -55,4 +55,36 @@ spec:
               name: nova-nanny-bin
             - mountPath: /nova-etc
               name: nova-etc
+{{- if .Values.db_cleanup.enabled }}
+        - name: nova-cleanup
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - dumb-init
+            - kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "{{ if not .Values.pod.debug.nanny }}/usr/bin/python /nova-nanny-bin/db-cleanup-entries-without-valid-project --dry-run --iterations 14 --interval 720 --nova{{ else }}sleep inf{{ end }}"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-nova,nova-api"
+            - name: OS_AUTH_URL
+              value: "https://{{ include "keystone_api_endpoint_host_public" . }}:443/v3"
+            - name: OS_PROJECT_NAME
+              value: "cloud_admin"
+            - name: OS_PROJECT_DOMAIN_NAME
+              value: "ccadmin"
+            - name: OS_USERNAME
+              value: "nova_nanny"
+            - name: OS_USER_DOMAIN_NAME
+              value: "Default"
+            - name: OS_PASSWORD
+              value: '{{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) }}'
+          volumeMounts:
+            - mountPath: /nova-nanny-bin
+              name: nova-nanny-bin
+{{- end }}
 {{- end }}

@@ -17,4 +17,6 @@ data:
 {{ include (print $.Template.BasePath "/bin/_nova-db-purge.tpl") . | indent 4 }}
   nova-quota-sync: |
 {{ include (print $.Template.BasePath "/bin/_nova-quota-sync.tpl") . | indent 4 }}
+  db-cleanup-entries-without-valid-project: |
+{{ include (print $.Template.BasePath "/bin/_db-cleanup-entries-without-valid-project.tpl") . | indent 4 }}
 {{- end }}
