@@ -50,6 +50,8 @@ db_name: manila
 db_user: manila
 db_password: DEFINED-IN-REGION-CHART
 
+share_server_cleanup_interval: 60
+
 port_metrics: '9102'
 
 sentry_dsn: DEFINE-IN-REGION-CHART
