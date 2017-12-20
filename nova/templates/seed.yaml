@@ -51,6 +51,9 @@ spec:
         role: cloud_network_admin
       - project: service
         role: cloud_compute_admin
+    - name: nova_nanny
+      description: Nova Nanny
+      password: {{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) }}
     groups:
     - name: administrators
       roles:
@@ -64,6 +67,12 @@ spec:
     - name: cloud_admin
       roles:
       - user: admin@Default
+        role: cloud_compute_admin
+      # permission to enumerate all projects and domains
+      - user: nova_nanny@Default
+        role: admin
+      # permission to manage all ressources checked by the nanny
+      - user: nova_nanny@Default
         role: cloud_compute_admin
     groups:
     - name: CCADMIN_CLOUD_ADMINS

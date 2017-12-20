@@ -1,0 +1,26 @@
+apiVersion: "openstack.stable.sap.cc/v1"
+kind: "OpenstackSeed"
+metadata:
+  name: cinder-seed
+spec:
+  requires:
+  - monsoon3/domain-default-seed
+  - monsoon3/domain-ccadmin-seed
+
+  domains:
+  - name: Default
+    users:
+    - name: cinder_nanny
+      description: Cinder Nanny
+      password: {{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) }}
+
+  - name: ccadmin
+    projects:
+    - name: cloud_admin
+      roles:
+      # permission to enumerate all projects and domains
+      - user: cinder_nanny@Default
+        role: admin
+      # permission to manage all ressources checked by the nanny
+      - user: cinder_nanny@Default
+        role: cloud_volume_admin
