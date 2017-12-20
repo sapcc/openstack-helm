@@ -11,7 +11,7 @@ spec:
   - name: Default
     users:
     - name: cinder_nanny
-      description: cinder nanny
+      description: Cinder Nanny
       password: {{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) }}
 
   - name: ccadmin

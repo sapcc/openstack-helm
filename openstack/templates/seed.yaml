@@ -11,7 +11,7 @@ spec:
   - name: Default
     users:
     - name: vcenter_nanny
-      description: vcenter nanny
+      description: Vcenter Nanny
       password: {{ derivePassword 1 "long" .Values.global.master_password "vcenter_nanny" (include "keystone_api_endpoint_host_public" .) }}
 
   - name: ccadmin
