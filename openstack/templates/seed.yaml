@@ -1,0 +1,30 @@
+apiVersion: "openstack.stable.sap.cc/v1"
+kind: "OpenstackSeed"
+metadata:
+  name: vcenter-operator-seed
+spec:
+  requires:
+  - monsoon3/domain-default-seed
+  - monsoon3/domain-ccadmin-seed
+
+  domains:
+  - name: Default
+    users:
+    - name: vcenter_nanny
+      description: vcenter nanny
+      password: {{ derivePassword 1 "long" .Values.global.master_password "vcenter_nanny" (include "keystone_api_endpoint_host_public" .) }}
+
+  - name: ccadmin
+    projects:
+    - name: cloud_admin
+      roles:
+      # permission to enumerate all projects and domains
+      - user: vcenter_nanny@Default
+        role: admin
+      # permission to manage all ressources checked by the nanny
+      - user: vcenter_nanny@Default
+        role: cloud_compute_admin
+      - user: vcenter_nanny@Default
+        role: cloud_volume_admin
+      - user: vcenter_nanny@Default
+        role: cloud_image_admin
