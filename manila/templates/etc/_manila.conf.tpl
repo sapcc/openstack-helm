@@ -29,6 +29,11 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
 {{- include "ini_sections.database_options" . }}
 
+delete_share_server_with_last_share = false
+automatic_share_server_cleanup = true
+# Unallocated share servers reclamation time interval (minutes).
+unused_share_server_cleanup_interval = {{ .Values.share_server_cleanup_interval | default 10 }}
+
 # all default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 quota_shares = 0
 quota_gigabytes = 0
