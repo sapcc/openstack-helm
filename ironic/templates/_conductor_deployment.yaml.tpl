@@ -141,8 +141,6 @@ spec:
         - name: ironic-tftp
           persistentVolumeClaim:
             claimName: ironic-tftp-pvclaim
-        - name: shellinabox
-          emptyDir: {}
         {{- if $conductor.debug }}
         - name: development
           persistentVolumeClaim:
