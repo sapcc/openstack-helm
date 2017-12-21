@@ -32,7 +32,7 @@ image_version_glance_registry: REQUIRED
 debug: "True"
 db_name: glance
 db_user: glance
-db_password: DEFINE_IN_REGION_CHART
+db_password: null
 
 port_metrics: '9102'
 ops_middleware_enabled: false
@@ -45,12 +45,11 @@ swift_multi_tenant: DEFINE_IN_REGION_CHART
 
 pg_metrics:
   name: glance
-  db_name: glance
-  db_user: glance
-  db_password: DEFINED-IN-REGION-CHART
 
 postgres:
   name: glance
+  users:
+    glance: {}
 
 logging:
     formatters:

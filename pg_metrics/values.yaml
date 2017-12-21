@@ -3,11 +3,10 @@ global:
   region: DEFINED-IN-REGION-CHART
   tld: DEFINED-IN-REGION-CHART
 
-db_name: DEFINED-IN-COMPONENT-CHART
-db_user: DEFINED-IN-COMPONENT-CHART
-db_password: DEFINED-IN-COMPONENT-CHART
-# DEFINED-IN-COMPONENT-CHART, named nova to make linter happy
-name: nova
+db_name: null
+db_user: null
+db_password: null
+name: null
 
 port_metrics: '9187'
 image: wrouesnel/postgres_exporter

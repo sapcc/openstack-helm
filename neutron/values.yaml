@@ -37,7 +37,7 @@ debug: "True"
 
 db_name: neutron
 db_user: neutron
-db_password: DEFINED-IN-REGION-CHART
+db_password: null
 
 port_metrics: '9102'
 
@@ -94,9 +94,6 @@ logging:
 
 pg_metrics:
   name: neutron
-  db_name: neutron
-  db_user: neutron
-  db_password: DEFINED-IN-REGION-CHART
   customMetrics:
     openstack_neutron_networks_count:
       query: "SELECT COUNT(*) AS gauge, status FROM networks GROUP BY networks.status"
@@ -221,3 +218,5 @@ pg_metrics:
 
 postgres:
   name: neutron
+  users:
+    neutron: {}

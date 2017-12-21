@@ -25,5 +25,3 @@ data:
 {{ include (print .Template.BasePath "/bin/_db-migrate.tpl") . | indent 4 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}
-
-

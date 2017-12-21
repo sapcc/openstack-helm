@@ -48,7 +48,7 @@ shares: {}
 
 db_name: manila
 db_user: manila
-db_password: DEFINED-IN-REGION-CHART
+db_password: null
 
 share_server_cleanup_interval: 60
 
@@ -58,9 +58,7 @@ sentry_dsn: DEFINE-IN-REGION-CHART
 
 pg_metrics:
   name: manila
-  db_name: manila
-  db_user: manila
-  db_password: DEFINED-IN-REGION-CHART
+
   customMetrics:
     openstack_manila_share_servers:
       query: "SELECT host, share_network_id, status, COUNT(*) AS count_gauge FROM share_servers GROUP BY host, share_network_id, status"
@@ -139,6 +137,8 @@ pg_metrics:
             description: "Maximum duration of state"
 postgres:
   name: manila
+  users:
+    manila: {}
 
 logging:
     formatters:

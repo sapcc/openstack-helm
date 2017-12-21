@@ -49,7 +49,7 @@ debug: "True"
 
 db_name: cinder
 db_user: cinder
-db_password: DEFINED-IN-REGION-CHART
+db_password: null
 
 port_metrics: '9102'
 
@@ -57,9 +57,6 @@ sentry_dsn: DEFINE-IN-REGION-CHART
 
 pg_metrics:
   name: cinder
-  db_name: cinder
-  db_user: cinder
-  db_password: DEFINED-IN-REGION-CHART
   customMetrics:
     openstack_stuck_volumes:
       query: "SELECT host, project_id, availability_zone, status, COUNT(*) FILTER (WHERE updated_at < now() - interval '15 minutes') AS count_gauge, MAX(EXTRACT(epoch FROM now() - updated_at)) AS max_duration_gauge FROM volumes WHERE status IN ('attaching', 'deleting', 'detaching') GROUP BY host, availability_zone, volume_type_id, status, project_id"
@@ -129,6 +126,8 @@ pg_metrics:
             description: "Size of Snapshots"
 postgres:
   name: cinder
+  users:
+    cinder: {}
 
 audit:
   enabled: false

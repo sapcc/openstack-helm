@@ -45,11 +45,11 @@ debug: "True"
 
 db_name: nova
 db_user: nova
-db_password: DEFINED-IN-REGION-CHART
+db_password: null
 
 api_db_name: nova_api
 api_db_user: nova_api
-api_db_password: DEFINED-IN-REGION-CHART
+api_db_password: null
 
 port_metrics: '9102'
 
@@ -77,9 +77,6 @@ scheduler:
 
 pg_metrics:
   name: nova
-  db_name: nova
-  db_user: nova
-  db_password: DEFINED-IN-REGION-CHART
   customMetrics:
     openstack_compute_nodes:
       query: "SELECT compute_nodes.host, aggregate_metadata.value AS availability_zone, compute_nodes.hypervisor_type, compute_nodes.free_disk_gb AS free_disk_gb_gauge, compute_nodes.local_gb AS local_gb_gauge, compute_nodes.local_gb_used AS local_gb_used_gauge, compute_nodes.free_ram_mb AS free_ram_mb_gauge, compute_nodes.memory_mb AS memory_mb_gauge, compute_nodes.memory_mb_used AS memory_mb_used_gauge, compute_nodes.vcpus_used AS vcpus_used_gauge, compute_nodes.vcpus AS vcpus_gauge, compute_nodes.running_vms AS running_vms_gauge from compute_nodes join aggregate_hosts on compute_nodes.host=aggregate_hosts.host join aggregate_metadata on aggregate_hosts.aggregate_id=aggregate_metadata.aggregate_id WHERE compute_nodes.deleted = 0"
@@ -162,6 +159,9 @@ pg_metrics:
 
 postgres:
   name: nova
+  users:
+    nova: {}
+    nova_api: {}
 
 audit:
   enabled: false

@@ -22,6 +22,7 @@ spec:
         name: postgres-{{.Values.name}}
       annotations:
 {{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
         configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
 {{- end }}
     spec:
@@ -34,12 +35,21 @@ spec:
         {{- else }}
           emptyDir: {}
         {{- end }}
+        {{- if and (not .Values.password) .Values.users }}
+        - name: db-init
+          emptyDir: {}
+        - name: db-maintain
+          configMap:
+            name: postgres-bin-{{.Values.name}}
+            defaultMode: 0755
+        {{- else }}
         - name: db-init
           configMap:
             name: db-init-{{.Values.name}}
         - name: db-maintain
           configMap:
             name: db-maintain-{{.Values.name}}
+        {{- end }}
         - name: postgres-etc
           configMap:
             name: postgres-etc-{{.Values.name}}
@@ -64,12 +74,12 @@ spec:
             - name: PGDATA
               value: /postgresql-data/data/
             - name: POSTGRES_USER
-              value: {{.Values.user}}
+              value: {{ .Values.user | quote }}
             - name: POSTGRES_PASSWORD
-              value: {{.Values.password}}
+              value: {{ .Values.password | default (tuple . .Values.user | include "postgres.password_for_fixed_user") | quote }}
           ports:
             - name: postgres
-              containerPort: {{.Values.port_private}}
+              containerPort: {{ .Values.port_private }}
           volumeMounts:
             - name: postgres-persistent-storage
               mountPath: /postgresql-data

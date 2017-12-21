@@ -10,13 +10,16 @@ global:
     enabled: false
     image_version: null
 
-name: DEFINED-IN-COMPONENT-CHART
+name: null
 user: postgres
-password: DEFINED-IN-REGION-CHART
+password: null
 port_public: '5432'
 port_private: '5432'
 hba_cidr: 0.0.0.0/0
 auth_method: password
+
+users: {}
+scripts: {}
 
 image_version_postgres: '9.4.14'
 

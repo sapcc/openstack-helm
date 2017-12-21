@@ -9,8 +9,8 @@ default_network_interface = neutron
 os_region = {{.Values.global.region}}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
-username = {{ .Values.global.ironic_service_user }}
-password = {{ .Values.global.ironic_service_password }}
+username = {{ .Values.global.ironic_service_user }}{{ .Values.global.user_suffix }}
+password = {{ .Values.global.ironic_service_password | default (tuple . .Values.global.ironic_service_user | include "identity.password_for_user")  | replace "$" "$$" | quote }}
 user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
@@ -36,15 +36,15 @@ processing_hooks = $default_processing_hooks,local_link_connection
 enroll_node_driver = agent_ipmitool
 
 [database]
-connection = {{ tuple . .Values.inspector_db_name .Values.inspector_db_user .Values.inspector_db_password | include "db_url" }}
+connection = {{ tuple . "ironic_inspector" "ironic_inspector" .Values.inspector_db_password | include "db_url" }}
 {{- include "ini_sections.database_options" . }}
 
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
-username = {{ .Values.global.ironic_service_user }}
-password = {{ .Values.global.ironic_service_password }}
+username = {{ .Values.global.ironic_service_user }}{{ .Values.global.user_suffix }}
+password = {{ .Values.global.ironic_service_password | default (tuple . .Values.global.ironic_service_user | include "identity.password_for_user") }}
 user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}

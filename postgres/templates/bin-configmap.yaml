@@ -1,9 +1,32 @@
+{{- $envAll := . }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgres-bin-{{.Values.name}}
+  name: postgres-bin-{{ .Values.name }}
   labels:
     system: openstack
     type: configuration
     component: database
 data:
+{{- if and (not .Values.password) .Values.users }}
+  "10-users.sql": |
+    \set ECHO all
+    \set ON_ERROR_STOP off {{/* We even expect the CREATE to fail */}}
+{{- range $user, $values := .Values.users }}
+    CREATE USER {{ $user }}{{ $envAll.Values.global.user_suffix }} WITH ENCRYPTED PASSWORD {{ tuple $envAll $user | include "postgres.password_for_user" | squote }};
+    ALTER ROLE {{ $user }}{{ $envAll.Values.global.user_suffix }} WITH ENCRYPTED PASSWORD {{ tuple $envAll $user | include "postgres.password_for_user" | squote }};
+{{- end }}
+    ALTER ROLE {{ .Values.user }} WITH ENCRYPTED PASSWORD {{ .Values.password | default (tuple . .Values.user | include "postgres.password_for_fixed_user") | squote }};
+  "20-databases.sql": |
+    \set ECHO all
+    \set ON_ERROR_STOP off {{/* We even expect the CREATE to fail */}}
+{{- range $user, $values := .Values.users }}
+    CREATE DATABASE {{ $user }} WITH OWNER {{ $user }}{{ $envAll.Values.global.user_suffix }};
+    ALTER DATABASE {{ $user }} OWNER TO {{ $user }}{{ $envAll.Values.global.user_suffix }};
+    GRANT ALL ON DATABASE {{ $user }} TO {{ $user }}{{ $envAll.Values.global.user_suffix }};
+{{- end }}
+{{- end }}
+{{- range $key, $value := $envAll.Values.scripts }}
+  {{$key | quote }}: |
+{{ indent 4 $value }}
+{{- end }}

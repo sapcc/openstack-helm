@@ -101,8 +101,8 @@ metadata_proxy_shared_secret = {{ .Values.global.nova_metadata_secret }}
 service_metadata_proxy = true
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_plugin = v3password
-username = {{ .Values.global.neutron_service_user }}
-password = {{ .Values.global.neutron_service_password }}
+username = {{ .Values.global.neutron_service_user }}{{ .Values.global.user_suffix }}
+password = {{ .Values.global.neutron_service_password | default (tuple . .Values.global.neutron_service_user | include "identity.password_for_user") | replace "$" "$$" | quote }}
 user_domain_name = {{.Values.global.keystone_service_domain}}
 region_name = {{.Values.global.region}}
 project_name = {{.Values.global.keystone_service_project}}
@@ -118,8 +118,8 @@ connection = {{ tuple . .Values.api_db_name .Values.api_db_user .Values.api_db_p
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 auth_type = v3password
-username = "{{ .Values.global.nova_service_user | default "" | replace "$" "$$" }}"
-password = "{{ .Values.global.nova_service_password | default "" | replace "$" "$$" }}"
+username = {{ .Values.global.nova_service_user }}{{ .Values.global.user_suffix }}
+password = {{ .Values.global.nova_service_password | default (tuple . .Values.global.nova_service_user | include "identity.password_for_user") | replace "$" "$$" | quote }}
 user_domain_name = "{{.Values.global.keystone_service_domain}}"
 project_name = "{{.Values.global.keystone_service_project}}"
 project_domain_name = "{{.Values.global.keystone_service_domain}}"
@@ -148,8 +148,8 @@ iscsi_use_multipath=True
 [ironic]
 #TODO: this should be V3 also?
 
-admin_username={{.Values.global.ironic_service_user }}
-admin_password={{.Values.global.ironic_service_password }}
+admin_username={{.Values.global.ironic_service_user }}{{ .Values.global.user_suffix }}
+admin_password={{ .Values.global.ironic_service_password | default (tuple . .Values.global.ironic_service_user | include "identity.password_for_user")  | replace "$" "$$" | quote }}
 admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v2.0
 admin_tenant_name={{.Values.global.keystone_service_project}}
 api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1

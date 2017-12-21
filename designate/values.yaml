@@ -92,7 +92,7 @@ mysql_metrics:
   name: designate
   db_name: designate
   db_user: root
-  db_password: DEFINED-IN-REGION-CHART
+  db_password: null
   customMetrics:
     - name: openstack_designate_zones
       help: "zones grouped by status and project"

@@ -10,5 +10,5 @@ metadata:
 data:
   db-init.sql: |
     CREATE DATABASE {{.Values.db_name}};
-    CREATE ROLE {{.Values.db_user}} WITH ENCRYPTED PASSWORD '{{.Values.db_password}}' LOGIN;
-    GRANT ALL PRIVILEGES ON DATABASE {{.Values.db_name}} TO {{.Values.db_user}};
+    CREATE ROLE {{.Values.db_user}}{{.Values.global.user_suffix}} WITH ENCRYPTED PASSWORD '{{.Values.db_password | default (tuple . .Values.db_user | include "postgres.password_for_user")}}' LOGIN;
+    GRANT ALL PRIVILEGES ON DATABASE {{.Values.db_name}} TO {{.Values.db_user}}{{.Values.global.user_suffix}};

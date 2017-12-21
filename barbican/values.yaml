@@ -26,16 +26,15 @@ debug: "True"
 
 db_name: barbican
 db_user: barbican
-db_password: DEFINED-IN-REGION-CHART
+db_password: null
 
 pg_metrics:
   name: barbican
-  db_name: barbican
-  db_user: barbican
-  db_password: DEFINED-IN-REGION-CHART
 
 postgres:
   name: barbican
+  users:
+    barbican: {}
 
 logging:
     formatters:

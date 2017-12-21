@@ -34,7 +34,7 @@ port_metrics: '9102'
 db_name: keystone
 db_user: keystone
 
-db_password: DEFINED-IN-REGION-CHART
+db_password: null
 admin_token: DEFINED-IN-REGION-CHART
 
 # token_expiration: 3600
@@ -56,10 +56,12 @@ pg_metrics:
   name: keystone
   db_name: keystone
   db_user: keystone
-  db_password: DEFINED-IN-REGION-CHART
+  db_password: null
 
 postgres:
   name: keystone
+  users:
+    keystone: {}
 
 operator:
   sentry_dsn: DEFINED-IN-REGION-CHART

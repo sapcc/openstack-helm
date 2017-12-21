@@ -9,5 +9,5 @@ metadata:
 
 data:
   db-maintain.sql: |
-    ALTER ROLE {{.Values.db_user}} WITH ENCRYPTED PASSWORD '{{.Values.db_password}}';
-    ALTER ROLE {{.Values.postgres.user}} WITH ENCRYPTED PASSWORD '{{.Values.postgres.password}}';
+    ALTER ROLE {{.Values.db_user}}{{.Values.global.user_suffix}} WITH ENCRYPTED PASSWORD '{{.Values.db_password | default (tuple . .Values.db_user | include "postgres.password_for_user")}}';
+    ALTER ROLE {{.Values.postgres.user}} WITH ENCRYPTED PASSWORD '{{.Values.postgres.password | default (tuple . .Values.postgres.user | include "postgres.password_for_user")}}';

@@ -98,9 +98,9 @@ spec:
   domains:
   - name: Default
     users:
-    - name: ironic
+    - name: {{ .Values.global.ironic_service_user }}{{ .Values.global.user_suffix }}
       description: Ironic Service
-      #password: {{ .Values.global.ironic_service_password }}
+      password: {{ .Values.global.ironic_service_password | default (tuple . .Values.global.ironic_service_user | include "identity.password_for_user") | quote }}
       roles:
       - project: service
         role: service

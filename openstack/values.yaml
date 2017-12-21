@@ -46,7 +46,7 @@ global:
   rabbit_transient_queues_ttl: 1800
 
   glance_service_user: glance
-  glance_service_password: DEFINED-IN-REGION-CHART
+  glance_service_password: null
 
   glance_api_endpoint_protocol_admin: http
   glance_api_endpoint_protocol_internal: http
@@ -58,7 +58,7 @@ global:
   glance_api_port_public: '443'
 
   neutron_service_user: neutron
-  neutron_service_password: DEFINED-IN-REGION-CHART
+  neutron_service_password: null
 
   neutron_api_endpoint_protocol_admin: http
   neutron_api_endpoint_protocol_internal: http
@@ -97,7 +97,7 @@ global:
   monasca_api_port_internal: '8070'
 
   ironic_service_user: ironic
-  ironic_service_password: DEFINED-IN-REGION-CHART
+  ironic_service_password: null
 
   ironic_api_endpoint_protocol_admin: http
   ironic_api_endpoint_protocol_internal: http
@@ -113,7 +113,7 @@ global:
   ironic_pxe_endpoint_ip_public: DEFINED-IN-REGION-CHART
 
   nova_service_user: nova
-  nova_service_password: DEFINED-IN-REGION-CHART
+  nova_service_password: null
   nova_metadata_secret: DEFINED-IN-REGION-CHART
 
   nova_api_endpoint_protocol_admin: http
@@ -142,7 +142,7 @@ global:
   barbican_api_port_public: '443'
 
   cinder_service_user: cinder
-  cinder_service_password: DEFINED-IN-REGION-CHART
+  cinder_service_password: null
 
   cinder_api_endpoint_protocol_admin: http
   cinder_api_endpoint_protocol_internal: http
@@ -156,7 +156,7 @@ global:
 
 
   manila_service_user: manila
-  manila_service_password: DEFINED-IN-REGION-CHART
+  manila_service_password: null
   manila_endpoint_protocol: http
   manila_api_port_public: '8786'
 
@@ -169,7 +169,7 @@ global:
   manila_api_port_public: '443'
 
   neutron_service_user: neutron
-  neutron_service_password: DEFINED-IN-REGION-CHART
+  neutron_service_password: null
 
   neutron_api_endpoint_protocol_admin: http
   neutron_api_endpoint_protocol_internal: http
@@ -197,10 +197,10 @@ global:
   designate_mdns_port_public: '5354'
   designate_mdns_external_ip: DEFINED-IN-REGION-CHART
   designate_service_user: designate
-  designate_service_password: DEFINED-IN-REGION-CHART
+  designate_service_password: null
 
   barbican_service_user: barbican
-  barbican_service_password: DEFINED-IN-REGION-CHART
+  barbican_service_password: null
 
 
   keystone_router_api_endpoint_protocol_public: https
@@ -217,9 +217,9 @@ global:
 
   cfm_api_endpoint_protocol_public: https
   cfm_api_port_public: '443'
-  cfm_service_password: DEFINED-IN-REGION-CHART
+  cfm_service_password: null
 
-  master_password: DEFINED-IN-REGION-CHART
+  master_password: null
 
 vcenter_operator:
     username:

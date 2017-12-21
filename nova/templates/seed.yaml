@@ -39,9 +39,9 @@ spec:
         role: cloud_compute_admin
       - project: admin
         role: cloud_compute_admin
-    - name: nova
+    - name: {{ .Values.global.nova_service_user }}{{ .Values.global.user_suffix | default "" }}
       description: Nova Service
-      #password: {{ .Values.global.nova_service_password }}
+      password: {{ .Values.global.nova_service_password | default (tuple . .Values.global.nova_service_user | include "identity.password_for_user") | quote }}
       roles:
       - project: service
         role: service
@@ -51,9 +51,9 @@ spec:
         role: cloud_network_admin
       - project: service
         role: cloud_compute_admin
-    - name: nova_nanny
+    - name: nova_nanny{{ .Values.global.user_suffix | default "" }}
       description: Nova Nanny
-      password: {{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
+      password: {{ tuple . "nova_nanny" | include "identity.password_for_user" | quote }}
     groups:
     - name: administrators
       roles:
@@ -69,10 +69,10 @@ spec:
       - user: admin@Default
         role: cloud_compute_admin
       # permission to enumerate all projects and domains
-      - user: nova_nanny@Default
+      - user: nova_nanny{{ .Values.global.user_suffix | default "" }}@Default
         role: admin
       # permission to manage all ressources checked by the nanny
-      - user: nova_nanny@Default
+      - user: nova_nanny{{ .Values.global.user_suffix | default "" }}@Default
         role: cloud_compute_admin
     groups:
     - name: CCADMIN_CLOUD_ADMINS

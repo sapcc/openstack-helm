@@ -174,8 +174,8 @@ enabled_extensions_v2 = quotas, reports
 [keystone_authtoken]
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_internal}}://{{include "keystone_api_endpoint_host_internal" .}}:{{ .Values.global.keystone_api_port_internal }}
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
-username = {{ .Values.global.designate_service_user }}
-password = {{ .Values.global.designate_service_password }}
+username = {{ .Values.global.designate_service_user }}{{ .Values.global.user_suffix }}
+password = {{ .Values.global.designate_service_password | default (tuple . .Values.global.designate_service_user | include "identity.password_for_user") | replace "$" "$$" | quote }}
 user_domain_name = {{.Values.global.keystone_service_domain}} 
 project_name = {{.Values.global.keystone_service_project}} 
 project_domain_name = {{.Values.global.keystone_service_domain}}

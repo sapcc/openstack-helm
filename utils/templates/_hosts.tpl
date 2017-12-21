@@ -10,17 +10,56 @@
 
 {{define "horizon_endpoint_host"}}horizon-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
+{{- define "utils.password_for_fixed_user_and_host" }}
+    {{- $envAll := index . 0 }}
+    {{- $user := index . 1 }}
+    {{- $host := index . 2 }}
+    {{- derivePassword 1 "long" $envAll.Values.global.master_password $user $host }}
+{{- end }}
 
-{{define "db_url" }}
+{{- define "identity.password_for_user" }}
+    {{- $envAll := index . 0 }}
+    {{- $user := index . 1 }}
+    {{- tuple $envAll ( $envAll.Values.global.user_suffix | default "" | print $user ) ( include "keystone_api_endpoint_host_public" $envAll ) | include "utils.password_for_fixed_user_and_host" }}
+{{- end }}
+
+{{- define "postgres.password_for_fixed_user"}}
+    {{- $envAll := index . 0 }}
+    {{- $user := index . 1 }}
+    {{- tuple $envAll $user ( include "db_host" $envAll ) | include "utils.password_for_fixed_user_and_host" }}
+{{- end }}
+
+{{- define "postgres.password_for_user"}}
+    {{- $envAll := index . 0 }}
+    {{- $user := index . 1 }}
+    {{- tuple $envAll ( $envAll.Values.global.user_suffix | default "" | print $user ) | include "postgres.password_for_fixed_user" }}
+{{- end }}
+
+{{define "db_host"}}
     {{- if kindIs "map" . -}}
-postgresql://{{.Values.db_user}}:{{.Values.db_password}}@postgres-{{.Chart.Name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}:{{.Values.postgres.port_public}}/{{.Values.db_name}}
+postgres-{{default .Chart.Name .Values.name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}
     {{- else }}
         {{- $envAll := index . 0 }}
         {{- $name := index . 1 }}
         {{- $user := index . 2 }}
         {{- $password := index . 3 }}
         {{- with $envAll -}}
-postgresql://{{$user}}:{{$password}}@postgres-{{.Chart.Name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}:{{.Values.postgres.port_public}}/{{$name}}
+postgres-{{default .Chart.Name .Values.name}}.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}
+        {{- end }}
+    {{- end -}}
+{{end}}
+
+{{define "db_url" }}
+    {{- if kindIs "map" . }}
+        {{- $db_user := default .Values.name .Values.db_user | default .Chart.Name -}}
+postgresql://{{ .Values.global.user_suffix | default "" | print $db_user | urlquery }}:{{.Values.db_password | default (tuple . $db_user | include "postgres.password_for_user") | urlquery }}@{{include "db_host" . }}:{{.Values.postgres.port_public}}/{{ default .Values.name .Values.db_name | default .Chart.Name }}
+    {{- else }}
+        {{- $envAll := index . 0 }}
+        {{- $name := index . 1 }}
+        {{- $user := index . 2 }}
+        {{- $password := index . 3 }}
+        {{- with $envAll -}}
+postgresql://{{ .Values.global.user_suffix | default "" | print $user | urlquery }}:{{ $password | default (tuple . $user | include "postgres.password_for_user") | urlquery }}@{{include "db_host" . }}:{{.Values.postgres.port_public}}/{{$name}}
         {{- end }}
     {{- end -}}
 ?connect_timeout=10&keepalives_idle=5&keepalives_interval=5&keepalives_count=10

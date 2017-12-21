@@ -1,3 +1,4 @@
+{{- if .Values.postgres.password }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,3 +12,4 @@ data:
     CREATE DATABASE {{.Values.db_name}};
     CREATE ROLE {{.Values.db_user}} WITH ENCRYPTED PASSWORD '{{.Values.db_password}}' LOGIN;
     GRANT ALL PRIVILEGES ON DATABASE {{.Values.db_name}} TO {{.Values.db_user}};
+{{- end }}

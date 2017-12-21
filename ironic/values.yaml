@@ -38,11 +38,11 @@ swift_multi_tenant: True
 debug: "True"
 db_name: ironic
 db_user: ironic
-db_password:
+db_password: null
 
 inspector_db_name: ironic_inspector
 inspector_db_user: ironic_inspector
-inspector_db_password:
+inspector_db_password: null
 
 api:
   override: {}
@@ -70,26 +70,26 @@ agent:
     swift_days_to_expire: 30
 
 console:
-  secret:
+  secret: null
 
-tftp_ip:
+tftp_ip: null
 
 port_metrics: '9102'
 sentry_dsn: DEFINE_IN_REGION_CHART
 
 network_management_uuid: DEFINE_IN_REGION_CHART
 network_cleaning_uuid: DEFINE_IN_REGION_CHART
-swift_account: DEFINE_IN_REGION_CHART
-swift_tempurl: DEFINE_IN_REGION_CHART
+swift_account: null
+swift_tempurl: null
 
 pg_metrics:
   name: ironic
-  db_name: ironic
-  db_user: ironic
-  db_password: DEFINED-IN-REGION-CHART
 
 postgres:
   name: ironic
+  users:
+    ironic: {}
+    ironic_inspector: {}
 
 logging:
     formatters:
