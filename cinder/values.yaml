@@ -43,8 +43,6 @@ pod:
         rolling_update:
            max_unavailable: 0
            max_surge: 1
-  debug:
-    nanny: false
 
 debug: "True"
 
@@ -171,9 +169,11 @@ logging:
             level: ERROR
 
 # cinder nanny
-image_version_cinder_api: DEFINED-IN-REGION-CHART
+image_version_cinder_nanny: DEFINED-IN-REGION-CHART
 nanny:
   enabled: False
+  # run the pod with an infinite sleep loop for debugging
+  debug: False
   # run the nanny every n minutes
   interval: 60
 quota_sync:
@@ -182,3 +182,11 @@ db_purge:
   enabled: False
   # purge deleted cinder entities older than n days
   older_than: 7
+db_cleanup:
+  enabled: False
+  # dry run mode, i.e. just pretend to cleanup the entries
+  dry_run: true
+  # run the db cleanup every n minutes
+  interval: 720
+  # really delete entities after how many iterations
+  iterations: 14

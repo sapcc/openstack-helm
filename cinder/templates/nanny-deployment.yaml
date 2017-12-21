@@ -1,4 +1,5 @@
 {{- if .Values.nanny.enabled }}
+{{- if or .Values.db_purge.enabled .Values.quota_sync.enabled .Values.db_cleanup.enabled }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -19,58 +20,68 @@ spec:
     metadata:
       labels:
         component: cinder-nanny
-      annotations:
-        checksum/openstack-cinder-templates-nanny-bin-configmap.yaml: {{ include (print $.Template.BasePath "/nanny-bin-configmap.yaml") . | sha256sum }}
-        checksum/openstack-cinder-templates-bin-cinder-nanny-start.tpl: {{ include (print $.Template.BasePath "/bin/_cinder-nanny-start.tpl") . | sha256sum }}
-        checksum/openstack-cinder-templates-bin-cinder-db-purge.tpl: {{ include (print $.Template.BasePath "/bin/_cinder-db-purge.tpl") . | sha256sum }}
-        checksum/openstack-cinder-templates-bin-cinder-quota-sync.tpl: {{ include (print $.Template.BasePath "/bin/_cinder-quota-sync.tpl") . | sha256sum }}
     spec:
       nodeSelector:
         zone: farm
       volumes:
-        - name: cinder-nanny-bin
-          configMap:
-            name: cinder-nanny-bin
         - name: cinder-etc
           configMap:
             name: cinder-etc
       containers:
-        - name: cinder-nanny
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
-          imagePullPolicy: IfNotPresent
+{{- if or .Values.db_purge.enabled .Values.quota_sync.enabled }}
+        - name: db-purge-quota-sync
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-nanny:{{.Values.image_version_cinder_nanny}}
+          #imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command:
             - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "{{ if not .Values.pod.debug.nanny }}/bin/bash /cinder-nanny-bin/cinder-nanny-start{{ else }}sleep inf{{ end }}"
+              value: "{{ if not .Values.nanny.debug }}/bin/bash /scripts/cinder-db-purge-quota-sync.sh{{ else }}sleep inf{{ end }}"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: DEPENDENCY_SERVICE
               value: "postgres-cinder,cinder-api"
+            - name: CINDER_DB_PURGE_ENABLED
+              value: {{ .Values.db_purge.enabled | quote }}
+            - name: CINDER_DB_PURGE_OLDER_THAN
+              value: {{ .Values.db_purge.older_than | quote }}
+            - name: CINDER_QUOTA_SYNC_ENABLED
+              value: {{ .Values.quota_sync.enabled | quote }}
+            - name: CINDER_NANNY_INTERVAL
+              value: {{ .Values.nanny.interval | quote }}
           volumeMounts:
-            - mountPath: /cinder-nanny-bin
-              name: cinder-nanny-bin
             - mountPath: /cinder-etc
               name: cinder-etc
+{{- end }}
 {{- if .Values.db_cleanup.enabled }}
-        - name: cinder-cleanup
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
-          imagePullPolicy: IfNotPresent
+        - name: db-cleanup
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-nanny:{{.Values.image_version_cinder_nanny}}
+          #imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command:
             - dumb-init
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "{{ if not .Values.pod.debug.nanny }}/usr/bin/python /cinder-nanny-bin/db-cleanup-entries-without-valid-project --dry-run --iterations 14 --interval 720 --cinder{{ else }}sleep inf{{ end }}"
+              value: "{{ if not .Values.nanny.debug }}/bin/bash /scripts/cinder-db-cleanup.sh{{ else }}sleep inf{{ end }}"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: DEPENDENCY_SERVICE
               value: "postgres-cinder,cinder-api"
+            - name: CINDER_DB_CLEANUP_ENABLED
+              value: {{ .Values.db_cleanup.enabled | quote }}
+            - name: CINDER_DB_CLEANUP_DRY_RUN
+              value: {{ .Values.db_cleanup.dry_run | quote }}
+            - name: CINDER_DB_CLEANUP_INTERVAL
+              value: {{ .Values.db_cleanup.interval | quote }}
+            - name: CINDER_DB_CLEANUP_ITERATIONS
+              value: {{ .Values.db_cleanup.iterations | quote }}
             - name: OS_AUTH_URL
               value: "https://{{ include "keystone_api_endpoint_host_public" . }}:443/v3"
             - name: OS_PROJECT_NAME
@@ -83,8 +94,6 @@ spec:
               value: "Default"
             - name: OS_PASSWORD
               value: '{{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) }}'
-          volumeMounts:
-            - mountPath: /cinder-nanny-bin
-              name: cinder-nanny-bin
+{{- end }}
 {{- end }}
 {{- end }}
