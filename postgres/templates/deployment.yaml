@@ -43,10 +43,6 @@ spec:
         - name: postgres-etc
           configMap:
             name: postgres-etc-{{.Values.name}}
-        - name: container-init
-          configMap:
-            name: postgres-bin-{{.Values.name}}
-            defaultMode: 0755
       containers:
         - name: postgres
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/postgres:{{.Values.image_version_postgres}}
@@ -70,7 +66,6 @@ spec:
               value: {{.Values.user}}
             - name: POSTGRES_PASSWORD
               value: {{.Values.password}}
-
           ports:
             - name: postgres
               containerPort: {{.Values.port_private}}
@@ -83,8 +78,6 @@ spec:
               mountPath: /docker-entrypoint-maintaindb.d
             - name: postgres-etc
               mountPath: /postgresql-conf
-            - name: container-init
-              mountPath: /container-init
 {{- if .Values.backup.enabled }}
         - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{ .Values.backup.image_version }}
           imagePullPolicy: IfNotPresent
