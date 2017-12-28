@@ -223,6 +223,15 @@ vcenter_operator:
     username:
     pbm_enabled: "false"
 
+    vcenter_nanny_enabled: False
+    vcenter_nanny_debug: True
+    # dry run mode, i.e. just pretend to cleanup the entries
+    vcenter_nanny_dry_run: true
+    # run the db cleanup every n minutes
+    vcenter_nanny_interval: 720
+    # really delete entities after how many iterations
+    vcenter_nanny_iterations: 14
+
 keystone:
   image_version_keystone_m3: DEFINED-IN-REGION-CHART
 nova:

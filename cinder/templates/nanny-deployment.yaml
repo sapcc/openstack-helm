@@ -30,9 +30,8 @@ spec:
       containers:
 {{- if or .Values.db_purge.enabled .Values.quota_sync.enabled }}
         - name: db-purge-quota-sync
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-nanny:{{.Values.image_version_cinder_nanny}}
-          #imagePullPolicy: IfNotPresent
-          imagePullPolicy: Always
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/cinder-nanny:{{.Values.image_version_cinder_nanny}}
+          imagePullPolicy: IfNotPresent
           command:
             - dumb-init
             - kubernetes-entrypoint
