@@ -47,6 +47,7 @@ spec:
         - name: postgres
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/postgres:{{.Values.image_version_postgres}}
           imagePullPolicy: IfNotPresent
+          args: ["-c", "config_file=/postgresql-conf/postgresql.conf", "-c", "hba_file=/postgresql-conf/pg-hba.conf"]
           livenessProbe:
             exec:
               command:
