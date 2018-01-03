@@ -14,11 +14,16 @@ spec:
   replicas: {{ .Values.replicas }}
   revisionHistoryLimit: {{ .Values.upgrades.revisionHistory }}
   strategy:
+    {{- if .Values.persistence.enabled }}
+    # rolling update is not possible since RabbitMQ does not support shared data files
+    type: Recreate
+    {{- else }}
     type: {{ .Values.upgrades.podReplacementStrategy }}
     {{ if eq .Values.upgrades.podReplacementStrategy "RollingUpdate" }}
     rollingUpdate:
       maxUnavailable: {{ .Values.upgrades.rollingUpdate.maxUnavailable }}
       maxSurge: {{ .Values.upgrades.rollingUpdate.maxSurge }}
+    {{ end }}
     {{ end }}
   selector:
     matchLabels:
@@ -28,6 +33,7 @@ spec:
       labels:
         app: {{ template "fullname" . }}
     spec:
+      hostname: {{ template "fullname" . }}
       containers:
       - name: rabbitmq
         image: "{{ .Values.image }}:{{.Values.imageTag }}"
