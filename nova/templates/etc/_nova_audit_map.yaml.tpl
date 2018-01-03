@@ -25,8 +25,8 @@ resources:
     flavors:
         custom_actions:
             detail: read/list/details
-            addTenantAccess: allow/tenant-access
-            removeTenantAccess: deny/tenant-access
+            addTenantAccess: allow/project-access
+            removeTenantAccess: deny/project-access
 
         children:
             os-flavor-access:
