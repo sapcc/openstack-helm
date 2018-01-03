@@ -11,5 +11,3 @@ metadata:
 data:
   rabbitmq-start: |
 {{ include (print .Template.BasePath "/bin/_rabbitmq-start.tpl") . | indent 4 }}
-
-

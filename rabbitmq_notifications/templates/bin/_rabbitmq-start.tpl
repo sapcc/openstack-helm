@@ -23,7 +23,7 @@ function bootstrap {
    rabbitmqctl set_user_tags {{ .Values.metrics.user }} monitoring || true
 {{- end }}
 
-   rabbitmqctl change_password guest {{ .Values.users.default.password }} || true
+   rabbitmqctl change_password guest {{ .Values.users.default.password | quote }} || true
    rabbitmqctl set_user_tags guest monitoring || true
    /etc/init.d/rabbitmq-server stop
 }
