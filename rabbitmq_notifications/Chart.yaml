@@ -1,3 +1,5 @@
 name: rabbitmq_notifications
 version: 0.0.1
 description: A Helm chart for RabbitMQ
+sources:
+- https://github.com/sapcc/openstack-helm/rabbitmq_notifications
