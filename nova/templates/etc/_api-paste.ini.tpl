@@ -127,4 +127,5 @@ level = ERROR
 paste.filter_factory = auditmiddleware:filter_factory
 audit_map_file = /etc/nova/nova_audit_map.yaml
 ignore_req_list = GET
+record_payloads = {{ if .Values.audit.record_payloads -}}True{{- else -}}False{{- end }}
 {{- end }}
