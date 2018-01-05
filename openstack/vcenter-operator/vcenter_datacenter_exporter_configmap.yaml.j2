@@ -14,7 +14,7 @@ data:
   config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
       availability_zone: '{{ availability_zone }}'
-      listen_port: '{{ vcenter_exporter['listen_port'] }}'
+      listen_port: "{{ vcenter_exporter['listen_port'] }}"
       host: '{{ host }}'
       user: '{{ username }}'
       password: '{{ password }}'
