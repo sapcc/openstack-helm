@@ -1,4 +1,4 @@
-{% if vcenter_exporter['enabled'] is defined and vcenter_exporter['enabled'] == True %}
+{% if vcenter_exporter['enabled'] == "true" %}
 {% for exporter_type in vcenter_exporter['datacenter_exporter_types'] %}
 ---
 apiVersion: v1
@@ -14,7 +14,7 @@ data:
   config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
       availability_zone: '{{ availability_zone }}'
-      listen_port: '{{ vcenter_exporter['listen_port'] }}'
+      listen_port: "{{ vcenter_exporter['listen_port'] }}"
       host: '{{ host }}'
       user: '{{ username}}'
       password: '{{ password }}'
@@ -23,7 +23,7 @@ data:
       interval: {{vcenter_exporter['interval']}}
       log: 'INFO'
       {% if vcenter_exporter['shorter_names_regex'] is defined %}
-      shorter_names_regex: '{{vcenter_exporter['shorter_names_regex']}}'
+      shorter_names_regex: "{{vcenter_exporter['shorter_names_regex']}}"
       {% endif %}
       {% if vcenter_exporter['host_match_regex is defined'] %}
       host_match_regex: '{{ name }}'

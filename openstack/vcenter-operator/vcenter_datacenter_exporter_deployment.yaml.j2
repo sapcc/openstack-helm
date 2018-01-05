@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-{% if enabled is defined and enabled == True %}
-{% for exporter_type in datacenter_exporter_types %}
-=======
-{% if vcenter_exporter['enabled'] is defined and vcenter_exporter['enabled'] == True %}
+{% if vcenter_exporter['enabled'] == "true" %}
 {% for exporter_type in vcenter_exporter['datacenter_exporter_types'] %}
->>>>>>> adjusted and validated jinja templates
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment

@@ -1,4 +1,4 @@
-{% if vcenter_exporter['enabled'] is defined and vcenter_exporter['enabled'] == True %}
+{% if vcenter_exporter['enabled'] == "true" %}
 {% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
 ---
 kind: Service
