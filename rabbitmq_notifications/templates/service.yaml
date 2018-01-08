@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "fullname" . }}"
+  name: {{ template "fullname" . }}
   labels:
-    app: "{{ template "fullname" . }}"
+    app: {{ template "fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -20,4 +20,4 @@ spec:
     - name: management
       port: {{ default 15672 .Values.ports.management }}
   selector:
-    app: "{{ template "fullname" . }}"
+    app: {{ template "fullname" . }}
