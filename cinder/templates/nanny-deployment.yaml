@@ -58,7 +58,7 @@ spec:
 {{- end }}
 {{- if .Values.db_cleanup.enabled }}
         - name: db-cleanup
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-nanny:{{.Values.image_version_cinder_nanny}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/cinder-nanny:{{.Values.image_version_cinder_nanny}}
           #imagePullPolicy: IfNotPresent
           imagePullPolicy: Always
           command:

@@ -62,7 +62,7 @@ spec:
 {{- end }}
 {{- if .Values.db_cleanup.enabled }}
         - name: db-cleanup
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-nanny:{{.Values.image_version_nova_nanny}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/nova-nanny:{{.Values.image_version_nova_nanny}}
           #imagePullPolicy: IfNotPresent
           imagePullPolicy: Always
           command:
