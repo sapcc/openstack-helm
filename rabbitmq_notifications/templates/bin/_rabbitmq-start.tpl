@@ -30,7 +30,11 @@ function bootstrap {
 
 
 function start_application {
-   exec rabbitmq-server
+  echo "Starting RabbitMQ with lock /var/lib/rabbitmq/rabbitmq-server.lock"
+  LOCKFILE=/var/lib/rabbitmq/rabbitmq-server.lock
+  exec 9>${LOCKFILE}
+  /usr/bin/flock -n 9
+  exec gosu rabbitmq rabbitmq-server
 }
 
 bootstrap
