@@ -12,7 +12,7 @@ spec:
     users:
     - name: cinder_nanny
       description: Cinder Nanny
-      password: {{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) }}
+      password: '{{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) }}'
 
   - name: ccadmin
     projects:
