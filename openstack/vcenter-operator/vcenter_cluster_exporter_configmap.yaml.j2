@@ -16,12 +16,12 @@ data:
       availability_zone: '{{ availability_zone }}'
       listen_port: "{{ vcenter_exporter['listen_port'] }}"
       host: '{{ host }}'
-      user: '{{ username}}'
+      user: '{{ username }}'
       password: '{{ password }}'
       port: 443{% if vcenter_exporter['ignore_ssl'] == "true" %}
       ignore_ssl: True{% else %}
       ignore_ssl: False{% endif %}
-      interval: {{ vcenter_exporter['interval']}}
+      interval: {{ vcenter_exporter['interval'] }}
       log: 'INFO'
       {% if vcenter_exporter['shorter_names_regex'] is defined %}
       shorter_names_regex: "{{ vcenter_exporter['shorter_names_regex'] }}"
