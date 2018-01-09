@@ -6,6 +6,7 @@ global:
   image_repository: DEFINED-IN-REGION-CHART
   image_namespace: DEFINED-IN-REGION-CHART
   cinder_api_port_internal: '8776'
+  master_password: DEFINED-IN-REGION-CHART
 
   hypervisors_vmware: []
   #  - name: DEFINED-IN-REGION-CHART

@@ -154,7 +154,7 @@ global:
 
   horizon_endpoint_port: '8080'
 
-  
+
   manila_service_user: manila
   manila_service_password: DEFINED-IN-REGION-CHART
   manila_endpoint_protocol: http
@@ -182,11 +182,11 @@ global:
 
   neutron_manila_physnet: DEFINED-IN-REGION-CHART
 
-  
+
   swift_endpoint_protocol: https
   swift_api_port_public: '443'
   swift_api_port_internal: '8080'
-  
+
   designate_api_endpoint_protocol_admin: http
   designate_api_endpoint_protocol_internal: http
   designate_api_endpoint_protocol_public: https
@@ -195,9 +195,9 @@ global:
   designate_api_port_public: '443'
   designate_metrics_port: '9102'
   designate_mdns_port_public: '5354'
-  designate_mdns_external_ip: DEFINED-IN-REGION-CHART 
+  designate_mdns_external_ip: DEFINED-IN-REGION-CHART
   designate_service_user: designate
-  designate_service_password: DEFINED-IN-REGION-CHART 
+  designate_service_password: DEFINED-IN-REGION-CHART
 
   barbican_service_user: barbican
   barbican_service_password: DEFINED-IN-REGION-CHART
@@ -218,6 +218,8 @@ global:
   cfm_api_endpoint_protocol_public: https
   cfm_api_port_public: '443'
   cfm_service_password: DEFINED-IN-REGION-CHART
+
+  master_password: DEFINED-IN-REGION-CHART
 
 vcenter_operator:
     username:

@@ -13,6 +13,7 @@ global:
   nova_novnc_port_internal: '6080'
   nova_spicehtml5_port_internal: '6082'
   nova_serial_port_internal: '6083'
+  master_password: DEFINED-IN-REGION-CHART
 
   hypervisors: []
   hypervisors_kvm: []

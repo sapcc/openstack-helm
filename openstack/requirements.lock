@@ -41,5 +41,8 @@ dependencies:
 - name: healthchecks
   repository: http://localhost:8879/charts
   version: 0.1.0
-digest: sha256:2290033ca83900548c6e1d0eb4115d980738c6826590cbc8108d019d0280581c
-generated: 2017-11-17T11:11:02.650306214+01:00
+- name: utils
+  repository: http://localhost:8879/charts
+  version: 0.1.1
+digest: sha256:b7b38552a7952c68069f0c4e907261b9a004208b5d7e5e18b24a9291adbfd3bb
+generated: 2018-01-09T13:34:21.585686+01:00
