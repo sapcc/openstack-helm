@@ -39,7 +39,6 @@ pod:
            max_surge: 1
   debug:
     api: false
-    nanny: false
 
 debug: "True"
 
@@ -215,15 +214,25 @@ logging:
 image_version_nova_nanny: DEFINED-IN-REGION-CHART
 nanny:
   enabled: False
+  # run the pod with an infinite sleep loop for debugging
+  debug: False
   # run the nanny every n minutes
   interval: 15
 quota_sync:
   enabled: False
 db_purge:
   enabled: False
+  # dry run mode, i.e. just pretend to purge the entries
+  dry_run: true
   # purge instance entries older than n days
   older_than: 7
   # purge at max n entries in one run
   max_number: 50
-  # dry run mode, i.e. just pretend to purge the entries
+db_cleanup:
+  enabled: False
+  # dry run mode, i.e. just pretend to cleanup the entries
   dry_run: true
+  # run the db cleanup every n minutes
+  interval: 720
+  # really delete entities after how many iterations
+  iterations: 14
