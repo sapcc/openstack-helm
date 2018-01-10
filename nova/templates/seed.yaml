@@ -53,7 +53,7 @@ spec:
         role: cloud_compute_admin
     - name: nova_nanny
       description: Nova Nanny
-      password: '{{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) }}'
+      password: {{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
     groups:
     - name: administrators
       roles:

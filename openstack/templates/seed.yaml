@@ -12,7 +12,7 @@ spec:
     users:
     - name: vcenter_nanny
       description: Vcenter Nanny
-      password: '{{ derivePassword 1 "long" .Values.global.master_password "vcenter_nanny" (include "keystone_api_endpoint_host_public" .) }}'
+      password: {{ derivePassword 1 "long" .Values.global.master_password "vcenter_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
 
   - name: ccadmin
     projects:
