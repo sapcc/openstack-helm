@@ -1,10 +1,14 @@
-{% if vcenter_exporter['enabled'] == "true" %}
-{% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
+{% if vcenter_exporter_enabled == "true" %}
+{% set exporter_types = vcenter_exporter_cluster_exporter_types.split(';') %}
+{% for exporter_type in exporter_types %}
+{% set keyvals = exporter_type.split(',') %}
+{% set exporter_type_name = keyvals[0].split(':')[1] %}
+{% set exporter_type_collector = keyvals[1].split(':')[1] %}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+  name: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
   namespace: monsoon3
   labels:
     system: openstack
@@ -20,32 +24,32 @@ spec:
   template:
     metadata:
       labels:
-        component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+        component: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
     spec:
       nodeSelector:
         zone: farm
       volumes:
         - name: maia-etc
           configMap:
-            name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+            name: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
       containers:
         - name: vcenter-exporter
           # remove the "string:" prefix which is used to prevent helm's --set option from reformatting plain numbers into floats in scientific notation
-          image: {{ vcenter_exporter['docker_repo']}}/vcenter-exporter:{{ vcenter_exporter['image_version'] | replace ("string:", "") }}
+          image: {{ vcenter_exporter_docker_repo}}/vcenter-exporter:{{ vcenter_exporter['image_version'] | replace ("string:", "") }}
           imagePullPolicy: IfNotPresent
           command:
             - python
           args:
             - /vcenter-exporter/vcenter-exporter.py
             - -c
-            - /maia-etc/config-{{ name }}-{{ exporter_type['name'] }}.yaml
+            - /maia-etc/config-{{ name }}-{{ exporter_type_name }}.yaml
             - -t
-            - {{ exporter_type['name'] }}
+            - {{ exporter_type_name }}
           volumeMounts:
             - mountPath: /maia-etc
               name: maia-etc
           ports:
             - name: metrics
-              containerPort: {{ vcenter_exporter['listen_port'] }}
+              containerPort: {{ vcenter_exporter_listen_port }}
 {% endfor %}
 {% endif %}
