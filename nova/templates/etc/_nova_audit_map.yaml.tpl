@@ -1,5 +1,7 @@
 service_type: 'compute'
 service_name: 'nova'
+# this works for DevStack only
+# prefix: '/compute/v2.1'
 prefix: '/v2[0-9\.]*(?:/[0-9a-f\-]+)?'
 
 resources:
@@ -58,6 +60,16 @@ resources:
         custom_id: name
     migrations:
         api_name: os-migrations
+    os-server-external-events:
+        type_uri: compute/servers/external-events
+        type_name: events
+        custom_id: tag
+        custom_attributes:
+          server_uuid: compute/server
+    os-volumes_boot:
+        # this is a legacy alternative to POST /servers used still in Devstack
+        type_uri: compute/servers
+        type_name: servers
     quota-sets:
         api_name: os-quota-sets
         el_type_uri: compute/quota
@@ -84,7 +96,7 @@ resources:
             migrate: update/migrate
             os-getConsoleOutput: read/console
             os-migrateLive: update/migrate/live
-            os-resetState: update/set/state
+            os-resetState: update/set/status
             os-start: start
             os-stop: stop
             pause: disable/pause
@@ -115,10 +127,7 @@ resources:
             ips:
             metadata:
                 singleton: true
-                custom_actions:
-                  'PUT:*': 'update/*'
-                  'GET:*': 'read/*'
-                  'DELETE:*': 'delete/*'
+                type_name: meta
             migrations:
                 custom_actions:
                     force_complete: update/force-completion
@@ -144,7 +153,6 @@ resources:
             disable: disable
             disable-log-reason: disable
             enable: enable
-            force-down: update
     usage:
         api_name: os-simple-tenant-usage
 
