@@ -33,14 +33,6 @@ backlog = 4096
 max_allowed_secret_in_bytes = 10000
 max_allowed_request_size_in_bytes = 1000000
 
-# SQLAlchemy connection string for the reference implementation
-# registry server. Any valid SQLAlchemy connection string is fine.
-# See: http://www.sqlalchemy.org/docs/05/reference/sqlalchemy/connections.html#sqlalchemy.create_engine
-# Uncomment this for local dev, putting db in project directory:
-#sql_connection = sqlite:///barbican.sqlite
-# Note: For absolute addresses, use '////' slashes after 'sqlite:'
-# Uncomment for a more global development environment
-
 sql_connection = {{ include "db_url" . }}
 
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 60 }}

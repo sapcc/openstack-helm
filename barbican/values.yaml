@@ -46,35 +46,20 @@ logging:
     handlers:
         stdout:
             class: StreamHandler
-            args: "(sys.stdout,)"
             formatter: context
-        "null":
-            class: logging.NullHandler
-            args: "()"
-            formatter: default
+            args: "(sys.stdout,)"
         sentry:
             class: raven.handlers.logging.SentryHandler
             level: ERROR
             args: "()"
     loggers:
         root:
-            handlers: "null"
+            handlers: stdout, sentry
             level: WARNING
         barbican:
             handlers: stdout, sentry
             level: INFO
-        amqp:
-            handlers: stdout, sentry
-            level: WARNING
-        amqplib:
-            handlers: stdout, sentry
-            level: WARNING
-        boto:
-            handlers: stdout, sentry
-            level: WARNING
         eventlet.wsgi.server:
             handlers: stdout, sentry
             level: INFO
-        sqlalchemy:
-            handlers: stdout, sentry
-            level: WARNING
+
