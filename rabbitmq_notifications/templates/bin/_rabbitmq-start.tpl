@@ -7,8 +7,10 @@ function bootstrap {
 
    /etc/init.d/rabbitmq-server start
 
+{{- if .Values.debug }}
    rabbitmq-plugins enable rabbitmq_tracing
    rabbitmqctl trace_on
+{{- end }}
 
    rabbitmqctl add_user {{ .Values.users.default.user }} {{ required "users.default.password needs to be set" .Values.users.default.password | quote }} || true
    rabbitmqctl set_permissions {{ .Values.users.default.user }} ".*" ".*" ".*" || true

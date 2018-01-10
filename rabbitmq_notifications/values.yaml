@@ -11,6 +11,8 @@ imageTag: 3-management
 ##
 # imagePullPolicy:
 
+debug: false
+
 ports:
   public: 5672
   management: 15672

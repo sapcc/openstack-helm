@@ -16,5 +16,9 @@ data:
 {{ include (print .Template.BasePath "/etc/_rootwrap.conf.tpl") . | indent 4 }}
   policy.json: |
 {{ include (print $.Template.BasePath "/etc/_cinder-policy.json.tpl") . | indent 4 }}
+{{- if .Values.audit.enabled }}
+  cinder_audit_map.yaml: |
+{{ include (print .Template.BasePath "/etc/_cinder_audit_map.yaml.tpl") . | indent 4 }}
+{{- end }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}

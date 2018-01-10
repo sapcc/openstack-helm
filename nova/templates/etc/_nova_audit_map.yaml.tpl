@@ -35,10 +35,6 @@ resources:
                 singleton: true
             os-extra_specs:
                 singleton: true
-                custom_actions:
-                  'PUT:*': 'update/*'
-                  'GET:*': 'read/*'
-                  'DELETE:*': 'delete/*'
     limits:
         singleton: true
     migrations:
