@@ -59,3 +59,5 @@ insecure = True
 lock_path = /var/lib/cinder/tmp
 
 {{include "oslo_messaging_rabbit" .}}
+
+{{- include "ini_sections.audit_middleware_notifications" . }}
