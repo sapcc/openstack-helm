@@ -9,10 +9,10 @@ tags:
   nova: true
   barbican: true
   cinder: true
-  manila: true
-  horizon: true
-  neutron: true
-  designate: true
+  manila: false
+  horizon: false
+  neutron: false
+  designate: false
   ironic: true
 
 global:
