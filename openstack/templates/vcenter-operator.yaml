@@ -13,10 +13,10 @@ data:
   nova_agent_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-nova-compute:{{ .Values.nova.image_version_nova_compute }}
   nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
   nova_service_password: {{ .Values.global.nova_service_password | quote }}
-  vcenter_nanny_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/vcenter-nanny:{{ .Values.vcenter_operator.image_version_vcenter_nanny }}
   password: {{ .Values.global.master_password | quote }}
 {{- range $key, $value := .Values.vcenter_operator }}
-  {{$key}}: {{ toJson $value }}
+  {{- $str := toJson $value }}
+  {{ $key }}: {{ if hasPrefix "\"" $str }}{{ $str }}{{ else }}{{ quote $str }}{{ end }}
 {{- end }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 ---
