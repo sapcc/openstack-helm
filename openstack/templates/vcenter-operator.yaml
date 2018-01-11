@@ -17,7 +17,8 @@ data:
   nova_service_user: {{  .Values.global.nova_service_user }}
   vcenter_nanny_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/vcenter-nanny:{{ .Values.vcenter_operator.image_version_vcenter_nanny }}
 {{- range $key, $value := .Values.vcenter_operator }}
-  {{$key}}: {{ toJson $value }}
+  {{- $str := toJson $value }}
+  {{ $key }}: {{if hasPrefix "\"" $str }}{{ $str }}{{ else }}{{ quote $str }}{{ end }}
 {{- end }}
 {{ (.Files.Glob "vcenter-operator/*").AsConfig | indent 2 }}
 ---
