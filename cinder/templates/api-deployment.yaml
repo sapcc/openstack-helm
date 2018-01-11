@@ -88,6 +88,10 @@ spec:
               mountPath: /etc/cinder/logging.conf
               subPath: logging.conf
               readOnly: true
+            - name: cinder-etc
+              mountPath: /etc/cinder/cinder_audit_map.yaml
+              subPath: cinder_audit_map.yaml
+              readOnly: true
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
