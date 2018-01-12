@@ -61,7 +61,7 @@ auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "
 auth_type = v3password
 
 username = {{ .Values.global.glance_service_user }}{{ .Values.global.user_suffix }}
-password = {{ .Values.global.glance_service_password | default (tuple . .Values.global.glance_service_user | include "identity.password_for_user") | replace "$" "$$" | quote }}
+password = {{ .Values.global.glance_service_password | default (tuple . .Values.global.glance_service_user | include "identity.password_for_user") | replace "$" "$$" }}
 user_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
