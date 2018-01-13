@@ -40,9 +40,9 @@ global:
   rabbitmq_port_management: '15672'
   rabbitmq_port_metrics: '9150'
 
-  rabbitmq_default_pass: DEFINED-IN-REGION-CHART
-  rabbitmq_admin_pass: DEFINED-IN-REGION-CHART
-  rabbitmq_metrics_pass: DEFINED-IN-REGION-CHART
+  rabbitmq_default_pass: null
+  rabbitmq_admin_pass: null
+  rabbitmq_metrics_pass: null
   rabbit_transient_queues_ttl: 1800
 
   glance_service_user: glance

@@ -1,8 +1,8 @@
 {{- define "oslo_messaging_rabbit" }}
 [oslo_messaging_rabbit]
-rabbit_userid = {{ .Values.rabbitmq_user | default .Values.global.rabbitmq_default_user }}
-rabbit_password = {{ .Values.rabbitmq_pass | default .Values.global.rabbitmq_default_pass }}
-rabbit_hosts =  {{include "rabbitmq_host" .}}
+rabbit_userid = {{ default "" .Values.global.user_suffix | print (default .Values.global.rabbitmq_default_user .Values.rabbitmq_user) }}
+rabbit_password = {{ .Values.rabbitmq_pass | default .Values.global.rabbitmq_default_pass | default ( tuple . (default .Values.global.rabbitmq_default_user .Values.rabbitmq_user) "rabbitmq" | include "svc.password_for_user_and_service" ) }}
+rabbit_hosts =  {{ include "rabbitmq_host" . }}
 rabbit_ha_queues = {{ .Values.rabbitmq_ha_queues | default .Values.global.rabbitmq_ha_queues | default "true" }}
 rabbit_transient_queues_ttl={{ .Values.rabbit_transient_queues_ttl | default .Values.global.rabbit_transient_queues_ttl | default 1800 }}
 {{- end }}
@@ -29,12 +29,14 @@ connection = {{ include "db_url" . }}
         {{- if .Values.audit.enabled }}
             {{- if .Values.rabbitmq_notifications }}
                 {{- if and .Values.rabbitmq_notifications.ports .Values.rabbitmq_notifications.users }}
-
+{{/* Add urlquery filter to password as soon as oslo_messaging is on newton or this has been backported
+  https://github.com/openstack/oslo.messaging/blob/newton-eol/oslo_messaging/transport.py#L436-L437
+  */}}
 # this is for the cadf audit messaging
 [audit_middleware_notifications]
 # topics = notifications
 driver = messagingv2
-transport_url = rabbit://{{ .Values.rabbitmq_notifications.users.default.user }}:{{ .Values.rabbitmq_notifications.users.default.password }}@{{ .Chart.Name }}-rabbitmq-notifications:{{ .Values.rabbitmq_notifications.ports.public }}/
+transport_url = rabbit://{{ default ""  .Values.global.user_suffix | print .Values.rabbitmq_notifications.users.default.user }}:{{ .Values.rabbitmq_notifications.users.default.password | default (tuple . .Values.rabbitmq_notifications.users.default.user (print .Chart.Name "-rabbitmq-notifications") | include "svc.password_for_user_and_service") }}@{{ .Chart.Name }}-rabbitmq-notifications:{{  .Values.rabbitmq_notifications.ports.public }}/
 mem_queue_size = {{ .Values.audit.mem_queue_size }}
                 {{- end }}
             {{- end }}

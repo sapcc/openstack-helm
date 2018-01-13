@@ -85,7 +85,7 @@ spec:
           - name: RABBIT_USER
             value: {{ .Values.metrics.user | quote }}
           - name: RABBIT_PASSWORD
-            value: {{ .Values.metrics.password | quote }}
+            value: {{ .Values.metrics.password | default ( tuple . .Values.metrics.user ( include "fullname" . ) | include "svc.password_for_fixed_user_and_service" ) | quote }}
           - name: RABBIT_URL
             value: "http://127.0.0.1:{{.Values.ports.management}}"
         {{- if .Values.metrics.resources.enabled }}

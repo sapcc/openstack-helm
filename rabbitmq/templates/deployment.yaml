@@ -62,11 +62,11 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: PUBLISH_PORT
-              value: "{{.Values.global.rabbitmq_port_metrics}}"
+              value: {{ .Values.global.rabbitmq_port_metrics | quote }}
             - name: RABBIT_USER
-              value: "{{.Values.global.rabbitmq_metrics_user}}"
+              value: {{ .Values.global.rabbitmq_metrics_user | quote }}
             - name: RABBIT_PASSWORD
-              value: "{{.Values.global.rabbitmq_metrics_pass}}"
+              value: {{  .Values.global.rabbitmq_metrics_pass | default ( tuple . .Values.global.rabbitmq_metrics_user "rabbitmq" | include "svc.password_for_fixed_user_and_service" ) | quote }}
             - name: RABBIT_URL
               value: "http://{{.Values.global.rabbitmq_host}}:{{.Values.global.rabbitmq_port_management}}"
           ports:

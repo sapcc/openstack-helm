@@ -1,3 +1,5 @@
+{{define "internal_service"}}{{ $envAll := index . 0 }}{{ $service := index . 1 }}{{$service}}.{{$envAll.Release.Namespace}}.svc.kubernetes.{{$envAll.Values.global.region}}.{{$envAll.Values.global.tld}}{{ end }}
+
 {{define "rabbitmq_host"}}rabbitmq.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "memcached_host"}}memcached.{{.Release.Namespace}}.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
@@ -33,6 +35,20 @@
     {{- $envAll := index . 0 }}
     {{- $user := index . 1 }}
     {{- tuple $envAll ( $envAll.Values.global.user_suffix | default "" | print $user ) | include "postgres.password_for_fixed_user" }}
+{{- end }}
+
+{{- define "svc.password_for_user_and_service" }}
+    {{- $envAll := index . 0 }}
+    {{- $user := index . 1 }}
+    {{- $service := index . 2 }}
+    {{- tuple $envAll ( $envAll.Values.global.user_suffix | default "" | print $user ) ( tuple $envAll $service | include "internal_service" ) | include "utils.password_for_fixed_user_and_host" }}
+{{- end }}
+
+{{- define "svc.password_for_fixed_user_and_service" }}
+    {{- $envAll := index . 0 }}
+    {{- $user := index . 1 }}
+    {{- $service := index . 2 }}
+    {{- tuple $envAll $user ( tuple $envAll $service | include "internal_service" ) | include "utils.password_for_fixed_user_and_host" }}
 {{- end }}
 
 {{define "db_host"}}

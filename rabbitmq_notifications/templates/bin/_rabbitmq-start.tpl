@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
+{{- $envAll := . }}
 set -e
+
+function upsert_user {
+    rabbitmqctl add_user "$1" "$2" || rabbitmqctl change_password "$1" "$2"
+    rabbitmqctl set_permissions "$1" ".*" ".*" ".*"
+    [ -z "$3" ] || rabbitmqctl set_user_tags "$1" "$3"
+}
 
 function bootstrap {
    #Not especially proud of this, but it works (unlike the environment variable approach in the docs)
@@ -11,21 +18,14 @@ function bootstrap {
    rabbitmq-plugins enable rabbitmq_tracing
    rabbitmqctl trace_on
 {{- end }}
-
-   rabbitmqctl add_user {{ .Values.users.default.user }} {{ required "users.default.password needs to be set" .Values.users.default.password | quote }} || true
-   rabbitmqctl set_permissions {{ .Values.users.default.user }} ".*" ".*" ".*" || true
-
-   rabbitmqctl add_user {{ .Values.users.admin.user }} {{  required "users.admin.password needs to be set" .Values.users.admin.password | quote }} || true
-   rabbitmqctl set_permissions {{ .Values.users.admin.user }} ".*" ".*" ".*" || true
-   rabbitmqctl set_user_tags {{ .Values.users.admin.user }} administrator || true
-
+{{ range $user, $values := .Values.users }}
+   upsert_user {{ print $values.user $envAll.Values.global.user_suffix | squote }} {{ default ( tuple $envAll $values.user (include "fullname" $envAll) | include "svc.password_for_user_and_service" ) $values.password | squote }}
+{{- end }}
 {{- if .Values.metrics.enabled }}
-   rabbitmqctl add_user {{ .Values.metrics.user }} {{  required "metrics.password needs to be set" .Values.metrics.password | quote }} || true
-   rabbitmqctl set_permissions {{ .Values.metrics.user }} ".*" ".*" ".*" || true
-   rabbitmqctl set_user_tags {{ .Values.metrics.user }} monitoring || true
+   upsert_user {{ .Values.metrics.user | squote }} {{ default ( tuple . .Values.metrics.user (include "fullname" . ) | include "svc.password_for_fixed_user_and_service" ) .Values.metrics.password | squote }} monitoring
 {{- end }}
 
-   rabbitmqctl change_password guest {{ .Values.users.default.password | quote }} || true
+   rabbitmqctl change_password guest {{ .Values.users.default.password | squote }} || true
    rabbitmqctl set_user_tags guest monitoring || true
    /etc/init.d/rabbitmq-server stop
 }
