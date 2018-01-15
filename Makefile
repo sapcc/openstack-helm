@@ -4,7 +4,7 @@ all: clean openstack europe-example-region
 
 europe-example-region: build-europe-example-region
 
-openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq neutron_vendor healthchecks
+openstack: barbican cinder designate horizon ironic keystone glance manila memcached neutron nova rabbitmq rabbitmq_notifications neutron_vendor healthchecks
 openstack: build-openstack
 
 healthchecks: build-healthchecks
@@ -12,7 +12,7 @@ healthchecks: build-healthchecks
 barbican: utils postgres pg_metrics
 barbican: build-barbican
 
-cinder: utils postgres
+cinder: utils postgres rabbitmq_notifications
 cinder: build-cinder
 
 designate: utils mariadb mysql_metrics
