@@ -26,6 +26,7 @@ spec:
       annotations:
         pod.beta.kubernetes.io/hostname: cinder-volume-vmware-{{ name }}
     spec:
+      hostname: cinder-volume-vmware-{{ name }}
       containers:
         - name: cinder-volume-vmware-{{ name }}
           image: {{ cinder_agent_image }}

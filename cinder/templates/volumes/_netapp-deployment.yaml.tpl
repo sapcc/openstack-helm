@@ -32,6 +32,7 @@ spec:
         configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
         configmap-volume-hash: {{ tuple . $volume | include "volume_netapp_configmap" | sha256sum }}
     spec:
+      hostname: cinder-volume-netapp-{{$volume.name}}
       containers:
         - name: cinder-volume-netapp-{{$volume.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}

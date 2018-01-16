@@ -28,10 +28,11 @@ spec:
       labels:
         name: neutron-cisco-asr-{{ $config_agent.name }}
       annotations:
-        pod.beta.kubernetes.io/hostname:  {{ $config_agent.hostname }}
+        pod.beta.kubernetes.io/hostname: {{ $config_agent.hostname }}
         prometheus.io/scrape: "true"
         prometheus.io/port: "{{$context.Values.port_metrics}}"
     spec:
+      hostname: {{ $config_agent.hostname }}
       containers:
         - name: neutron-cisco-asr
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}

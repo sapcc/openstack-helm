@@ -23,8 +23,9 @@ spec:
       labels:
         name: neutron-aci-agent
       annotations:
-        pod.beta.kubernetes.io/hostname:  aci-agent-pet
+        pod.beta.kubernetes.io/hostname: aci-agent-pet
     spec:
+      hostname: aci-agent-pet
       containers:
         - name: neutron-aci-agent
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}

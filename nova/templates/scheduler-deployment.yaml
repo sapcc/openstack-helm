@@ -33,6 +33,7 @@ spec:
             {{ tuple . "nova" "scheduler" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+      hostname: nova-scheduler
       containers:
         - name: nova-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-scheduler:{{.Values.image_version_nova_scheduler}}

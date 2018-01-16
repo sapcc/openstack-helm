@@ -33,6 +33,7 @@ spec:
             {{ tuple . "nova" "console" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+      hostname: nova-console
       volumes:
       - name: etcnova
         emptyDir: {}

@@ -26,6 +26,7 @@ spec:
       annotations:
         pod.beta.kubernetes.io/hostname: cisco-ml2-ucsm-bm
     spec:
+       hostname: cisco-ml2-ucsm-bm
       containers:
         - name: neutron-cisco-ml2-ucsm-bm-agent
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}

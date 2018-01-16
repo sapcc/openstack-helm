@@ -26,8 +26,9 @@ spec:
       labels:
         name: neutron-f5agent-{{ $loadbalancer.name }}
       annotations:
-        pod.beta.kubernetes.io/hostname:  f5-{{ $loadbalancer.name }}
+        pod.beta.kubernetes.io/hostname: f5-{{ $loadbalancer.name }}
     spec:
+      hostname: f5-{{ $loadbalancer.name }}
       containers:
         - name: neutron-f5agent-{{ $loadbalancer.name }}
           image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}

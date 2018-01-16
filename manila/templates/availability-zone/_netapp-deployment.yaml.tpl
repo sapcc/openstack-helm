@@ -29,6 +29,7 @@ spec:
         configmap-etc-hash: {{ include (print .Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
         configmap-netapp-hash: {{ tuple . $share | include "share_netapp_configmap" | sha256sum }}
     spec:
+      hostname: manila-share-netapp-{{$share.name}}
       containers:
         - name: manila-share-netapp-{{$share.name}}
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-share:{{.Values.image_version_manila_share}}

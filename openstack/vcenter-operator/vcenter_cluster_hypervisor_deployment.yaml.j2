@@ -28,6 +28,7 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9102"
     spec:
+      hostname: nova-compute-{{ name }}
       containers:
         - name: nova-compute-{{ name }}
           image: {{ nova_agent_image }}
