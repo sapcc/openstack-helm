@@ -50,6 +50,10 @@ spec:
               value: {{ .Values.db_purge.older_than | quote }}
             - name: CINDER_QUOTA_SYNC_ENABLED
               value: {{ .Values.quota_sync.enabled | quote }}
+            - name: CINDER_CONSISTENCY_ENABLED
+              value: {{ .Values.consistency.enabled | quote }}
+            - name: CINDER_CONSISTENCY_DRY_RUN
+              value: {{ .Values.consistency.dry_run | quote }}
             - name: CINDER_NANNY_INTERVAL
               value: {{ .Values.nanny.interval | quote }}
           volumeMounts:
