@@ -97,4 +97,5 @@ paste.filter_factory = auditmiddleware:filter_factory
 audit_map_file = /etc/cinder/cinder_audit_map.yaml
 ignore_req_list = GET
 record_payloads = {{ if .Values.audit.record_payloads -}}True{{- else -}}False{{- end }}
+metrics_enabled = {{ if .Values.audit.metrics_enabled -}}True{{- else -}}False{{- end }}
 {{- end }}

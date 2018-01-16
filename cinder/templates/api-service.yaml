@@ -9,6 +9,7 @@ metadata:
     component: cinder
   annotations:
     prometheus.io/scrape: "true"
+    maia.io/scrape: "true"
     prometheus.io/port: "{{.Values.port_metrics}}"
 spec:
   selector:

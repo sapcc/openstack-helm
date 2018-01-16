@@ -167,7 +167,8 @@ audit:
   enabled: false
   # how many messages to buffer before dumping to log (when rabbit is down or too slow)
   mem_queue_size: 1000
-  record_payloads: False
+  record_payloads: false
+  metrics_enabled: true
 
 rabbitmq_notifications:
   name: nova
