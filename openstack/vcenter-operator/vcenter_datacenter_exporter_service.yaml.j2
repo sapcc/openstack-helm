@@ -1,9 +1,5 @@
-{% if vcenter_exporter_enabled == "true" %}
-{% set exporter_types = vcenter_exporter_datacenter_exporter_types.split(';') %}
-{% for exporter_type in exporter_types %}
-{% set keyvals = exporter_type.split(',') %}
-{% set exporter_type_name = keyvals[0].split(':')[1] %}
-{% set exporter_type_collector = keyvals[1].split(':')[1] %}
+{% if vcenter_exporter['enabled'] == "true" %}
+{% for exporter_type in vcenter_exporter['datacenter_exporter_types'] %}
 ---
 kind: Service
 apiVersion: v1
@@ -22,9 +18,9 @@ metadata:
     prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}{% endif %}
 spec:
   selector:
-    component: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   ports:
     - name: metrics
-      port: {{ vcenter_exporter_listen_port }}
+      port: {{ vcenter_exporter['listen_port'] }}
 {% endfor %}
 {% endif %}

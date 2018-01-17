@@ -1,24 +1,20 @@
-{% if vcenter_exporter_enabled == "true" %}
-{% set exporter_types = vcenter_exporter_datacenter_exporter_types.split(';') %}
-{% for exporter_type in exporter_types %}
-{% set keyvals = exporter_type.split(',') %}
-{% set exporter_type_name = keyvals[0].split(':')[1] %}
-{% set exporter_type_collector = keyvals[1].split(':')[1] %}
+{% if vcenter_exporter['enabled'] == "true" %}
+{% for exporter_type in vcenter_exporter['datacenter_exporter_types'] %}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
+  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   namespace: monsoon3
   labels:
     system: openstack
     service: metrics
     component: configuration
 data:
-  config-{{ name }}-{{ exporter_type_name }}.yaml: |
+  config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
       availability_zone: '{{ availability_zone }}'
-      listen_port: "{{ vcenter_exporter_listen_port }}"
+      listen_port: "{{ vcenter_exporter['listen_port'] }}"
       host: '{{ host }}'
       user: '{{ username }}'
       password: '{{ password }}'
@@ -27,8 +23,8 @@ data:
       ignore_ssl: False{% endif %}
       interval: {{ vcenter_exporter['interval'] }}
       log: 'INFO'
-      {% if vcenter_exporter_shorter_names_regex is defined %}
-      shorter_names_regex: "{{ vcenter_exporter_shorter_names_regex }}"
+      {% if vcenter_exporter['shorter_names_regex'] is defined %}
+      shorter_names_regex: "{{ vcenter_exporter['shorter_names_regex'] }}"
       {% endif %}
       {% if vcenter_exporter['host_match_regex'] is defined %}
       host_match_regex: '{{ name }}'

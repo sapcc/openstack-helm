@@ -1,9 +1,5 @@
-{% if vcenter_exporter_enabled == "true" %}
-{% set exporter_types = vcenter_exporter_cluster_exporter_types.split(';') %}
-{% for exporter_type in exporter_types %}
-{% set keyvals = exporter_type.split(',') %}
-{% set exporter_type_name = keyvals[0].split(':')[1] %}
-{% set exporter_type_collector = keyvals[1].split(':')[1] %}
+{% if vcenter_exporter['enabled'] == "true" %}
+{% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
 ---
 kind: Service
 apiVersion: v1
@@ -13,18 +9,18 @@ metadata:
   labels:
     system: openstack
     service: metrics
-    component: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
-{% if exporter_type_collector is defined %}{% if exporter_type_collector == "maia" %}
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+{% if exporter_type['collector'] is defined %}{% if exporter_type['collector'] == "maia" %}
   annotations:
     maia.io/scrape: "true"
-    maia.io/port: "{{ vcenter_exporter_listen_port }}" {% elif exporter_type_collector == "prometheus" %}
+    maia.io/port: "{{ vcenter_exporter['listen_port'] }}" {% elif exporter_type['collector'] == "prometheus" %}
     prometheus.io/scrape: "true"
-    prometheus.io/port: "{{ vcenter_exporter_listen_port }}" {% endif %}{% endif %}
+    prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}{% endif %}
 spec:
   selector:
-    component: vcenter-exporter-{{ name }}-{{ exporter_type_name }}
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
   ports:
     - name: metrics
-      port: {{ vcenter_exporter_listen_port }}
+      port: {{ vcenter_exporter['listen_port'] }}
 {% endfor %}
 {% endif %}
