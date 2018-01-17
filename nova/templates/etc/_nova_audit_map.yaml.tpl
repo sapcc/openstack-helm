@@ -129,11 +129,14 @@ resources:
                     force_complete: update/force-completion
             interfaces:
                 api_name: os-interface
+                type_name: interfaceAttachments
                 custom_id: port_id
             instance-actions:
                 api_name: os-instance-actions
+                type_name: instanceActions
             security-groups:
                 api_name: os-security-groups
+                type_name: securityGroups
                 singleton: true
             server-password:
                 api_name: os-server-password
@@ -141,6 +144,7 @@ resources:
             tags:
             volume-attachments:
                 api_name: os-volume_attachments
+                type_name: volumeAttachments
     server-groups:
         api_name: os-server-groups
     services:
