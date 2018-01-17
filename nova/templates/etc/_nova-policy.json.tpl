@@ -11,6 +11,9 @@
     "compute_admin_all": "role:compute_admin or role:cloud_compute_admin",
     "default": "rule:context_is_admin",
 
+    "network_admin": "role:network_admin and rule:owner",
+    "context_is_network_admin": "role:cloud_network_admin or rule:network_admin",
+
     "cells_scheduler_filter:TargetCellFilter": "rule:context_is_admin",
 
     "compute:create": "rule:context_is_editor",
@@ -88,8 +91,8 @@
     "compute:soft_delete": "rule:context_is_editor",
     "compute:force_delete": "rule:context_is_editor",
 
-    "compute:security_groups:add_to_instance": "rule:context_is_editor",
-    "compute:security_groups:remove_from_instance": "rule:context_is_editor",
+    "compute:security_groups:add_to_instance": "rule:context_is_compute_admin or rule:context_is_network_admin",
+    "compute:security_groups:remove_from_instance": "rule:context_is_compute_admin or rule:context_is_network_admin",
 
     "compute:restore": "rule:context_is_editor",
 
