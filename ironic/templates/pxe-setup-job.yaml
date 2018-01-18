@@ -1,0 +1,50 @@
+# Might we worth building your own ipxe stack here: https://rom-o-matic.eu/
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ironic-pxe-setup
+  labels:
+    system: openstack
+    type: job
+    component: ironic
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      securityContext:
+        runAsUser: 0
+      containers:
+      - name: ironic-pxe-setup
+        image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
+        imagePullPolicy: IfNotPresent
+        command:
+        - bash
+        args:
+        - -c
+        - |
+          cd /tftpboot
+
+          if [ ! -f lpxelinux.0 ]; then
+            [ -z "$a" ] && apt-get update && a=1
+            apt-get install pxelinux
+            cp /usr/lib/PXELINUX/* .
+          fi
+
+          if [ ! -f ldlinux.c32 ]; then
+            [ -z "$a" ] && apt-get update && a=1
+            apt-get install syslinux-common
+            cp /usr/lib/syslinux/modules/*/ldlinux.* .
+          fi
+
+          for f in undionly.kpxe ipxe.pxe; do
+            [ -f $f ] || curl -L -O http://boot.ipxe.org/$f
+          done
+
+          chown -R ironic:ironic .
+        volumeMounts:
+        - mountPath: /tftpboot
+          name: ironic-tftp
+      volumes:
+      - name: ironic-tftp
+        persistentVolumeClaim:
+          claimName: ironic-tftp-pvclaim
