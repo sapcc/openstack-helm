@@ -1,0 +1,58 @@
+# Might we worth building your own ipxe stack here: https://rom-o-matic.eu/
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ironic-db-migration
+  labels:
+    system: openstack
+    type: job
+    component: ironic
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      securityContext:
+        runAsUser: 0
+      containers:
+      - name: ironic-dbsync
+        image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe}}
+        imagePullPolicy: IfNotPresent
+        command:
+        - kubernetes-entrypoint
+        env:
+        - name: COMMAND
+          value: "ironic-dbsync"
+        - name: NAMESPACE
+          value: {{ .Release.Namespace }}
+        - name: DEPENDENCY_SERVICE
+          value: "postgres-ironic"
+        volumeMounts:
+        - mountPath: /etc/ironic
+          name: etcironic
+        - mountPath: /etc/ironic/ironic.conf
+          name: ironic-etc
+          subPath: ironic.conf
+          readOnly: true
+        - mountPath: /etc/ironic/policy.json
+          name: ironic-etc
+          subPath: policy.json
+          readOnly: true
+        - mountPath: /etc/ironic/pxe_config.template
+          name: ironic-etc
+          subPath: pxe_config.template
+          readOnly: true
+        - mountPath: /etc/ironic/rootwrap.conf
+          name: ironic-etc
+          subPath: rootwrap.conf
+          readOnly: true
+        - mountPath: /etc/ironic/logging.conf
+          name: ironic-etc
+          subPath: logging.conf
+          readOnly: true
+      volumes:
+      - name: etcironic
+        emptyDir: {}
+      - name: ironic-etc
+        configMap:
+          name: ironic-etc
+          defaultMode: 0444

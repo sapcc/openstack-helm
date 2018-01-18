@@ -44,6 +44,8 @@ spec:
               value: "ironic-api"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
+            - name: DEPENDENCY_JOBS
+              value: "ironic-db-migration"
             - name: DEPENDENCY_SERVICE
               value: "postgres-ironic,rabbitmq"
           livenessProbe:
