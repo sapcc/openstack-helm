@@ -54,6 +54,7 @@ resources:
         api_name: os-keypairs
         custom_id: name
     migrations:
+    migrations/legacy:
         api_name: os-migrations
     os-server-external-events:
         type_uri: compute/servers/external-events
