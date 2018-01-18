@@ -44,6 +44,9 @@ spec:
           - bash
         args:
           - /container.init/rabbitmq-start
+        env:
+          - name: RABBITMQ_LOGS
+            value: "-"
         livenessProbe:
           exec:
             command:

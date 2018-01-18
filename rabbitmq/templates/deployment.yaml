@@ -39,9 +39,9 @@ spec:
             - bash
           args:
             - /container.init/rabbitmq-start
-#          env:
-#          - name: RABBITMQ_NODENAME
-#            value: monsoon3-rabbitmq
+          env:
+            - name: RABBITMQ_LOGS
+              value: "-"
           livenessProbe:
             tcpSocket:
               port: {{.Values.global.rabbitmq_port_public}}
@@ -69,8 +69,6 @@ spec:
               value: {{  .Values.global.rabbitmq_metrics_pass | default ( tuple . .Values.global.rabbitmq_metrics_user "rabbitmq" | include "svc.password_for_fixed_user_and_service" ) | quote }}
             - name: RABBIT_URL
               value: "http://{{.Values.global.rabbitmq_host}}:{{.Values.global.rabbitmq_port_management}}"
-            - name: RABBITMQ_LOGS
-              value: "-"
           ports:
             - name: metrics
               containerPort: {{.Values.global.rabbitmq_port_metrics}}
