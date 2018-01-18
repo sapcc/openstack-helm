@@ -37,7 +37,6 @@ resources:
                 singleton: true
     limits:
         singleton: true
-    migrations:
     hypervisors:
         api_name: os-hypervisors
         custom_actions:
