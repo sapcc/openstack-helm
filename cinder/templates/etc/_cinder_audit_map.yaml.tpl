@@ -77,10 +77,10 @@ resources:
     children:
       associations:
         singleton: true
-  quota-class-sets:
+  quota-classes:
     api_name: os-quota-class-sets
-    singleton: true
-  quota-sets:
+    el_type_uri: network/quota-class
+  quotas:
     api_name: os-quota-sets
     custom_actions:
       validate_setup_for_nested_quota_use: read/validate
