@@ -65,15 +65,14 @@ resources:
         # this is a legacy alternative to POST /servers used still in Devstack
         type_uri: compute/servers
         type_name: servers
-    quota-sets:
+    quotas:
         api_name: os-quota-sets
-        el_type_uri: compute/quota
         children:
             defaults:
                 singleton: true
             detail:
                 singleton: true
-    quota-class-sets:
+    quota-classes:
         api_name: os-quota-class-sets
         el_type_uri: compute/quota-class
     servers:
