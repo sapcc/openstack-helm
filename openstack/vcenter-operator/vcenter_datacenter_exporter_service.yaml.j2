@@ -1,0 +1,27 @@
+{% if ((vcenter_exporter is defined) and
+       (vcenter_exporter['enabled'] == "true")) %}
+{% for exporter_type in vcenter_exporter['datacenter_exporter_types'] %}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+  namespace: monsoon3
+  labels:
+    system: openstack
+    service: metrics
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+{% if exporter_type['collector'] is defined %}{% if exporter_type['collector'] == "maia" %}
+  annotations:
+    maia.io/scrape: "true"
+    maia.io/port: "{{ vcenter_exporter['listen_port'] }}" {% elif exporter_type['collector'] == "prometheus" %}
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}{% endif %}
+spec:
+  selector:
+    component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+  ports:
+    - name: metrics
+      port: {{ vcenter_exporter['listen_port'] }}
+{% endfor %}
+{% endif %}

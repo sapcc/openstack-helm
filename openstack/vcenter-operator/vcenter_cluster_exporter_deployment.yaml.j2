@@ -1,0 +1,52 @@
+{% if ((vcenter_exporter is defined) and
+       (vcenter_exporter['enabled'] == "true")) %}
+{% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+  namespace: monsoon3
+  labels:
+    system: openstack
+    service: metrics
+
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+    spec:
+      nodeSelector:
+        zone: farm
+      volumes:
+        - name: maia-etc
+          configMap:
+            name: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
+      containers:
+        - name: vcenter-exporter
+          # remove the "string:" prefix which is used to prevent helm's --set option from reformatting plain numbers into floats in scientific notation
+          image: {{ vcenter_exporter['docker_repo']}}/vcenter-exporter:{{ vcenter_exporter['image_version'] | replace ("string:", "") }}
+          imagePullPolicy: IfNotPresent
+          command:
+            - python
+          args:
+            - /vcenter-exporter/vcenter-exporter.py
+            - -c
+            - /maia-etc/config-{{ name }}-{{ exporter_type['name'] }}.yaml
+            - -t
+            - {{ exporter_type['name'] }}
+          volumeMounts:
+            - mountPath: /maia-etc
+              name: maia-etc
+          ports:
+            - name: metrics
+              containerPort: {{ vcenter_exporter['listen_port'] }}
+{% endfor %}
+{% endif %}
