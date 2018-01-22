@@ -1,4 +1,5 @@
-{% if vcenter_exporter['enabled'] == "true" %}
+{% if ((vcenter_exporter is defined) and
+       (vcenter_exporter['enabled'] == "true")) %}
 {% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
 ---
 apiVersion: v1
