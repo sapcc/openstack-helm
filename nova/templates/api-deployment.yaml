@@ -37,6 +37,9 @@ spec:
       securityContext:
         runAsUser: 0
 {{- end }}
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
+{{ tuple . "nova" "api" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
+{{- end }}
       containers:
         - name: nova-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-api:{{.Values.image_version_nova_api}}
@@ -131,4 +134,3 @@ spec:
           configMap:
             name: nova-bin
             defaultMode: 0755
-

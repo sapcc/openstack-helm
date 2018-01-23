@@ -32,6 +32,9 @@ spec:
             {{ tuple . "barbican" "api" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
+{{ tuple . "barbican" "api" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
+{{- end }}
       containers:
         - name: barbican-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-barbican-api:{{.Values.image_version_barbican}}

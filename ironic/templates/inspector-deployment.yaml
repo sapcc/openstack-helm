@@ -31,9 +31,12 @@ spec:
         configmap-inspector-etc-hash: {{ include (print $.Template.BasePath "/inspector-etc-configmap.yaml") . | sha256sum }}
 {{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
         scheduler.alpha.kubernetes.io/affinity: >
-            {{ tuple . "ironic" "api" | include "kubernetes_pod_anti_affinity" }}
+            {{ tuple . "ironic" "inspector" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
+{{ tuple . "ironic" "inspector" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
+{{- end }}
       containers:
         - name: ironic-inspector
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}

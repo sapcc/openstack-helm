@@ -33,6 +33,9 @@ spec:
             {{ tuple . "cinder" "scheduler" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
+{{ tuple . "cinder" "scheduler" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
+{{- end }}
       containers:
         - name: cinder-scheduler
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-scheduler:{{.Values.image_version_cinder_scheduler}}

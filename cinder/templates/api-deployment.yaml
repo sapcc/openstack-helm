@@ -30,9 +30,12 @@ spec:
         configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
 {{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
         scheduler.alpha.kubernetes.io/affinity: >
-            {{ tuple . "barbican" "api" | include "kubernetes_pod_anti_affinity" }}
+            {{ tuple . "cinder" "api" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
+{{ tuple . "cinder" "api" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
+{{- end }}
       containers:
         - name: cinder-api
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}

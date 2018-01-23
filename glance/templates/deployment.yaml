@@ -33,6 +33,9 @@ spec:
             {{ tuple . "glance" "api" | include "kubernetes_pod_anti_affinity" }}
 {{- end }}
     spec:
+{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
+{{ tuple . "glance" "api" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
+{{- end }}
       containers:
         - name: glance-api
           securityContext:
