@@ -15,6 +15,7 @@ metadata:
   annotations:
     maia.io/scrape: "true"
     maia.io/port: "{{ vcenter_exporter['listen_port'] }}" {% elif exporter_type['collector'] == "prometheus" %}
+  annotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}{% endif %}
 spec:
