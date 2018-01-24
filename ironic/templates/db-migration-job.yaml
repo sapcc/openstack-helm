@@ -9,23 +9,30 @@ metadata:
     component: ironic
 spec:
   template:
+    metadata:
+      annotations:
+        pod.beta.kubernetes.io/init-containers: '[{
+          "name": "kubernetes-entrypoint",
+          "image": "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe}}",
+          "imagePullPolicy": "IfNotPresent",
+          "command": ["kubernetes-entrypoint"],
+          "env": [{"name": "NAMESPACE", "value": {{ .Release.Namespace | quote }}},
+                  {"name": "DEPENDENCY_SERVICE", "value": "postgres-ironic"},
+                  {"name": "COMMAND", "value": "true"}]
+          }]'
     spec:
       restartPolicy: OnFailure
-      securityContext:
-        runAsUser: 0
       containers:
       - name: ironic-dbsync
         image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe}}
         imagePullPolicy: IfNotPresent
         command:
-        - kubernetes-entrypoint
-        env:
-        - name: COMMAND
-          value: "ironic-dbsync"
-        - name: NAMESPACE
-          value: {{ .Release.Namespace }}
-        - name: DEPENDENCY_SERVICE
-          value: "postgres-ironic"
+        - bash
+        args:
+        - -c
+        - |
+          ironic-dbsync upgrade
+          true
         volumeMounts:
         - mountPath: /etc/ironic
           name: etcironic
