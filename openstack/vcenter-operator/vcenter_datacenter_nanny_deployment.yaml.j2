@@ -46,6 +46,12 @@ spec:
               value: "{{ vcenter_nanny_enabled }}"
             - name: VCENTER_CLEANUP_DRY_RUN
               value: "{{ vcenter_nanny_dry_run }}"
+            - name: VCENTER_CLEANUP_POWER_OFF
+              value: "{{ vcenter_nanny_power_off }}"
+            - name: VCENTER_CLEANUP_UNREGISTER
+              value: "{{ vcenter_nanny_unregister }}"
+            - name: VCENTER_CLEANUP_DELETE
+              value: "{{ vcenter_nanny_delete }}"
             - name: VCENTER_CLEANUP_HOST
               value: "{{ host }}"
             - name: VCENTER_CLEANUP_USER
