@@ -229,6 +229,12 @@ vcenter_operator:
     vcenter_nanny_debug: True
     # dry run mode, i.e. just pretend to cleanup the entries
     vcenter_nanny_dry_run: true
+    # power off machines discovered as orphaned
+    vcenter_nanny_power_off: false
+    # unregister machines discovered as orphaned
+    vcenter_nanny_unregister: false
+    # delete machines discovered as orphaned
+    vcenter_nanny_delete: false
     # run the db cleanup every n minutes
     vcenter_nanny_interval: 720
     # really delete entities after how many iterations
