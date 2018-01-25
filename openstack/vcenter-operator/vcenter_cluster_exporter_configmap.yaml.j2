@@ -15,6 +15,7 @@ data:
   config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
       availability_zone: '{{ availability_zone }}'
+      cluster_name: '{{ cluster_name }}'
       listen_port: "{{ vcenter_exporter['listen_port'] }}"
       host: '{{ host }}'
       user: '{{ username }}'
