@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: cron
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone:{{.Values.image_version_keystone}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-keystone:{{.Values.image_version_keystone | default .Values.image_version | required "Please set keystone.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - /usr/local/bin/kubernetes-entrypoint

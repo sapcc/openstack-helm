@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: designate-worker
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-worker:{{.Values.image_version_designate_worker}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-worker:{{.Values.image_version_designate_worker | default .Values.image_version | required "Please set designate.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true

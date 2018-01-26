@@ -1,4 +1,4 @@
-{{- if .Values.image_version_ironic_inspector -}}
+{{- if .Values.inspector.ip  }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 
@@ -24,4 +24,4 @@ spec:
           backend:
             serviceName: ironic-inspector
             servicePort: {{.Values.inspector.port_internal}}
-{{ end -}}
+{{- end }}

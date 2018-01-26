@@ -18,13 +18,10 @@ deploy_logs_swift_project_domain_name = {{ .Values.agent.deploy_logs.swift_proje
 deploy_logs_swift_container = {{ .Values.agent.deploy_logs.swift_container | default "ironic_deploy_logs_container" }}
 {{- end }}
 
-{{- if .Values.image_version_ironic_inspector }}
-
 [inspector]
 enabled=True
 auth_section = keystone_authtoken
 service_url=https://{{include "ironic_inspector_endpoint_host_public" .}}
-{{- end }}
 
 [dhcp]
 dhcp_provider=neutron

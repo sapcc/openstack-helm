@@ -45,7 +45,7 @@ spec:
           name: nova-etc
       containers:
         - name: nova-consoleauth
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init
@@ -77,7 +77,7 @@ spec:
               subPath: logging.conf
               readOnly: true
         - name: nova-novncproxy
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init
@@ -104,7 +104,7 @@ spec:
               subPath: logging.conf
               readOnly: true
         - name: nova-spicehtml5proxy
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.image_version_nova_spicehtml5proxy}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.image_version_nova_spicehtml5proxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init
@@ -129,7 +129,7 @@ spec:
               subPath: logging.conf
               readOnly: true
         - name: nova-serialproxy
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init

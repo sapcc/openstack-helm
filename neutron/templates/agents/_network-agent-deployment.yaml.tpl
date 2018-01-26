@@ -1,6 +1,6 @@
-{{- define "network_agent" -}}
-{{- $context := index . 0 -}}
-{{- $agent := index . 1 -}}
+{{- define "network_agent" }}
+{{- $agent := index . 1 }}
+{{- with $context := index . 0 }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -29,7 +29,7 @@ spec:
         kubernetes.io/hostname: {{$agent.node}}
       containers:
         - name: neutron-dhcp-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-dhcp-agent:{{$context.Values.image_version_neutron_dhcp_agent}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-dhcp-agent:{{.Values.image_version_neutron_dhcp_agent | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -39,7 +39,7 @@ spec:
             - /container.init/neutron-dhcp-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
             - name: DEBUG_CONTAINER
               value: "false"
           volumeMounts:
@@ -50,7 +50,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: neutron-metadata-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-metadata-agent:{{$context.Values.image_version_neutron_metadata_agent}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-metadata-agent:{{.Values.image_version_neutron_metadata_agent | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -60,7 +60,7 @@ spec:
             - /container.init/neutron-metadata-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -69,7 +69,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: neutron-l3-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-l3-agent:{{$context.Values.image_version_neutron_l3_agent}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-l3-agent:{{.Values.image_version_neutron_l3_agent | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -79,7 +79,7 @@ spec:
             - /container.init/neutron-l3-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -91,7 +91,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: neutron-ovs-agent
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{$context.Values.image_version_neutron_openvswitch_agent}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-openvswitch-agent:{{.Values.image_version_neutron_openvswitch_agent | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -101,7 +101,7 @@ spec:
             - /container.init/neutron-ovs-agent-start
           env:
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -114,7 +114,7 @@ spec:
               name: container-init
 
         - name: ovs
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{$context.Values.image_version_neutron_vswitchd}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-openvswitch-vswitchd:{{.Values.image_version_neutron_vswitchd | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -126,7 +126,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /var/run
               name: run
@@ -136,7 +136,7 @@ spec:
             - mountPath: /container.init
               name: container-init
         - name: ovs-db
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{$context.Values.image_version_neutron_vswitchdb}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-openvswitch-db-server:{{.Values.image_version_neutron_vswitchdb | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -164,4 +164,5 @@ spec:
         - name: container-init
           configMap:
             name: neutron-bin
-{{- end -}}
+{{- end }}
+{{- end }}

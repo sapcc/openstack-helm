@@ -38,7 +38,7 @@ spec:
 {{- end }}
       containers:
         - name: cinder-api
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-api:{{.Values.image_version_cinder_api | default .Values.image_version | required "Please set cinder.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - kubernetes-entrypoint

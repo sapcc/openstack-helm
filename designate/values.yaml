@@ -37,10 +37,11 @@ pod:
 rabbitmq_notification_user: DEFINED-IN-REGION-CHART
 rabbitmq_notification_pass: DEFINED-IN-REGION-CHART
 
-image_version_designate_api:  DEFINED-IN-REGION-CHART
-image_version_designate_central:  DEFINED-IN-REGION-CHART
-image_version_designate_mdns:  DEFINED-IN-REGION-CHART
-image_version_designate_pool_manager:  DEFINED-IN-REGION-CHART
+image_version: null
+image_version_designate_api: null
+image_version_designate_central: null
+image_version_designate_mdns: null
+image_version_designate_pool_manager: null
 
 bind_pools:
   - name: default

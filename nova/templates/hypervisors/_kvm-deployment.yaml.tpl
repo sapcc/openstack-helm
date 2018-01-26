@@ -43,7 +43,7 @@ spec:
       {{- end }}
       containers:
         - name: nova-compute-minion1
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.image_version_nova_compute}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-compute:{{.Values.image_version_nova_compute | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -91,7 +91,7 @@ spec:
             - mountPath: /nova-patches
               name: nova-patches
         - name: nova-libvirt
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -137,7 +137,7 @@ spec:
             - mountPath: /container.init
               name: nova-container-init
         - name: nova-virtlog
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-libvirt:{{.Values.image_version_nova_libvirt | default .Values.image_version | required "Please set nova.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true

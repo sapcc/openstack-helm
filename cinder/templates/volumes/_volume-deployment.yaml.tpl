@@ -35,7 +35,7 @@ spec:
       hostname: cinder-volume-{{$volume.name}}
       containers:
         - name: cinder-volume-{{$volume.name}}
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume | default .Values.image_version | required "Please set cinder.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - kubernetes-entrypoint

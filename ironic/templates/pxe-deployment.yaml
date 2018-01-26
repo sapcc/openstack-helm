@@ -1,4 +1,3 @@
-{{- if .Values.image_version_ironic_conductor -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -31,7 +30,7 @@ spec:
     spec:
       containers:
         - name: ironic-tftp
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-pxe:{{.Values.image_version_ironic_pxe | default .Values.image_version | required "Please set ironic.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           command: ["ptftpd", "-v", "-d", "/tftpmap.py:handle", "eth0", "/tftpboot"]
           ports:
@@ -67,4 +66,3 @@ spec:
           configMap:
             name: ironic-pxe
             defaultMode: 0444
-{{ end -}}

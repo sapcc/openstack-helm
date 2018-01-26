@@ -27,7 +27,8 @@ pod:
 
 debug: "False"
 
-image_version_keystone: DEFINED-IN-REGION-CHART
+image_version: null
+image_version_keystone: null
 
 port_metrics: '9102'
 

@@ -21,7 +21,8 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
-image_version_barbican: DEFINED-IN-REGION-CHART
+image_version: null
+image_version_barbican: null
 debug: "True"
 
 db_name: barbican

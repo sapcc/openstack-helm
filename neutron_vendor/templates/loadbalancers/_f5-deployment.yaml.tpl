@@ -1,6 +1,6 @@
-{{- define "f5_deployment" -}}
-{{- $context := index . 0 -}}
-{{- $loadbalancer := index . 1 -}}
+{{- define "f5_deployment" }}
+{{- $loadbalancer := index . 1 }}
+{{- with $context := index . 0 }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -31,7 +31,7 @@ spec:
       hostname: f5-{{ $loadbalancer.name }}
       containers:
         - name: neutron-f5agent-{{ $loadbalancer.name }}
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3 | default .Values.image_version | required "Please set neutron_vendor.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
@@ -41,7 +41,7 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc
@@ -75,4 +75,5 @@ spec:
           configMap:
             name: neutron-bin-vendor
             defaultMode: 0755
-{{- end -}}
+{{- end }}
+{{- end }}

@@ -1,4 +1,3 @@
-{{- if .Values.image_version_ironic_inspector -}}
 kind: Deployment
 apiVersion: extensions/v1beta1
 
@@ -39,7 +38,7 @@ spec:
 {{- end }}
       containers:
         - name: ironic-inspector
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-inspector:{{.Values.image_version_ironic_inspector | default .Values.image_version | required "Please set ironic.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           command:
             - kubernetes-entrypoint
@@ -69,9 +68,9 @@ spec:
               name: ironic-etc
               subPath: logging.conf
               readOnly: true
-{{- if .Values.image_version_staticdhcpd}}
+{{- if .Values.global.ironic_tftp_ip }}
         - name: dhcp
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-staticdhcpd:{{.Values.image_version_staticdhcpd}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-staticdhcpd:{{.Values.image_version_staticdhcpd | default .Values.image_version | required "Please set ironic.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           command:
             - staticDHCPd
@@ -102,10 +101,9 @@ spec:
           configMap:
             name: ironic-inspector-etc
             defaultMode: 0444
-{{- if .Values.image_version_staticdhcpd }}
+{{- if .Values.global.ironic_tftp_ip }}
         - name: dhcp-config
           configMap:
             name: ironic-inspector-dhcp
             defaultMode: 0444
-{{ end -}}
-{{ end -}}
+{{- end }}

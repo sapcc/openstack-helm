@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: manila-scheduler
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler:{{.Values.image_version_manila_scheduler}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-manila-scheduler:{{.Values.image_version_manila_scheduler | default .Values.image_version | required "Please set manila.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - kubernetes-entrypoint

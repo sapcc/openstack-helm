@@ -39,7 +39,7 @@ spec:
       hostname: nova-conductor
       containers:
         - name: nova-conductor
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-conductor:{{.Values.image_version_nova_conductor}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-conductor:{{.Values.image_version_nova_conductor | default .Values.image_version | required "Please set nova.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init

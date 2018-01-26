@@ -6,7 +6,7 @@ global:
   image_repository: DEFINED-IN-REGION-CHART
   image_namespace: DEFINED-IN-REGION-CHART
   cinder_api_port_internal: '8776'
-  master_password: DEFINED-IN-REGION-CHART
+  master_password: null
 
   hypervisors_vmware: []
   #  - name: DEFINED-IN-REGION-CHART
@@ -28,9 +28,10 @@ global:
 
 osprofiler: {}
 
-image_version_cinder_api: 'v1'
-image_version_cinder_scheduler: 'v1'
-image_version_cinder_volume: 'v1'
+image_version: null
+image_version_cinder_api: null
+image_version_cinder_scheduler: null
+image_version_cinder_volume: null
 
 pod:
   replicas:

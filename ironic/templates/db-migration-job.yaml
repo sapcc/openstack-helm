@@ -13,7 +13,7 @@ spec:
       annotations:
         pod.beta.kubernetes.io/init-containers: '[{
           "name": "kubernetes-entrypoint",
-          "image": "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe}}",
+          "image": "{{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe | default .Values.image_version | required "Please set ironic.image_version or similar"}}",
           "imagePullPolicy": "IfNotPresent",
           "command": ["kubernetes-entrypoint"],
           "env": [{"name": "NAMESPACE", "value": {{ .Release.Namespace | quote }}},
@@ -24,7 +24,7 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: ironic-dbsync
-        image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe}}
+        image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-ironic-api:{{.Values.image_version_ironic_pxe | default .Values.image_version | required "Please set ironic.image_version or similar"}}
         imagePullPolicy: IfNotPresent
         command:
         - bash

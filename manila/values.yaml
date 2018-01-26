@@ -26,9 +26,10 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
-image_version_manila_api_m3: DEFINED-IN-REGION-CHART
-image_version_manila_scheduler_m3: DEFINED-IN-REGION-CHART
-image_version_manila_share_m3: DEFINED-IN-REGION-CHART
+image_version: null
+image_version_manila_api_m3: null
+image_version_manila_scheduler_m3: null
+image_version_manila_share_m3: null
 
 # Dictionary mapping availability-zones to shares
 # shares:

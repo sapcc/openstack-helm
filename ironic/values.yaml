@@ -7,6 +7,7 @@ global:
   image_namespace: REQUIRED
   image_repository: REQUIRED
   ironic_api_port_internal: '6385'
+  ironic_tftp_ip: null
   ironic_tftp_port_public: '69'
   osprofiler: {}
   fernet_router:
@@ -52,10 +53,10 @@ inspector:
   dhcp:
     port: '67'
     proxy_port: '4011'
-    ip: DEFINE_IN_REGION_CHART
-    range: DEFINE_IN_REGION_CHART
+    ip: null
+    range: null
     options:
-      router: DEFINE_IN_REGION_CHART
+      router: null
 
 conductor:
   hosts: []

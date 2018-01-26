@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
         - name: designate-producer
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-producer:{{.Values.image_version_designate_producer}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-producer:{{.Values.image_version_designate_producer | default .Values.image_version | required "Please set designate.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true

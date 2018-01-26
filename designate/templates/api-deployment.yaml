@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: designate-api
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-api:{{.Values.image_version_designate_api}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-designate-api:{{.Values.image_version_designate_api | default .Values.image_version | required "Please set designate.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - kubernetes-entrypoint

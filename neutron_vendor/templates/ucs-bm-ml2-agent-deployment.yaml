@@ -29,7 +29,7 @@ spec:
        hostname: cisco-ml2-ucsm-bm
       containers:
         - name: neutron-cisco-ml2-ucsm-bm-agent
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3 | default .Values.image_version | required "Please set neutron_vendor.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init

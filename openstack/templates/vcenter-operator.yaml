@@ -8,11 +8,11 @@ data:
   namespace: monsoon3
   user_suffix: {{ .Values.global.user_suffix | default "" | quote }}
   password: {{ .Values.global.master_password | quote }}
-  cinder_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/ubuntu-source-cinder-volume:{{ .Values.cinder.image_version_cinder_volume }}
+  cinder_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/ubuntu-source-cinder-volume:{{ .Values.cinder.image_version_cinder_volume | default .Values.cinder.image_version | required "Please set cinder.image_version or similar" }}
   cinder_sentry_dsn: {{ .Values.cinder.sentry_dsn | quote }}
-  neutron_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/ubuntu-source-neutron-server-m3:{{ .Values.neutron.image_version_neutron_server_m3 }}
+  neutron_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/ubuntu-source-neutron-server-m3:{{ .Values.neutron.image_version_neutron_server_m3 | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
   neutron_sentry_dsn: {{ .Values.neutron.sentry_dsn | quote  }}
-  nova_agent_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-nova-compute:{{ .Values.nova.image_version_nova_compute }}
+  nova_agent_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-nova-compute:{{ .Values.nova.image_version_nova_compute | default .Values.nova.image_version | required "Please set nova.image_version or similar"}}
   nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
   nova_service_user: {{  .Values.global.nova_service_user }}
   vcenter_nanny_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/vcenter-nanny:{{ .Values.vcenter_operator.image_version_vcenter_nanny }}

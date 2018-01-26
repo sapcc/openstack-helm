@@ -1,4 +1,4 @@
-{{- if .Values.global.ironic_tftp_ip -}}
+{{- if .Values.global.ironic_tftp_ip }}
 kind: Service
 apiVersion: v1
 
@@ -24,4 +24,4 @@ spec:
   externalIPs:
     - {{.Values.global.ironic_tftp_ip}}
   sessionAffinity: "ClientIP"
-{{ end -}}
+{{- end }}

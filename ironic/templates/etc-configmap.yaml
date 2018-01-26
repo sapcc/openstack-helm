@@ -1,4 +1,3 @@
-{{- if or .Values.image_version_ironic_api .Values.image_version_ironic_conductor -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -19,4 +18,3 @@ data:
 {{ include (print .Template.BasePath "/etc/_ipxe_config.template.tpl") . | indent 4 }}
   logging.conf: |
 {{ include "loggerIni" .Values.logging | indent 4 }}
-{{ end -}}

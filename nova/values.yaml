@@ -13,7 +13,7 @@ global:
   nova_novnc_port_internal: '6080'
   nova_spicehtml5_port_internal: '6082'
   nova_serial_port_internal: '6083'
-  master_password: DEFINED-IN-REGION-CHART
+  master_password: null
 
   hypervisors: []
   hypervisors_kvm: []
@@ -56,19 +56,20 @@ port_metrics: '9102'
 sentry_dsn: DEFINE_IN_REGION_CHART
 
 #TODO we need to move to global or find another way to share image versions
-image_version_neutron_server_m3: DEFINED-IN-REGION-CHART
-image_version_neutron_openvswitch_agent:  DEFINED-IN-REGION-CHART
-image_version_neutron_vswitchd:  DEFINED-IN-REGION-CHART
-image_version_neutron_vswitchdb: DEFINED-IN-REGION-CHART
+image_version_neutron_server_m3: null
+image_version_neutron_openvswitch_agent: null
+image_version_neutron_vswitchd: null
+image_version_neutron_vswitchdb: null
 
-image_version_nova_api: DEFINED-IN-REGION-CHART
-image_version_nova_compute: DEFINED-IN-REGION-CHART
-image_version_nova_libvirt: DEFINED-IN-REGION-CHART
-image_version_nova_conductor: DEFINED-IN-REGION-CHART
-image_version_nova_consoleauth: DEFINED-IN-REGION-CHART
-image_version_nova_novncproxy: DEFINED-IN-REGION-CHART
-image_version_nova_spicehtml5proxy: DEFINED-IN-REGION-CHART
-image_version_nova_scheduler: DEFINED-IN-REGION-CHART
+image_version: null
+image_version_nova_api: null
+image_version_nova_compute: null
+image_version_nova_libvirt: null
+image_version_nova_conductor: null
+image_version_nova_consoleauth: null
+image_version_nova_novncproxy: null
+image_version_nova_spicehtml5proxy: null
+image_version_nova_scheduler: null
 
 cross_az_attach: 'False'
 

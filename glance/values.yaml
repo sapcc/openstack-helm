@@ -26,8 +26,9 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
-image_version_glance_api: REQUIRED
-image_version_glance_registry: REQUIRED
+image_version: null
+image_version_glance_api: null
+image_version_glance_registry: null
 
 debug: "True"
 db_name: glance

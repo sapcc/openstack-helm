@@ -1,6 +1,6 @@
-{{- define "asr_deployment" -}}
-{{- $context := index . 0 -}}
-{{- $config_agent := index . 1 -}}
+{{- define "asr_deployment" }}
+{{- $config_agent := index . 1 }}
+{{- with $context := index . 0 }}
 kind: Deployment
 
 apiVersion: extensions/v1beta1
@@ -30,12 +30,12 @@ spec:
       annotations:
         pod.beta.kubernetes.io/hostname: {{ $config_agent.hostname }}
         prometheus.io/scrape: "true"
-        prometheus.io/port: "{{$context.Values.port_metrics}}"
+        prometheus.io/port: "{{.Values.port_metrics}}"
     spec:
       hostname: {{ $config_agent.hostname }}
       containers:
         - name: neutron-cisco-asr
-          image: {{$context.Values.global.image_repository}}/{{$context.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{$context.Values.image_version_neutron_server_m3}}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-neutron-server-m3:{{.Values.image_version_neutron_server_m3 | default .Values.image_version | required "Please set neutron_vendor.image_version or similar"}}
           imagePullPolicy: IfNotPresent
           command:
             - /container.init/neutron-asr-start
@@ -43,9 +43,9 @@ spec:
             - name: DEBUG_CONTAINER
               value: "false"
             - name: SENTRY_DSN
-              value: {{$context.Values.sentry_dsn | quote}}
+              value: {{.Values.sentry_dsn | quote}}
             - name: METRICS_PORT
-              value: "{{$context.Values.port_metrics}}"
+              value: "{{.Values.port_metrics}}"
           volumeMounts:
             - mountPath: /development
               name: development
@@ -56,7 +56,7 @@ spec:
             - mountPath: /container.init
               name: container-init
           ports:
-            - containerPort: {{$context.Values.port_metrics}}
+            - containerPort: {{.Values.port_metrics}}
               name: metrics
               protocol: TCP
       volumes:
@@ -73,4 +73,5 @@ spec:
         - name: development
           persistentVolumeClaim:
             claimName: development-pvclaim
-{{- end -}}
+{{- end }}
+{{- end }}
