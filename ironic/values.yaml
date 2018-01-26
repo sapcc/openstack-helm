@@ -30,10 +30,11 @@ pod:
            max_unavailable: 0
            max_surge: 1
 
-image_version_ironic_api:
-image_version_ironic_conductor:
-image_version_ironic_inspector:
-image_version_ironic_pxe:
+image_version: null
+image_version_ironic_api: null
+image_version_ironic_conductor: null
+image_version_ironic_inspector: null
+image_version_ironic_pxe: null
 swift_multi_tenant: True
 
 debug: "True"

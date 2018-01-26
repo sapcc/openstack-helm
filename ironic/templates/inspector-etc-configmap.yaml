@@ -1,4 +1,3 @@
-{{- if .Values.inspector.ip  }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -11,4 +10,3 @@ metadata:
 data:
   ironic.conf: |
 {{ include (print .Template.BasePath "/etc/_ironic_inspector.conf.tpl") . | indent 4 }}
-{{- end }}
