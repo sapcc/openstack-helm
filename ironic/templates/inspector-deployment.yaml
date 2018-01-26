@@ -68,7 +68,7 @@ spec:
               name: ironic-etc
               subPath: logging.conf
               readOnly: true
-{{- if .Values.global.ironic_tftp_ip }}
+{{- if and .Values.global.ironic_tftp_ip .Values.inspector.dhcp.range .Values.inspector.dhcp.options.router }}
         - name: dhcp
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-staticdhcpd:{{.Values.image_version_staticdhcpd | default .Values.image_version | required "Please set ironic.image_version or similar"}}
           imagePullPolicy: IfNotPresent
@@ -101,7 +101,7 @@ spec:
           configMap:
             name: ironic-inspector-etc
             defaultMode: 0444
-{{- if .Values.global.ironic_tftp_ip }}
+{{- if and .Values.global.ironic_tftp_ip .Values.inspector.dhcp.range .Values.inspector.dhcp.options.router }}
         - name: dhcp-config
           configMap:
             name: ironic-inspector-dhcp

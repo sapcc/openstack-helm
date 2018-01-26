@@ -1,4 +1,4 @@
-{{- if .Values.global.ironic_tftp_ip }}
+{{- if and .Values.global.ironic_tftp_ip .Values.inspector.dhcp.range .Values.inspector.dhcp.options.router }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
