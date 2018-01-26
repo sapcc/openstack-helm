@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
+{{- $envAll := . }}
 set -e
 
-. /container.init/common.sh
+LOCKFILE=/var/lib/rabbitmq/rabbitmq-server.lock
+echo "Acquiring RabbitMQ lock ${LOCKFILE}"
+exec 9>${LOCKFILE}
+/usr/bin/flock -n 9
 
 function upsert_user {
     rabbitmqctl add_user "$1" "$2" || rabbitmqctl change_password "$1" "$2"
@@ -10,29 +14,28 @@ function upsert_user {
 }
 
 function bootstrap {
-   #Not especially proud of this, but it works (unlike the environment variable approach in the docs)
-   chown -R rabbitmq:rabbitmq /var/lib/rabbitmq
+    #Not especially proud of this, but it works (unlike the environment variable approach in the docs)
+    chown -R rabbitmq:rabbitmq /var/lib/rabbitmq
 
-   /etc/init.d/rabbitmq-server start
+    /etc/init.d/rabbitmq-server start || ( cat /var/log/rabbitmq/startup_* && exit 1 )
 
-   rabbitmq-plugins enable rabbitmq_tracing
-   rabbitmqctl trace_on
+{{- if .Values.debug }}
+    rabbitmq-plugins enable rabbitmq_tracing
+    rabbitmqctl trace_on
+{{- end }}
+    upsert_user {{ print .Values.global.rabbitmq_default_user .Values.global.user_suffix | replace "$" "\\$" | quote }} {{ .Values.global.rabbitmq_default_pass | default ( tuple . .Values.global.rabbitmq_default_user "rabbitmq" | include "svc.password_for_user_and_service" ) | replace "$" "\\$" | quote }}
+    upsert_user {{ print .Values.global.rabbitmq_admin_user .Values.global.user_suffix | replace "$" "\\$" | quote }} {{ .Values.global.rabbitmq_admin_pass | default ( tuple . .Values.global.rabbitmq_admin_user "rabbitmq" | include "svc.password_for_user_and_service" ) | replace "$" "\\$" | quote }} administrator
+    upsert_user {{ .Values.global.rabbitmq_metrics_user | replace "$" "\\$" | quote }} {{ .Values.global.rabbitmq_metrics_pass | default ( tuple . .Values.global.rabbitmq_metrics_user "rabbitmq" | include "svc.password_for_user_and_service" ) | replace "$" "\\$" | quote }} monitoring
 
-   upsert_user {{ print .Values.global.rabbitmq_default_user .Values.global.user_suffix  | squote }} {{ .Values.global.rabbitmq_default_pass | default ( tuple . .Values.global.rabbitmq_default_user "rabbitmq" | include "svc.password_for_user_and_service" ) | squote }}
-   upsert_user {{ print .Values.global.rabbitmq_admin_user .Values.global.user_suffix | squote }} {{ .Values.global.rabbitmq_admin_pass | default ( tuple . .Values.global.rabbitmq_admin_user "rabbitmq" | include "svc.password_for_user_and_service" ) | squote }} administrator
-   upsert_user {{ .Values.global.rabbitmq_metrics_user | squote }} {{ .Values.global.rabbitmq_metrics_pass | default ( tuple . .Values.global.rabbitmq_metrics_user "rabbitmq" | include "svc.password_for_user_and_service" ) | squote }} monitoring
-
-   rabbitmqctl change_password guest {{ .Values.global.rabbitmq_default_pass | default ( tuple . "guest" "rabbitmq" | include "svc.password_for_user_and_service" ) | squote }} || true
-   rabbitmqctl set_user_tags guest monitoring || true
-   /etc/init.d/rabbitmq-server stop
+    rabbitmqctl change_password guest {{ .Values.global.rabbitmq_default_pass | default ( tuple . "guest" "rabbitmq" | include "svc.password_for_user_and_service" ) | replace "$" "\\$" | quote }} || true
+    rabbitmqctl set_user_tags guest monitoring || true
+    /etc/init.d/rabbitmq-server stop
 }
 
 
 function start_application {
-   exec rabbitmq-server
+    exec gosu rabbitmq rabbitmq-server
 }
 
 bootstrap
 start_application
-
-
