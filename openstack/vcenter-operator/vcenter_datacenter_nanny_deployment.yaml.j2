@@ -53,11 +53,11 @@ spec:
             - name: VCENTER_CLEANUP_DELETE
               value: "{{ vcenter_nanny_delete }}"
             - name: VCENTER_CLEANUP_HOST
-              value: "{{ host }}"
+              value: {{ host | quote }}
             - name: VCENTER_CLEANUP_USER
-              value: "{{ username }}"
+              value: {{ username | quote }}
             - name: VCENTER_CLEANUP_PASSWORD
-              value: "{{ password }}"
+              value: {{ password | quote }}
             - name: VCENTER_CLEANUP_ITERATIONS
               value: "{{ vcenter_nanny_iterations }}"
             - name: VCENTER_CLEANUP_INTERVAL
@@ -73,5 +73,5 @@ spec:
             - name: OS_USER_DOMAIN_NAME
               value: "Default"
             - name: OS_PASSWORD
-              value: '{{ "vcenter_nanny" | derive_password("identity-3." + availability_zone[:-1] + ".cloud.sap") }}'
+              value: {{ "vcenter_nanny" | derive_password("identity-3." + availability_zone[:-1] + ".cloud.sap") | quote }}
 {% endif %}
