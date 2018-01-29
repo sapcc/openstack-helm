@@ -13,10 +13,10 @@ data:
     \set ECHO all
     \set ON_ERROR_STOP off {{/* We even expect the CREATE to fail */}}
 {{- range $user, $values := .Values.users }}
-    CREATE USER {{ $user }}{{ $envAll.Values.global.user_suffix }} WITH ENCRYPTED PASSWORD {{ tuple $envAll $user | include "postgres.password_for_user" | squote }};
-    ALTER ROLE {{ $user }}{{ $envAll.Values.global.user_suffix }} WITH ENCRYPTED PASSWORD {{ tuple $envAll $user | include "postgres.password_for_user" | squote }};
+    CREATE USER {{ $user }}{{ $envAll.Values.global.user_suffix }} WITH ENCRYPTED PASSWORD '{{ tuple $envAll $user | include "postgres.password_for_user" | replace "'" "''" }}';
+    ALTER ROLE {{ $user }}{{ $envAll.Values.global.user_suffix }} WITH ENCRYPTED PASSWORD '{{ tuple $envAll $user | include "postgres.password_for_user" | replace "'" "''" }}';
 {{- end }}
-    ALTER ROLE {{ .Values.user }} WITH ENCRYPTED PASSWORD {{ .Values.password | default (tuple . .Values.user | include "postgres.password_for_fixed_user") | squote }};
+    ALTER ROLE {{ .Values.user }} WITH ENCRYPTED PASSWORD '{{ .Values.password | default (tuple . .Values.user | include "postgres.password_for_fixed_user") | replace "'" "''" }}';
   "20-databases.sql": |
     \set ECHO all
     \set ON_ERROR_STOP off {{/* We even expect the CREATE to fail */}}
