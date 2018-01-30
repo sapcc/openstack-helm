@@ -40,8 +40,8 @@ spec:
       description: HANA Baremetal 2 socket 256GB Haswell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
     - name: "zh2vic1.medium"
       id: "1010"
       vcpus: "28"
@@ -51,8 +51,8 @@ spec:
       description: HANA Baremetal 2 socket 512GB Broadwell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
     - name: "zh1mlx1.large"
       id: "1020"
       vcpus: "28"
@@ -62,8 +62,8 @@ spec:
       description: HANA Baremetal 2 socket 1TB Broadwell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
     - name: "zh1emx1.xlarge"
       id: "1030"
       vcpus: "72"
@@ -73,8 +73,8 @@ spec:
       description: HANA Baremetal 4 socket 2TB Haswell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
     - name: "zh2mlx1.xlarge"
       id: "1031"
       vcpus: "88"
@@ -84,8 +84,8 @@ spec:
       description: HANA Baremetal 4 socket 2TB Broadwell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
     - name: "zh2mlx1.2xlarge"
       id: "1040"
       vcpus: "176"
@@ -95,8 +95,8 @@ spec:
       description: HANA Baremetal 8 socket 4TB Broadwell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
     - name: "zh2mlx1.3xlarge"
       id: "1050"
       vcpus: "176"
@@ -106,8 +106,8 @@ spec:
       description: HANA Baremetal 8 socket 6TB Broadwell
       extra_specs:
         - "capabilities:cpu_arch": "x86_64"
-        - "quota:separate": "true"
-        - "quota:instance_only": "true"
+          "quota:separate": "true"
+          "quota:instance_only": "true"
 
   domains:
   - name: Default
