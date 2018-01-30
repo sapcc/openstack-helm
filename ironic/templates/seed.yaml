@@ -110,6 +110,8 @@ spec:
         role: cloud_compute_admin
       - project: service
         role: cloud_baremetal_admin
+      - project: service
+        role: swiftreseller
   - name: ccadmin
     projects:
     - name: master
