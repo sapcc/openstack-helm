@@ -36,7 +36,6 @@ spec:
       vcpus: "8"
       ram: "262144"
       disk: "300"
-      is_public: true
       description: HANA Baremetal 2 socket 256GB Haswell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
@@ -47,7 +46,6 @@ spec:
       vcpus: "28"
       ram: "524288"
       disk: "300"
-      is_public: true
       description: HANA Baremetal 2 socket 512GB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
@@ -80,18 +78,16 @@ spec:
       vcpus: "88"
       ram: "2097152"
       disk: "400"
-      is_public: true
       description: HANA Baremetal 4 socket 2TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
     - name: "zh2mlx1.2xlarge"
-      id: "1040"
+      id: "1041"
       vcpus: "176"
       ram: "4194304"
       disk: "400"
-      is_public: true
       description: HANA Baremetal 8 socket 4TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
@@ -102,7 +98,6 @@ spec:
       vcpus: "176"
       ram: "6291456"
       disk: "400"
-      is_public: true
       description: HANA Baremetal 8 socket 6TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
@@ -139,12 +134,3 @@ spec:
         role: cloud_baremetal_admin
       - project: cloud_admin
         role: cloud_baremetal_admin
-
-  - name: ccadmin
-    projects:
-    - name: master
-      flavors:
-      - "1000"
-      - "1010"
-      - "1020"
-      - "1030"
