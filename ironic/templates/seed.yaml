@@ -36,64 +36,71 @@ spec:
       vcpus: "8"
       ram: "262144"
       disk: "300"
-      is_public: false
       description: HANA Baremetal 2 socket 256GB Haswell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh2vic1.medium"
       id: "1010"
       vcpus: "28"
       ram: "524288"
       disk: "300"
-      is_public: false
       description: HANA Baremetal 2 socket 512GB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh1mlx1.large"
       id: "1020"
       vcpus: "28"
       ram: "1048576"
       disk: "400"
-      is_public: false
       description: HANA Baremetal 2 socket 1TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh1emx1.xlarge"
       id: "1030"
       vcpus: "72"
       ram: "2097152"
       disk: "1228"
-      is_public: false
       description: HANA Baremetal 4 socket 2TB Haswell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh2mlx1.xlarge"
       id: "1031"
       vcpus: "88"
       ram: "2097152"
       disk: "400"
-      is_public: false
       description: HANA Baremetal 4 socket 2TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh2mlx1.2xlarge"
       id: "1040"
       vcpus: "176"
       ram: "4194304"
       disk: "400"
-      is_public: false
       description: HANA Baremetal 8 socket 4TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh2mlx1.3xlarge"
       id: "1050"
       vcpus: "176"
       ram: "6291456"
       disk: "400"
-      is_public: false
       description: HANA Baremetal 8 socket 6TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
 
   domains:
   - name: Default
@@ -125,12 +132,3 @@ spec:
         role: cloud_baremetal_admin
       - project: cloud_admin
         role: cloud_baremetal_admin
-
-  - name: ccadmin
-    projects:
-    - name: master
-      flavors:
-      - "1000"
-      - "1010"
-      - "1020"
-      - "1030"
