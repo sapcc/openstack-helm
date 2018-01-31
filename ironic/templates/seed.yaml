@@ -56,7 +56,6 @@ spec:
       vcpus: "28"
       ram: "1048576"
       disk: "400"
-      is_public: true
       description: HANA Baremetal 2 socket 1TB Broadwell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
@@ -67,7 +66,6 @@ spec:
       vcpus: "72"
       ram: "2097152"
       disk: "1228"
-      is_public: true
       description: HANA Baremetal 4 socket 2TB Haswell
       extra_specs:
         "capabilities:cpu_arch": "x86_64"
@@ -84,7 +82,7 @@ spec:
         "quota:separate": "true"
         "quota:instance_only": "true"
     - name: "zh2mlx1.2xlarge"
-      id: "1041"
+      id: "1040"
       vcpus: "176"
       ram: "4194304"
       disk: "400"
