@@ -3,10 +3,7 @@
 {{- with index . 0 }}
 [DEFAULT]
 compute_driver=nova.virt.ironic.IronicDriver
+reserved_host_memory_mb={{$hypervisor.reserved_host_memory_mb | default .reserved_host_memory_mb | default 0 }}
 
-#compute_manager=ironic.nova.compute.manager.ClusteredComputeManager
-
-scheduler_use_baremetal_filters=True
-scheduler_tracks_instance_changes=False
 {{- end }}
 {{- end }}
