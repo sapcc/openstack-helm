@@ -51,7 +51,7 @@ spec:
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
-    - name: "zh1mlx1.large"
+    - name: "zh2mlx1.large"
       id: "1020"
       vcpus: "28"
       ram: "1048576"
