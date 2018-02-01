@@ -30,7 +30,11 @@ rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
-{{- include "ini_sections.database_options" . }}
+
+[api_database]
+connection = {{ tuple . .Values.api_db_name .Values.api_db_user .Values.api_db_password | include "db_url" }}
+{{- include "ini_sections.database" . }}
+
 
 # most default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 quota_cores = 0
