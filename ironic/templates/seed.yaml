@@ -36,8 +36,8 @@ spec:
       vcpus: "8"
       ram: "262144"
       disk: "300"
-      description: HANA Baremetal 2 socket 256GB Haswell
       extra_specs:
+        "catalog:description": HANA Baremetal 2 socket 256GB Haswell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
@@ -46,8 +46,8 @@ spec:
       vcpus: "28"
       ram: "524288"
       disk: "300"
-      description: HANA Baremetal 2 socket 512GB Broadwell
       extra_specs:
+        "catalog:description": HANA Baremetal 2 socket 512GB Broadwell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
@@ -56,8 +56,8 @@ spec:
       vcpus: "28"
       ram: "1048576"
       disk: "400"
-      description: HANA Baremetal 2 socket 1TB Broadwell
       extra_specs:
+        "catalog:description": HANA Baremetal 2 socket 1TB Broadwell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
@@ -66,8 +66,8 @@ spec:
       vcpus: "72"
       ram: "2097152"
       disk: "1228"
-      description: HANA Baremetal 4 socket 2TB Haswell
       extra_specs:
+        "catalog:description": HANA Baremetal 4 socket 2TB Haswell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
@@ -76,8 +76,8 @@ spec:
       vcpus: "88"
       ram: "2097152"
       disk: "400"
-      description: HANA Baremetal 4 socket 2TB Broadwell
       extra_specs:
+        "catalog:description": HANA Baremetal 4 socket 2TB Broadwell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
@@ -86,8 +86,8 @@ spec:
       vcpus: "176"
       ram: "4194304"
       disk: "400"
-      description: HANA Baremetal 8 socket 4TB Broadwell
       extra_specs:
+        "catalog:description": HANA Baremetal 8 socket 4TB Broadwell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
@@ -96,8 +96,8 @@ spec:
       vcpus: "176"
       ram: "6291456"
       disk: "400"
-      description: HANA Baremetal 8 socket 6TB Broadwell
       extra_specs:
+        "catalog:description": HANA Baremetal 8 socket 6TB Broadwell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
