@@ -9,7 +9,7 @@ function process_config {
     cp /designate-etc/designate.conf /etc/designate/designate.conf
     cp /designate-etc/api-paste.ini /etc/designate/api-paste.ini
     cp /designate-etc/policy.json  /etc/designate/policy.json
-    cp /designate-etc/logging.conf /etc/designate/logging.conf
+    cp /designate-etc/logging.ini /etc/designate/logging.ini
 }
 
 function _start_application {

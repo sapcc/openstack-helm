@@ -18,21 +18,29 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "/container.init/db-migrate"
+              value: "glance-manage db_sync"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-glance"
           volumeMounts:
-            - mountPath: /glance-etc
-              name: glance-etc
-            - mountPath: /container.init
-              name: container-init
+            - name: etcglance
+              mountPath: /etc/glance
+            - name: glance-etc
+              mountPath: /etc/glance/glance.conf
+              subPath: glance-api.conf
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/swift-store.conf
+              subPath: swift-store.conf
+              readOnly: true
+            - name: glance-etc
+              mountPath: /etc/glance/logging.ini
+              subPath: logging.ini
+              readOnly: true
       volumes:
+        - name: etcglance
+          emptyDir: {}
         - name: glance-etc
           configMap:
             name: glance-etc
-        - name: container-init
-          configMap:
-            name: glance-bin
-            defaultMode: 0755

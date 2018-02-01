@@ -27,7 +27,6 @@ spec:
 {{ tuple . "cinder" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
 {{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
         scheduler.alpha.kubernetes.io/affinity: >
             {{ tuple . "cinder" "api" | include "kubernetes_pod_anti_affinity" }}
@@ -88,8 +87,8 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: cinder-etc
-              mountPath: /etc/cinder/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/cinder/logging.ini
+              subPath: logging.ini
               readOnly: true
             - name: cinder-etc
               mountPath: /etc/cinder/cinder_audit_map.yaml

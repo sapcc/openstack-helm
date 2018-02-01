@@ -23,5 +23,5 @@ data:
 {{ include (print .Template.BasePath "/etc/_pools.yaml.tpl") . | indent 4 }}
   policy.json: |
 {{ include (print .Template.BasePath "/etc/_designate-policy.json.tpl") . | indent 4 }}
-  logging.conf: |
+  logging.ini: |
 {{ include "loggerIni" .Values.logging | indent 4 }}

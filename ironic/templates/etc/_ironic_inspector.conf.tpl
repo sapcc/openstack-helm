@@ -1,5 +1,5 @@
 [DEFAULT]
-log-config-append = /etc/ironic/logging.conf
+log-config-append = /etc/ironic/logging.ini
 
 enabled_drivers = {{.Values.enabled_drivers | default "pxe_ipmitool,agent_ipmitool"}}
 enabled_network_interfaces = noop,flat,neutron

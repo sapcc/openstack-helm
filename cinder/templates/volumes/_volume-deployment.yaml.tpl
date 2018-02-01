@@ -41,7 +41,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "cinder-volume --config-file /etc/cinder/cinder.conf --config-file /etc/cinder/volume.conf"
+              value: "cinder-volume"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
@@ -62,12 +62,12 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: cinder-etc
-              mountPath: /etc/cinder/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/cinder/logging.ini
+              subPath: logging.ini
               readOnly: true
             - name: volume-config
-              mountPath: /etc/cinder/volume.conf
-              subPath: volume.conf
+              mountPath: /etc/cinder/cinder-volume.conf
+              subPath: cinder-volume.conf
               readOnly: true
       volumes:
         - name: etccinder

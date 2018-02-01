@@ -14,7 +14,7 @@ debug = {{ .Values.debug }}
 # Top-level directory for maintaining designate's state
 state_path = /var/lib/designate
 
-log_config_append = /etc/designate/logging.conf
+log_config_append = /etc/designate/logging.ini
 
 # Driver used for issuing notifications
 #notification_driver = messagingv2

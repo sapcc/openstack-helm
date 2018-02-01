@@ -27,7 +27,6 @@ spec:
 {{ tuple . "nova" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
 {{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
         scheduler.alpha.kubernetes.io/affinity: >
             {{ tuple . "nova" "api" | include "kubernetes_pod_anti_affinity" }}
@@ -107,9 +106,9 @@ spec:
               name: nova-etc
               subPath: policy.json
               readOnly: true
-            - mountPath: /etc/nova/logging.conf
+            - mountPath: /etc/nova/logging.ini
               name: nova-etc
-              subPath: logging.conf
+              subPath: logging.ini
               readOnly: true
             - mountPath: /var/lib/kolla/venv/bin/iptables-restore
               name: nova-bin

@@ -15,7 +15,7 @@ registry_host = 127.0.0.1
 # configuration options are ignored (for example,
 # logging_context_format_string). (string value)
 # Deprecated group/name - [DEFAULT]/log_config
-log_config_append = /etc/glance/logging.conf
+log_config_append = /etc/glance/logging.ini
 
 # Whether to include the backend image storage location in image
 # properties. Revealing storage location can be a security risk, so

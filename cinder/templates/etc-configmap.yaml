@@ -20,5 +20,5 @@ data:
   cinder_audit_map.yaml: |
 {{ include (print .Template.BasePath "/etc/_cinder_audit_map.yaml.tpl") . | indent 4 }}
 {{- end }}
-  logging.conf: |
+  logging.ini: |
 {{ include "loggerIni" .Values.logging | indent 4 }}

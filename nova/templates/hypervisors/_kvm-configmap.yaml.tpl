@@ -10,7 +10,7 @@ metadata:
     type: configuration
     component: nova
 data:
-  hypervisor.conf: |
+  nova-compute.conf: |
 {{ tuple . $hypervisor | include "kvm_conf" | indent 4 }}
   libvirtd.conf: |
 {{ include (print .Template.BasePath "/etc/_libvirtd.conf.tpl") . | indent 4 }}

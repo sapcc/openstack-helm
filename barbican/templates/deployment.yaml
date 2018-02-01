@@ -73,8 +73,8 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: barbican-etc
-              mountPath: /etc/barbican/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/barbican/logging.ini
+              subPath: logging.ini
               readOnly: true
             - mountPath: /barbican-patches
               name: barbican-patches

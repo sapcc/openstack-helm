@@ -10,7 +10,7 @@ metadata:
     type: configuration
     component: nova
 data:
-  hypervisor.conf: |
+  nova-compute.conf: |
 {{ tuple . $hypervisor | include "ironic_conf" | indent 4 }}
 {{- end -}}
 {{- end -}}

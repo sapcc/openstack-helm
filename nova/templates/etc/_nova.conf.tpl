@@ -2,9 +2,7 @@
 [DEFAULT]
 debug = {{.Values.debug}}
 
-log_config_append = /etc/nova/logging.conf
-
-api_paste_config = /etc/nova/api-paste.ini
+log_config_append = /etc/nova/logging.ini
 state_path = /var/lib/nova
 
 security_group_api = neutron
@@ -19,7 +17,6 @@ linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 allow_resize_to_same_host = true
 
 enable_new_services={{ .Values.enable_new_services | default .Release.IsInstall }}
-enabled_apis=osapi_compute,metadata
 
 osapi_compute_workers=8
 metadata_workers=8
@@ -34,13 +31,6 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
 {{- include "ini_sections.database_options" . }}
-
-# Scheduling
-scheduler_driver_task_period = {{ .Values.scheduler.driver_task_period | default 60 }}
-scheduler_host_manager = {{ if .Values.global.hypervisors_ironic }}nova.scheduler.ironic_host_manager.IronicHostManager{{ else }}nova.scheduler.host_manager.HostManager{{ end }}
-scheduler_driver = {{ .Values.scheduler.driver | default "nova.scheduler.filter_scheduler.FilterScheduler" }}
-scheduler_available_filters = {{ .Values.scheduler.available_filters | default "nova.scheduler.filters.all_filters" }}
-scheduler_default_filters = {{ .Values.scheduler.default_filters}}
 
 # most default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 quota_cores = 0
@@ -89,7 +79,6 @@ lock_path = /var/lib/nova/tmp
 api_servers = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}/v2
 num_retries = 10
 
-
 [cinder]
 os_region_name = {{.Values.global.region}}
 catalog_info = volumev2:cinderv2:internalURL
@@ -107,10 +96,6 @@ user_domain_name = {{.Values.global.keystone_service_domain}}
 region_name = {{.Values.global.region}}
 project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
-
-[api_database]
-connection = {{ tuple . .Values.api_db_name .Values.api_db_user .Values.api_db_password | include "db_url" }}
-{{- include "ini_sections.database_options" . }}
 
 {{- include "ini_sections.database" . }}
 
@@ -144,14 +129,5 @@ iscsi_use_multipath=True
 #live_migration_downtime_steps = 10
 #live_migration_downtime_delay = 75
 #live_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED
-
-[ironic]
-#TODO: this should be V3 also?
-
-admin_username={{.Values.global.ironic_service_user }}{{ .Values.global.user_suffix }}
-admin_password={{ .Values.global.ironic_service_password | default (tuple . .Values.global.ironic_service_user | include "identity.password_for_user")  | replace "$" "$$" }}
-admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v2.0
-admin_tenant_name={{.Values.global.keystone_service_project}}
-api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1
 
 {{- include "ini_sections.audit_middleware_notifications" . }}

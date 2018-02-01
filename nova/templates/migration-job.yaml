@@ -30,6 +30,9 @@ spec:
               mountPath: /etc/nova/nova.conf
               subPath: nova.conf
               readOnly: true
+              mountPath: /etc/nova/nova-api.conf
+              subPath: nova-api.conf
+              readOnly: true
             - name: nova-etc
               mountPath: /etc/nova/api-paste.ini
               subPath: api-paste.ini
@@ -45,8 +48,8 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: nova-etc
-              mountPath: /etc/nova/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
               readOnly: true
             - mountPath: /container.init
               name: container-init

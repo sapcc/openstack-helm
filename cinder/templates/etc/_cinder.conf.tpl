@@ -1,7 +1,7 @@
 [DEFAULT]
 debug = {{ .Values.debug}}
 
-log_config_append = /etc/cinder/logging.conf
+log_config_append = /etc/cinder/logging.ini
 
 enable_v1_api=True
 enable_v3_api=true

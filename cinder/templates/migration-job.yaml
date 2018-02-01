@@ -18,7 +18,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "/container.init/db-migrate"
+              value: "cinder-manage db sync"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
@@ -39,18 +39,12 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: cinder-etc
-              mountPath: /etc/cinder/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/cinder/logging.ini
+              subPath: logging.ini
               readOnly: true
-            - mountPath: /container.init
-              name: container-init
       volumes:
         - name: etccinder
           emptyDir: {}
         - name: cinder-etc
           configMap:
             name: cinder-etc
-        - name: container-init
-          configMap:
-            name: cinder-bin
-            defaultMode: 0755

@@ -73,8 +73,8 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: nova-etc
-              mountPath: /etc/nova/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
               readOnly: true
         - name: nova-novncproxy
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
@@ -100,8 +100,8 @@ spec:
               subPath: nova.conf
               readOnly: true
             - name: nova-etc
-              mountPath: /etc/nova/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
               readOnly: true
         - name: nova-spicehtml5proxy
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-spicehtml5proxy:{{.Values.image_version_nova_spicehtml5proxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
@@ -125,8 +125,8 @@ spec:
               subPath: nova.conf
               readOnly: true
             - name: nova-etc
-              mountPath: /etc/nova/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
               readOnly: true
         - name: nova-serialproxy
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
@@ -150,6 +150,6 @@ spec:
               subPath: nova.conf
               readOnly: true
             - name: nova-etc
-              mountPath: /etc/nova/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
               readOnly: true

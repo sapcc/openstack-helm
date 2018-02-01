@@ -63,8 +63,8 @@ spec:
               subPath: nova.conf
               readOnly: true
             - name: nova-etc
-              mountPath: /etc/nova/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
               readOnly: true
       volumes:
         - name: etcnova

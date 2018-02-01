@@ -27,7 +27,6 @@ spec:
 {{ tuple . "cinder" "scheduler" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
 {{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
         scheduler.alpha.kubernetes.io/affinity: >
             {{ tuple . "cinder" "scheduler" | include "kubernetes_pod_anti_affinity" }}
@@ -44,7 +43,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "cinder-scheduler --config-file /etc/cinder/cinder.conf"
+              value: "cinder-scheduler"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
@@ -67,8 +66,8 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: cinder-etc
-              mountPath: /etc/cinder/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/cinder/logging.ini
+              subPath: logging.ini
               readOnly: true
       volumes:
         - name: etccinder

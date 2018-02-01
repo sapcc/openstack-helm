@@ -64,9 +64,9 @@ spec:
               name: ironic-etc
               subPath: rootwrap.conf
               readOnly: true
-            - mountPath: /etc/ironic/logging.conf
+            - mountPath: /etc/ironic/logging.ini
               name: ironic-etc
-              subPath: logging.conf
+              subPath: logging.ini
               readOnly: true
 {{- if and .Values.global.ironic_tftp_ip .Values.inspector.dhcp.range .Values.inspector.dhcp.options.router }}
         - name: dhcp

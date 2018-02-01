@@ -1,7 +1,7 @@
 [DEFAULT]
 debug = {{.Values.debug }}
 
-log_config_append = /etc/manila/logging.conf
+log_config_append = /etc/manila/logging.ini
 
 use_forwarded_for = true
 

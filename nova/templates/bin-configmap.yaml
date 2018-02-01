@@ -7,11 +7,6 @@ metadata:
     type: configuration
     component: nova
 data:
-  nova-libvirt-start: |
-{{ .Files.Get "bin/nova-libvirt-start" | indent 4 }}
-  db-migrate: |
-{{ .Files.Get "bin/db-migrate" | indent 4 }}
-  iptables-restore.mock: |
-{{ .Files.Get "bin/iptables-restore.mock" | indent 4 }}
+{{ (.Files.Glob "bin/*").AsConfig | indent 2 }}
   common.sh: |
 {{ include "common.sh" .| indent 4 }}

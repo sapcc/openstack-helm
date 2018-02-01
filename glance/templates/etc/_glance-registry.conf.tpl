@@ -1,7 +1,7 @@
 [DEFAULT]
 debug = {{.Values.debug}}
 
-log_config_append = /etc/glance/logging.conf
+log_config_append = /etc/glance/logging.ini
 
 #disable default admin rights for role 'admin'
 admin_role = ''

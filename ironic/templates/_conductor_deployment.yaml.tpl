@@ -81,9 +81,9 @@ spec:
               name: ironic-etc
               subPath: rootwrap.conf
               readOnly: {{ not $conductor.debug }}
-            - mountPath: /etc/ironic/logging.conf
+            - mountPath: /etc/ironic/logging.ini
               name: ironic-etc
-              subPath: logging.conf
+              subPath: logging.ini
               readOnly: {{ not $conductor.debug }}
             - mountPath: /etc/ironic/ironic-conductor.conf
               name: ironic-conductor-etc

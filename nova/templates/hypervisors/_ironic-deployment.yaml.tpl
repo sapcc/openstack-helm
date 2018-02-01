@@ -39,7 +39,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "nova-compute --config-file /etc/nova/nova.conf --config-file /etc/nova/hypervisor.conf"
+              value: "nova-compute"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: SENTRY_DSN
@@ -59,13 +59,13 @@ spec:
               name: nova-etc
               subPath: policy.json
               readOnly: true
-            - mountPath: /etc/nova/logging.conf
+            - mountPath: /etc/nova/logging.ini
               name: nova-etc
-              subPath: logging.conf
+              subPath: logging.ini
               readOnly: true
-            - mountPath: /etc/nova/hypervisor.conf
+            - mountPath: /etc/nova/nova-compute.conf
               name: hypervisor-config
-              subPath: hypervisor.conf
+              subPath: nova-compute.conf
               readOnly: true
             - mountPath: /nova-patches
               name: nova-patches

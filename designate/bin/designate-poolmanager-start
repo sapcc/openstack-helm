@@ -7,7 +7,7 @@ set -x
 
 function process_config {
     cp /designate-etc/designate.conf /etc/designate/designate.conf
-    cp /designate-etc/logging.conf /etc/designate/logging.conf
+    cp /designate-etc/logging.ini /etc/designate/logging.ini
     cp /designate-etc/pools.yaml /etc/designate/pools.yaml
     cp /designate-etc/rndc*.key /etc/designate/
     cp /designate-etc/policy.json  /etc/designate/policy.json

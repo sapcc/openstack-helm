@@ -57,8 +57,8 @@ spec:
               subPath: policy.json
               readOnly: true
             - name: manila-etc
-              mountPath: /etc/manila/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/manila/logging.ini
+              subPath: logging.ini
               readOnly: true
             - name: backend-config
               mountPath: /etc/manila/backend.conf

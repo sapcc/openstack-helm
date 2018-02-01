@@ -78,9 +78,9 @@ spec:
               name: ironic-etc
               subPath: rootwrap.conf
               readOnly: true
-            - mountPath: /etc/ironic/logging.conf
+            - mountPath: /etc/ironic/logging.ini
               name: ironic-etc
-              subPath: logging.conf
+              subPath: logging.ini
               readOnly: true
 {{- tuple . .Values.api.override "ironic-api" | include "debug_port_container" | indent 8 }}
       volumes:

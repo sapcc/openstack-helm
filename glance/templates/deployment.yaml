@@ -27,7 +27,6 @@ spec:
 {{ tuple . "glance" "api" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
         configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
-        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
 {{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
         scheduler.alpha.kubernetes.io/affinity: >
             {{ tuple . "glance" "api" | include "kubernetes_pod_anti_affinity" }}
@@ -94,8 +93,8 @@ spec:
               subPath: glance-api-paste.ini
               readOnly: true
             - name: glance-etc
-              mountPath: /etc/glance/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/glance/logging.ini
+              subPath: logging.ini
               readOnly: true
             - mountPath: /glance_store
               name: image-store
@@ -142,8 +141,8 @@ spec:
               subPath: glance-registry-paste.ini
               readOnly: true
             - name: glance-etc
-              mountPath: /etc/glance/logging.conf
-              subPath: logging.conf
+              mountPath: /etc/glance/logging.ini
+              subPath: logging.ini
               readOnly: true
         - name: statsd
           image: prom/statsd-exporter

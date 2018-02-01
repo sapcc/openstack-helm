@@ -10,7 +10,7 @@ metadata:
     type: configuration
     component: cinder
 data:
-  volume.conf: |
+  cinder-volume.conf: |
 {{ tuple . $volume | include "volume_netapp_conf" | indent 4 }}
 {{- end -}}
 {{- end -}}
