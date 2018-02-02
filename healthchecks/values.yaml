@@ -18,5 +18,4 @@ ad_node_1: DEFINED-IN-REGION-CHART
 ad_node_2: DEFINED-IN-REGION-CHART
 ad_test_group: MONSOON3_DOMAIN_USERS
 ad_test_user: D062392
-cam_dns: spc40-emea.byd.sap.corp
 ews_dns: autodiscover.sap.com

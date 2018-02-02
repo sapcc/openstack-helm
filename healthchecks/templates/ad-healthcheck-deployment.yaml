@@ -53,8 +53,6 @@ spec:
               value: {{.Values.ad_test_group}}
             - name: AD_TEST_USER
               value: {{.Values.ad_test_user}}
-            - name: CAM_DNS
-              value: {{.Values.cam_dns}}
             - name: EWS_DNS
               value: {{.Values.ews_dns}}
           ports:
