@@ -29,14 +29,11 @@ connection = {{ include "db_url" . }}
         {{- if .Values.audit.enabled }}
             {{- if .Values.rabbitmq_notifications }}
                 {{- if and .Values.rabbitmq_notifications.ports .Values.rabbitmq_notifications.users }}
-{{/* Add urlquery filter to password as soon as oslo_messaging is on newton or this has been backported
-  https://github.com/openstack/oslo.messaging/blob/newton-eol/oslo_messaging/transport.py#L436-L437
-  */}}
 # this is for the cadf audit messaging
 [audit_middleware_notifications]
 # topics = notifications
 driver = messagingv2
-transport_url = rabbit://{{ default ""  .Values.global.user_suffix | print .Values.rabbitmq_notifications.users.default.user }}:{{ .Values.rabbitmq_notifications.users.default.password | default (tuple . .Values.rabbitmq_notifications.users.default.user (print .Chart.Name "-rabbitmq-notifications") | include "svc.password_for_user_and_service") }}@{{ .Chart.Name }}-rabbitmq-notifications:{{  .Values.rabbitmq_notifications.ports.public }}/
+transport_url = rabbit://{{ default ""  .Values.global.user_suffix | print .Values.rabbitmq_notifications.users.default.user }}:{{ .Values.rabbitmq_notifications.users.default.password | default (tuple . .Values.rabbitmq_notifications.users.default.user (print .Chart.Name "-rabbitmq-notifications") | include "svc.password_for_user_and_service") | urlquery }}@{{ .Chart.Name }}-rabbitmq-notifications:{{  .Values.rabbitmq_notifications.ports.public }}/
 mem_queue_size = {{ .Values.audit.mem_queue_size }}
                 {{- end }}
             {{- end }}
