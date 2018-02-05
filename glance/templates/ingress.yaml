@@ -8,10 +8,10 @@ metadata:
     type: api
     component: glance
   annotations:
-     ingress.kubernetes.io/proxy-request-buffering: "off"
-     {{- if .Values.vice_president }}
-     vice-president: "true"
-     {{- end }}
+    ingress.kubernetes.io/proxy-request-buffering: "off"
+    ingress.kubernetes.io/proxy-read-timeout: "600"
+    ingress.kubernetes.io/proxy-send-timeout: "600"
+    vice-president: {{ default false .Values.ingress.vice_president | quote }}
 spec:
   tls:
     - secretName: tls-{{ include "glance_api_endpoint_host_public" . | replace "." "-" }}
