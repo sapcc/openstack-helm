@@ -35,8 +35,8 @@ backdoor_socket=/tmp/eventlet_backdoor.socket
 
 [api_database]
 connection = {{ tuple . .Values.api_db_name .Values.api_db_user .Values.api_db_password | include "db_url" }}
-{{- include "ini_sections.database" . }}
 
+{{ include "ini_sections.database" . }}
 
 # most default quotas are 0 to enforce usage of the Resource Management tool in Elektra
 quota_cores = 0

@@ -30,7 +30,7 @@ spec:
               mountPath: /etc/nova/nova.conf
               subPath: nova.conf
               readOnly: true
-              mountPath: /etc/nova/nova-api.conf
+            - mountPath: /etc/nova/nova-api.conf
               subPath: nova-api.conf
               readOnly: true
             - name: nova-etc

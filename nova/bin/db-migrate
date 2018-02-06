@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
 set -e
-
-. /container.init/common.sh
-
+set -x
+ls -l /etc/nova
 nova-manage --config-dir /etc/nova db sync
 nova-manage --config-dir /etc/nova api_db sync
 #nova-manage --config-dir /etc/nova db online_data_migrations
