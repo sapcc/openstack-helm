@@ -24,31 +24,32 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "postgres-nova"
           volumeMounts:
-            - name: etcnova
-              mountPath: /etc/nova
-            - name: nova-etc
-              mountPath: /etc/nova/nova.conf
+            - mountPath: /etc/nova
+              name: etcnova
+            - mountPath: /etc/nova/nova.conf
+              name: nova-etc
               subPath: nova.conf
               readOnly: true
             - mountPath: /etc/nova/nova-api.conf
+              name: nova-etc
               subPath: nova-api.conf
               readOnly: true
-            - name: nova-etc
-              mountPath: /etc/nova/api-paste.ini
+            - mountPath: /etc/nova/api-paste.ini
+              name: nova-etc
               subPath: api-paste.ini
               readOnly: true
 {{- if .Values.audit.enabled }}
-            - name: nova-etc
-              mountPath: /etc/nova/nova_audit_map.yaml
+            - mountPath: /etc/nova/nova_audit_map.yaml
+              name: nova-etc
               subPath: nova_audit_map.yaml
               readOnly: true
 {{- end }}
-            - name: nova-etc
-              mountPath: /etc/nova/policy.json
+            - mountPath: /etc/nova/policy.json
+              name: nova-etc
               subPath: policy.json
               readOnly: true
-            - name: nova-etc
-              mountPath: /etc/nova/logging.ini
+            - mountPath: /etc/nova/logging.ini
+              name: nova-etc
               subPath: logging.ini
               readOnly: true
             - mountPath: /container.init
