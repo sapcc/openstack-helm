@@ -24,7 +24,7 @@
     "baremetal:node:set_power_state": "rule:context_is_admin",
     "baremetal:node:set_provision_state": "rule:context_is_admin",
     "baremetal:node:set_raid_state": "rule:context_is_admin",
-    "baremetal:node:get_console": "rule:context_is_admin",
+    "baremetal:node:get_console": "rule:context_is_viewer",
     "baremetal:node:set_console_state": "rule:context_is_admin",
     "baremetal:node:vendor_passthru": "rule:context_is_admin",
     "baremetal:node:ipa_heartbeat": "rule:public_api",
