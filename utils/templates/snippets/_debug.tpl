@@ -77,3 +77,8 @@ data:
 {{- . | include "debug_port_configmap" }}
     {{- end }}
 {{- end }}
+
+
+{{ define "utils.snippets.eventlet_backdoor_ini" }}
+backdoor_socket=/var/lib/{{.}}/eventlet_backdoor.socket
+{{ end }}

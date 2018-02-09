@@ -35,8 +35,8 @@ metadata:
     component: neutron
 data:
   ml2-vmware.ini: |
-    [default]
-    backdoor_socket=/tmp/eventlet_backdoor.socket
+    [DEFAULT]
+    backdoor_socket=/var/lib/neutron/eventlet_backdoor.socket
 
     [securitygroup]
     firewall_driver = networking_dvs.plugins.ml2.drivers.mech_dvs.agent.dvs_firewall.DvsSecurityGroupsDriver

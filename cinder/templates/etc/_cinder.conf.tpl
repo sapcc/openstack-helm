@@ -15,6 +15,7 @@ os_region_name = {{.Values.global.region}}
 default_availability_zone={{.Values.global.default_availability_zone}}
 default_volume_type = vmware
 
+{{ template "utils.snippets.eventlet_backdoor_ini" "cinder" }}
 
 api_paste_config = /etc/cinder/api-paste.ini
 #nova_catalog_info = compute:nova:internalURL
