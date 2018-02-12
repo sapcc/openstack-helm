@@ -32,6 +32,16 @@ spec:
  #      url: http://ironic-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:6385
 
   flavors:
+    - name: "zh0hpe1.large"
+      id: "900"
+      vcpus: "60"
+      ram: "1048576"
+      disk: "900"
+      extra_specs:
+        "catalog:description": HANA Baremetal 4 socket 1TB Ivybridge
+        "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh1vic1.small"
       id: "1000"
       vcpus: "8"
@@ -59,6 +69,16 @@ spec:
       disk: "400"
       extra_specs:
         "catalog:description": HANA Baremetal 2 socket 1TB Broadwell
+        "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
+    - name: "zh1emx1.large"
+      id: "1029"
+      vcpus: "72"
+      ram: "1048576"
+      disk: "1228"
+      extra_specs:
+        "catalog:description": HANA Baremetal 4 socket 1TB Haswell
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
