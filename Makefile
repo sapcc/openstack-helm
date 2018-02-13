@@ -1,4 +1,4 @@
-.PHONY: $(shell find * -type d -depth 0)
+.PHONY: $(sort $(dir $(wildcard */)))
 
 all: clean openstack europe-example-region
 
