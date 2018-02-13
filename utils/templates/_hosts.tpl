@@ -134,9 +134,6 @@ postgresql://{{ .Values.global.user_suffix | default "" | print $user | urlquery
 {{define "lyra_api_endpoint_host_public"}}lyra.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "webcli_api_endpoint_host_public"}}webcli.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 {{define "keystone_router_api_endpoint_host_public"}}identity.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
-{{define "monasca_api_endpoint_host_admin"}}monasca-api.monasca.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
-{{define "monasca_api_endpoint_host_internal"}}monasca-api.monasca.svc.kubernetes.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
-{{define "monasca_api_endpoint_host_public"}}monitoring.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
 {{define "swift_endpoint_host"}}objectstore-3.{{.Values.global.region}}.{{.Values.global.tld}}{{end}}
 
