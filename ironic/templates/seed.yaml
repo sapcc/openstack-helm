@@ -11,9 +11,7 @@ spec:
     - cloud_baremetal_admin
     - baremetal_admin
     - baremetal_viewer
-    - cloud_compute_admin
-    - cloud_image_admin
-    - cloud_network_admin
+    - cloud_image_admin  # TODO: That should move to the glance seed
 
   services:
   - name: ironic
