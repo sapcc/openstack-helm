@@ -139,6 +139,8 @@ spec:
       - project: service
         role: cloud_baremetal_admin
       - project: service
+        role: cloud_image_admin
+      - project: service
         role: swiftreseller
   - name: ccadmin
     projects:
