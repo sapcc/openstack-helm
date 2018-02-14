@@ -6,6 +6,9 @@ spec:
   requires:
     - monsoon3/domain-default-seed
     - monsoon3/domain-ccadmin-seed
+    - monsoon3/nova-seed
+    - monsoon3/neutron-seed
+    - swift/swift-seed
 
   roles:
     - cloud_baremetal_admin
