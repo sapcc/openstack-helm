@@ -14,12 +14,12 @@ metadata:
 data:
   config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
-      availability_zone: '{{ availability_zone }}'
-      cluster_name: '{{ cluster_name }}'
+      availability_zone: {{ availability_zone | quote }}
+      cluster_name: {{ cluster_name | quote }}
       listen_port: "{{ vcenter_exporter['listen_port'] }}"
-      host: '{{ host }}'
-      user: '{{ username }}'
-      password: '{{ password }}'
+      host: {{ host | quote }}
+      user: {{ username | quote }}
+      password: {{ password | quote }}
       port: 443{% if vcenter_exporter['ignore_ssl'] == "true" %}
       ignore_ssl: True{% else %}
       ignore_ssl: False{% endif %}
@@ -29,7 +29,7 @@ data:
       shorter_names_regex: "{{ vcenter_exporter['shorter_names_regex'] }}"
       {% endif %}
       {% if vcenter_exporter['host_match_regex'] is defined %}
-      host_match_regex: '{{ name }}'
+      host_match_regex: {{ name | quote }}
       {% endif %}
       ignore_match_regex: '(^c_blackbox_|^datapath_|^canary_).*'
       vm_metrics:
