@@ -75,6 +75,8 @@ console:
   secret: null
 
 tftp_ip: null
+tftp_files:
+  undionly.kpxe: http://boot.ipxe.org/undionly.kpxe
 
 port_metrics: '9102'
 sentry_dsn: DEFINE_IN_REGION_CHART

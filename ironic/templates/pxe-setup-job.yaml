@@ -36,9 +36,9 @@ spec:
             cp /usr/lib/syslinux/modules/*/ldlinux.* .
           fi
 
-          for f in undionly.kpxe ipxe.pxe; do
-            [ -f $f ] || curl -L -O http://boot.ipxe.org/$f
-          done
+          {{- range $v, $url := .Values.tftp_files }}
+          curl -sRz {{ $v }} -o {{ $v }} {{ $url }}
+          {{- end }}
 
           chown -R ironic:ironic .
         volumeMounts:
