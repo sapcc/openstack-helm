@@ -24,3 +24,11 @@ data:
   nova_audit_map.yaml: |
 {{ include (print .Template.BasePath "/etc/_nova_audit_map.yaml.tpl") . | indent 4 }}
 {{- end }}
+  rootwrap.conf: |
+{{ include (print .Template.BasePath "/etc/_rootwrap.conf.tpl") . | indent 4 }}
+  api-metadata.filters: |
+{{ include (print .Template.BasePath "/etc/_api-metadata.filters.tpl") . | indent 4 }}
+  compute.filters: |
+{{ include (print .Template.BasePath "/etc/_compute.filters.tpl") . | indent 4 }}
+  network.filters: |
+{{ include (print .Template.BasePath "/etc/_network.filters.tpl") . | indent 4 }}

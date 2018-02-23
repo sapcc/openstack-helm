@@ -110,6 +110,14 @@ spec:
               name: nova-etc
               subPath: logging.ini
               readOnly: true
+            - mountPath: /etc/nova/rootwrap.conf
+              name: nova-etc
+              subPath: rootwrap.conf
+              readOnly: true
+            - mountPath: /etc/nova/rootwrap.d/api-metadata.filters
+              name: nova-etc
+              subPath: api-metadata.filters
+              readOnly: true
             - mountPath: /var/lib/kolla/venv/bin/iptables-restore
               name: nova-bin
               subPath: iptables-restore.mock
