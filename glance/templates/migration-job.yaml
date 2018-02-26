@@ -8,6 +8,9 @@ metadata:
     component: glance
 spec:
   template:
+    metadata:
+      annotations:
+        configmap-etc-hash: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
     spec:
       restartPolicy: OnFailure
       containers:
@@ -18,25 +21,33 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "glance-manage db_sync"
+              value: bash /etc/glance/maintain.sh
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-glance"
+            - name: PGPASSWORD
+              value: {{ .Values.db_password | default (tuple . .Values.postgres.user | include "postgres.password_for_user") }}
           volumeMounts:
-            - name: etcglance
-              mountPath: /etc/glance
-            - name: glance-etc
-              mountPath: /etc/glance/glance.conf
+            - mountPath: /etc/glance
+              name: etcglance
+            - mountPath: /etc/glance/glance.conf
+              name: glance-etc
               subPath: glance-api.conf
               readOnly: true
-            - name: glance-etc
-              mountPath: /etc/glance/swift-store.conf
+{{- if not .Values.swift_multi_tenant }}
+            - mountPath: /etc/glance/swift-store.conf
+              name: glance-etc
               subPath: swift-store.conf
               readOnly: true
-            - name: glance-etc
-              mountPath: /etc/glance/logging.ini
+{{- end }}
+            - mountPath: /etc/glance/logging.ini
+              name: glance-etc
               subPath: logging.ini
+              readOnly: true
+            - mountPath: /etc/glance/maintain.sh
+              name: glance-etc
+              subPath: maintain.sh
               readOnly: true
       volumes:
         - name: etcglance
