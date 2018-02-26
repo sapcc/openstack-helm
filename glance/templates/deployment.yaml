@@ -80,10 +80,12 @@ spec:
               mountPath: /etc/glance/glance-api.conf
               subPath: glance-api.conf
               readOnly: true
+{{- if .Values.swift_multi_tenant }}
             - name: glance-etc
               mountPath: /etc/glance/swift-store.conf
               subPath: swift-store.conf
               readOnly: true
+{{- end }}
             - name: glance-etc
               mountPath: /etc/glance/policy.json
               subPath: policy.json

@@ -12,8 +12,10 @@ data:
 {{ include (print .Template.BasePath "/etc/_glance-api.conf.tpl") . | indent 4 }}
   glance-registry.conf: |
 {{ include (print .Template.BasePath "/etc/_glance-registry.conf.tpl") . | indent 4 }}
+{{- if not .Values.swift_multi_tenant }}
   swift-store.conf: |
 {{ include (print .Template.BasePath "/etc/_swift-store.conf.tpl") . | indent 4 }}
+{{- end }}
   policy.json: |
 {{ include (print .Template.BasePath "/etc/_glance-policy.json.tpl") . | indent 4 }}
   logging.ini: |

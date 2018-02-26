@@ -39,10 +39,11 @@ port_metrics: '9102'
 ops_middleware_enabled: false
 sentry_dsn: DEFINE_IN_REGION_CHART
 
-default_store: DEFINE_IN_REGION_CHART
-swift_domain: DEFINE_IN_REGION_CHART
-swift_project: DEFINE_IN_REGION_CHART
-swift_multi_tenant: DEFINE_IN_REGION_CHART
+default_store: swift
+swift_multi_tenant: true
+# If not swift_multi_tenant, where to store the images
+swift_domain:
+swift_project:
 
 pg_metrics:
   name: glance

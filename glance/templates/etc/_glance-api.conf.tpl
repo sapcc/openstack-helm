@@ -1,20 +1,5 @@
 [DEFAULT]
-
-# If set to true, the logging level will be set to DEBUG instead of
-# the default INFO level. (boolean value)
-debug = {{.Values.debug}}
-
-# Address to find the registry server. (string value)
 registry_host = 127.0.0.1
-
-# The name of a logging configuration file. This file is appended to
-# any existing logging configuration files. For details about logging
-# configuration files, see the Python logging module documentation.
-# Note that when logging configuration files are used then all logging
-# configuration is set in the configuration file and other logging
-# configuration options are ignored (for example,
-# logging_context_format_string). (string value)
-# Deprecated group/name - [DEFAULT]/log_config
 log_config_append = /etc/glance/logging.ini
 
 # Whether to include the backend image storage location in image
@@ -29,7 +14,6 @@ admin_role = ''
 
 # Seconds to wait for a response from a call. (integer value)
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 300 }}
-
 rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | default 1 }}
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
@@ -96,13 +80,16 @@ filesystem_store_datadir = /glance_store
 swift_store_region={{.Values.global.region}}
 swift_store_auth_insecure = True
 swift_store_create_container_on_put = True
-swift_store_multi_tenant = {{.Values.swift_multi_tenant}}
+{{- if .Values.swift_multi_tenant }}
+swift_store_multi_tenant = True
+{{- else }}
+default_swift_reference = swift-global
+swift_store_config_file=/etc/glance/swift-store.conf
+{{- end }}
 {{- if .Values.swift_store_large_object_size }}
 swift_store_large_object_size = {{.Values.swift_store_large_object_size}}
 {{- end }}
 
-default_swift_reference = swift-global
-swift_store_config_file=/etc/glance/swift-store.conf
 swift_store_use_trusts=True
 
 [oslo_messaging_notifications]
