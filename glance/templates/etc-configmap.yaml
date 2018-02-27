@@ -24,3 +24,9 @@ data:
 {{ include (print .Template.BasePath "/etc/_glance-api-paste.ini.tpl") . | indent 4 }}
   glance-registry-paste.ini: |
 {{ include (print .Template.BasePath "/etc/_glance-registry-paste.ini.tpl") . | indent 4 }}
+{{- if .Values.swift_multi_tenant }}
+  maintain.sh: |
+    set -xe
+    glance-manage db sync
+    psql -h postgres-{{ .Values.postgres.name }} -U {{ .Values.db_user }} {{ .Values.db_name }} "UPDATE image_locations AS l SET value='swift+https://objectstore-3.{{.Values.global.region}}.{{.Values.global.tld}}:443/v1/AUTH_' || i.owner || '/glance_' || i.id || '/' || i.id FROM images AS i WHERE i.id = l.image_id AND and l.value like 'swift+config://%'"
+{{- end }}

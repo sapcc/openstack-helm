@@ -18,11 +18,13 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "glance-manage db_sync"
+              value: bash /etc/glance/maintain.sh
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-glance"
+            - name: PGPASSWORD
+              value: {{ .Values.db_password | default (tuple . .Values.postgres.user | include "postgres.password_for_user") }}
           volumeMounts:
             - name: etcglance
               mountPath: /etc/glance
@@ -37,6 +39,10 @@ spec:
             - name: glance-etc
               mountPath: /etc/glance/logging.ini
               subPath: logging.ini
+              readOnly: true
+            - mountPath: /etc/glance/maintain.sh
+              name: glance-etc
+              subPath: maintain.sh
               readOnly: true
       volumes:
         - name: etcglance
