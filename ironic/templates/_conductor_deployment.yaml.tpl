@@ -81,6 +81,14 @@ spec:
               name: ironic-etc
               subPath: rootwrap.conf
               readOnly: {{ not $conductor.debug }}
+            - mountPath: /etc/ironic/rootwrap.d/ironic-images.filters
+              name: ironic-etc
+              subPath: ironic-images.filters
+              readOnly: {{ not $conductor.debug }}
+            - mountPath: /etc/ironic/rootwrap.d/ironic-utils.filters
+              name: ironic-etc
+              subPath: ironic-utils.filters
+              readOnly: {{ not $conductor.debug }}
             - mountPath: /etc/ironic/logging.ini
               name: ironic-etc
               subPath: logging.ini

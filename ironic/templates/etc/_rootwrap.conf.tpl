@@ -10,7 +10,7 @@ filters_path=/etc/ironic/rootwrap.d,/usr/share/ironic/rootwrap
 # explicitely specify a full path (separated by ',')
 # If not specified, defaults to system PATH environment variable.
 # These directories MUST all be only writeable by root !
-exec_dirs=/sbin,/usr/sbin,/bin,/usr/bin
+exec_dirs=/var/lib/kolla/venv/bin,/bin,/sbin,/usr/sbin,/bin,/usr/bin
 
 # Enable logging to syslog
 # Default value is False
