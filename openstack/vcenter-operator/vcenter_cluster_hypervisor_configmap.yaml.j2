@@ -44,6 +44,9 @@ data:
 
     [ml2]
     extension_drivers =
+{%- if ml2_mechanismdrivers is defined %}
+    mechanism_drivers = {{ ml2_mechanismdrivers }}
+{%- endif %}
 
     [ml2_vmware]
     vsphere_hostname = {{ host }}
