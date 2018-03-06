@@ -24,3 +24,5 @@ spec:
       # permission to manage all ressources checked by the nanny
       - user: cinder_nanny{{ .Values.global.user_suffix | default "" }}@Default
         role: cloud_volume_admin
+      - user: cinder_nanny{{ .Values.global.user_suffix | default "" }}@Default
+        role: cloud_compute_admin
