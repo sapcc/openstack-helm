@@ -37,9 +37,13 @@ data:
   ml2-vmware.ini: |
     [DEFAULT]
     backdoor_socket=/var/lib/neutron/eventlet_backdoor.socket
+    service_plugins =
 
     [securitygroup]
     firewall_driver = networking_dvs.plugins.ml2.drivers.mech_dvs.agent.dvs_firewall.DvsSecurityGroupsDriver
+
+    [ml2]
+    extension_drivers =
 
     [ml2_vmware]
     vsphere_hostname = {{ host }}
