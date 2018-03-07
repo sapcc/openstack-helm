@@ -28,8 +28,8 @@ spec:
           configMap:
             name: cinder-etc
       containers:
-{{- if or .Values.db_purge.enabled .Values.quota_sync.enabled }}
-        - name: db-purge-quota-sync
+{{- if .Values.db_purge.enabled }}
+        - name: db-consistency-and-purge
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/cinder-nanny:{{.Values.image_version_cinder_nanny}}
           imagePullPolicy: IfNotPresent
           command:
@@ -37,7 +37,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "{{ if not .Values.nanny.debug }}/bin/bash /scripts/cinder-db-purge-quota-sync.sh{{ else }}sleep inf{{ end }}"
+              value: "{{ if not .Values.nanny.debug }}/bin/bash /scripts/cinder-consistency-and-purge.sh{{ else }}sleep inf{{ end }}"
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
@@ -48,12 +48,36 @@ spec:
               value: {{ .Values.db_purge.enabled | quote }}
             - name: CINDER_DB_PURGE_OLDER_THAN
               value: {{ .Values.db_purge.older_than | quote }}
-            - name: CINDER_QUOTA_SYNC_ENABLED
-              value: {{ .Values.quota_sync.enabled | quote }}
             - name: CINDER_CONSISTENCY_ENABLED
               value: {{ .Values.consistency.enabled | quote }}
             - name: CINDER_CONSISTENCY_DRY_RUN
               value: {{ .Values.consistency.dry_run | quote }}
+            - name: CINDER_NANNY_INTERVAL
+              value: {{ .Values.nanny.interval | quote }}
+          volumeMounts:
+            - mountPath: /cinder-etc
+              name: cinder-etc
+{{- end }}
+{{- if .Values.quota_sync.enabled }}
+        - name: quota-sync
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/cinder-nanny:{{.Values.image_version_cinder_nanny}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - dumb-init
+            - kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "{{ if not .Values.nanny.debug }}/bin/bash /scripts/cinder-quota-sync.sh{{ else }}sleep inf{{ end }}"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-cinder,cinder-api"
+            - name: CINDER_QUOTA_SYNC_ENABLED
+              value: {{ .Values.quota_sync.enabled | quote }}
+            - name: CINDER_QUOTA_SYNC_DRY_RUN
+              value: {{ .Values.quota_sync.dry_run | quote }}
             - name: CINDER_NANNY_INTERVAL
               value: {{ .Values.nanny.interval | quote }}
           volumeMounts:
