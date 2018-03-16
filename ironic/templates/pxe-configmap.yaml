@@ -13,6 +13,14 @@ data:
         server_name  localhost;
 
         location / {
+            root   /srv/tftpboot;
+            autoindex   on;
+            sendfile    on;
+            tcp_nopush  on;
+            tcp_nodelay on;
+        }
+
+        location /tftpboot {
             root   /srv;
             autoindex   on;
             sendfile    on;
