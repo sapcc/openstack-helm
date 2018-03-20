@@ -59,7 +59,7 @@ spec:
               name: nova-etc
 {{- end }}
 {{- if .Values.quota_sync.enabled }}
-        - name: db-purge-quota-sync
+        - name: quota-sync
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/nova-nanny:{{.Values.image_version_nova_nanny}}
           imagePullPolicy: IfNotPresent
           command:
