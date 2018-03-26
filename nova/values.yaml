@@ -74,7 +74,7 @@ image_version_nova_scheduler: null
 cross_az_attach: 'False'
 
 scheduler:
-  default_filters: "AvailabilityZoneFilter, AggregateInstanceExtraSpecsFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter, BaremetalExactRamFilter, BaremetalExactCoreFilter, BaremetalExactDiskFilter"
+  default_filters: "AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter, BaremetalExactRamFilter, BaremetalExactCoreFilter, BaremetalExactDiskFilter"
 
 pg_metrics:
   name: nova
