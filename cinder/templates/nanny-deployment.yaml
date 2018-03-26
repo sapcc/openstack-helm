@@ -120,7 +120,7 @@ spec:
             - name: OS_USER_DOMAIN_NAME
               value: "Default"
             - name: OS_PASSWORD
-              value: '{{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) }}'
+              value: {{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
 {{- end }}
 {{- end }}
 {{- end }}
