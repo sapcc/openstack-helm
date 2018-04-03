@@ -10,7 +10,7 @@ metadata:
     service: cinder-nanny
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/port: 9456
+    prometheus.io/port: "9456"
 spec:
   selector:
     component: cinder-nanny
