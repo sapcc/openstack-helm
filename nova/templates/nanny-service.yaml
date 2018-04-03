@@ -17,5 +17,5 @@ spec:
   ports:
     - name: metrics
       port: 9456
-{% endif %}
-{% endif %}
+{{- end }}
+{{- end }}
