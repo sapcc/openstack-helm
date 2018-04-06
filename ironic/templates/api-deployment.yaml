@@ -50,6 +50,13 @@ spec:
               value: "ironic-db-migration"
             - name: DEPENDENCY_SERVICE
               value: "postgres-ironic,rabbitmq"
+{{- if .Values.logging.handlers.sentry }}
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry
+                  key: {{ .Chart.Name }}.DSN.python
+{{- end }}
           livenessProbe:
             httpGet:
               path: /

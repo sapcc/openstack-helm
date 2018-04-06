@@ -49,6 +49,13 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
+{{- if .Values.logging.handlers.sentry }}
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry
+                  key: {{ .Chart.Name }}.DSN.python
+{{- end }}
           volumeMounts:
             - mountPath: /etc/ironic
               name: etcironic

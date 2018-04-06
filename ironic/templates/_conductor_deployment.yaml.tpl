@@ -55,13 +55,20 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "ironic-api,rabbitmq"
+{{- if .Values.logging.handlers.sentry }}
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry
+                  key: {{ .Chart.Name }}.DSN.python
+{{- end }}
         {{- if not $conductor.debug }}
           livenessProbe:
             exec:
               command:
                 - bash
                 - -c
-                - eval $(cat /etc/ironic/ironic.conf | grep -A9 '\[keystone_authtoken\]' | grep '='  | while read LINE; do var="${LINE% =*}" ; val="${LINE#*= }" ; echo export OS_${var^^}=${val}  ; done); OS_IDENTITY_API_VERSION=3 openstack baremetal driver list | grep `hostname` >/dev/null
+                - eval $(cat /etc/ironic/ironic.conf | grep -Pzo '\[keystone_authtoken\][^[]*' | tr -d '\000' | grep '='  | while read LINE; do var="${LINE% =*}" ; val="${LINE#*= }" ; echo export OS_${var^^}=${val} ; done); OS_IDENTITY_API_VERSION=3 openstack baremetal driver list -f csv | grep `hostname` >/dev/null
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 3
