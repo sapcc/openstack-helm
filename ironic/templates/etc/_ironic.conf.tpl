@@ -20,7 +20,7 @@ deploy_logs_swift_container = {{ .Values.agent.deploy_logs.swift_container | def
 
 [inspector]
 enabled=True
-auth_section = keystone_authtoken
+auth_section = service_catalog
 service_url=https://{{include "ironic_inspector_endpoint_host_public" .}}
 
 [dhcp]
@@ -32,12 +32,17 @@ host_ip = 0.0.0.0
 {{- include "ini_sections.database" . }}
 
 [keystone]
-auth_section = keystone_authtoken
+auth_section = service_catalog
 region = {{ .Values.global.region }}
 
 [keystone_authtoken]
+auth_section = service_catalog
 auth_uri = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
+
+[service_catalog]
+auth_section = service_catalog
+insecure = True
 # auth_section
 auth_type = v3password
 auth_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
@@ -47,12 +52,8 @@ password = {{ .Values.global.ironic_service_password | default (tuple . .Values.
 project_domain_name = {{.Values.global.keystone_service_domain}}
 project_name = {{.Values.global.keystone_service_project}}
 
-[service_catalog]
-auth_section = keystone_authtoken
-insecure = True
-
 [glance]
-auth_section = keystone_authtoken
+auth_section = service_catalog
 glance_api_servers = {{.Values.global.glance_api_endpoint_protocol_internal}}://{{include "glance_api_endpoint_host_internal" .}}:{{.Values.global.glance_api_port_internal}}
 swift_temp_url_duration=1200
 # No terminal slash, it will break the url signing scheme
@@ -69,13 +70,13 @@ swift_account={{ .Values.swift_account }}
 {{- end }}
 
 [swift]
-auth_section = keystone_authtoken
+auth_section = service_catalog
 {{- if .Values.swift_set_temp_url_key }}
 swift_set_temp_url_key = True
 {{- end }}
 
 [neutron]
-auth_section = keystone_authtoken
+auth_section = service_catalog
 url = {{.Values.global.neutron_api_endpoint_protocol_internal}}://{{include "neutron_api_endpoint_host_internal" .}}:{{ .Values.global.neutron_api_port_internal }}
 cleaning_network_uuid = {{ .Values.network_cleaning_uuid }}
 provisioning_network_uuid = {{ .Values.network_management_uuid }}
