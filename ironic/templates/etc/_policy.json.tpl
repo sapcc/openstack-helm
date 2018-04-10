@@ -29,6 +29,10 @@
     "baremetal:node:vendor_passthru": "rule:context_is_admin",
     "baremetal:node:ipa_heartbeat": "rule:public_api",
 
+    "baremetal:node:vif:list": "rule:context_is_viewer",
+    "baremetal:node:vif:attach": "rule:context_is_admin",
+    "baremetal:node:vif:detach": "rule:context_is_admin",
+
     "baremetal:port:get": "rule:context_is_viewer",
     "baremetal:port:create": "rule:context_is_admin",
     "baremetal:port:delete": "rule:context_is_admin",
@@ -38,6 +42,16 @@
     "baremetal:chassis:create": "rule:context_is_admin",
     "baremetal:chassis:delete": "rule:context_is_admin",
     "baremetal:chassis:update": "rule:context_is_admin",
+
+    "baremetal:portgroup:get": "rule:context_is_viewer",
+    "baremetal:portgroup:create": "rule:context_is_admin",
+    "baremetal:portgroup:update": "rule:context_is_admin",
+    "baremetal:portgroup:delete": "rule:context_is_admin",
+
+    "baremetal:volume:get": "rule:context_is_viewer",
+    "baremetal:volume:create": "rule:context_is_admin",
+    "baremetal:volume:update": "rule:context_is_admin",
+    "baremetal:volume:delete": "rule:context_is_admin",
 
     "baremetal:driver:get": "rule:context_is_baremetal_admin",
     "baremetal:driver:get_properties": "rule:context_is_baremetal_admin",
