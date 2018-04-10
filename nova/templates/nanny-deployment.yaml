@@ -52,8 +52,24 @@ spec:
               value: {{ .Values.db_purge.older_than | quote }}
             - name: NOVA_DB_PURGE_MAX_NUMBER
               value: {{ .Values.db_purge.max_number | quote }}
+            - name: NOVA_CONSISTENCY_ENABLED
+              value: {{ .Values.consistency.enabled | quote }}
+            - name: NOVA_CONSISTENCY_DRY_RUN
+              value: {{ .Values.consistency.dry_run | quote }}
             - name: NOVA_NANNY_INTERVAL
               value: {{ .Values.nanny.interval | quote }}
+            - name: OS_AUTH_URL
+              value: "https://{{ include "keystone_api_endpoint_host_public" . }}:443/v3"
+            - name: OS_PROJECT_NAME
+              value: "cloud_admin"
+            - name: OS_PROJECT_DOMAIN_NAME
+              value: "ccadmin"
+            - name: OS_USERNAME
+              value: "nova_nanny"
+            - name: OS_USER_DOMAIN_NAME
+              value: "Default"
+            - name: OS_PASSWORD
+              value: {{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
           volumeMounts:
             - mountPath: /nova-etc
               name: nova-etc

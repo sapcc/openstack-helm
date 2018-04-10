@@ -74,6 +74,8 @@ spec:
       # permission to manage all ressources checked by the nanny
       - user: nova_nanny{{ .Values.global.user_suffix | default "" }}@Default
         role: cloud_compute_admin
+      - user: nova_nanny{{ .Values.global.user_suffix | default "" }}@Default
+        role: cloud_volume_admin
     groups:
     - name: CCADMIN_CLOUD_ADMINS
       roles:

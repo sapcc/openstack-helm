@@ -193,6 +193,10 @@ db_purge:
   enabled: False
   # purge deleted cinder entities older than n days
   older_than: 7
+consistency:
+  enabled: False
+  # dry run mode, i.e. just check for consistency without fixing it
+  dry_run: True
 db_cleanup:
   enabled: False
   # dry run mode, i.e. just pretend to cleanup the entries

@@ -231,6 +231,10 @@ db_purge:
   older_than: 7
   # purge at max n entries in one run
   max_number: 50
+consistency:
+  enabled: False
+  # dry run mode, i.e. just check for consistency without fixing it
+  dry_run: True
 db_cleanup:
   enabled: False
   # dry run mode, i.e. just pretend to cleanup the entries
