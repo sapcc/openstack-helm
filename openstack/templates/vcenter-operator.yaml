@@ -55,6 +55,9 @@ spec:
             - dumb-init
           args:
             - vcenter-operator
+          env:
+          - name: SERVICE_DOMAIN
+            value: "cc.{{.Values.global.region}}.{{.Values.global.tld}}"
           image: "{{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-vcenter-operator:{{ .Values.vcenter_operator.image_version}}"
           volumeMounts:
             - name: config
