@@ -55,6 +55,8 @@ spec:
             - name: PYTHONWARNINGS
               value: {{ .Values.python_warnings | quote }}
 {{- end }}
+            - name: PGAPPNAME
+              value: nova-scheduler
           volumeMounts:
             - name: etcnova
               mountPath: /etc/nova

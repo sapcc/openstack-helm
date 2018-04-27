@@ -64,6 +64,8 @@ spec:
               value: "openstack"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+            - name: PGAPPNAME
+              value: neutron-server
           ports:
             - name: neutron-api
               containerPort: {{.Values.global.neutron_api_port_internal}}

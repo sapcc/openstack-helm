@@ -50,6 +50,8 @@ spec:
               value: "cinder-api,rabbitmq"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+            - name: PGAPPNAME
+              value: cinder-scheduler
           volumeMounts:
             - name: etccinder
               mountPath: /etc/cinder

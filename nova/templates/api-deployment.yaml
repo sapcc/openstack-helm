@@ -67,6 +67,8 @@ spec:
               value: {{ .Values.python_warnings | quote }}
 {{- end }}
 {{- if not .Values.pod.debug.api }}
+            - name: PGAPPNAME
+              value: nova-api
           livenessProbe:
             httpGet:
               path: /

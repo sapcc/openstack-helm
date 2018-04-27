@@ -49,6 +49,8 @@ spec:
               value: "9125"
             - name: PYTHONWARNINGS
               value: "ignore:Unverified HTTPS request"
+            - name: PGAPPNAME
+              value: nova-compute-{{ name }}
           volumeMounts:
             - mountPath: /etc/nova
               name: etcnova
@@ -82,6 +84,8 @@ spec:
               value: "9125"
             - name: PYTHONWARNINGS
               value: "ignore:Unverified HTTPS request"
+            - name: PGAPPNAME
+              value: neutron-dvs-agent-{{ name }}
           livenessProbe:
             initialDelaySeconds: 300
             periodSeconds: 5

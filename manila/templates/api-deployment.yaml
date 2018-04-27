@@ -50,6 +50,8 @@ spec:
               value: "postgres-manila,rabbitmq"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+            - name: PGAPPNAME
+              value: manila-api
           livenessProbe:
             httpGet:
               path: /

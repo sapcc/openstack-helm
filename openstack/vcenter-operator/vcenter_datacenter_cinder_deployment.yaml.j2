@@ -43,6 +43,8 @@ spec:
               value: {{ cinder_sentry_dsn }}
             - name: PYTHONWARNINGS
               value: "ignore:Unverified HTTPS request"
+            - name: PGAPPNAME
+              value: cinder-volume-vmware-{{ name }}
           volumeMounts:
             - name: etccinder
               mountPath: /etc/cinder

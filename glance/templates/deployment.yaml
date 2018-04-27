@@ -70,6 +70,8 @@ spec:
               value: "9125"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+            - name: PGAPPNAME
+              value: glance-api
           ports:
             - name: api
               containerPort: {{.Values.global.glance_api_port_internal}}
@@ -120,6 +122,8 @@ spec:
               value: "glance"
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
+            - name: PGAPPNAME
+              value: glance-registry
           ports:
             - name: registry
               containerPort: 9191

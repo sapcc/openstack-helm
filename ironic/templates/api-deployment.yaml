@@ -57,6 +57,8 @@ spec:
                   name: sentry
                   key: {{ .Chart.Name }}.DSN.python
 {{- end }}
+            - name: PGAPPNAME
+              value: ironic-api
           livenessProbe:
             httpGet:
               path: /

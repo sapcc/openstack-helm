@@ -62,6 +62,8 @@ spec:
                   name: sentry
                   key: {{ .Chart.Name }}.DSN.python
 {{- end }}
+            - name: PGAPPNAME
+              value: ironic-conductor-{{$conductor.name}}
         {{- if not $conductor.debug }}
           livenessProbe:
             exec:

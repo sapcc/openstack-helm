@@ -65,6 +65,8 @@ spec:
               value: "9125"
             - name: STATSD_PREFIX
               value: "openstack"
+            - name: PGAPPNAME
+              value: keystone
           ports:
             - name: public
               containerPort: 5000
