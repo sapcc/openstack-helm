@@ -1,4 +1,5 @@
-{{- if or .Values.pgbouncer.enabled .Values.global.pgbouncer.enabled }}
+{{- $opts := merge .Values.pgbouncer .Values.global.pgbouncer }}
+{{- if $opts.enabled }}
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -37,29 +38,29 @@ spec:
       terminationGracePeriodSeconds: 150
       containers:
         - name: pgbouncer
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/pgbouncer-k8s:{{.Values.pgbouncer.image_version | default .Values.global.pgbouncer.image_version | default "latest" }}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/pgbouncer-k8s:{{$opts.image_version | default "latest" }}
           imagePullPolicy: IfNotPresent
-{{- if .Values.pgbouncer.debug }}
+{{- if $opts.debug }}
           command: ["sleep", "inf"]
 {{- end }}
           env:
             - name: LABEL_SELECTOR
               value: "name=postgres-{{.Values.name}}"
             - name: LISTEN_PORT
-              value: "6543"
+              value: {{ $opts.config.listen_port | quote }}
             - name: LISTEN_BACKLOG
-              value: "{{.Values.pgbouncer.listen_backlog | default .Values.global.pgbouncer.listen_backlog | default 256 }}"
+              value: {{ $opts.config.listen_backlog | quote }}
             - name: MAX_CLIENT_CONN
-              value: "{{.Values.pgbouncer.max_client_conn | default .Values.global.pgbouncer.max_client_conn | default 16384 }}"
+              value: {{ $opts.config.max_client_conn | quote }}
             - name: MIN_POOL_SIZE
-              value: "{{.Values.pgbouncer.min_pool_size | default .Values.global.pgbouncer.min_pool_size | default 1 }}"
+              value: {{ $opts.config.min_pool_size | quote }}
             - name: DEFAULT_POOL_SIZE
-              value: "{{.Values.pgbouncer.default_pool_size | default .Values.global.pgbouncer.default_pool_size | default 4 }}"
+              value: {{ $opts.config.default_pool_size | quote }}
             - name: RESERVE_POOL_SIZE
-              value: "{{.Values.pgbouncer.reserve_pool_size | default .Values.global.pgbouncer.reserve_pool_size | default 4 }}"
+              value: {{ $opts.config.reserve_pool_size | quote }}
             - name: STATS_PASS
-              value: "{{.Values.pgbouncer.stats_pass | default .Values.global.pgbouncer.stats_pass | default (derivePassword 1 "long" "password" "stats_user" (print "postgres-" .Values.name "." .Release.Namespace ".svc.kubernetes." .Values.global.region "." .Values.global.tld)) }}"
-{{- if not .Values.pgbouncer.debug }}
+              value: {{ $opts.config.stats_pass | default (derivePassword 1 "long" "password" "stats_user" (print "postgres-" .Values.name "." .Release.Namespace ".svc.kubernetes." .Values.global.region "." .Values.global.tld)) | quote }}
+{{- if not $opts.debug }}
           livenessProbe:
             exec:
               command:
@@ -70,5 +71,5 @@ spec:
 {{- end }}
           ports:
             - name: pgbouncer
-              containerPort: 6543
+              containerPort: {{ $opts.config.listen_port }}
 {{- end }}

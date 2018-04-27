@@ -9,6 +9,29 @@ global:
   pgbouncer:
     enabled: false
     image_version: null
+    config:
+      stats_users: "stats_user"
+      admin_users: "admin_user"
+      autodb_idle_timeout: 3600
+      max_client_conn: 16384
+      reserve_pool_size: 4
+      min_pool_size: 1
+      default_pool_size: 4
+      server_check_delay: 30
+      unix_socket_dir: "/tmp"
+      listen_addr: "0.0.0.0"
+      listen_port: 6543
+      listen_backlog: 256
+      auth_type: "md5"
+      tcp_keepalive: 1
+      tcp_keepcnt: 10
+      tcp_keepidle: 5
+      tcp_keepintvl: 5
+      ignore_startup_parameters: "extra_float_digits"
+      log_connections: 0
+      log_disconnections: 0
+      pool_mode: "transaction"
+      application_name_add_host: 1
 
 name: null
 user: postgres
@@ -51,5 +74,4 @@ backup:
   os_project_domain: ccadmin
 
 pgbouncer:
-  enabled: false
-  image_version: null
+  config: {}
