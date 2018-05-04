@@ -49,7 +49,9 @@ spec:
             - name: DEPENDENCY_SERVICE
               value: "postgres-barbican,rabbitmq"
             - name: PGAPPNAME
-              value: barbican-api
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           livenessProbe:
             httpGet:
               path: /

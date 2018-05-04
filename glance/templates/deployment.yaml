@@ -71,7 +71,9 @@ spec:
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
             - name: PGAPPNAME
-              value: glance-api
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           ports:
             - name: api
               containerPort: {{.Values.global.glance_api_port_internal}}

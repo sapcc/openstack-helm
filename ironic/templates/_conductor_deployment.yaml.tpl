@@ -63,7 +63,9 @@ spec:
                   key: {{ .Chart.Name }}.DSN.python
 {{- end }}
             - name: PGAPPNAME
-              value: ironic-conductor-{{$conductor.name}}
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
         {{- if not $conductor.debug }}
           livenessProbe:
             exec:

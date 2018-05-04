@@ -23,6 +23,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-manila"
+            - name: PGAPPNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           volumeMounts:
             - name: etcmanila
               mountPath: /etc/manila

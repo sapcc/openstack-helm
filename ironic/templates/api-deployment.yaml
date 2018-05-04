@@ -58,7 +58,9 @@ spec:
                   key: {{ .Chart.Name }}.DSN.python
 {{- end }}
             - name: PGAPPNAME
-              value: ironic-api
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           livenessProbe:
             httpGet:
               path: /

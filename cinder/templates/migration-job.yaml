@@ -23,6 +23,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-cinder"
+            - name: PGAPPNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           volumeMounts:
             - name: etccinder
               mountPath: /etc/cinder

@@ -28,6 +28,10 @@ spec:
               value: "postgres-glance"
             - name: PGPASSWORD
               value: {{ .Values.db_password | default (tuple . .Values.postgres.user | include "postgres.password_for_user") }}
+            - name: PGAPPNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           volumeMounts:
             - mountPath: /etc/glance
               name: etcglance

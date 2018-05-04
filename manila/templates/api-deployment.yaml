@@ -51,7 +51,9 @@ spec:
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
             - name: PGAPPNAME
-              value: manila-api
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           livenessProbe:
             httpGet:
               path: /

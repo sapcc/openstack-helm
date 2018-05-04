@@ -23,6 +23,10 @@ spec:
               value: {{ .Release.Namespace }}
             - name: DEPENDENCY_SERVICE
               value: "postgres-neutron"
+            - name: PGAPPNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           volumeMounts:
             - mountPath: /neutron-etc
               name: neutron-etc

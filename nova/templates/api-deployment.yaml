@@ -66,9 +66,11 @@ spec:
             - name: PYTHONWARNINGS
               value: {{ .Values.python_warnings | quote }}
 {{- end }}
-{{- if not .Values.pod.debug.api }}
             - name: PGAPPNAME
-              value: nova-api
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+{{- if not .Values.pod.debug.api }}
           livenessProbe:
             httpGet:
               path: /

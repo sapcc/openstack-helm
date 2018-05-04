@@ -49,7 +49,9 @@ spec:
               value: {{ or $hypervisor.python_warnings .Values.python_warnings | quote }}
 {{- end }}
             - name: PGAPPNAME
-              value: nova-compute-ironic
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           volumeMounts:
             - mountPath: /etc/nova
               name: etcnova

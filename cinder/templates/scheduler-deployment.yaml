@@ -51,7 +51,9 @@ spec:
             - name: SENTRY_DSN
               value: {{.Values.sentry_dsn | quote}}
             - name: PGAPPNAME
-              value: cinder-scheduler
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
           volumeMounts:
             - name: etccinder
               mountPath: /etc/cinder

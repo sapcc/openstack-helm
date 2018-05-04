@@ -49,6 +49,11 @@ spec:
         - |
           ironic-dbsync upgrade
           true
+        env:
+        - name: PGAPPNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         volumeMounts:
         - mountPath: /etc/ironic
           name: etcironic
