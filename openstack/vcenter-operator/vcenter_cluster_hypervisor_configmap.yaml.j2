@@ -27,6 +27,9 @@ data:
     pbm_default_policy = "nova-ephemeral"
     datastore_regex = {{ datastore_regex | quote }}
     use_linked_clone = False
+    {%- if vmware_connection_pool_size is defined and vmware_connection_pool_size %}
+    connection_pool_size = {{ vmware_connection_pool_size }}
+    {%- endif %}
 ---
 apiVersion: v1
 kind: ConfigMap
