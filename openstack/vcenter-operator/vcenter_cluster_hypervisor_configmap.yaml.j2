@@ -30,6 +30,9 @@ data:
     {%- if vmware_connection_pool_size is defined and vmware_connection_pool_size %}
     connection_pool_size = {{ vmware_connection_pool_size }}
     {%- endif %}
+    {%- if vmware_connection_pool_block is defined %}
+    connection_pool_block = {{ vmware_connection_pool_block }}
+    {%- endif %}
 ---
 apiVersion: v1
 kind: ConfigMap
