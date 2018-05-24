@@ -166,7 +166,7 @@ dynamic_shared_memory_type = posix	# the default is the first option
 
 # - Asynchronous Behavior -
 
-#effective_io_concurrency = 1		# 1-1000; 0 disables prefetching
+effective_io_concurrency = 200		# 1-1000; 0 disables prefetching
 #max_worker_processes = 8
 
 
@@ -192,7 +192,7 @@ dynamic_shared_memory_type = posix	# the default is the first option
 #wal_compression = off			# enable compression of full-page writes
 #wal_log_hints = off			# also do full page writes of non-critical updates
                     # (change requires restart)
-#wal_buffers = -1			# min 32kB, -1 sets based on shared_buffers
+wal_buffers = 16MB			# min 32kB, -1 sets based on shared_buffers
                     # (change requires restart)
 #wal_writer_delay = 200ms		# 1-10000 milliseconds
 
@@ -204,7 +204,7 @@ dynamic_shared_memory_type = posix	# the default is the first option
 #checkpoint_timeout = 5min		# range 30s-1h
 #max_wal_size = 1GB
 #min_wal_size = 80MB
-#checkpoint_completion_target = 0.5	# checkpoint target duration, 0.0 - 1.0
+checkpoint_completion_target = 0.9	# checkpoint target duration, 0.0 - 1.0
 #checkpoint_warning = 30s		# 0 disables
 
 # - Archiving -
@@ -290,7 +290,7 @@ dynamic_shared_memory_type = posix	# the default is the first option
 # - Planner Cost Constants -
 
 #seq_page_cost = 1.0			# measured on an arbitrary scale
-#random_page_cost = 4.0			# same scale as above
+random_page_cost = 1.1			# same scale as above
 #cpu_tuple_cost = 0.01			# same scale as above
 #cpu_index_tuple_cost = 0.005		# same scale as above
 #cpu_operator_cost = 0.0025		# same scale as above
