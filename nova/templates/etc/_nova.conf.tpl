@@ -5,11 +5,7 @@ debug = {{.Values.debug}}
 log_config_append = /etc/nova/logging.ini
 state_path = /var/lib/nova
 
-security_group_api = neutron
 use_neutron = True
-network_api_class = nova.network.neutronv2.api.API
-firewall_driver = nova.virt.firewall.NoopFirewallDriver
-
 linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
 
 # we patched this to be treated as force_resize_to_same_host
@@ -123,15 +119,5 @@ driver = noop
 
 [oslo_middleware]
 enable_proxy_headers_parsing = true
-
-[libvirt]
-connection_uri = "qemu+tcp://127.0.0.1/system"
-iscsi_use_multipath=True
-#inject_key=True
-#inject_password = True
-#live_migration_downtime = 500
-#live_migration_downtime_steps = 10
-#live_migration_downtime_delay = 75
-#live_migration_flag = VIR_MIGRATE_UNDEFINE_SOURCE, VIR_MIGRATE_PEER2PEER, VIR_MIGRATE_LIVE, VIR_MIGRATE_TUNNELLED
 
 {{- include "ini_sections.audit_middleware_notifications" . }}
