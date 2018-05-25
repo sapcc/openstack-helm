@@ -10,6 +10,9 @@ disk_allocation_ratio={{$hypervisor.disk_allocation_ratio | default .disk_alloca
 reserved_host_disk_mb={{$hypervisor.reserved_host_disk_mb | default .reserved_host_disk_mb | default 0 }}
 reserved_host_memory_mb={{$hypervisor.reserved_host_memory_mb | default .reserved_host_memory_mb | default 512 }}
 
+# Needs to be same on hypervisor and scheduler
+scheduler_tracks_instance_changes = {{ .Values.scheduler.scheduler_tracks_instance_changes }}
+
 [libvirt]
 connection_uri = "qemu+tcp://127.0.0.1/system"
 iscsi_use_multipath=True

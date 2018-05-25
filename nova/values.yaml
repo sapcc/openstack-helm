@@ -74,6 +74,8 @@ image_version_nova_scheduler: null
 cross_az_attach: 'False'
 
 scheduler:
+  driver: "nova.scheduler.filter_scheduler.FilterScheduler"
+  scheduler_tracks_instance_changes: True
   default_filters: "AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter, BaremetalExactRamFilter, BaremetalExactCoreFilter, BaremetalExactDiskFilter"
   ram_weight_multiplier: 1.0
   disk_weight_multiplier: 1.0
