@@ -33,6 +33,7 @@ data:
     {%- if vmware_connection_pool_block is defined %}
     connection_pool_block = {{ vmware_connection_pool_block }}
     {%- endif %}
+    scheduler_tracks_instance_changes = {{ scheduler_tracks_instance_changes }}
 ---
 apiVersion: v1
 kind: ConfigMap
