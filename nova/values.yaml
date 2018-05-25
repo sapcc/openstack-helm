@@ -75,6 +75,8 @@ cross_az_attach: 'False'
 
 scheduler:
   default_filters: "AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter, BaremetalExactRamFilter, BaremetalExactCoreFilter, BaremetalExactDiskFilter"
+  ram_weight_multiplier: 1.0
+  disk_weight_multiplier: 1.0
 
 pg_metrics:
   name: nova
