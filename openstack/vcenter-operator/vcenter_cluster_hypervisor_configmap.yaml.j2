@@ -34,6 +34,7 @@ data:
     connection_pool_block = {{ vmware_connection_pool_block }}
     {%- endif %}
     scheduler_tracks_instance_changes = {{ scheduler_tracks_instance_changes }}
+    scheduler_instance_sync_interval = {{ scheduler_instance_sync_interval }}
 ---
 apiVersion: v1
 kind: ConfigMap

@@ -17,6 +17,7 @@ data:
   nova_service_user: {{  .Values.global.nova_service_user }}
   vcenter_nanny_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/vcenter-nanny:{{ .Values.vcenter_operator.image_version_vcenter_nanny }}
   scheduler_tracks_instance_changes: {{ .Values.nova.scheduler.scheduler_tracks_instance_changes | quote }}
+  scheduler_instance_sync_interval: {{ .Values.nova.scheduler.scheduler_instance_sync_interval | quote }}
 {{- range $key, $value := .Values.vcenter_operator }}
   {{- $str := toJson $value }}
   {{ $key }}: {{if hasPrefix "\"" $str }}{{ $str }}{{ else }}{{ quote $str }}{{ end }}

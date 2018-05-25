@@ -7,6 +7,7 @@ reserved_host_memory_mb={{$hypervisor.reserved_host_memory_mb | default .reserve
 
 # Needs to be same on hypervisor and scheduler
 scheduler_tracks_instance_changes = {{ .Values.scheduler.scheduler_tracks_instance_changes }}
+scheduler_instance_sync_interval = {{ .Values.scheduler.scheduler_instance_sync_interval }}
 
 [ironic]
 #TODO: this should be V3 also?
