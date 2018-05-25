@@ -15,6 +15,9 @@ data:
     max_concurrent_builds_per_project = {{ max_concurrent_builds_per_project }}
     {%- endif %}
 
+    scheduler_tracks_instance_changes = {{ scheduler_tracks_instance_changes }}
+    scheduler_instance_sync_interval = {{ scheduler_instance_sync_interval }}
+
     [vmware]
     insecure = True
     integration_bridge = {{ bridge | quote }}
@@ -33,8 +36,6 @@ data:
     {%- if vmware_connection_pool_block is defined %}
     connection_pool_block = {{ vmware_connection_pool_block }}
     {%- endif %}
-    scheduler_tracks_instance_changes = {{ scheduler_tracks_instance_changes }}
-    scheduler_instance_sync_interval = {{ scheduler_instance_sync_interval }}
 ---
 apiVersion: v1
 kind: ConfigMap
