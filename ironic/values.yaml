@@ -82,6 +82,9 @@ port_metrics: '9102'
 
 network_management_uuid: DEFINE_IN_REGION_CHART
 network_cleaning_uuid: DEFINE_IN_REGION_CHART
+neutron_url_timeout: 60
+neutron_port_setup_delay: 0
+
 swift_account: null
 swift_tempurl: null
 

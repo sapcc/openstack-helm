@@ -80,6 +80,8 @@ auth_section = service_catalog
 url = {{.Values.global.neutron_api_endpoint_protocol_internal}}://{{include "neutron_api_endpoint_host_internal" .}}:{{ .Values.global.neutron_api_port_internal }}
 cleaning_network_uuid = {{ .Values.network_cleaning_uuid }}
 provisioning_network_uuid = {{ .Values.network_management_uuid }}
+url_timeout = {{ .Values.neutron_url_timeout }}
+port_setup_delay = {{ .Values.neutron_port_setup_delay }}
 
 {{include "oslo_messaging_rabbit" .}}
 
