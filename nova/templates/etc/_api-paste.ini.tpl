@@ -43,18 +43,18 @@ use = call:nova.api.openstack.urlmap:urlmap_factory
 [composite:openstack_compute_api_legacy_v2]
 use = call:nova.api.auth:pipeline_factory
 noauth2 = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 legacy_ratelimit sentry osapi_compute_app_legacy_v2
-keystone = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext legacy_ratelimit sentry {{- include "audit_pipe" . }} osapi_compute_app_legacy_v2
-keystone_nolimit = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext sentry {{- include "audit_pipe" . }} osapi_compute_app_legacy_v2
+keystone = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext {{if .Values.watcher_enabled}}watcher {{end}}legacy_ratelimit sentry {{- include "audit_pipe" . }} osapi_compute_app_legacy_v2
+keystone_nolimit = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext {{if .Values.watcher_enabled}}watcher {{end}}sentry {{- include "audit_pipe" . }} osapi_compute_app_legacy_v2
 
 [composite:openstack_compute_api_v21]
 use = call:nova.api.auth:pipeline_factory_v21
 noauth2 = cors healthcheck http_proxy_to_wsgi compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 sentry {{- include "audit_pipe" . }} osapi_compute_app_v21
-keystone = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext sentry {{- include "audit_pipe" . }} osapi_compute_app_v21
+keystone = cors compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext {{if .Values.watcher_enabled}}watcher {{end}}sentry {{- include "audit_pipe" . }} osapi_compute_app_v21
 
 [composite:openstack_compute_api_v21_legacy_v2_compatible]
 use = call:nova.api.auth:pipeline_factory_v21
 noauth2 = cors healthcheck http_proxy_to_wsgi compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit noauth2 legacy_v2_compatible sentry {{- include "audit_pipe" . }} osapi_compute_app_v21
-keystone = cors healthcheck http_proxy_to_wsgi compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext legacy_v2_compatible sentry {{- include "audit_pipe" . }} osapi_compute_app_v21
+keystone = cors healthcheck http_proxy_to_wsgi compute_req_id {{- include "osprofiler_pipe" . }} statsd faultwrap sizelimit authtoken keystonecontext {{if .Values.watcher_enabled}}watcher {{end}}legacy_v2_compatible sentry {{- include "audit_pipe" . }} osapi_compute_app_v21
 
 [filter:request_id]
 paste.filter_factory = oslo_middleware:RequestId.factory
@@ -121,6 +121,13 @@ use = egg:ops-middleware#statsd
 [filter:sentry]
 use = egg:ops-middleware#sentry
 level = ERROR
+
+[filter:watcher]
+use = egg:watcher-middleware#watcher
+service_name = compute
+keystone_service_type = compute
+project_id_from_service_catalog = true
+config_file = /etc/nova/watcher.yaml
 
 {{ if .Values.audit.enabled }}
 [filter:audit]

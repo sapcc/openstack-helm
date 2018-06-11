@@ -248,3 +248,6 @@ db_cleanup:
   interval: 720
   # really delete entities after how many iterations
   iterations: 14
+
+# OpenStack request watcher: https://github.com/sapcc/openstack-watcher-middleware
+watcher_enabled: false
