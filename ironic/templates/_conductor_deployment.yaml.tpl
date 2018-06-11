@@ -47,7 +47,7 @@ spec:
           env:
             - name: COMMAND
         {{- if not $conductor.debug }}
-              value: "ironic-conductor --config-file /etc/ironic/ironic.conf --config-file /etc/ironic/ironic-conductor.conf"
+              value: "ironic-conductor"
         {{- else }}
               value: "sleep inf"
         {{- end }}
