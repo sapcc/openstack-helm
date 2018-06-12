@@ -103,6 +103,16 @@ spec:
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
+    - name: "zh2mlx1.1xlarge"
+      id: "1032"
+      vcpus: "88"
+      ram: "4194304"
+      disk: "400"
+      extra_specs:
+        "catalog:description": HANA Baremetal 4 socket 4TB Broadwell
+        "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh2mlx1.2xlarge"
       id: "1040"
       vcpus: "176"
