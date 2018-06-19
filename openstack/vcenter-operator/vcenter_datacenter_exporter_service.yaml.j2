@@ -11,13 +11,12 @@ metadata:
     system: openstack
     service: metrics
     component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
-{% if exporter_type['collector'] is defined %}{% if exporter_type['collector'] == "maia" %}
+{% if exporter_type['collector'] is defined and exporter_type['collector'] != None %}
   annotations:
-    maia.io/scrape: "true"
-    maia.io/port: "{{ vcenter_exporter['listen_port'] }}" {% elif exporter_type['collector'] == "prometheus" %}
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}{% endif %}
+    maia.io/scrape: {% if 'maia' in exporter_type['collector'] %}"true"{% else %}"false"{% endif %}
+    maia.io/port: "{{ vcenter_exporter['listen_port'] }}"
+    prometheus.io/scrape: {% if 'prometheus' in exporter_type['collector'] %}"true"{% else %}"false"{% endif %}
+    prometheus.io/port: "{{ vcenter_exporter['listen_port'] }}" {% endif %}
 spec:
   selector:
     component: vcenter-exporter-{{ name }}-{{ exporter_type['name'] }}
