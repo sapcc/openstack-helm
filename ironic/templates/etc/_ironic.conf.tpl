@@ -1,5 +1,5 @@
 [DEFAULT]
-log-config-append = /etc/ironic/logging.ini
+log_config_append = /etc/ironic/logging.ini
 pybasedir = /ironic/ironic
 network_provider = neutron_plugin
 enabled_network_interfaces = noop,flat,neutron
