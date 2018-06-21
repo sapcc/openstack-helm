@@ -53,6 +53,16 @@ spec:
         "capabilities:cpu_arch": "x86_64"
         "quota:separate": "true"
         "quota:instance_only": "true"
+    - name: "zh1vic1.medium"
+      id: "1005"
+      vcpus: "24"
+      ram: "262144"
+      disk: "300"
+      extra_specs:
+        "catalog:description": HANA Baremetal 2 socket 256GB Haswell
+        "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh2vic1.medium"
       id: "1010"
       vcpus: "28"
