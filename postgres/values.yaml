@@ -41,6 +41,11 @@ port_private: '5432'
 hba_cidr: 0.0.0.0/0
 auth_method: password
 
+extensions:
+  pg_stat_statements:
+    max: 1000
+    track: all
+
 users: {}
 scripts: {}
 
