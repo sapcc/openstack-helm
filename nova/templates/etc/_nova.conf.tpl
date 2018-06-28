@@ -73,6 +73,7 @@ enabled = True
 base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_console_port_public }}/serial
 shellinaboxproxy_host = 0.0.0.0
 shellinaboxproxy_port = {{ .Values.global.nova_shellinabox_port_internal }}
+shellinabox_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_console_port_public }}/shellinabox
 
 {{include "oslo_messaging_rabbit" .}}
 
