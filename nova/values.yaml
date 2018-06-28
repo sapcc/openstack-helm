@@ -231,7 +231,7 @@ quota_sync:
 db_purge:
   enabled: False
   # dry run mode, i.e. just pretend to purge the entries
-  dry_run: true
+  dry_run: True
   # purge instance entries older than n days
   older_than: 7
   # purge at max n entries in one run
@@ -243,8 +243,14 @@ consistency:
 db_cleanup:
   enabled: False
   # dry run mode, i.e. just pretend to cleanup the entries
-  dry_run: true
+  dry_run: True
   # run the db cleanup every n minutes
   interval: 720
   # really delete entities after how many iterations
   iterations: 14
+sync_neutron_cache:
+  enabled: False
+  # dry run mode, i.e. just pretend to cleanup the entries
+  dry_run: True
+  # run the db cleanup every n minutes
+  interval: 360

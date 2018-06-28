@@ -1,5 +1,5 @@
 {{- if .Values.nanny.enabled }}
-{{- if or .Values.db_purge.enabled .Values.quota_sync.enabled .Values.db_cleanup.enabled }}
+{{- if or .Values.db_purge.enabled .Values.quota_sync.enabled .Values.db_cleanup.enabled .Values.sync_neutron_cache.enabled }}
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -137,6 +137,32 @@ spec:
               value: "Default"
             - name: OS_PASSWORD
               value: {{ derivePassword 1 "long" .Values.global.master_password "nova_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
+{{- end }}
+{{- if .Values.sync_neutron_cache.enabled }}
+        - name: sync-neutron-cache
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/nova-nanny:{{.Values.image_version_nova_nanny}}
+          imagePullPolicy: IfNotPresent
+          command:
+            - dumb-init
+            - kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "{{ if not .Values.nanny.debug }}/bin/bash /scripts/nova-sync-neutron-cache.sh{{ else }}sleep inf{{ end }}"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEPENDENCY_SERVICE
+              value: "postgres-nova,nova-api,neutron-server"
+            - name: NOVA_SYNC_NEUTRON_CACHE_ENABLED
+              value: {{ .Values.sync_neutron_cache.enabled | quote }}
+            - name: NOVA_SYNC_NEUTRON_CACHE_DRY_RUN
+              value: {{ .Values.sync_neutron_cache.dry_run | quote }}
+            - name: NOVA_SYNC_NEUTRON_CACHE_INTERVAL
+              value: {{ .Values.sync_neutron_cache.interval | quote }}
+          volumeMounts:
+            - mountPath: /nova-etc
+              name: nova-etc
 {{- end }}
 {{- end }}
 {{- end }}
