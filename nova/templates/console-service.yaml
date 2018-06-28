@@ -21,3 +21,6 @@ spec:
     - name: serial
       port: {{.Values.global.nova_serial_port_internal}}
       targetPort: {{.Values.global.nova_serial_port_internal}}
+    - name: shellinabox
+      port: {{.Values.global.nova_shellinabox_port_internal}}
+      targetPort: {{.Values.global.nova_shellinabox_port_internal}}

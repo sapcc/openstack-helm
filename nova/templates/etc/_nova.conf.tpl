@@ -66,11 +66,13 @@ vncserver_listen = $my_ip
 vncserver_proxyclient_address = $my_ip
 novncproxy_base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_console_port_public }}/novnc/vnc_auto.html?path=/novnc/websockify
 novncproxy_host = 0.0.0.0
-novncproxy_port = {{ .Values.global.nova_novnc_port_internal}}
+novncproxy_port = {{ .Values.global.nova_novnc_port_internal }}
 
 [serial_console]
 enabled = True
 base_url = {{.Values.global.nova_console_endpoint_protocol}}://{{include "nova_console_endpoint_host_public" .}}:{{ .Values.global.nova_console_port_public }}/serial
+shellinaboxproxy_host = 0.0.0.0
+shellinaboxproxy_port = {{ .Values.global.nova_shellinabox_port_internal }}
 
 {{include "oslo_messaging_rabbit" .}}
 

@@ -32,3 +32,7 @@ spec:
           backend:
             serviceName: nova-console
             servicePort: serial
+        - path: /shellinabox
+          backend:
+            serviceName: nova-console
+            servicePort: shellinabox
