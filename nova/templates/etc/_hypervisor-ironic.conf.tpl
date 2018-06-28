@@ -17,5 +17,6 @@ admin_password={{ .Values.global.ironic_service_password | default (tuple . .Val
 admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v2.0
 admin_tenant_name={{.Values.global.keystone_service_project}}
 api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1
+serial_console_state_timeout=3
 {{- end }}
 {{- end }}
