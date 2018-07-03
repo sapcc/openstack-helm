@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shellinabox-console
+  labels:
+    system: openstack
+    type: config
+    component: nova
+data:
+  default.conf: |
+    server {
+        listen       6084;
+        server_name  {{include "nova_console_endpoint_host_public" .}};
+
+        location /shellinabox/ {
+            proxy_pass http://ironic-conductor-ucs-console/;
+            proxy_http_version  1.1;
+            proxy_redirect      default;
+            proxy_buffering     off;
+        }
+
+        location /health {
+            access_log off;
+            return 204;
+        }
+    }

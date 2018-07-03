@@ -43,6 +43,9 @@ spec:
       - name: nova-etc
         configMap:
           name: nova-etc
+      - name: shellinabox-console
+        configMap:
+          name: shellinabox-console
       containers:
         - name: nova-consoleauth
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth | default .Values.image_version | required "Please set nova.image_version or similar" }}
@@ -154,27 +157,12 @@ spec:
               subPath: logging.ini
               readOnly: true
         - name: nova-shellinaboxproxy
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-shellinaboxproxy:{{.Values.image_version_nova_shellinaboxproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
+          image: {{.Values.imageVersionNginx | default "nginx:stable-alpine"}}
           imagePullPolicy: IfNotPresent
-          command:
-            - dumb-init
-            - kubernetes-entrypoint
-          env:
-            - name: COMMAND
-              value: "nova-shellinaboxproxy"
-            - name: NAMESPACE
-              value: {{ .Release.Namespace }}
           ports:
             - name: shellinabox
+              protocol: TCP
               containerPort: 6084
           volumeMounts:
-            - name: etcnova
-              mountPath: /etc/nova
-            - name: nova-etc
-              mountPath: /etc/nova/nova.conf
-              subPath: nova.conf
-              readOnly: true
-            - name: nova-etc
-              mountPath: /etc/nova/logging.ini
-              subPath: logging.ini
-              readOnly: true
+            - mountPath: /etc/nginx/conf.d
+              name: shellinabox-console
