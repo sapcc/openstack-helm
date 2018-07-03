@@ -154,7 +154,7 @@ spec:
               subPath: logging.ini
               readOnly: true
         - name: nova-shellinaboxproxy
-          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-novncproxy:{{.Values.image_version_nova_novncproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
+          image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-shellinaboxproxy:{{.Values.image_version_nova_shellinaboxproxy | default .Values.image_version | required "Please set nova.image_version or similar" }}
           imagePullPolicy: IfNotPresent
           command:
             - dumb-init
