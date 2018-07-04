@@ -43,9 +43,9 @@ spec:
       - name: nova-etc
         configMap:
           name: nova-etc
-      - name: shellinabox-console
+      - name: nova-shellinabox-console
         configMap:
-          name: shellinabox-console
+          name: nova-shellinabox-console
       containers:
         - name: nova-consoleauth
           image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-nova-consoleauth:{{.Values.image_version_nova_consoleauth | default .Values.image_version | required "Please set nova.image_version or similar" }}
@@ -165,4 +165,4 @@ spec:
               containerPort: 6084
           volumeMounts:
             - mountPath: /etc/nginx/conf.d
-              name: shellinabox-console
+              name: nova-shellinabox-console
