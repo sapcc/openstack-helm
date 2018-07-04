@@ -28,3 +28,5 @@ spec:
         role: cloud_volume_admin
       - user: vcenter_nanny@Default
         role: cloud_image_admin
+      - user: vcenter_nanny@Default
+        role: cloud_network_admin
