@@ -156,6 +156,7 @@ spec:
               mountPath: /etc/nova/logging.ini
               subPath: logging.ini
               readOnly: true
+        {{- if .Values.global.hypervisors_ironic }}
         - name: nova-shellinaboxproxy
           image: {{.Values.imageVersionNginx | default "nginx:stable-alpine"}}
           imagePullPolicy: IfNotPresent
@@ -166,3 +167,4 @@ spec:
           volumeMounts:
             - mountPath: /etc/nginx/conf.d
               name: nova-shellinabox-console
+        {{- end }}
