@@ -5,7 +5,49 @@ metadata:
 spec:
   requires:
   - monsoon3/domain-default-seed
+  - monsoon3/domain-cc3test-seed
   - monsoon3/domain-ccadmin-seed
+  - monsoon3/domain-bs-seed
+  - monsoon3/domain-fsn-seed
+  - monsoon3/domain-hcm-seed
+  - monsoon3/domain-hcp03-seed
+  - monsoon3/domain-hec-seed
+  - monsoon3/domain-monsoon3-seed
+  - monsoon3/domain-s4-seed
+  - monsoon3/domain-wbs-seed
+
+  roles:
+  - cloud_volume_admin
+  - volume_admin
+  - volume_viewer
+
+  services:
+  - name: cinder
+    type: volume
+    description: Openstack Block Storage
+    endpoints:
+    - interface: admin
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_admin}}://{{include "cinder_api_endpoint_host_admin" .}}:{{.Values.openstack.global.cinder_api_port_admin}}/v1/%(tenant_id)s'
+    - interface: internal
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_internal}}://{{include "cinder_api_endpoint_host_internal" .}}:{{.Values.openstack.global.cinder_api_port_internal}}/v1/%(tenant_id)s'
+    - interface: public
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_public}}://{{include "cinder_api_endpoint_host_public" .}}:{{.Values.openstack.global.cinder_api_port_public}}/v1/%(tenant_id)s'
+  - name: cinderv2
+    type: volumev2
+    description: Openstack Block Storage
+    endpoints:
+    - interface: admin
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_admin}}://{{include "cinder_api_endpoint_host_admin" .}}:{{.Values.openstack.global.cinder_api_port_admin}}/v2/%(tenant_id)s'
+    - interface: internal
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_internal}}://{{include "cinder_api_endpoint_host_internal" .}}:{{.Values.openstack.global.cinder_api_port_internal}}/v2/%(tenant_id)s'
+    - interface: public
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_public}}://{{include "cinder_api_endpoint_host_public" .}}:{{.Values.openstack.global.cinder_api_port_public}}/v2/%(tenant_id)s'
 
   domains:
   - name: Default
@@ -13,11 +55,33 @@ spec:
     - name: cinder_nanny{{ .Values.global.user_suffix | default "" }}
       description: Cinder Nanny
       password: {{ derivePassword 1 "long" .Values.global.master_password "cinder_nanny" (include "keystone_api_endpoint_host_public" .) | quote }}
+    users:
+    - name: cinder
+      description: Cinder Service
+      password: '{{.Values.openstack.global.cinder_service_password}}'
+      roles:
+      - project: service
+        role: service
+    - name: admin
+      roles:
+      - project: admin
+        role: cloud_volume_admin
+      - domain: Default
+        role: cloud_volume_admin
+    groups:
+    - name: administrators
+      roles:
+      - project: admin
+        role: cloud_volume_admin
+      - domain: Default
+        role: cloud_volume_admin
 
   - name: ccadmin
     projects:
     - name: cloud_admin
       roles:
+      - user: admin@Default
+        role: cloud_volume_admin
       # permission to enumerate all projects and domains
       - user: cinder_nanny{{ .Values.global.user_suffix | default "" }}@Default
         role: admin
@@ -26,3 +90,361 @@ spec:
         role: cloud_volume_admin
       - user: cinder_nanny{{ .Values.global.user_suffix | default "" }}@Default
         role: cloud_compute_admin
+    groups:
+    - name: CCADMIN_CLOUD_ADMINS
+      roles:
+      - project: cloud_admin
+        role: cloud_volume_admin
+    - name: CCADMIN_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - project: api_tools
+        role: volume_admin
+      - domain: ccadmin
+        role: volume_admin
+        inherited: true
+    - name: CCADMIN_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - project: compute_tools
+        role: volume_admin
+      - domain: ccadmin
+        role: volume_viewer
+        inherited: true
+    - name: CCADMIN_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - project: network_tools
+        role: volume_admin
+      - domain: ccadmin
+        role: volume_viewer
+        inherited: true
+    - name: CCADMIN_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - project: storage_tools
+        role: volume_admin
+      - domain: ccadmin
+        role: volume_admin
+        inherited: true
+    - name: CCADMIN_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: ccadmin
+        role: volume_viewer
+        inherited: true
+
+  - name: bs
+    groups:
+    - name: BS_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: bs
+        role: volume_admin
+        inherited: true
+    - name: BS_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: bs
+        role: volume_viewer
+        inherited: true
+    - name: BS_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: bs
+        role: volume_viewer
+        inherited: true
+    - name: BS_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: bs
+        role: volume_admin
+        inherited: true
+    - name: BS_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: bs
+        role: volume_viewer
+        inherited: true
+
+  - name: fsn
+    groups:
+    - name: FSN_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: fsn
+        role: volume_admin
+        inherited: true
+    - name: FSN_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: fsn
+        role: volume_viewer
+        inherited: true
+    - name: FSN_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: fsn
+        role: volume_viewer
+        inherited: true
+    - name: FSN_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: fsn
+        role: volume_admin
+        inherited: true
+    - name: FSN_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: fsn
+        role: volume_viewer
+        inherited: true
+
+  - name: hcm
+    groups:
+    - name: HCM_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: hcm
+        role: volume_admin
+        inherited: true
+    - name: HCM_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: hcm
+        role: volume_viewer
+        inherited: true
+    - name: HCM_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: hcm
+        role: volume_viewer
+        inherited: true
+    - name: HCM_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: hcm
+        role: volume_admin
+        inherited: true
+    - name: HCM_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: hcm
+        role: volume_viewer
+        inherited: true
+
+  - name: hcp03
+    groups:
+    - name: HCP03_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: hcp03
+        role: volume_admin
+        inherited: true
+    - name: HCP03_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: hcp03
+        role: volume_viewer
+        inherited: true
+    - name: HCP03_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: hcp03
+        role: volume_viewer
+        inherited: true
+    - name: HCP03_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: hcp03
+        role: volume_admin
+        inherited: true
+    - name: HCP03_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: hcp03
+        role: volume_viewer
+        inherited: true
+
+  - name: hec
+    groups:
+    - name: HEC_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: hec
+        role: volume_admin
+        inherited: true
+    - name: HEC_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: hec
+        role: volume_viewer
+        inherited: true
+    - name: HEC_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: hec
+        role: volume_viewer
+        inherited: true
+    - name: HEC_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: hec
+        role: volume_admin
+        inherited: true
+    - name: HEC_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: hec
+        role: volume_viewer
+        inherited: true
+
+  - name: monsoon3
+    groups:
+    - name: MONSOON3_DOMAIN_ADMINS
+      roles:
+      - project: cc-demo
+        role: volume_admin
+
+    - name: MONSOON3_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: monsoon3
+        role: volume_admin
+        inherited: true
+    - name: MONSOON3_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: monsoon3
+        role: volume_viewer
+        inherited: true
+    - name: MONSOON3_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: monsoon3
+        role: volume_viewer
+        inherited: true
+    - name: MONSOON3_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: monsoon3
+        role: volume_admin
+        inherited: true
+    - name: MONSOON3_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: monsoon3
+        role: volume_viewer
+        inherited: true
+
+  - name: s4
+    groups:
+    - name: S4_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: s4
+        role: volume_admin
+        inherited: true
+    - name: S4_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: s4
+        role: volume_viewer
+        inherited: true
+    - name: S4_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: s4
+        role: volume_viewer
+        inherited: true
+    - name: S4_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: s4
+        role: volume_admin
+        inherited: true
+    - name: S4_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: s4
+        role: volume_viewer
+        inherited: true
+
+  - name: wbs
+    groups:
+    - name: WBS_API_SUPPORT
+      roles:
+      - project: api_support
+        role: volume_admin
+      - domain: wbs
+        role: volume_admin
+        inherited: true
+    - name: WBS_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: volume_admin
+      - domain: wbs
+        role: volume_viewer
+        inherited: true
+    - name: WBS_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: volume_admin
+      - domain: wbs
+        role: volume_viewer
+        inherited: true
+    - name: WBS_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: volume_admin
+      - domain: wbs
+        role: volume_admin
+        inherited: true
+    - name: WBS_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: volume_admin
+      - domain: wbs
+        role: volume_viewer
+        inherited: true
+
