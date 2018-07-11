@@ -5,7 +5,16 @@ metadata:
 spec:
   requires:
     - monsoon3/domain-default-seed
+    - monsoon3/domain-cc3test-seed
     - monsoon3/domain-ccadmin-seed
+    - monsoon3/domain-bs-seed
+    - monsoon3/domain-fsn-seed
+    - monsoon3/domain-hcm-seed
+    - monsoon3/domain-hcp03-seed
+    - monsoon3/domain-hec-seed
+    - monsoon3/domain-monsoon3-seed
+    - monsoon3/domain-s4-seed
+    - monsoon3/domain-wbs-seed
     - monsoon3/nova-seed
     - monsoon3/neutron-seed
     - swift/swift-seed
@@ -31,6 +40,16 @@ spec:
  #    - interface: public
  #      region: {{ .Values.global.region }}
  #      url: http://ironic-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:6385
+    endpoints:
+    - interface: admin
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.ironic_api_endpoint_protocol_admin}}://{{include "ironic_api_endpoint_host_admin" .}}:{{.Values.openstack.global.ironic_api_port_admin}}'
+    - interface: internal
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.openstack.global.ironic_api_port_internal}}'
+    - interface: public
+      region: '{{.Values.openstack.global.region}}'
+      url: '{{.Values.openstack.global.ironic_api_endpoint_protocol_public}}://{{include "ironic_api_endpoint_host_public" .}}:{{.Values.openstack.global.ironic_api_port_public}}'
 
   flavors:
     - name: "zh0hpe1.large"
@@ -176,3 +195,354 @@ spec:
         role: cloud_baremetal_admin
       - project: cloud_admin
         role: cloud_baremetal_admin
+    - name: CCADMIN_API_SUPPORT
+       roles:
+       - project: api_support
+         role: baremetal_admin
+       - project: api_tools
+         role: baremetal_admin
+       - domain: ccadmin
+         role: baremetal_admin
+         inherited: true
+    - name: CCADMIN_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - project: compute_tools
+        role: baremetal_admin
+      - domain: ccadmin
+        role: baremetal_admin
+        inherited: true
+    - name: CCADMIN_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - project: network_tools
+        role: baremetal_admin
+      - domain: ccadmin
+        role: baremetal_viewer
+        inherited: true
+    - name: CCADMIN_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - project: storage_tools
+        role: baremetal_admin
+      - domain: ccadmin
+        role: baremetal_viewer
+        inherited: true
+    - name: CCADMIN_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: ccadmin
+        role: baremetal_viewer
+        inherited: true
+
+  - name: bs
+    groups:
+    - name: BS_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: bs
+        role: baremetal_admin
+        inherited: true
+    - name: BS_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: bs
+        role: baremetal_admin
+        inherited: true
+    - name: BS_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: bs
+        role: baremetal_viewer
+        inherited: true
+    - name: BS_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: bs
+        role: baremetal_viewer
+        inherited: true
+    - name: BS_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: bs
+        role: baremetal_viewer
+        inherited: true
+
+  - name: fsn
+    groups:
+    - name: FSN_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: fsn
+        role: baremetal_admin
+        inherited: true
+    - name: FSN_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: fsn
+        role: baremetal_admin
+        inherited: true
+    - name: FSN_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: fsn
+        role: baremetal_viewer
+        inherited: true
+    - name: FSN_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: fsn
+        role: baremetal_viewer
+        inherited: true
+    - name: FSN_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: fsn
+        role: baremetal_viewer
+        inherited: true
+
+  - name: hcm
+    groups:
+    - name: HCM_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: hcm
+        role: baremetal_admin
+        inherited: true
+    - name: HCM_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: hcm
+        role: baremetal_admin
+        inherited: true
+    - name: HCM_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: hcm
+        role: baremetal_viewer
+        inherited: true
+    - name: HCM_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: hcm
+        role: baremetal_viewer
+        inherited: true
+    - name: HCM_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: hcm
+        role: baremetal_viewer
+        inherited: true
+
+  - name: hcp03
+    groups:
+    - name: HCP03_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: hcp03
+        role: baremetal_admin
+        inherited: true
+    - name: HCP03_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: hcp03
+        role: baremetal_admin
+        inherited: true
+    - name: HCP03_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: hcp03
+        role: baremetal_viewer
+        inherited: true
+    - name: HCP03_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: hcp03
+        role: baremetal_viewer
+        inherited: true
+    - name: HCP03_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: hcp03
+        role: baremetal_viewer
+        inherited: true
+
+  - name: hec
+    groups:
+    - name: HEC_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: hec
+        role: baremetal_admin
+        inherited: true
+    - name: HEC_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: hec
+        role: baremetal_admin
+        inherited: true
+    - name: HEC_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: hec
+        role: baremetal_viewer
+        inherited: true
+    - name: HEC_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: hec
+        role: baremetal_viewer
+        inherited: true
+    - name: HEC_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: hec
+        role: baremetal_viewer
+        inherited: true
+
+  - name: monsoon3
+    groups:
+    - name: MONSOON3_DOMAIN_ADMINS
+      roles:
+      - project: cc-demo
+        role: baremetal_admin
+    - name: MONSOON3_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: monsoon3
+        role: baremetal_admin
+         inherited: true
+    - name: MONSOON3_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: monsoon3
+        role: baremetal_admin
+        inherited: true
+    - name: MONSOON3_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: monsoon3
+        role: baremetal_viewer
+        inherited: true
+    - name: MONSOON3_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: monsoon3
+        role: baremetal_viewer
+        inherited: true
+    - name: MONSOON3_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: monsoon3
+        role: baremetal_viewer
+        inherited: true
+
+  - name: s4
+    groups:
+    - name: S4_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: s4
+        role: baremetal_admin
+        inherited: true
+    - name: S4_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: s4
+        role: baremetal_admin
+        inherited: true
+    - name: S4_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: s4
+        role: baremetal_viewer
+        inherited: true
+    - name: S4_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: s4
+        role: baremetal_viewer
+        inherited: true
+    - name: S4_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: s4
+        role: baremetal_viewer
+        inherited: true
+
+  - name: wbs
+    groups:
+    - name: WBS_API_SUPPORT
+      roles:
+      - project: api_support
+        role: baremetal_admin
+      - domain: wbs
+        role: baremetal_admin
+        inherited: true
+    - name: WBS_COMPUTE_SUPPORT
+      roles:
+      - project: compute_support
+        role: baremetal_admin
+      - domain: wbs
+        role: baremetal_admin
+        inherited: true
+    - name: WBS_NETWORK_SUPPORT
+      roles:
+      - project: network_support
+        role: baremetal_admin
+      - domain: wbs
+        role: baremetal_viewer
+        inherited: true
+    - name: WBS_STORAGE_SUPPORT
+      roles:
+      - project: storage_support
+        role: baremetal_admin
+      - domain: wbs
+        role: baremetal_viewer
+        inherited: true
+    - name: WBS_SERVICE_DESK
+      roles:
+      - project: service_desk
+        role: baremetal_admin
+      - domain: wbs
+        role: baremetal_viewer
+        inherited: true
