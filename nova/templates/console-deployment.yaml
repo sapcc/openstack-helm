@@ -165,6 +165,17 @@ spec:
               value: "nova-shellinaboxproxy baremetal-console-3.{{ .Values.global.region }}.cloud.sap 443 --listenport {{ .Values.global.nova_shellinabox_port_internal }}"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
+          volumeMounts:
+            - name: etcnova
+              mountPath: /etc/nova
+            - name: nova-etc
+              mountPath: /etc/nova/nova.conf
+              subPath: nova.conf
+              readOnly: true
+            - name: nova-etc
+              mountPath: /etc/nova/logging.ini
+              subPath: logging.ini
+              readOnly: true
           ports:
             - name: shellinabox
               protocol: TCP
