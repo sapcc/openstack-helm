@@ -162,7 +162,7 @@ spec:
             - kubernetes-entrypoint
           env:
             - name: COMMAND
-              value: "nova-shellinaboxproxy baremetal-console-3.{{ .Values.global.region }}.cloud.sap 443 --listenport {{ .Values.global.nova_shellinabox_port_internal }}"
+              value: "nova-shellinaboxproxy baremetal-console-3.{{ .Values.global.region }}.cloud.sap --proxyport 443 --listenport {{ .Values.global.nova_shellinabox_port_internal }}"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
           volumeMounts:
@@ -171,10 +171,6 @@ spec:
             - name: nova-etc
               mountPath: /etc/nova/nova.conf
               subPath: nova.conf
-              readOnly: true
-            - name: nova-etc
-              mountPath: /etc/nova/policy.json
-              subPath: policy.json
               readOnly: true
             - name: nova-etc
               mountPath: /etc/nova/logging.ini
