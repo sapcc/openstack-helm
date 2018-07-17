@@ -166,7 +166,7 @@ spec:
             - name: LANG
               value: en_US.UTF-8
             - name: COMMAND
-              value: "nova-shellinaboxproxy baremetal-console-3.{{ .Values.global.region }}.cloud.sap --proxyport 443 --listenport {{ .Values.global.nova_shellinabox_port_internal }}"
+              value: "nova-shellinaboxproxy https://baremetal-console-3.{{ .Values.global.region }}.cloud.sap/"
             - name: NAMESPACE
               value: {{ .Release.Namespace }}
           volumeMounts:
