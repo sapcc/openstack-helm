@@ -34,7 +34,7 @@ spec:
 
   flavors:
     - name: "zg1bcm1.medium"
-      id: "800"
+      id: "910"
       vcpus: "32"
       ram: "3932160"
       disk: "1966"
