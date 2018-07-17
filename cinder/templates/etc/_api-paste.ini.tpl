@@ -5,7 +5,6 @@
 [composite:osapi_volume]
 use = call:cinder.api:root_app_factory
 /: apiversions
-/v1: openstack_volume_api_v1
 /v2: openstack_volume_api_v2
 /v3: openstack_volume_api_v3
 
@@ -55,15 +54,12 @@ paste.filter_factory = osprofiler.web:WsgiMiddleware.factory
 paste.filter_factory = cinder.api.middleware.auth:NoAuthMiddleware.factory
 
 [filter:sizelimit]
-paste.filter_factory = cinder.api.middleware.sizelimit:RequestBodySizeLimiter.factory
+paste.filter_factory = oslo_middleware.sizelimit:RequestBodySizeLimiter.factory
 
 [filter:healthcheck]
 paste.filter_factory = oslo_middleware:Healthcheck.factory
 backends = disable_by_file
 disable_by_file_path = /etc/cinder/healthcheck_disable
-
-[app:apiv1]
-paste.app_factory = cinder.api.v1.router:APIRouter.factory
 
 [app:apiv2]
 paste.app_factory = cinder.api.v2.router:APIRouter.factory

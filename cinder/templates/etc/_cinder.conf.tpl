@@ -3,7 +3,6 @@ debug = {{ .Values.debug}}
 
 log_config_append = /etc/cinder/logging.ini
 
-enable_v1_api=True
 enable_v3_api=true
 volume_name_template = '%s'
 
