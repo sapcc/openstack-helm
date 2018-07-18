@@ -24,7 +24,6 @@ spec:
         component: compute
         name: nova-compute-{{ name }}
       annotations:
-        pod.beta.kubernetes.io/hostname: nova-compute-{{ name }}
         prometheus.io/scrape: "true"
         prometheus.io/port: "9102"
     spec:
@@ -33,6 +32,7 @@ spec:
         - name: nova-compute-{{ name }}
           image: {{ nova_agent_image }}
           imagePullPolicy: IfNotPresent
+          terminationGracePeriodSeconds: 900
           command:
             - dumb-init
             - kubernetes-entrypoint

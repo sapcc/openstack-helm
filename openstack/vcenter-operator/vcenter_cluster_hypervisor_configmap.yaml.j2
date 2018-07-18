@@ -9,6 +9,7 @@ metadata:
 data:
   nova-compute.conf: |
     [DEFAULT]
+    graceful_shutdown_timeout = 900
     compute_driver = nova.virt.vmwareapi.VMwareVCDriver
     reserved_host_memory_mb = 0
     {%- if max_concurrent_builds_per_project is defined %}
