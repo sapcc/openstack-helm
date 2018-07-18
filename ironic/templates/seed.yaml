@@ -36,7 +36,7 @@ spec:
     - name: "zg1bcm1.medium"
       id: "910"
       vcpus: "32"
-      ram: "290816"
+      ram: "393216"
       disk: "1966"
       extra_specs:
         "catalog:description": GPU Baremetal 2 Socket Skylake 3xNvidia Tesla V100
