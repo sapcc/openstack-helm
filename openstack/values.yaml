@@ -228,6 +228,12 @@ vcenter_operator:
   vcenter_nanny_unregister: false
   # delete machines discovered as orphaned
   vcenter_nanny_delete: false
+  # detach discovered ghost volumes
+  vcenter_nanny_detach_ghost_volumes: false
+  # detach discovered ghost ports
+  vcenter_nanny_detach_ghost_ports: false
+  # how many ghost volumes or ports to detach at maximum - if more: deny to delete any
+  vcenter_nanny_detach_ghost_limit: 3
   # run the db cleanup every n minutes
   vcenter_nanny_interval: 720
   # really delete entities after how many iterations
