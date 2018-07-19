@@ -8,6 +8,9 @@ metadata:
     component: nova
 spec:
   template:
+    metadata:
+      annotations:
+        configmap-bin-hash: {{ include (print $.Template.BasePath "/bin-configmap.yaml") . | sha256sum }}
     spec:
       restartPolicy: OnFailure
       containers:

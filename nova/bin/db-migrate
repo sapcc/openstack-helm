@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -e
+
+psql `cat /etc/nova/nova.conf  | grep connection | tail -1 | cut -d'=' -f2- | xargs` <<-EOT
+DELETE FROM services WHERE deleted>0 OR updated_at IS NULL OR updated_at < now() - interval '30 minutes';
+EOT
+
 set -x
-ls -l /etc/nova
+
 nova-manage --config-dir /etc/nova db sync
 nova-manage --config-dir /etc/nova api_db sync
 #nova-manage --config-dir /etc/nova db online_data_migrations
