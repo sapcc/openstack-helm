@@ -23,6 +23,13 @@ connection = {{ include "db_url" . }}
 {{- include "ini_sections.database_options" . }}
 {{- end }}
 
+{{- define "ini_sections.cache" }}
+
+[cache]
+enabled = True
+backend = oslo_cache.memcache_pool
+memcache_servers = {{ include "memcached_host" . }}:{{ .Values.global.memcached_port_public }}
+{{- end }}
 
 {{- define "ini_sections.audit_middleware_notifications"}}
     {{- if .Values.audit }}

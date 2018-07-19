@@ -549,3 +549,4 @@ connection = mysql+pymysql://root:{{.Values.mariadb.root_password}}@{{include "d
 
 # [hook_point:designate.api.v2.controllers.zones.get_one]
 
+{{- include "ini_sections.cache" . }}

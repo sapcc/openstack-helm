@@ -93,3 +93,5 @@ project_name = {{.Values.global.keystone_service_project}}
 project_domain_name = {{.Values.global.keystone_service_domain}}
 memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
 insecure = True
+
+{{- include "ini_sections.cache" . }}

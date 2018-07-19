@@ -12,10 +12,7 @@ notification_driver = messaging
 rpc_backend = rabbit
 rpc_response_timeout = {{ .Values.rpc_response_timeout | default .Values.global.rpc_response_timeout | default 300 }}
 
-[cache]
-backend = oslo_cache.memcache_pool
-memcache_servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}
-enabled = true
+{{- include "ini_sections.cache" . }}
 
 [memcache]
 servers = {{include "memcached_host" .}}:{{.Values.global.memcached_port_public}}

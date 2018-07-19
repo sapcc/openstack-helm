@@ -124,3 +124,5 @@ driver = noop
 enable_proxy_headers_parsing = true
 
 {{- include "ini_sections.audit_middleware_notifications" . }}
+
+{{- include "ini_sections.cache" . }}

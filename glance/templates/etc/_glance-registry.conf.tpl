@@ -32,3 +32,5 @@ flavor = keystone
 driver = noop
 
 {{- include "osprofiler" . }}
+
+{{- include "ini_sections.cache" . }}

@@ -96,3 +96,5 @@ swift_store_use_trusts=True
 driver = noop
 
 {{- include "osprofiler" . }}
+
+{{- include "ini_sections.cache" . }}

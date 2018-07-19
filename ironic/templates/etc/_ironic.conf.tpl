@@ -89,3 +89,5 @@ port_setup_delay = {{ .Values.neutron_port_setup_delay }}
 enable_proxy_headers_parsing = True
 
 {{- include "osprofiler" . }}
+
+{{- include "ini_sections.cache" . }}

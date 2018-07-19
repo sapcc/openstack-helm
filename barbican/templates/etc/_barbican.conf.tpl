@@ -41,3 +41,5 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
 max_pool_size = {{ .Values.max_pool_size | default .Values.global.max_pool_size | default 5 }}
 max_overflow = {{ .Values.max_overflow | default .Values.global.max_overflow | default 10 }}
+
+{{- include "ini_sections.cache" . }}
