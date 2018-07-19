@@ -14,8 +14,10 @@ scheduler_instance_sync_interval = {{ .Values.scheduler.scheduler_instance_sync_
 
 admin_username={{.Values.global.ironic_service_user }}{{ .Values.global.user_suffix }}
 admin_password={{ .Values.global.ironic_service_password | default (tuple . .Values.global.ironic_service_user | include "identity.password_for_user")  | replace "$" "$$" }}
-admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v2.0
+admin_url = {{.Values.global.keystone_api_endpoint_protocol_admin}}://{{include "keystone_api_endpoint_host_admin" .}}:{{ .Values.global.keystone_api_port_admin }}/v3
 admin_tenant_name={{.Values.global.keystone_service_project}}
+admin_project_domain_name={{.Values.global.keystone_service_domain}}
+admin_user_domain_name={{.Values.global.keystone_service_domain}}
 api_endpoint={{.Values.global.ironic_api_endpoint_protocol_internal}}://{{include "ironic_api_endpoint_host_internal" .}}:{{ .Values.global.ironic_api_port_internal }}/v1
 serial_console_state_timeout=10
 {{- end }}

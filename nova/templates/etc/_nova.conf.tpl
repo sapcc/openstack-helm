@@ -27,6 +27,8 @@ rpc_workers = {{ .Values.rpc_workers | default .Values.global.rpc_workers | defa
 
 wsgi_default_pool_size = {{ .Values.wsgi_default_pool_size | default .Values.global.wsgi_default_pool_size | default 100 }}
 
+transport_url = {{include "oslo_messaging_rabbit_url" .}}
+
 {{ template "utils.snippets.eventlet_backdoor_ini" "nova" }}
 
 [api_database]
