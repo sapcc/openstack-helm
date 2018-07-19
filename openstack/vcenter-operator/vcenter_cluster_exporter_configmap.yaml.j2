@@ -1,5 +1,6 @@
 {% if ((vcenter_exporter is defined) and
-       (vcenter_exporter['enabled'] == "true")) %}
+       (vcenter_exporter['enabled'] == "true") and
+       (vcenter_exporter['cluster_exporter_types'] is defined)) %}
 {% for exporter_type in vcenter_exporter['cluster_exporter_types'] %}
 ---
 apiVersion: v1
@@ -15,23 +16,18 @@ data:
   config-{{ name }}-{{ exporter_type['name'] }}.yaml: |
     main:
       availability_zone: {{ availability_zone | quote }}
-      cluster_name: {{ cluster_name | quote }}
-      listen_port: "{{ vcenter_exporter['listen_port'] }}"
-      host: {{ host | quote }}
-      user: {{ username | quote }}
-      password: {{ password | quote }}
-      port: 443{% if vcenter_exporter['ignore_ssl'] == "true" %}
-      ignore_ssl: True{% else %}
-      ignore_ssl: False{% endif %}
-      interval: {{ vcenter_exporter['interval'] }}
-      log: 'INFO'
-      {% if vcenter_exporter['shorter_names_regex'] is defined %}
-      shorter_names_regex: "{{ vcenter_exporter['shorter_names_regex'] }}"
-      {% endif %}
-      {% if vcenter_exporter['host_match_regex'] is defined %}
-      host_match_regex: {{ name | quote }}
-      {% endif %}
-      ignore_match_regex: '(^c_blackbox_|^datapath_|^canary_).*'
+      prometheus_port: {{ vcenter_exporter['prometheus_port'] | quote }}
+      vcenter_host: {{ host | quote }}
+      vcenter_user: {{ username | quote }}
+      vcenter_password: {{ password | quote }}
+      vcenter_port: {% if vcenter_exporter['vcenter_port'] is defined %}{{ vcenter_exporter['vcenter_port'] }}{% else %}443{% endif %}
+      vc_cluster_match_regex: {{ vcenter_exporter['vc_cluster_match_regex'] | quote }}
+      ignore_ssl: {{ vcenter_exporter['ignore_ssl']|default("true", true) }}
+      vc_polling_interval: {% if exporter_type['vc_polling_interval'] is defined %}{{ exporter_type['vc_polling_interval'] }}{% else %}{{ vcenter_exporter['vc_polling_interval'] }}{% endif %}
+      exporter_log_level: {{ vcenter_exporter['exporter_log_level'] | quote }}
+      name_shortening_regex: {{ vcenter_exporter['name_shortening_regex'] | quote }}
+      ignore_vm_match_regex: {{ vcenter_exporter['ignore_vm_match_regex'] | quote }}
+      ignore_ds_match_regex: {{ vcenter_exporter['ignore_ds_match_regex'] |quote }}
       vm_metrics:
       - 'cpu.latency.average'
       - 'cpu.usage.average'

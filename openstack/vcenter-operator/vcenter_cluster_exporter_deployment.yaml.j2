@@ -47,6 +47,6 @@ spec:
               name: maia-etc
           ports:
             - name: metrics
-              containerPort: {{ vcenter_exporter['listen_port'] }}
+              containerPort: {{ vcenter_exporter['prometheus_port'] }}
 {% endfor %}
 {% endif %}
