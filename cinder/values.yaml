@@ -205,3 +205,7 @@ db_cleanup:
   interval: 720
   # really delete entities after how many iterations
   iterations: 14
+
+# openstack-watcher-middleware
+watcher:
+  enabled: false
