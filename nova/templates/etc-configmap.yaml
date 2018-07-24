@@ -32,3 +32,7 @@ data:
 {{ include (print .Template.BasePath "/etc/_compute.filters.tpl") . | indent 4 }}
   network.filters: |
 {{ include (print .Template.BasePath "/etc/_network.filters.tpl") . | indent 4 }}
+{{- if .Values.watcher.enabled }}
+  watcher.yaml: |
+{{ include (print .Template.BasePath "/etc/_watcher.yaml.tpl") . | indent 4 }}
+{{- end }}
