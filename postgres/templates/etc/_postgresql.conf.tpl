@@ -638,3 +638,4 @@ default_text_search_config = 'pg_catalog.english'
 #------------------------------------------------------------------------------
 
 # Add settings for extensions here
+include_if_exists = 'auto.conf'

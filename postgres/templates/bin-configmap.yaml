@@ -9,6 +9,66 @@ metadata:
     component: database
 data:
 {{- if and (not .Values.password) .Values.users }}
+  "00-tune.sh": |
+    # Traditionally, the rule of thumb (for mixed loads) is to use
+    # - 1/4 of RAM for shared_buffers
+    # - 3/4 of RAM for cache
+    # - And half of the memory per connection as worker_memory
+    # But since the cache is not accounted for in our cgroup the logic does not translate 1:1
+    #
+    version=`cd /usr/lib/postgresql; echo *`
+    ram_mib=$((`cat /sys/fs/cgroup/memory/memory.limit_in_bytes` / 1024/1024))
+    phy_mem_mib=$((`cat /proc/meminfo | grep -Eo '^MemTotal:\s+[0-9]+' | cut -d: -f2` / 1024))
+
+    if [ $ram_mib -gt $phy_mem_mib ]; then
+      # No ram limit
+      ram_mib=$(($phy_mem_mib/16))
+    fi
+
+    cpus=`awk 'BEGIN { getline q < "/sys/fs/cgroup/cpu,cpuacct/cpu.cfs_quota_us" ; getline p < "/sys/fs/cgroup/cpu,cpuacct/cpu.cfs_period_us"; r=q/p; printf("%d\n",r+=r<0?0:0.999)}'`
+    if [ $cpus -le 0 ]; then
+      # No cpu limit
+      cpus=$((`getconf _NPROCESSORS_ONLN`/8))
+    fi
+
+    max_connections=`grep '^max_connections' /postgresql-conf/postgresql.conf | grep -o '[0-9]*'`
+    # Memory currently used for caches
+    cache_mem=$((`cat /proc/meminfo | grep -Eo '^Cached:\s+[0-9]+' | cut -d: -f2` / 1024))
+    cache_mem=$(($cache_mem + `cat /proc/meminfo | grep -Eo '^MemFree:\s+[0-9]+' | cut -d: -f2` / 1024))
+    shared_buffers=$(($ram_mib / 4))
+    shared_buffers=$(($shared_buffers > 2048 ? 2048 : $shared_buffers))
+    maintenance_work_mem=$((ram_mib / 8))
+    maintenance_work_mem=$((maintenance_work_mem > 1024 ? 1024 : $maintenance_work_mem))
+    effective_cache_size_os=$((cache_mem / 16))  # Uneducated guess: A 16th of the free memory will be used for our cache
+    effective_cache_size_ns=$((3 * $ram_mib / 4))
+    effective_cache_size=$(($effective_cache_size_os > $effective_cache_size_ns ? $effective_cache_size_os : $effective_cache_size_ns))
+    work_mem=$(($ram_mib / $max_connections))
+
+    echo >/etc/postgresql-conf/auto.conf <<EOT
+    checkpoint_completion_target = 0.9
+    wal_buffers = 16MB
+    default_statistics_target = 100
+    random_page_cost = 1.1
+    effective_io_concurrency = 200
+    shared_buffers = ${shared_buffers}M
+    maintenance_work_mem = ${maintenance_work_mem}M
+    effective_cache_size = ${effective_cache_size}M
+    work_mem = ${work_mem}
+    EOT
+    if [ "$version"x == "9.4x" ]; then
+    echo >>/etc/postgresql-conf/auto.conf <<EOT
+    checkpoint_segments = 32
+    EOT
+    fi
+    if [ "$version"x == "9.5x" ]; then
+    echo >>/etc/postgresql-conf/auto.conf <<EOT
+    checkpoint_segments = 32
+    min_wal_size = 1GB
+    max_wal_size = 2GB
+    wal_buffers = 16MB
+    EOT
+    fi
+
   "10-users.sql": |
     \set ECHO all
     \set ON_ERROR_STOP off {{/* We even expect the CREATE to fail */}}
@@ -30,3 +90,4 @@ data:
   {{$key | quote }}: |
 {{ indent 4 $value }}
 {{- end }}
+

@@ -50,6 +50,16 @@ extensions:
 users: {}
 scripts: {}
 
+resources:
+  enabled: false
+  limits:
+    memory: 2Gi
+    cpu: 10
+  requests:
+    memory: 256Mi
+    cpu: 500m
+
+
 image_version_postgres: '9.4.14'
 
 pod:

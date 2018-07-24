@@ -89,7 +89,16 @@ spec:
               mountPath: /docker-entrypoint-maintaindb.d
             - name: postgres-etc
               mountPath: /postgresql-conf
-{{- if .Values.backup.enabled }}
+          {{- if .Values.resources.enabled }}
+          resources:
+            limits:
+              cpu: {{ .Values.resources.limits.cpu | quote }}
+              memory: {{ .Values.resources.limits.memory | quote }}
+            requests:
+              cpu: {{ .Values.resources.requests.cpu | quote }}
+              memory: {{ .Values.resources.requests.memory | quote }}
+          {{- end }}
+  {{- if .Values.backup.enabled }}
         - image: {{.Values.global.image_repository}}/{{.Values.global.image_namespace}}/backup-tools:{{ .Values.backup.image_version }}
           imagePullPolicy: IfNotPresent
           name: backup
