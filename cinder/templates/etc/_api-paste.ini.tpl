@@ -13,23 +13,27 @@ use = call:cinder.api:root_app_factory
 {{- if .Values.audit.enabled }} audit{{- end -}}
 {{- end }}
 
+{{- define "watcher_pipe" -}}
+{{- if .Values.watcher.enabled }} watcher{{- end -}}
+{{- end }}
+
 [composite:openstack_volume_api_v1]
 use = call:cinder.api.middleware.auth:pipeline_factory
 noauth = cors http_proxy_to_wsgi request_id faultwrap sizelimit {{- include "osprofiler_pipe" . }} noauth apiv1
-keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} apiv1
-keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} apiv1
+keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "watcher_pipe" . }} {{- include "audit_pipe" . }} apiv1
+keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} {{- include "audit_pipe" . }} apiv1
 
 [composite:openstack_volume_api_v2]
 use = call:cinder.api.middleware.auth:pipeline_factory
 noauth = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} noauth apiv2
-keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} apiv2
-keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} apiv2
+keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} {{- include "audit_pipe" . }} apiv2
+keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} {{- include "audit_pipe" . }} apiv2
 
 [composite:openstack_volume_api_v3]
 use = call:cinder.api.middleware.auth:pipeline_factory
 noauth = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} noauth apiv3
-keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} apiv3
-keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} apiv3
+keystone = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} {{- include "audit_pipe" . }} apiv3
+keystone_nolimit = cors http_proxy_to_wsgi request_id statsd faultwrap sentry sizelimit {{- include "osprofiler_pipe" . }} authtoken keystonecontext {{- include "audit_pipe" . }} {{- include "audit_pipe" . }} apiv3
 
 [filter:request_id]
 paste.filter_factory = oslo_middleware.request_id:RequestId.factory
@@ -98,4 +102,11 @@ audit_map_file = /etc/cinder/cinder_audit_map.yaml
 ignore_req_list = GET
 record_payloads = {{ if .Values.audit.record_payloads -}}True{{- else -}}False{{- end }}
 metrics_enabled = {{ if .Values.audit.metrics_enabled -}}True{{- else -}}False{{- end }}
+{{- end }}
+
+{{- if .Values.watcher.enabled }}
+[filter:watcher]
+use = egg:watcher-middleware#watcher
+service_type = volume
+config_file = /etc/cinder/watcher.yaml
 {{- end }}
