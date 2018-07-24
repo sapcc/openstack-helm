@@ -98,6 +98,12 @@ spec:
               mountPath: /etc/cinder/cinder_audit_map.yaml
               subPath: cinder_audit_map.yaml
               readOnly: true
+            {{- if .Values.watcher.enabled }}
+            - name: cinder-etc
+              mountPath: /etc/cinder/watcher.yaml
+              subPath: watcher.yaml
+              readOnly: true
+            {{- end }}
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent
