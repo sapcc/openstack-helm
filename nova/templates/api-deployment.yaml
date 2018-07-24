@@ -126,6 +126,12 @@ spec:
               name: nova-bin
               subPath: iptables-restore.mock
               readOnly: true
+            {{- if .Values.watcher.enabled }}
+            - name: nova-etc
+              mountPath: /etc/nova/watcher.yaml
+              subPath: watcher.yaml
+              readOnly: true
+            {{- end }}
         - name: statsd
           image: prom/statsd-exporter
           imagePullPolicy: IfNotPresent

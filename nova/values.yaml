@@ -256,3 +256,7 @@ sync_neutron_cache:
   dry_run: True
   # run the db cleanup every n minutes
   interval: 360
+
+# openstack-watcher-middleware
+watcher:
+  enabled: false
