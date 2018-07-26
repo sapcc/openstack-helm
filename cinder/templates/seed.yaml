@@ -27,27 +27,27 @@ spec:
     description: Openstack Block Storage
     endpoints:
     - interface: admin
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_admin}}://{{include "cinder_api_endpoint_host_admin" .}}:{{.Values.openstack.global.cinder_api_port_admin}}/v1/%(tenant_id)s'
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.cinder_api_endpoint_protocol_admin}}://{{include "cinder_api_endpoint_host_admin" .}}:{{.Values.global.cinder_api_port_admin}}/v1/%(tenant_id)s'
     - interface: internal
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_internal}}://{{include "cinder_api_endpoint_host_internal" .}}:{{.Values.openstack.global.cinder_api_port_internal}}/v1/%(tenant_id)s'
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.cinder_api_endpoint_protocol_internal}}://{{include "cinder_api_endpoint_host_internal" .}}:{{.Values.global.cinder_api_port_internal}}/v1/%(tenant_id)s'
     - interface: public
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_public}}://{{include "cinder_api_endpoint_host_public" .}}:{{.Values.openstack.global.cinder_api_port_public}}/v1/%(tenant_id)s'
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.cinder_api_endpoint_protocol_public}}://{{include "cinder_api_endpoint_host_public" .}}:{{.Values.global.cinder_api_port_public}}/v1/%(tenant_id)s'
   - name: cinderv2
     type: volumev2
     description: Openstack Block Storage
     endpoints:
     - interface: admin
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_admin}}://{{include "cinder_api_endpoint_host_admin" .}}:{{.Values.openstack.global.cinder_api_port_admin}}/v2/%(tenant_id)s'
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.cinder_api_endpoint_protocol_admin}}://{{include "cinder_api_endpoint_host_admin" .}}:{{.Values.global.cinder_api_port_admin}}/v2/%(tenant_id)s'
     - interface: internal
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_internal}}://{{include "cinder_api_endpoint_host_internal" .}}:{{.Values.openstack.global.cinder_api_port_internal}}/v2/%(tenant_id)s'
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.cinder_api_endpoint_protocol_internal}}://{{include "cinder_api_endpoint_host_internal" .}}:{{.Values.global.cinder_api_port_internal}}/v2/%(tenant_id)s'
     - interface: public
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.cinder_api_endpoint_protocol_public}}://{{include "cinder_api_endpoint_host_public" .}}:{{.Values.openstack.global.cinder_api_port_public}}/v2/%(tenant_id)s'
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.cinder_api_endpoint_protocol_public}}://{{include "cinder_api_endpoint_host_public" .}}:{{.Values.global.cinder_api_port_public}}/v2/%(tenant_id)s'
 
   domains:
   - name: Default
@@ -58,7 +58,7 @@ spec:
     users:
     - name: cinder
       description: Cinder Service
-      password: '{{.Values.openstack.global.cinder_service_password}}'
+      password: '{{.Values.global.cinder_service_password}}'
       roles:
       - project: service
         role: service
