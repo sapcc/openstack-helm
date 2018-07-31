@@ -20,7 +20,7 @@ spec:
    metadata:
     labels:
      name: metrics-{{.Values.name}}
-     component: {{ default .Release.Name .Values.db_name }}
+     component: {{ default .Values.name .Values.db_name }}
     annotations:
       chart-version: {{.Chart.Version}}
       checksum/etc-configmap.conf: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
