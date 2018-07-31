@@ -20,6 +20,7 @@ spec:
    metadata:
     labels:
      name: metrics-{{.Values.name}}
+     component: {{ default .Release.Name .Values.db_name }}
     annotations:
       chart-version: {{.Chart.Version}}
       checksum/etc-configmap.conf: {{ include (print $.Template.BasePath "/etc-configmap.yaml") . | sha256sum }}
@@ -44,7 +45,7 @@ spec:
         ports:
           - name: metrics
             containerPort: {{ .Values.port_metrics }}
-        args: ["-extend.query-path", "/conf/custom-metrics.yaml"]
+        args: ["--extend.query-path", "/conf/custom-metrics.yaml"]
         volumeMounts:
           - name: custom-metrics
             mountPath: /conf
