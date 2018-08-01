@@ -29,58 +29,56 @@ template: |{{`
           application: cinder
           component: volume-vmware
           name: cinder-volume-vmware-{{ name }}
-        annotations:
-          pod.beta.kubernetes.io/hostname: cinder-volume-vmware-{{ name }}
       spec:
         hostname: cinder-volume-vmware-{{ name }}
         containers:
-          - name: cinder-volume-vmware-{{ name }}
-            image: `}}{{ .Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume | default .Values.image_version | required "Please set cinder.image_version or similar" }}{{`
-            imagePullPolicy: IfNotPresent
-            command:
-              - dumb-init
-              - kubernetes-entrypoint
-            env:
-              - name: COMMAND
-                value: 'cinder-volume'
-              - name: NAMESPACE
-                value: {{ namespace }}
-              - name: SENTRY_DSN
-                value: `}}{{ .Values.sentry_dsn | quote }}{{`
-              - name: PYTHONWARNINGS
-                value: 'ignore:Unverified HTTPS request'
-              - name: PGAPPNAME
-                value: cinder-volume-vmware-{{ name }}
-            volumeMounts:
-              - name: etccinder
-                mountPath: /etc/cinder
-              - name: cinder-etc
-                mountPath: /etc/cinder/cinder.conf
-                subPath: cinder.conf
-                readOnly: true
-              - name: cinder-etc
-                mountPath: /etc/cinder/policy.json
-                subPath: policy.json
-                readOnly: true
-              - name: cinder-etc
-                mountPath: /etc/cinder/rootwrap.conf
-                subPath: rootwrap.conf
-                readOnly: true
-              - name: cinder-etc
-                mountPath: /etc/cinder/logging.ini
-                subPath: logging.ini
-                readOnly: true
-              - name: volume-config
-                mountPath: /etc/cinder/cinder-volume.conf
-                subPath: cinder-volume.conf
-                readOnly: true
-        volumes:
+        - name: cinder-volume-vmware-{{ name }}
+          image: `}}{{ .Values.global.image_repository}}/{{.Values.global.image_namespace}}/ubuntu-source-cinder-volume:{{.Values.image_version_cinder_volume | default .Values.image_version | required "Please set cinder.image_version or similar" }}{{`
+          imagePullPolicy: IfNotPresent
+          command:
+          - dumb-init
+          - kubernetes-entrypoint
+          env:
+          - name: COMMAND
+            value: 'cinder-volume'
+          - name: NAMESPACE
+            value: {{ namespace }}
+          - name: SENTRY_DSN
+            value: `}}{{ .Values.sentry_dsn | quote }}{{`
+          - name: PYTHONWARNINGS
+            value: 'ignore:Unverified HTTPS request'
+          - name: PGAPPNAME
+            value: cinder-volume-vmware-{{ name }}
+          volumeMounts:
           - name: etccinder
-            emptyDir: {}
+            mountPath: /etc/cinder
           - name: cinder-etc
-            configMap:
-              name: cinder-etc
+            mountPath: /etc/cinder/cinder.conf
+            subPath: cinder.conf
+            readOnly: true
+          - name: cinder-etc
+            mountPath: /etc/cinder/policy.json
+            subPath: policy.json
+            readOnly: true
+          - name: cinder-etc
+            mountPath: /etc/cinder/rootwrap.conf
+            subPath: rootwrap.conf
+            readOnly: true
+          - name: cinder-etc
+            mountPath: /etc/cinder/logging.ini
+            subPath: logging.ini
+            readOnly: true
           - name: volume-config
-            configMap:
-              name:  volume-vmware-{{ name }}
+            mountPath: /etc/cinder/cinder-volume.conf
+            subPath: cinder-volume.conf
+            readOnly: true
+        volumes:
+        - name: etccinder
+          emptyDir: {}
+        - name: cinder-etc
+          configMap:
+            name: cinder-etc
+        - name: volume-config
+          configMap:
+            name:  volume-vmware-{{ name }}
 `}}
