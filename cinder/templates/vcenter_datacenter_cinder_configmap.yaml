@@ -1,3 +1,4 @@
+{{- .Capabilities.APIVersions.Has "vcenter-operator.stable.sap.cc/v1" }}
 apiVersion: vcenter-operator.stable.sap.cc/v1
 kind: VCenterTemplate
 metadata:
@@ -27,3 +28,4 @@ template: |{{`
       vmware_insecure = True
       vmware_storage_profile = cinder-vvol
 `}}
+{{- end }}

@@ -1,3 +1,4 @@
+{{- .Capabilities.APIVersions.Has "vcenter-operator.stable.sap.cc/v1" }}
 apiVersion: vcenter-operator.stable.sap.cc/v1
 kind: VCenterTemplate
 metadata:
@@ -82,3 +83,4 @@ template: |{{`
           configMap:
             name:  volume-vmware-{{ name }}
 `}}
+{{- end }}
