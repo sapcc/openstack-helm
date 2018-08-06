@@ -33,6 +33,16 @@ spec:
  #      url: http://ironic-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:6385
 
   flavors:
+    - name: "zg1bcm1.medium"
+      id: "910"
+      vcpus: "32"
+      ram: "393216"
+      disk: "1966"
+      extra_specs:
+        "catalog:description": GPU Baremetal 2 Socket Skylake 3xNvidia Tesla V100
+        "capabilities:cpu_arch": "x86_64"
+        "quota:separate": "true"
+        "quota:instance_only": "true"
     - name: "zh0hpe1.large"
       id: "900"
       vcpus: "60"
