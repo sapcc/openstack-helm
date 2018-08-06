@@ -245,3 +245,5 @@ vcenter_operator:
     interval: 120
     name_shortening_regex: DEFINED-IN-REGION-CHART
     docker_repo: DEFINED-IN-REGION-CHART
+
+neutron: {}

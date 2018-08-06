@@ -1,6 +1,0 @@
-{{- range $i, $agent := .Values.global.network_agents -}}
-{{ tuple $ $agent |include "network_agent" }}
-{{ if lt $i (sub (len $.Values.global.network_agents) 1) }}
----
-{{end}}
-{{- end -}}

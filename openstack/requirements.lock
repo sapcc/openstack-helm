@@ -11,17 +11,11 @@ dependencies:
 - name: cinder
   repository: file://../cinder
   version: 0.1.1
-- name: neutron
-  repository: file://../neutron
-  version: 0.1.1
-- name: neutron_vendor
-  repository: file://../neutron_vendor
-  version: 0.1.0
 - name: healthchecks
   repository: file://../healthchecks
   version: 0.1.0
 - name: utils
   repository: file://../utils
   version: 0.1.1
-digest: sha256:feabe10e47e8e36572b3f769e0300c26350511e28867c9fabba80126a92bac50
-generated: 2018-08-06T11:15:22.55860146+02:00
+digest: sha256:edeae3a13ed0ca1691ec5a1d697e2dc3dae879430ec7018f81fc3b7998d30440
+generated: 2018-08-06T12:21:18.146580138+02:00

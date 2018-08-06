@@ -1,6 +1,0 @@
-{{- range $i, $config_agent := .Values.asr_config_agents -}}
-{{ tuple $ $config_agent |include "asr_deployment" }}
-{{ if lt $i (sub (len $.Values.asr_config_agents) 1) }}
----
-{{end}}
-{{- end -}}
