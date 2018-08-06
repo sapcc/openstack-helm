@@ -26,27 +26,30 @@ spec:
   - name: nova
     type: compute
     description: Openstack Compute
- # uncomment once moved to helm-charts
- #    endpoints:
- #    - interface: admin
- #      region: {{ .Values.global.region }}
- #      url: https://{{include "nova_api_endpoint_host_public" .}}/v2/%(tenant_id)s
- #    - interface: internal
- #      region: {{ .Values.global.region }}
- #      url: http://nova-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:8774/v2/%(tenant_id)s
- #    - interface: public
- #      region: {{ .Values.global.region }}
- #      url: http://nova-api.{{ .Release.Namespace }}.svc.kubernetes.{{ .Values.global.region }}.{{ .Values.global.tld }}:8774/v2/%(tenant_id)s
+    endpoints:
+      # Trailing slash is important, otherwise there will be a redirect to http url with slash, even if https terminated
+    - interface: admin
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.nova_api_endpoint_protocol_admin}}://{{include "nova_api_endpoint_host_admin" .}}:{{.Values.global.nova_api_port_admin}}/v2.1/'
+    - interface: internal
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.nova_api_endpoint_protocol_internal}}://{{include "nova_api_endpoint_host_internal" .}}:{{.Values.global.nova_api_port_internal}}/v2.1/'
+    - interface: public
+      region: '{{.Values.global.region}}'
+      url: '{{.Values.global.nova_api_endpoint_protocol_public}}://{{include "nova_api_endpoint_host_public" .}}:{{.Values.global.nova_api_port_public}}/v2.1/'
+  - name: nova_legacy
+    type: compute_legacy
+    description: Openstack Compute Legacy Service
     endpoints:
     - interface: admin
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.nova_api_endpoint_protocol_admin}}://{{include "nova_api_endpoint_host_admin" .}}:{{.Values.openstack.global.nova_api_port_admin}}/v2/%(tenant_id)s'
+      region: '{{ .Values.global.region }}'
+      url: '{{.Values.global.nova_api_endpoint_protocol_admin}}://{{include "nova_api_endpoint_host_admin" .}}:{{.Values.global.nova_api_port_admin}}/v2/%(tenant_id)s'
     - interface: internal
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.nova_api_endpoint_protocol_internal}}://{{include "nova_api_endpoint_host_internal" .}}:{{.Values.openstack.global.nova_api_port_internal}}/v2/%(tenant_id)s'
+      region: '{{ .Values.global.region }}'
+      url: '{{.Values.global.nova_api_endpoint_protocol_internal}}://{{include "nova_api_endpoint_host_internal" .}}:{{.Values.global.nova_api_port_internal}}/v2/%(tenant_id)s'
     - interface: public
-      region: '{{.Values.openstack.global.region}}'
-      url: '{{.Values.openstack.global.nova_api_endpoint_protocol_public}}://{{include "nova_api_endpoint_host_public" .}}:{{.Values.openstack.global.nova_api_port_public}}/v2/%(tenant_id)s'
+      region: '{{ .Values.global.region }}'
+      url: '{{.Values.global.nova_api_endpoint_protocol_public}}://{{include "nova_api_endpoint_host_public" .}}:{{.Values.global.nova_api_port_public}}/v2/%(tenant_id)s'
 
   domains:
   - name: Default
