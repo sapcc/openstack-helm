@@ -1,10 +1,10 @@
 dependencies:
-  - name: postgres
-    repository: http://localhost:8879/charts
-    version: 0.1.0
   - name: utils
-    repository: http://localhost:8879/charts
+    repository: file://../utils
     version: 0.1.1
+  - name: postgres
+    repository: file://../postgres
+    version: 0.1.0
   - name: pg_metrics
-    repository: http://localhost:8879/charts
+    repository: file://../pg_metrics
     version: 0.1.0

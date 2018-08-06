@@ -1,9 +1,9 @@
 dependencies:
 - name: openstack
-  repository: http://localhost:8879/charts
+  repository: file://../openstack
   version: 0.1.1
 - name: utils
-  repository: http://localhost:8879/charts
+  repository: file://../utils
   version: 0.1.1
-digest: sha256:1b8f441991e4ce693793ba20bf98a53d176bc6cee58c579efe1bf82319618642
-generated: 2017-08-15T12:11:09.729079578+02:00
+digest: sha256:f91276425b47a65dc6eda20c08b715f8c611c00159a134d402cf1e5503bb9aad
+generated: 2018-08-06T11:15:24.630738023+02:00

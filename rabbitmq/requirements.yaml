@@ -1,4 +1,4 @@
 dependencies:
   - name: utils
-    repository: http://localhost:8879/charts
+    repository: file://../utils
     version: 0.1.1

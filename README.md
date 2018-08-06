@@ -1,5 +1,7 @@
 # openstack-helm
 
+*DEPRECATED*: Use [SAP Converged Charts](https://github.com/sapcc/helm-charts) instead
+
 A collection of Helm charts to install and maintain a core Openstack IAAS platform on Kubernetes.
 
 Includes charts for Openstack

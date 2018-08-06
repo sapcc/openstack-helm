@@ -1,48 +1,27 @@
 dependencies:
 - name: memcached
-  repository: http://localhost:8879/charts
+  repository: file://../memcached
   version: 0.1.0
 - name: rabbitmq
-  repository: http://localhost:8879/charts
-  version: 0.1.0
-- name: keystone
-  repository: http://localhost:8879/charts
-  version: 0.1.0
-- name: glance
-  repository: http://localhost:8879/charts
-  version: 0.1.1
-- name: ironic
-  repository: http://localhost:8879/charts
+  repository: file://../rabbitmq
   version: 0.1.0
 - name: nova
-  repository: http://localhost:8879/charts
+  repository: file://../nova
   version: 0.1.1
-- name: barbican
-  repository: http://localhost:8879/charts
-  version: 0.1.0
 - name: cinder
-  repository: http://localhost:8879/charts
+  repository: file://../cinder
   version: 0.1.1
-- name: manila
-  repository: http://localhost:8879/charts
-  version: 0.1.0
-- name: horizon
-  repository: http://localhost:8879/charts
-  version: 0.1.0
 - name: neutron
-  repository: http://localhost:8879/charts
+  repository: file://../neutron
   version: 0.1.1
 - name: neutron_vendor
-  repository: http://localhost:8879/charts
+  repository: file://../neutron_vendor
   version: 0.1.0
-- name: designate
-  repository: http://localhost:8879/charts
-  version: 0.1.1
 - name: healthchecks
-  repository: http://localhost:8879/charts
+  repository: file://../healthchecks
   version: 0.1.0
 - name: utils
-  repository: http://localhost:8879/charts
+  repository: file://../utils
   version: 0.1.1
-digest: sha256:b7b38552a7952c68069f0c4e907261b9a004208b5d7e5e18b24a9291adbfd3bb
-generated: 2018-01-09T13:34:21.585686+01:00
+digest: sha256:feabe10e47e8e36572b3f769e0300c26350511e28867c9fabba80126a92bac50
+generated: 2018-08-06T11:15:22.55860146+02:00
