@@ -259,4 +259,4 @@ sync_neutron_cache:
 
 # openstack-watcher-middleware
 watcher:
-  enabled: false
+  enabled: true
