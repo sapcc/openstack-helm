@@ -348,7 +348,7 @@ spec:
         role: compute_admin
       - domain: monsoon3
         role: compute_admin
-         inherited: true
+        inherited: true
     - name: MONSOON3_COMPUTE_SUPPORT
       roles:
       - project: compute_support
