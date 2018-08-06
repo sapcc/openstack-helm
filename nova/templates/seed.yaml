@@ -103,7 +103,7 @@ spec:
       - project: cloud_admin
         role: cloud_compute_admin
     - name: CCADMIN_API_SUPPORT
-       roles:
+      roles:
        - project: api_support
          role: compute_admin
        - project: api_tools
