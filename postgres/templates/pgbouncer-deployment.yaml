@@ -27,14 +27,10 @@ spec:
         name: {{.Values.name}}-pgbouncer
 {{ tuple . .Values.name "pgbouncer" | include "helm-toolkit.snippets.kubernetes_metadata_labels" | indent 8 }}
       annotations:
-{{- if and (eq .Capabilities.KubeVersion.Major "1") (lt .Capabilities.KubeVersion.Minor "5") }}
-        scheduler.alpha.kubernetes.io/affinity: >
-            {{ tuple . .Values.name "pgbouncer" | include "kubernetes_pod_anti_affinity" }}
-{{- end }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9200"
     spec:
-{{- if and (eq .Capabilities.KubeVersion.Major "1") (ge .Capabilities.KubeVersion.Minor "7") }}
 {{ tuple . .Values.name "pgbouncer" | include "kubernetes_pod_anti_affinity17" | indent 6 }}
-{{- end }}
       terminationGracePeriodSeconds: 150
       containers:
         - name: pgbouncer
