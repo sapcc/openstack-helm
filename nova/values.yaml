@@ -168,6 +168,34 @@ pg_metrics:
             usage: "GAUGE"
             description: "Maximum duration of state"
 
+    openstack_compute_instance:
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, created_at, launched_at, uuid, availability_zone, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS TimeTakenToLaunch FROM instances where created_at > now() - interval '15 minutes' AND deleted=0 GROUP BY host, project_id, uuid, availability_zone, created_at, launched_at, vm_state"
+      metrics:
+        - project_id:
+            usage: "LABEL"
+            description: "Project ID"
+        - vm_state:
+            usage: "LABEL"
+            description: "State of the VM"
+        - host:
+            usage: "LABEL"
+            description: "Host Name"
+        - uuid:
+            usage: "LABEL"
+            description: "Instance ID"
+        - availability_zone:
+            usage: "LABEL"
+            description: "AZ Name"
+        - created_at:
+            usage: "LABEL"
+            description: "Instance Created at Nova timestamp"
+        - launched_at:
+            usage: "LABEL"
+            description: "Instance launched from hypervisor timestamp"
+        - TimeTakenToLaunch:
+            usage: "GAUGE"
+            description: "Maximum duration of state"
+
 postgres:
   name: nova
   users:
