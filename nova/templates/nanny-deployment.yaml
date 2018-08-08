@@ -56,6 +56,10 @@ spec:
               value: {{ .Values.consistency.enabled | quote }}
             - name: NOVA_CONSISTENCY_DRY_RUN
               value: {{ .Values.consistency.dry_run | quote }}
+            - name: NOVA_CONSISTENCY_OLDER_THAN
+              value: {{ .Values.consistency.older_than | quote }}
+            - name: NOVA_CONSISTENCY_MAX_INSTANCE_FAULTS
+              value: {{ .Values.consistency.max_instance_faults | quote }}
             - name: NOVA_NANNY_INTERVAL
               value: {{ .Values.nanny.interval | quote }}
             - name: OS_AUTH_URL

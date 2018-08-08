@@ -273,6 +273,10 @@ consistency:
   enabled: False
   # dry run mode, i.e. just check for consistency without fixing it
   dry_run: True
+  # purge deleted block_device_mappings and reservations older than n days
+  older_than: 7
+  # keep at max n instance fault entries per instance
+  max_instance_faults: 10
 db_cleanup:
   enabled: False
   # dry run mode, i.e. just pretend to cleanup the entries
