@@ -52,12 +52,12 @@ spec:
               value: "{{ vcenter_nanny_unregister }}"
             - name: VCENTER_CLEANUP_DELETE
               value: "{{ vcenter_nanny_delete }}"
+            - name: VCENTER_CLEANUP_DETACH_GHOST_LIMIT
+              value: "{{ vcenter_nanny_detach_ghost_limit }}"
             - name: VCENTER_CLEANUP_DETACH_GHOST_VOLUMES
               value: "{{ vcenter_nanny_detach_ghost_volumes }}"
             - name: VCENTER_CLEANUP_DETACH_GHOST_PORTS
               value: "{{ vcenter_nanny_detach_ghost_ports }}"
-            - name: VCENTER_CLEANUP_DETACH_GHOST_LIMIT
-              value: "{{ vcenter_nanny_detach_ghost_limit }}"
             - name: VCENTER_CLEANUP_HOST
               value: {{ host | quote }}
             - name: VCENTER_CLEANUP_USER
