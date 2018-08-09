@@ -168,34 +168,56 @@ pg_metrics:
             usage: "GAUGE"
             description: "Maximum duration of state"
 
-    openstack_compute_instance:
-      query: "SELECT coalesce(host, 'N/A') AS host, project_id, extract(epoch from created_at) AS created_at, extract(epoch from launched_at) AS launched_at, uuid, availability_zone, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS time_taken_to_launch_gauge FROM instances WHERE (launched_at IS NULL OR launched_at > now() - interval '15 minutes') AND NOT deleted_at < now() - interval '15 minutes' GROUP BY host, project_id, uuid, availability_zone, created_at, launched_at, vm_state"
+    openstack_compute_instance_time:
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS to_launch_gauge FROM instances WHERE (launched_at IS NOT NULL AND launched_at > now() - interval '24 hours') AND vm_state='active' OR vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
       metrics:
-        - project_id:
-            usage: "LABEL"
-            description: "Project ID"
-        - vm_state:
-            usage: "LABEL"
-            description: "State of the VM"
         - host:
             usage: "LABEL"
-            description: "Host Name"
+            description: "Name of host"
+        - project_id:
+            usage: "LABEL"
+            description: "Project ID of the instance"
         - uuid:
             usage: "LABEL"
-            description: "Instance ID"
-        - availability_zone:
+            description: "Instance UUID"
+        - vm_state:
             usage: "LABEL"
-            description: "AZ Name"
-        - created_at:
+            description: "instance current state"
+        - to_launch_gauge:
             usage: "LABEL"
-            description: "Instance Created at Nova timestamp"
-        - launched_at:
-            usage: "LABEL"
-            description: "Instance launched from hypervisor timestamp"
-        - time_taken_to_launch_gauge:
-            usage: "GAUGE"
-            description: "Difference between Launch & create time of the instance in seconds"
+            description: "Name of host"
 
+    openstack_compute_instance_time_to:
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM updated_at - terminated_at)) AS terminate_gauge FROM instances WHERE (terminated_at IS NOT NULL AND terminated_at < now() - interval '24 hours') AND vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
+      metrics:
+        - host:
+            usage: "LABEL"
+            description: "Name of host"
+        - project_id:
+            usage: "LABEL"
+            description: "Project ID of the instance"
+        - uuid:
+            usage: "LABEL"
+            description: "Instance UUID"
+        - vm_state:
+            usage: "LABEL"
+            description: "instance current state"
+        - terminate_gauge:
+            usage: "LABEL"
+            description: "Name of host"
+
+    openstack_compute_instance_created:
+      query: "SELECT coalesce(host, 'N/A') AS host, vm_state, COUNT(*) FILTER (where created_at < now() - interval '24 hours') AS in_24_gauge FROM instances  GROUP BY host, vm_state"
+      metrics:
+        - host:
+            usage: "LABEL"
+            description: "Name of host"
+        - vm_state:
+            usage: "LABEL"
+            description: "instance current state"
+        - in_24_gauge:
+            usage: "LABEL"
+            description: "Name of host"
 postgres:
   name: nova
   users:
