@@ -167,7 +167,6 @@ pg_metrics:
         - max_duration_gauge:
             usage: "GAUGE"
             description: "Maximum duration of state"
-
     openstack_compute_instance_time:
       query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS to_launch_gauge FROM instances WHERE (launched_at IS NOT NULL AND launched_at > now() - interval '24 hours') AND vm_state='active' OR vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
       metrics:
@@ -186,9 +185,8 @@ pg_metrics:
         - to_launch_gauge:
             usage: "LABEL"
             description: "Name of host"
-
-    openstack_compute_instance_time_to:
-      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM updated_at - terminated_at)) AS terminate_gauge FROM instances WHERE (terminated_at IS NOT NULL AND terminated_at < now() - interval '24 hours') AND vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
+    openstack_compute_instance_time:
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM updated_at - terminated_at)) AS to_terminate_gauge FROM instances WHERE (terminated_at IS NOT NULL AND terminated_at < now() - interval '24 hours') AND vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
       metrics:
         - host:
             usage: "LABEL"
@@ -202,10 +200,9 @@ pg_metrics:
         - vm_state:
             usage: "LABEL"
             description: "instance current state"
-        - terminate_gauge:
+        - to_terminate_gauge:
             usage: "LABEL"
             description: "Name of host"
-
     openstack_compute_instance_created:
       query: "SELECT coalesce(host, 'N/A') AS host, vm_state, COUNT(*) FILTER (where created_at < now() - interval '24 hours') AS in_24_gauge FROM instances  GROUP BY host, vm_state"
       metrics:
@@ -218,6 +215,7 @@ pg_metrics:
         - in_24_gauge:
             usage: "LABEL"
             description: "Name of host"
+            
 postgres:
   name: nova
   users:
