@@ -167,8 +167,8 @@ pg_metrics:
         - max_duration_gauge:
             usage: "GAUGE"
             description: "Maximum duration of state"
-    openstack_compute_instance_time:
-      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS to_launch_gauge FROM instances WHERE (launched_at IS NOT NULL AND launched_at > now() - interval '24 hours') AND vm_state='active' OR vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
+    openstack_compute_instance_launch:
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS time_taken_gauge FROM instances WHERE (launched_at IS NOT NULL AND launched_at > now() - interval '24 hours') AND vm_state='active' OR vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
       metrics:
         - host:
             usage: "LABEL"
@@ -182,11 +182,11 @@ pg_metrics:
         - vm_state:
             usage: "LABEL"
             description: "instance current state"
-        - to_launch_gauge:
+        - time_taken_gauge:
             usage: "GAUGE"
             description: "Name of host"
-    openstack_compute_instance_time:
-      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM updated_at - terminated_at)) AS to_terminate_gauge FROM instances WHERE (terminated_at IS NOT NULL AND terminated_at < now() - interval '24 hours') AND vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
+    openstack_compute_instance_termination:
+      query: "SELECT coalesce(host, 'N/A') AS host, project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM updated_at - terminated_at)) AS time_taken_gauge FROM instances WHERE (terminated_at IS NOT NULL AND terminated_at < now() - interval '24 hours') AND vm_state='deleted' GROUP BY host, project_id, uuid, vm_state"
       metrics:
         - host:
             usage: "LABEL"
@@ -200,7 +200,7 @@ pg_metrics:
         - vm_state:
             usage: "LABEL"
             description: "instance current state"
-        - to_terminate_gauge:
+        - time_taken_gauge:
             usage: "GAUGE"
             description: "Name of host"
     openstack_compute_instance_created:
