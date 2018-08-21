@@ -203,18 +203,18 @@ pg_metrics:
         - time_taken_gauge:
             usage: "GAUGE"
             description: "Name of host"
-    openstack_compute_instance_created:
-      query: "SELECT coalesce(host, 'N/A') AS host, vm_state, COUNT(*) FILTER (where created_at < now() - interval '24 hours') AS in_24_gauge FROM instances AND NOT deleted_at < now() - interval '24 hours' GROUP BY host, vm_state"
-      metrics:
-        - host:
-            usage: "LABEL"
-            description: "Name of host"
-        - vm_state:
-            usage: "LABEL"
-            description: "instance current state"
-        - in_24_gauge:
-            usage: "GAUGE"
-            description: "Name of host"
+#    openstack_compute_instance_created:
+#      query: "SELECT coalesce(host, 'N/A') AS host, vm_state, COUNT(*) FILTER (where created_at < now() - interval '24 hours') AS in_24_gauge FROM instances AND NOT deleted_at < now() - interval '24 hours' GROUP BY host, vm_state"
+#      metrics:
+#        - host:
+#            usage: "LABEL"
+#            description: "Name of host"
+#        - vm_state:
+#            usage: "LABEL"
+#            description: "instance current state"
+#        - in_24_gauge:
+#            usage: "GAUGE"
+#            description: "Name of host"
     openstack_ironic_node_launch:
       query: "SELECT project_id, uuid, vm_state, MAX(EXTRACT(epoch FROM launched_at - created_at)) AS time_taken_gauge FROM instances WHERE host='nova-compute-ironic' AND (launched_at IS NOT NULL AND launched_at > now() - interval '24 hours') AND NOT deleted_at < now() - interval '24 hours' GROUP BY host, project_id, uuid, vm_state"
       metrics:
