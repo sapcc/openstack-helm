@@ -14,6 +14,7 @@ allow_resize_to_same_host = true
 
 enable_new_services={{ .Values.enable_new_services | default .Release.IsInstall }}
 
+osapi_compute_link_prefix={{.Values.global.nova_api_endpoint_protocol_public}}://{{include "nova_api_endpoint_host_public" .}}:{{.Values.global.nova_api_port_public}}
 osapi_compute_workers=8
 metadata_workers=8
 
