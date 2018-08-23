@@ -260,62 +260,62 @@ pg_metrics:
 #         - in_24hrs_gauge:
 #             usage: "GAUGE"
 #             description: "Name of host"
-#
-# postgres:
-#   name: nova
-#   users:
-#     nova: {}
-#     nova_api: {}
-#
-# audit:
-#   enabled: false
-#   # how many messages to buffer before dumping to log (when rabbit is down or too slow)
-#   mem_queue_size: 1000
-#   record_payloads: false
-#   metrics_enabled: true
-#
-# rabbitmq_notifications:
-#   name: nova
-#
-# logging:
-#     formatters:
-#         context:
-#             class: oslo_log.formatters.ContextFormatter
-#         default:
-#             format: "%(message)s"
-#     handlers:
-#         stdout:
-#             class: StreamHandler
-#             args: "(sys.stdout,)"
-#             formatter: context
-#         "null":
-#             class: logging.NullHandler
-#             args: "()"
-#             formatter: default
-#         sentry:
-#             class: raven.handlers.logging.SentryHandler
-#             level: ERROR
-#             args: "()"
-#     loggers:
-#         root:
-#             handlers: stdout, sentry
-#             level: WARNING
-#         nova:
-#             handlers: stdout, sentry
-#             level: INFO
-#         nova.scheduler.host_manager: # You might get problems with unicodedecode errors if you decrease that
-#             handlers: stdout, sentry
-#             level: INFO
-#         eventlet.wsgi.server:
-#             handlers: stdout, sentry
-#             level: INFO
-#         suds:
-#             handlers: "null"
-#             level: ERROR
-#         oslo_vmware.common.loopingcall:
-#             handlers: "null"
-#             level: ERROR
-#
+
+postgres:
+  name: nova
+  users:
+    nova: {}
+    nova_api: {}
+
+audit:
+  enabled: false
+  # how many messages to buffer before dumping to log (when rabbit is down or too slow)
+  mem_queue_size: 1000
+  record_payloads: false
+  metrics_enabled: true
+
+rabbitmq_notifications:
+  name: nova
+
+logging:
+    formatters:
+        context:
+            class: oslo_log.formatters.ContextFormatter
+        default:
+            format: "%(message)s"
+    handlers:
+        stdout:
+            class: StreamHandler
+            args: "(sys.stdout,)"
+            formatter: context
+        "null":
+            class: logging.NullHandler
+            args: "()"
+            formatter: default
+        sentry:
+            class: raven.handlers.logging.SentryHandler
+            level: ERROR
+            args: "()"
+    loggers:
+        root:
+            handlers: stdout, sentry
+            level: WARNING
+        nova:
+            handlers: stdout, sentry
+            level: INFO
+        nova.scheduler.host_manager: # You might get problems with unicodedecode errors if you decrease that
+            handlers: stdout, sentry
+            level: INFO
+        eventlet.wsgi.server:
+            handlers: stdout, sentry
+            level: INFO
+        suds:
+            handlers: "null"
+            level: ERROR
+        oslo_vmware.common.loopingcall:
+            handlers: "null"
+            level: ERROR
+
 # nova nanny
 image_version_nova_nanny: DEFINED-IN-REGION-CHART
 nanny:
