@@ -22,12 +22,14 @@ propagate=0
 
 {{- define "osprofiler" }}
     {{- $options := merge .Values.osprofiler .Values.global.osprofiler }}
+[profiler]
     {{- if $options.enabled }}
 
-[profiler]
         {{- range $key, $value := $options }}
 {{ $key }} = {{ $value }}
         {{- end }}
+    {{- else }}
+enabled = false
     {{- end }}
 {{- end }}
 
