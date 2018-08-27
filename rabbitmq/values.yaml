@@ -16,5 +16,6 @@ global:
   rabbit_transient_queues_ttl: 1800
   user_suffix: ""
 
-persistence:
-  enabled: true
+rabbit_rpc:
+  persistence:
+    enabled: true
