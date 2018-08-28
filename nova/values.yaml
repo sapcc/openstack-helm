@@ -83,6 +83,16 @@ scheduler:
   ram_weight_multiplier: 1.0
   disk_weight_multiplier: 1.0
 
+compute:
+  defaults:
+    default:
+      max_concurrent_builds_per_project: 3
+    vmware:
+      insecure: True
+      use_linked_clone: False
+      pbm_enabled: False
+      pbm_default_policy: "nova-ephemeral"
+
 pg_metrics:
   name: nova
   customMetrics:

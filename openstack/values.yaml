@@ -215,9 +215,6 @@ global:
 
 vcenter_operator:
   username:
-  pbm_enabled: "false"
-  vmware_connection_pool_size: 20
-
   vcenter_nanny_enabled: False
   vcenter_nanny_debug: True
   # dry run mode, i.e. just pretend to cleanup the entries

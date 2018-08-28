@@ -8,14 +8,7 @@ data:
   namespace: monsoon3
   user_suffix: {{ .Values.global.user_suffix | default "" | quote }}
   password: {{ .Values.global.master_password | quote }}
-  neutron_agent_image: {{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/{{ .Values.neutron.image_name | default "ubuntu-source-neutron-server" }}:{{ .Values.neutron.image_version_neutron_server | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}
-  neutron_sentry_dsn: {{ .Values.neutron.sentry_dsn | quote  }}
-  nova_agent_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/ubuntu-source-nova-compute:{{ .Values.nova.image_version_nova_compute | default .Values.nova.image_version | required "Please set nova.image_version or similar"}}
-  nova_sentry_dsn: {{ .Values.nova.sentry_dsn | quote }}
-  nova_service_user: {{  .Values.global.nova_service_user }}
   vcenter_nanny_image: {{ .Values.global.image_repository}}/{{ .Values.global.image_namespace}}/vcenter-nanny:{{ .Values.vcenter_operator.image_version_vcenter_nanny }}
-  scheduler_tracks_instance_changes: {{ .Values.nova.scheduler.scheduler_tracks_instance_changes | quote }}
-  scheduler_instance_sync_interval: {{ .Values.nova.scheduler.scheduler_instance_sync_interval | quote }}
 {{- range $key, $value := .Values.vcenter_operator }}
   {{- $str := toJson $value }}
   {{ $key }}: {{if hasPrefix "\"" $str }}{{ $str }}{{ else }}{{ quote $str }}{{ end }}

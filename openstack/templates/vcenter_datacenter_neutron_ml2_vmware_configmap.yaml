@@ -1,0 +1,32 @@
+{{- if .Capabilities.APIVersions.Has "vcenter-operator.stable.sap.cc/v1" }}
+apiVersion: vcenter-operator.stable.sap.cc/v1
+kind: VCenterTemplate
+metadata:
+  name: 'vcenter-cluster-neutron-ml2-vmware-configmap'
+  scope: 'cluster'
+template: |{{`
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: neutron-ml2-vmware-{{ name }}
+    labels:
+      system: openstack
+      type: configuration
+      component: neutron
+  data:
+    ml2-vmware.ini: |
+      [DEFAULT]
+      backdoor_socket=/var/lib/neutron/eventlet_backdoor.socket
+
+      [securitygroup]
+      firewall_driver = networking_dvs.plugins.ml2.drivers.mech_dvs.agent.dvs_firewall.DvsSecurityGroupsDriver
+
+      [ml2_vmware]
+      vsphere_hostname = {{ host }}
+      cluster_name = {{ cluster_name | quote }}
+
+      vsphere_login = {{ username | quote }}
+      vsphere_password = {{ password | quote }}
+
+      network_maps = "{{ physical | ini_escape }}:{{ bridge | ini_escape }}"
+`}}{{ end }}
