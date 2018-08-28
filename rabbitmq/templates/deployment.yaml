@@ -27,6 +27,7 @@ spec:
             claimName: rabbitmq-pvclaim
         {{- else }}
           emptyDir: {}
+          sizeLimit: 1Gi
         {{- end }}
         - name: container-init
           configMap:
