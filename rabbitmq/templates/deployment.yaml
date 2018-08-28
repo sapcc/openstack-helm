@@ -22,7 +22,7 @@ spec:
     spec:
       volumes:
         - name: rabbitmq-persistent-storage
-        {{- if .Values.persistence.enabled }}
+        {{- if .Values.rabbit_rpc.persistence.enabled }}
           persistentVolumeClaim:
             claimName: rabbitmq-pvclaim
         {{- else }}
