@@ -11,5 +11,5 @@ dependencies:
 - name: rabbitmq_notifications
   repository: file://../rabbitmq_notifications
   version: 0.0.1
-digest: sha256:9c282aa7fa56de67b5c429af33be4c10fabda83dd598bacaa8fe47951990dc40
-generated: 2018-08-06T11:15:16.872789599+02:00
+digest: sha256:673bc20d1650b041c4c3ab70ebef1e280d2dede0aa3e9a82241c43d7d3c03f6c
+generated: 2018-08-28T15:22:08.541622698+02:00

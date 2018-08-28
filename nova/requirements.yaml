@@ -10,5 +10,5 @@ dependencies:
     version: 0.1.0
   - name: rabbitmq_notifications
     repository: file://../rabbitmq_notifications
-    condition: openstack.cinder.audit.enabled
+    condition: openstack.nova.audit.enabled
     version: 0.0.1
