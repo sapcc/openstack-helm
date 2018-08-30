@@ -36,7 +36,7 @@ template: |{{`
       {{- range $key, $value := .Values.nova.compute.defaults.vmware }}
       {{ $key }} = {{ $value }}
       {{- end }}
-      {{- if (or (not (hasKey .Values.nova.compute.defaults.vmware "pbm_enabled")) (not .Values.nova.compute.defaults.vmware)) }}
+      {{- if (or (not (hasKey .Values.nova.compute.defaults.vmware "pbm_enabled")) (not .Values.nova.compute.defaults.vmware.pbm_enabled)) }}
       datastore_regex = {{`{{ datastore_regex | quote }}`}}
       {{- end }}{{`
 `}}{{ end }}
