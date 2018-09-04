@@ -8,14 +8,11 @@ dependencies:
 - name: nova
   repository: file://../nova
   version: 0.1.1
-- name: cinder
-  repository: file://../cinder
-  version: 0.1.1
 - name: healthchecks
   repository: file://../healthchecks
   version: 0.1.0
 - name: utils
   repository: file://../utils
   version: 0.1.1
-digest: sha256:edeae3a13ed0ca1691ec5a1d697e2dc3dae879430ec7018f81fc3b7998d30440
-generated: 2018-08-06T12:21:18.146580138+02:00
+digest: sha256:9b8e3bc3c2075771bd661927f6eb9973296782bf04052582bd4632eb66b0d004
+generated: 2018-09-04T13:05:51.001364939+02:00

@@ -4,13 +4,10 @@ all: clean openstack europe-example-region
 
 europe-example-region: build-europe-example-region
 
-openstack: cinder memcached nova rabbitmq rabbitmq_notifications healthchecks
+openstack: memcached nova rabbitmq rabbitmq_notifications healthchecks
 openstack: build-openstack
 
 healthchecks: build-healthchecks
-
-cinder: utils postgres rabbitmq_notifications
-cinder: build-cinder
 
 memcached: build-memcached
 
