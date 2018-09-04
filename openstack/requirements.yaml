@@ -5,6 +5,8 @@ dependencies:
   - name: rabbitmq
     repository: file://../rabbitmq
     version: 0.1.0
+    tags:
+        - rabbitmq
   - name: nova
     repository: file://../nova
     version: 0.1.1
