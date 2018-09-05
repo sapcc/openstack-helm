@@ -236,3 +236,17 @@ vcenter_operator:
     docker_repo: DEFINED-IN-REGION-CHART
 
 neutron: {}
+
+nova:
+  compute:
+    defaults:
+      default:
+        max_concurrent_builds_per_project: 3
+      vmware:
+        insecure: True
+        use_linked_clone: False
+        pbm_enabled: False
+        pbm_default_policy: "nova-ephemeral"
+  scheduler:
+    scheduler_tracks_instance_changes: False
+    scheduler_instance_sync_interval: 120
