@@ -68,7 +68,7 @@ global:
   keystone_api_endpoint_protocol_public: https
 
 
-  keystone_api_port_admin: '35357'
+  keystone_api_port_admin: '5000'
   keystone_api_port_admin_ext: '443'
   keystone_api_port_internal: '5000'
   keystone_api_port_public: '443'
