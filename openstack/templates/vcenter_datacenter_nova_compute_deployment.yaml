@@ -45,7 +45,7 @@ template: |{{`
               - kubernetes-entrypoint
             env:
               - name: COMMAND
-                value: "nova-compute"
+                value: "nova-compute --config-file=/etc/nova/nova.conf --config-file=/etc/nova/nova-compute.conf --config-file=/etc/nova/nova-cell-{{ availability_zone }}.conf"
               - name: NAMESPACE
                 value: {{ namespace }}
               - name: SENTRY_DSN
