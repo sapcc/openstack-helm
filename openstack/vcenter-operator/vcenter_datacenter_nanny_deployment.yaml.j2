@@ -41,7 +41,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
             - name: DEPENDENCY_SERVICE
-              value: "postgres-nova,nova-api"
+              value: "nova-postgresql,nova-api"
             - name: VCENTER_CLEANUP_ENABLED
               value: "{{ vcenter_nanny_enabled }}"
             - name: VCENTER_CLEANUP_DRY_RUN
