@@ -1,0 +1,83 @@
+{% if vcenter_nanny_enabled is defined and vcenter_nanny_enabled == "True" %}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: vcenter-nanny-{{ name }}
+  namespace: monsoon3
+  labels:
+    system: openstack
+    service: vcenter-nanny
+
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        component: vcenter-nanny-{{ name }}
+    spec:
+      nodeSelector:
+        zone: farm
+      volumes:
+        - name: nova-etc
+          configMap:
+            name: nova-etc
+      containers:
+        - name: vcenter-cleanup
+          image: {{ vcenter_nanny_image }}
+          imagePullPolicy: IfNotPresent
+          command:
+            - dumb-init
+            - kubernetes-entrypoint
+          env:
+            - name: COMMAND
+              value: "{% if vcenter_nanny_debug is defined and vcenter_nanny_debug == "True" %}sleep inf{% else %}/bin/bash /scripts/vcenter-cleanup.sh{% endif %}"
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: DEPENDENCY_SERVICE
+              value: "nova-postgresql,nova-api"
+            - name: VCENTER_CLEANUP_ENABLED
+              value: "{{ vcenter_nanny_enabled }}"
+            - name: VCENTER_CLEANUP_DRY_RUN
+              value: "{{ vcenter_nanny_dry_run }}"
+            - name: VCENTER_CLEANUP_POWER_OFF
+              value: "{{ vcenter_nanny_power_off }}"
+            - name: VCENTER_CLEANUP_UNREGISTER
+              value: "{{ vcenter_nanny_unregister }}"
+            - name: VCENTER_CLEANUP_DELETE
+              value: "{{ vcenter_nanny_delete }}"
+            - name: VCENTER_CLEANUP_DETACH_GHOST_LIMIT
+              value: "{{ vcenter_nanny_detach_ghost_limit }}"
+            - name: VCENTER_CLEANUP_DETACH_GHOST_VOLUMES
+              value: "{{ vcenter_nanny_detach_ghost_volumes }}"
+            - name: VCENTER_CLEANUP_DETACH_GHOST_PORTS
+              value: "{{ vcenter_nanny_detach_ghost_ports }}"
+            - name: VCENTER_CLEANUP_HOST
+              value: {{ host | quote }}
+            - name: VCENTER_CLEANUP_USER
+              value: {{ username | quote }}
+            - name: VCENTER_CLEANUP_PASSWORD
+              value: {{ password | quote }}
+            - name: VCENTER_CLEANUP_ITERATIONS
+              value: "{{ vcenter_nanny_iterations }}"
+            - name: VCENTER_CLEANUP_INTERVAL
+              value: "{{ vcenter_nanny_interval }}"
+            - name: OS_AUTH_URL
+              value: "https://identity-3.{{ availability_zone[:-1] }}.cloud.sap:443/v3"
+            - name: OS_PROJECT_NAME
+              value: "cloud_admin"
+            - name: OS_PROJECT_DOMAIN_NAME
+              value: "ccadmin"
+            - name: OS_USERNAME
+              value: "vcenter_nanny"
+            - name: OS_USER_DOMAIN_NAME
+              value: "Default"
+            - name: OS_PASSWORD
+              value: {{ "vcenter_nanny" | derive_password("identity-3." + availability_zone[:-1] + ".cloud.sap") | quote }}
+{% endif %}
