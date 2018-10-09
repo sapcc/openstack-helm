@@ -17,7 +17,7 @@ template: |{{`
     nova-compute.conf: |
       [DEFAULT]
       graceful_shutdown_timeout = 900
-      compute_driver = nova.virt.vmwareapi.VMwareVCDriver
+      compute_driver = vmwareapi.VMwareVCDriver
       reserved_host_memory_mb = 0`}}
       {{- if .Values.nova.compute.defaults.default.max_concurrent_builds_per_project }}
       max_concurrent_builds_per_project = {{ .Values.nova.compute.defaults.default.max_concurrent_builds_per_project }}
