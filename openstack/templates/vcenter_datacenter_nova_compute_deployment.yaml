@@ -61,6 +61,8 @@ template: |{{`
             volumeMounts:
               - mountPath: /etc/nova
                 name: etcnova
+              - mountPath: /etc/nova/rootwrap.d
+                name: etcnova
               - mountPath: /etc/nova/nova.conf
                 name: nova-etc
                 subPath: nova.conf
@@ -77,6 +79,14 @@ template: |{{`
                 name: hypervisor-config
                 subPath: nova-compute.conf
                 readOnly: true`}}
+              - mountPath: /etc/nova/rootwrap.conf
+                name: nova-etc
+                subPath: rootwrap.conf
+                readOnly: true
+              - mountPath: /etc/nova/rootwrap.d/compute.filters
+                name: nova-etc
+                subPath: compute.filters
+                readOnly: true
 {{- if .Values.nova.vspc.enabled }}
               - mountPath: /opt/vspc
                 name: serial-log-dir
