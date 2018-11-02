@@ -250,3 +250,5 @@ nova:
   scheduler:
     scheduler_tracks_instance_changes: False
     scheduler_instance_sync_interval: 120
+  vspc:
+    enabled: false
