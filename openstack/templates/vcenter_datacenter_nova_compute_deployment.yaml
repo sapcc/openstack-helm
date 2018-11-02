@@ -89,7 +89,6 @@ template: |{{`
               - mountPath: /opt/vspc
                 name: serial-log-dir
                 readOnly: true
-                subPath: /
 {{- end }}{{`
           - name: neutron-dvs-agent
             image: `}}{{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/{{ .Values.neutron.image_name | default "ubuntu-source-neutron-server" }}:{{ .Values.neutron.image_version_neutron_server | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}{{`
