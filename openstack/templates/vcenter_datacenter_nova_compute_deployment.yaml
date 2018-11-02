@@ -77,6 +77,10 @@ template: |{{`
                 name: hypervisor-config
                 subPath: nova-compute.conf
                 readOnly: true
+              - mountPath: /etc/sudoers
+                name: nova-etc
+                subPath: sudoers
+                readOnly: true
               - mountPath: /etc/nova/rootwrap.conf
                 name: nova-etc
                 subPath: rootwrap.conf
