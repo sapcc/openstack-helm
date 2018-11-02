@@ -76,12 +76,12 @@ template: |{{`
               - mountPath: /etc/nova/nova-compute.conf
                 name: hypervisor-config
                 subPath: nova-compute.conf
-                readOnly: true
+                readOnly: true`}}
 {{- if .Values.nova.vspc.enabled }}
               - mountPath: /opt/vspc
                 name: serial-log-dir
                 readOnly: true
-{{- end }}
+{{- end }}{{`
           - name: neutron-dvs-agent
             image: `}}{{ .Values.global.image_repository }}/{{ .Values.global.image_namespace }}/{{ .Values.neutron.image_name | default "ubuntu-source-neutron-server" }}:{{ .Values.neutron.image_version_neutron_server | default .Values.neutron.image_version | required "Please set neutron.image_version or similar" }}{{`
             imagePullPolicy: IfNotPresent
@@ -166,10 +166,10 @@ template: |{{`
           - name: neutron-container-init
             configMap:
               name: neutron-bin-vendor
-              defaultMode: 0755
+              defaultMode: 0755`}}
 {{- if .Values.nova.vspc.enabled }}
           - name: serial-log-dir
             persistentVolumeClaim:
-              claimName: {{ .Values.vspc.pvc.existingClaim | default "nova-vspc-pvclaim" }}
-{{- end }}
+              claimName: {{ .Values.nova.vspc.pvc.existingClaim | default "nova-vspc-pvclaim" }}
+{{- end }}{{`
 `}}{{ end }}
