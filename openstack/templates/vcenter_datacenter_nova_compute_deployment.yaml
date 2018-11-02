@@ -61,8 +61,6 @@ template: |{{`
             volumeMounts:
               - mountPath: /etc/nova
                 name: etcnova
-              - mountPath: /etc/nova/rootwrap.d
-                name: etcnova
               - mountPath: /etc/nova/nova.conf
                 name: nova-etc
                 subPath: nova.conf
