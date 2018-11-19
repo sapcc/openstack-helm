@@ -208,26 +208,6 @@ global:
 
 vcenter_operator:
   username:
-  vcenter_nanny_enabled: False
-  vcenter_nanny_debug: True
-  # dry run mode, i.e. just pretend to cleanup the entries
-  vcenter_nanny_dry_run: true
-  # power off machines discovered as orphaned
-  vcenter_nanny_power_off: false
-  # unregister machines discovered as orphaned
-  vcenter_nanny_unregister: false
-  # delete machines discovered as orphaned
-  vcenter_nanny_delete: false
-  # detach discovered ghost volumes
-  vcenter_nanny_detach_ghost_volumes: false
-  # detach discovered ghost ports
-  vcenter_nanny_detach_ghost_ports: false
-  # how many ghost volumes or ports to detach at maximum - if more: deny to delete any
-  vcenter_nanny_detach_ghost_limit: 3
-  # run the db cleanup every n minutes
-  vcenter_nanny_interval: 720
-  # really delete entities after how many iterations
-  vcenter_nanny_iterations: 14
   vcenter_exporter:
     enabled: DEFINED-IN-REGION-CHART
     image_version: DEFINED-IN-REGION-CHART
