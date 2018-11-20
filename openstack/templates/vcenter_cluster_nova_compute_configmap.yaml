@@ -4,11 +4,14 @@ kind: VCenterTemplate
 metadata:
   name: 'vcenter-cluster-nova-compute-configmap'
   scope: 'cluster'
-template: |{{`
+  jinja2_options:
+    variable_start_string: '{='
+    variable_end_string: '=}'
+template: |
   apiVersion: v1
   kind: ConfigMap
   metadata:
-    name: nova-compute-{{ name }}
+    name: nova-compute-{= name =}
     labels:
       system: openstack
       type: configuration
@@ -18,25 +21,25 @@ template: |{{`
       [DEFAULT]
       graceful_shutdown_timeout = 900
       compute_driver = vmwareapi.VMwareVCDriver
-      reserved_host_memory_mb = 0`}}
+      reserved_host_memory_mb = 0
       {{- if .Values.nova.compute.defaults.default.max_concurrent_builds_per_project }}
       max_concurrent_builds_per_project = {{ .Values.nova.compute.defaults.default.max_concurrent_builds_per_project }}
-      {{- end }}{{`
+      {{- end }}
 
-      scheduler_tracks_instance_changes = `}}{{ .Values.nova.scheduler.scheduler_tracks_instance_changes }}{{`
-      scheduler_instance_sync_interval = `}}{{ .Values.nova.scheduler.scheduler_instance_sync_interval }}{{`
+      scheduler_tracks_instance_changes = {{ .Values.nova.scheduler.scheduler_tracks_instance_changes }}
+      scheduler_instance_sync_interval = {{ .Values.nova.scheduler.scheduler_instance_sync_interval }}
 
       [vmware]
-      integration_bridge = {{ bridge | quote }}
-      cache_prefix= "{{ name | ini_escape }}-images"
-      host_ip = {{ host }}
-      host_username = {{ username | quote }}
-      host_password = {{ password | quote }}
-      cluster_name = {{ cluster_name | quote }}`}}
+      integration_bridge = {= bridge | quote =}
+      cache_prefix= "{= name | ini_escape =}-images"
+      host_ip = {= host =}
+      host_username = {= username | quote =}
+      host_password = {= password | quote =}
+      cluster_name = {= cluster_name | quote =}
       {{- range $key, $value := .Values.nova.compute.defaults.vmware }}
       {{ $key }} = {{ $value }}
       {{- end }}
       {{- if (or (not (hasKey .Values.nova.compute.defaults.vmware "pbm_enabled")) (not .Values.nova.compute.defaults.vmware.pbm_enabled)) }}
-      datastore_regex = {{`{{ datastore_regex | quote }}`}}
-      {{- end }}{{`
-`}}{{ end }}
+      datastore_regex = {= datastore_regex | quote =}
+      {{- end }}
+{{ end }}
