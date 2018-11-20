@@ -5,6 +5,7 @@
 tags:
   nova: true
   rabbitmq: true
+  healthchecks: true
 
 global:
   os_release: mitaka
