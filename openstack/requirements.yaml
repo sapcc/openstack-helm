@@ -7,11 +7,6 @@ dependencies:
     version: 0.1.0
     tags:
         - rabbitmq
-  - name: nova
-    repository: file://../nova
-    version: 0.1.1
-    tags:
-        - nova
   - name: healthchecks
     repository: file://../healthchecks
     version: 0.1.0

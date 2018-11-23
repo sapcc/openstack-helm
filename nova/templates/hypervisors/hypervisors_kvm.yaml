@@ -1,8 +1,0 @@
-{{- range $i, $hypervisor := .Values.global.hypervisors_kvm }}
-  {{- if ne $i 0 }}
----
-  {{- end }}
-  {{- tuple $ $hypervisor | include "kvm_hypervisor" }}
----
-  {{- tuple $ $hypervisor | include "kvm_configmap" }}
-{{- end }}

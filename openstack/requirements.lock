@@ -5,14 +5,11 @@ dependencies:
 - name: rabbitmq
   repository: file://../rabbitmq
   version: 0.1.0
-- name: nova
-  repository: file://../nova
-  version: 0.1.1
 - name: healthchecks
   repository: file://../healthchecks
   version: 0.1.0
 - name: utils
   repository: file://../utils
   version: 0.1.1
-digest: sha256:de559a14758ed99e14162170a66300e74119922bc38c50986fb2461d5373da01
-generated: 2018-09-04T16:00:33.400667189+02:00
+digest: sha256:14f133ea1a8fa9ede40ddf64121451f3f4d939e2921f8b338e54a697c01632fa
+generated: 2018-11-23T09:50:00.723321+01:00
