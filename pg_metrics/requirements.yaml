@@ -1,4 +1,0 @@
-dependencies:
-  - name: utils
-    repository: file://../utils
-    version: 0.1.1

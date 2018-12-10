@@ -1,9 +1,0 @@
-# Default values for memcached.
-# This is a YAML-formatted file.
-# Declare name/value pairs to be passed into your templates.
-# name: value
-global:
-  memcached_port_public: '11211'
-  memcached_port_metrics: '9150' 
-
-

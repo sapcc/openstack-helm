@@ -4,12 +4,9 @@
 # name: value
 tags:
   rabbitmq: true
-  healthchecks: false
 
 global:
   region: DEFINED-IN-REGION-CHART
-  memcached_port_public: '11211'
-  memcached_port_metrics: '9150'
 
   rabbitmq_default_user: openstack
   rabbitmq_admin_user: admin

@@ -1,17 +1,9 @@
 dependencies:
-- name: memcached
-  repository: file://../memcached
-  version: 0.1.0
 - name: rabbitmq
   repository: file://../rabbitmq
   version: 0.1.0
   tags:
   - rabbitmq
-- name: healthchecks
-  repository: file://../healthchecks
-  version: 0.1.0
-  tags:
-  - healthchecks
 - name: utils
   repository: file://../utils
   version: 0.1.1

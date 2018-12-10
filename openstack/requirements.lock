@@ -1,15 +1,9 @@
 dependencies:
-- name: memcached
-  repository: file://../memcached
-  version: 0.1.0
 - name: rabbitmq
   repository: file://../rabbitmq
-  version: 0.1.0
-- name: healthchecks
-  repository: file://../healthchecks
   version: 0.1.0
 - name: utils
   repository: file://../utils
   version: 0.1.1
-digest: sha256:14f133ea1a8fa9ede40ddf64121451f3f4d939e2921f8b338e54a697c01632fa
-generated: 2018-11-23T09:50:00.723321+01:00
+digest: sha256:a8c7b81ee5eea5d55a6fa2120167a54964c31345dd78efd68b6aad84c1ff08fd
+generated: 2018-12-10T09:20:36.307093+01:00
