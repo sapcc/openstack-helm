@@ -1,1 +1,0 @@
-Add cert and key files here that are used in the TLS secrets for ingress routers

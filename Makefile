@@ -1,8 +1,6 @@
 .PHONY: $(sort $(dir $(wildcard */)))
 
-all: clean openstack europe-example-region
-
-europe-example-region: build-europe-example-region
+all: clean openstack
 
 openstack: rabbitmq
 openstack: build-openstack
@@ -11,8 +9,6 @@ openstack: build-openstack
 rabbitmq: build-rabbitmq
 utils: build-utils
 
-
-lint: lint-europe-example-region
 lint: lint-openstack
 lint: lint-rabbitmq lint-utils
 

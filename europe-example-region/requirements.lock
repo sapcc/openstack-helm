@@ -1,9 +1,0 @@
-dependencies:
-- name: openstack
-  repository: file://../openstack
-  version: 0.1.1
-- name: utils
-  repository: file://../utils
-  version: 0.1.1
-digest: sha256:f91276425b47a65dc6eda20c08b715f8c611c00159a134d402cf1e5503bb9aad
-generated: 2018-08-06T11:15:24.630738023+02:00

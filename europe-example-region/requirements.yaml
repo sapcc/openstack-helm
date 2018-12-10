@@ -1,7 +1,0 @@
-dependencies:
-  - name: openstack
-    repository: file://../openstack
-    version: 0.1.1
-  - name: utils
-    repository: file://../utils
-    version: 0.1.1
