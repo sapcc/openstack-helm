@@ -4,6 +4,3 @@ dependencies:
   version: 0.1.0
   tags:
   - rabbitmq
-- name: utils
-  repository: file://../utils
-  version: 0.1.1

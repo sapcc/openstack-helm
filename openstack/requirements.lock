@@ -2,8 +2,5 @@ dependencies:
 - name: rabbitmq
   repository: file://../rabbitmq
   version: 0.1.0
-- name: utils
-  repository: file://../utils
-  version: 0.1.1
-digest: sha256:a8c7b81ee5eea5d55a6fa2120167a54964c31345dd78efd68b6aad84c1ff08fd
-generated: 2018-12-10T09:20:36.307093+01:00
+digest: sha256:f2261b24d586070732dba8c78a5ab336266e2974d29cffa6bd7bd4881f484006
+generated: 2018-12-12T17:15:26.472732+01:00
