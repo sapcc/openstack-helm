@@ -2,15 +2,9 @@
 
 all: clean openstack
 
-openstack: rabbitmq
 openstack: build-openstack
 
-#dependencies
-rabbitmq: build-rabbitmq
-utils: build-utils
-
 lint: lint-openstack
-lint: lint-rabbitmq lint-utils
 
 build-%:
 	if [ -f $*/requirements.yaml ]; then helm dep up --skip-refresh $*; fi
