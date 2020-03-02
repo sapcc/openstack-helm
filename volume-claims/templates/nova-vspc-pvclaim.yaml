@@ -1,0 +1,12 @@
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nova-vspc-pvclaim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
