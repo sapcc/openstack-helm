@@ -1,6 +1,0 @@
-dependencies:
-- name: rabbitmq
-  repository: file://../rabbitmq
-  version: 0.1.0
-digest: sha256:f2261b24d586070732dba8c78a5ab336266e2974d29cffa6bd7bd4881f484006
-generated: 2018-12-12T17:15:26.472732+01:00
